@@ -1,0 +1,31 @@
+import type { Config } from "tailwindcss";
+
+const config: Config = {
+  content: [
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        background: "#0a0a0a", // Deep charcoal/black
+        foreground: "#ededed", // Soft white
+        card: "#121212", // Slightly lighter black
+        "card-hover": "#1a1a1a",
+        primary: "#dc2626", // Red 600
+        secondary: "#94a3b8", // Slate 400 (More silver)
+        accent: "#f59e0b", // Amber 500
+        muted: "#525252", // Neutral 600
+        "muted-foreground": "#a3a3a3", // Neutral 400
+        border: "#262626", // Neutral 800
+      },
+      fontFamily: {
+        sans: ["var(--font-inter)", "sans-serif"],
+        mono: ["var(--font-jetbrains-mono)", "monospace"],
+      },
+    },
+  },
+  plugins: [],
+};
+export default config;

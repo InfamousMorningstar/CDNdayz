@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --card: #121212;
+  --card-hover: #1a1a1a;
+  --primary: #dc2626; /* Red 600 */
+  --secondary: #94a3b8; /* Silver/Slate */
+  --accent: #f59e0b;
+  --muted: #525252;
+  --muted-foreground: #a3a3a3;
+  --border: #262626;
+
+  /* Fonts */
+  --font-inter: 'Inter', sans-serif;
+  --font-jetbrains-mono: 'JetBrains Mono', monospace;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground antialiased min-h-screen selection:bg-red-500/30 selection:text-red-200;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Custom premium styling */
+.glass-panel {
+  @apply bg-black/40 backdrop-blur-md border border-white/5 shadow-xl;
+}
+
+.hero-gradient {
+  background: radial-gradient(circle at center, rgba(220, 38, 38, 0.15) 0%, transparent 70%);
+}
