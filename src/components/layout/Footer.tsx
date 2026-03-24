@@ -37,7 +37,7 @@ export function Footer() {
           <h3 className="font-bold text-white tracking-widest text-xs uppercase opacity-80">Community</h3>
           <Link href="https://discord.gg/sBPzcjzBcT" target="_blank" className="text-sm hover:text-red-400 transition-colors">Discord</Link>
           <Link href="#" className="text-sm hover:text-red-400 transition-colors">Staff Application</Link>
-          <Link href="#" className="text-sm hover:text-red-400 transition-colors">Support Ticket</Link>
+          <Link href="#" className="text-sm hover:text-red-400 transition-colors">Open Ticket (#support)</Link>
         </div>
 
         <div className="flex flex-col gap-4">

@@ -22,12 +22,12 @@ export function Hero() {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="flex flex-col items-center gap-6"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-900/20 border border-red-500/30 backdrop-blur-md mb-4 animate-pulse">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-900/20 border border-green-500/30 backdrop-blur-md mb-4 animate-pulse">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-red-600"></span>
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-green-600"></span>
             </span>
-            <span className="text-xs font-mono text-red-400 tracking-widest uppercase">SIGNAL DETECTED</span>
+            <span className="text-xs font-mono text-green-400 tracking-widest uppercase">SIGNAL DETECTED</span>
           </div>
           
           <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold tracking-tighter text-white max-w-5xl relative z-20 mix-blend-overlay">

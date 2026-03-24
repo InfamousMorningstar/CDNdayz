@@ -12,10 +12,12 @@ This generic web portal is designed to provide players with real-time informatio
 
 ### Key Features
 -   **Live Server Monitoring**: Real-time status, player counts, and connection details for all 12 CDN servers.
--   **Community Integration**: Built to work alongside our Discord server.
--   **Comprehensive Rules Hub**: New tabbed interface separating **General/Discord** conduct from detailed **Base Building** regulations (Radius, Bunkers, Special Zones).
--   **Server Systems Guide**: Interactive breakdown of building systems (Expansion, Vanilla+, BBP) active on each server.
--   **Event Tracking**: Schedule and details for upcoming community events.
+-   **Community Integration**: Built to work alongside our Discord server, with direct links to support channels.
+-   **Comprehensive Rules Hub**: New tabbed interface separating **General/Discord** conduct from detailed **Base Building** regulations.
+-   **Donation Store Info**: Clear breakdown of perks, wipe rollover policies, and support ticket instructions.
+-   **Quick Intel Dashboard**: Homepage summary providing immediate access to rules, events, and store highlights.
+-   **Immersive UI**: Dynamic cinematic backgrounds and tactical aesthetic tailored for the DayZ experience.
+-   **Event Tracking**: Schedule and details for upcoming community events and boss fights.
 
 ## 🛠️ Tech Stack
 -   **Framework**: [Next.js 15](https://nextjs.org/) (App Router)

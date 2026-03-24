@@ -133,40 +133,98 @@ export default function StorePage() {
           ))}
         </div>
 
-        {/* FAQ / Discord Redirect Section */}
-        <div className="max-w-4xl mx-auto">
-          <Card className="p-8 md:p-12 bg-neutral-900/60 border-neutral-800 relative overflow-hidden text-center">
-            <div className="relative z-10">
-              <h2 className="text-3xl font-heading font-bold text-white mb-4">How to Purchase</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left my-8">
-                <div className="relative pl-6 border-l border-neutral-800">
-                  <div className="absolute -left-1.5 top-0 w-3 h-3 rounded-full bg-neutral-700" />
-                  <h4 className="text-white font-bold mb-2">1. Join Discord</h4>
-                  <p className="text-sm text-neutral-400">Join our community Discord server where all support tickets are handled.</p>
-                </div>
-                <div className="relative pl-6 border-l border-neutral-800">
-                  <div className="absolute -left-1.5 top-0 w-3 h-3 rounded-full bg-neutral-700" />
-                  <h4 className="text-white font-bold mb-2">2. Open Ticket</h4>
-                  <p className="text-sm text-neutral-400">Navigate to the #donation-support channel and click "Create Ticket".</p>
-                </div>
-                <div className="relative pl-6 border-l border-neutral-800">
-                  <div className="absolute -left-1.5 top-0 w-3 h-3 rounded-full bg-neutral-700" />
-                  <h4 className="text-white font-bold mb-2">3. Receive Item</h4>
-                  <p className="text-sm text-neutral-400">Admins will process your request and grant your in-game items instantly.</p>
-                </div>
-              </div>
+        {/* Donation Info & Payment Section */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+            
+            {/* Info Card */}
+            <Card className="p-8 bg-neutral-900/60 border-neutral-800 flex flex-col backdrop-blur-md">
+                <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                    <Shield className="text-red-500 w-6 h-6" />
+                    Important Information
+                </h3>
+                
+                <div className="space-y-8 text-neutral-300">
+                    <div className="bg-red-900/20 border border-red-500/20 p-5 rounded-xl">
+                        <strong className="text-red-400 block mb-2 text-lg">Wipe Rollover Policy</strong>
+                        <p className="text-neutral-300 leading-relaxed">
+                            Donation items last a full wipe. If you donate for something in the <span className="text-white font-semibold">last month before a wipe</span>, 
+                            it will roll over to the new wipe automatically.
+                        </p>
+                    </div>
 
-              <Link href={DISCORD_LINK} target="_blank">
-                <Button size="lg" className="bg-[#5865F2] hover:bg-[#4752C4] text-white border-none px-8 py-6 text-lg">
-                  <span className="mr-2">Open Discord Store</span>
-                  <ExternalLink size={20} />
-                </Button>
-              </Link>
-              <p className="mt-4 text-xs text-neutral-500">
-                You will be redirected to the official CDN Discord server.
-              </p>
-            </div>
-          </Card>
+                    <div className="space-y-2">
+                        <strong className="text-white block text-lg">Flexible Support</strong>
+                        <p className="text-neutral-400 leading-relaxed">
+                            If you can't make a large donation, any small donation is appreciated! We can still offer you something, 
+                            so just make a ticket in #support with what you want. Items can be claimed across all servers.
+                        </p>
+                    </div>
+                    
+                    <div className="space-y-2">
+                        <strong className="text-white block text-lg">Server Maintenance</strong>
+                        <p className="text-neutral-400 leading-relaxed">
+                            We want everyone to have fun and enjoy the server! All donations go directly back into 
+                            keeping the server running, maintained, and funding new mods.
+                        </p>
+                    </div>
+                </div>
+            </Card>
+
+            {/* Payment & Steps Card */}
+            <Card className="p-8 bg-neutral-900/60 border-neutral-800 flex flex-col backdrop-blur-md">
+                 <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                    <Crown className="text-amber-500 w-6 h-6" />
+                    Payment Methods
+                </h3>
+
+                <div className="space-y-6 mb-8">
+                     <div className="p-5 bg-neutral-800/50 rounded-xl border border-neutral-700 relative overflow-hidden">
+                        <div className="absolute top-0 right-0 bg-amber-500 text-black text-[10px] font-bold px-2 py-1 uppercase tracking-widest rounded-bl-lg">Preferred</div>
+                        <div className="text-xs uppercase tracking-widest text-neutral-500 mb-2">PayPal (Friends & Family)</div>
+                        <div className="font-mono text-amber-400 text-lg md:text-xl select-all break-all cursor-pointer hover:text-amber-300 transition-colors">
+                            Joelmarq1559@icloud.com
+                        </div>
+                     </div>
+
+                     <div className="p-5 rounded-xl border border-neutral-800 bg-neutral-900/30">
+                        <div className="font-bold text-white mb-1">Other Options</div>
+                        <p className="text-neutral-400 text-sm">
+                            Cash App, Zelle, Venmo, etc. available upon request. Please open a ticket in #support.
+                        </p>
+                     </div>
+                </div>
+
+                <div className="mt-auto pt-6 border-t border-neutral-800">
+                    <h4 className="text-white font-bold mb-4 flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                        How to Donate
+                    </h4>
+                     <ol className="space-y-3 text-neutral-400 text-sm mb-6 pl-2">
+                        <li className="flex gap-3">
+                            <span className="font-mono text-neutral-600 font-bold">01</span>
+                            <span>Join our Discord server</span>
+                        </li>
+                        <li className="flex gap-3">
+                            <span className="font-mono text-neutral-600 font-bold">02</span>
+                            <span>Open a ticket in <span className="text-amber-500">#support</span></span>
+                        </li>
+                        <li className="flex gap-3">
+                            <span className="font-mono text-neutral-600 font-bold">03</span>
+                            <span>Mention your desired items and payment method</span>
+                        </li>
+                    </ol>
+
+                    <Link href={DISCORD_LINK} target="_blank" className="block">
+                        <Button size="lg" className="w-full bg-[#5865F2] hover:bg-[#4752C4] text-white border-none py-6 text-lg font-bold shadow-xl shadow-indigo-500/10">
+                        <span className="mr-2">Open Ticket on Discord</span>
+                        <ExternalLink size={20} />
+                        </Button>
+                    </Link>
+                    <p className="text-center mt-3 text-xs text-neutral-600">
+                        Secure transaction handling via Discord support tickets
+                    </p>
+                </div>
+            </Card>
         </div>
 
       </div>

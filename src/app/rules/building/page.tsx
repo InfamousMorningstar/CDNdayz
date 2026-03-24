@@ -185,7 +185,7 @@ export default function BuildingRulesPage() {
                    These are Donation bases and may already be pre-claimed.
                  </p>
                  <Button variant="link" className="px-0 text-red-500 h-auto text-xs">
-                   Make a ticket to inquire with staff &rarr;
+                   Make a ticket in #support to inquire with staff &rarr;
                  </Button>
               </div>
             </Card>

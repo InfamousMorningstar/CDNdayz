@@ -67,11 +67,11 @@ export function RulesClient() {
                     </li>
                     <li className="flex gap-3">
                       <span className="text-red-500">•</span>
-                      <span>We're here to build a community where everyone feels welcome. Please use the ticket system and forums to get help or share your thoughts.</span>
+                      <span>We're here to build a community where everyone feels welcome. Please use the ticket system (#support) and forums to get help or share your thoughts.</span>
                     </li>
                     <li className="flex gap-3">
                       <span className="text-red-500">•</span>
-                      <span>Do not DM the admins about game issues unless specifically given permission to do so. Use the ticket system.</span>
+                      <span>Do not DM the admins about game issues unless specifically given permission to do so. Use the #support ticket system.</span>
                     </li>
                     <li className="flex gap-3">
                       <span className="text-red-500">•</span>
@@ -92,9 +92,9 @@ export function RulesClient() {
                 <Card className="p-8 bg-neutral-900/60 border-neutral-800">
                   <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/5">
                     <Terminal className="text-red-500 w-6 h-6" />
-                    <h2 className="text-2xl font-heading font-bold text-white">Ticket System</h2>
+                    <h2 className="text-2xl font-heading font-bold text-white">Ticket System (#support)</h2>
                   </div>
-                  <p className="text-neutral-400 mb-4">Use this whenever you want to chat with an Admin or if you have an in-game issue.</p>
+                  <p className="text-neutral-400 mb-4">Use this whenever you want to chat with an Admin or if you have an in-game issue. Open a ticket in the #support channel on Discord.</p>
                   <div className="bg-black/40 p-4 rounded border border-white/5 mb-4 font-mono text-sm text-neutral-300">
                     <p className="text-neutral-500 mb-2">// Required Layout (Other entries deleted)</p>
                     <p>Game: Server Name/Map</p>
@@ -316,7 +316,7 @@ export function RulesClient() {
                         </li>
                         <li className="flex gap-2">
                           <span className="text-red-500">•</span>
-                          <span><strong>Dono Bases:</strong> Do not move into unoccupied "premade" bases. These are donation-based. Open a ticket if interested.</span>
+                          <span><strong>Dono Bases:</strong> Do not move into unoccupied "premade" bases. These are donation-based. Open a ticket in #support if interested.</span>
                         </li>
                       </ul>
                     </div>
