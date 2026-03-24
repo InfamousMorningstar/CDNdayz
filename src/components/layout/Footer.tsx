@@ -26,9 +26,11 @@ export function Footer() {
         <div className="flex flex-col gap-4">
           <h3 className="font-bold text-white tracking-widest text-xs uppercase opacity-80">Explore</h3>
           <Link href="/servers" className="text-sm hover:text-red-400 transition-colors">Servers</Link>
+          <Link href="/features" className="text-sm hover:text-red-400 transition-colors">Features</Link>
+          <Link href="/store" className="text-sm hover:text-red-400 transition-colors">Donation Store</Link>
           <Link href="/events" className="text-sm hover:text-red-400 transition-colors">Events</Link>
           <Link href="/rules" className="text-sm hover:text-red-400 transition-colors">Rules</Link>
-          <Link href="/join" className="text-sm hover:text-red-400 transition-colors">How to Join</Link>
+          <Link href="/join" className="text-sm hover:text-red-400 transition-colors">Join Guide</Link>
         </div>
 
         <div className="flex flex-col gap-4">

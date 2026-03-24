@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Globe, Shield, BookOpen, Calendar, HelpCircle, Hammer } from 'lucide-react';
+import { Menu, X, Globe, Shield, BookOpen, Calendar, HelpCircle, Hammer, ShoppingBag } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/Button';
 import Image from 'next/image';
@@ -14,6 +14,7 @@ const navItems = [
   { name: 'Servers', href: '/servers', icon: Shield },
   { name: 'Features', href: '/features', icon: Hammer },
   { name: 'Events', href: '/events', icon: Calendar },
+  { name: 'Store', href: '/store', icon: ShoppingBag },
   { name: 'Rules', href: '/rules', icon: BookOpen },
   { name: 'Join Guide', href: '/join', icon: HelpCircle },
 ];

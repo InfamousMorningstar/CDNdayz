@@ -222,15 +222,15 @@ export function RulesClient() {
                   <div className="space-y-4">
                     <div>
                       <Badge variant="outline" className="mb-2 text-red-400 border-red-500/30">Expansion Building</Badge>
-                      <p className="text-xs text-neutral-500">DeerIsle, Bitterroot, Sakhal, Hardcore Hashima, Noob Chernarus</p>
+                      <p className="text-xs text-neutral-500">DeerIsle, Bitterroot, Sakhal, Chernarus (Noob Friendly)</p>
                     </div>
                     <div>
-                      <Badge variant="outline" className="mb-2 text-amber-400 border-amber-500/30">Vanilla / Vanilla+</Badge>
-                      <p className="text-xs text-neutral-500">Reg Livonia, Reg Chernarus, Banov, Sci-Fi Banov, Namalsk</p>
+                      <Badge variant="outline" className="mb-2 text-amber-400 border-amber-500/30">Hardcore</Badge>
+                      <p className="text-xs text-neutral-500">Hardcore Hashima, Livonia (Hardcore), Chernarus (Hardcore)</p>
                     </div>
                     <div>
-                      <Badge variant="outline" className="mb-2 text-blue-400 border-blue-500/30">BaseBuildingPlus</Badge>
-                      <p className="text-xs text-neutral-500">Hardcore Livonia</p>
+                      <Badge variant="outline" className="mb-2 text-emerald-400 border-emerald-500/30">Vanilla+</Badge>
+                      <p className="text-xs text-neutral-500">Livonia (Regular), Chernarus (Regular), Banov, Banov Sci-Fi, Namalsk</p>
                     </div>
                     <div className="pt-2">
                          <a href="/features" className="text-xs text-red-500 hover:text-red-400 underline decoration-red-500/30 underline-offset-4">

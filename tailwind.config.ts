@@ -25,6 +25,16 @@ const config: Config = {
         mono: ["var(--font-jetbrains-mono)", "monospace"],
         heading: ["var(--font-rajdhani)", "sans-serif"],
       },
+      animation: {
+        'pulse-slow': 'pulse 8s ease-in-out infinite',
+        'shimmer': 'shimmer 2s linear infinite',
+      },
+      keyframes: {
+        shimmer: {
+          from: { backgroundPosition: "0 0" },
+          to: { backgroundPosition: "-200% 0" },
+        },
+      },
     },
   },
   plugins: [],
