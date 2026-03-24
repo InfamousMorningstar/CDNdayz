@@ -58,7 +58,7 @@ export function Hero() {
               </Link>
             </Button>
             <Button size="lg" variant="outline" className="h-14 px-8 text-lg font-heading tracking-wider border-neutral-500/30 hover:border-red-500/50 hover:bg-red-900/20 hover:text-red-400 transition-all" onClick={() => window.open('https://discord.gg/sBPzcjzBcT', '_blank')}>
-              Join Discord
+              Join Comms
             </Button>
           </div>
         </motion.div>

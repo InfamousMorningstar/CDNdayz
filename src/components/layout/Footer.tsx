@@ -4,7 +4,7 @@ import Image from 'next/image';
 export function Footer() {
   return (
     <footer className="footer bg-black border-t border-white/5 pt-12 pb-8 text-neutral-400">
-      <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+      <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
         <div className="flex flex-col gap-4">
           <Link href="/" className="flex items-center gap-2 group">
              <div className="relative w-8 h-8 flex items-center justify-center transition-all group-hover:scale-105">
@@ -34,13 +34,6 @@ export function Footer() {
         </div>
 
         <div className="flex flex-col gap-4">
-          <h3 className="font-bold text-white tracking-widest text-xs uppercase opacity-80">Community</h3>
-          <Link href="https://discord.gg/sBPzcjzBcT" target="_blank" className="text-sm hover:text-red-400 transition-colors">Discord</Link>
-          <Link href="#" className="text-sm hover:text-red-400 transition-colors">Staff Application</Link>
-          <Link href="#" className="text-sm hover:text-red-400 transition-colors">Open Ticket (#support)</Link>
-        </div>
-
-        <div className="flex flex-col gap-4">
           <h3 className="font-bold text-white tracking-widest text-xs uppercase opacity-80">Legal</h3>
           <Link href="#" className="text-sm hover:text-red-400 transition-colors">Terms of Service</Link>
           <Link href="#" className="text-sm hover:text-red-400 transition-colors">Privacy Policy</Link>
@@ -60,9 +53,16 @@ export function Footer() {
 
           <div className="text-xs text-neutral-600 flex flex-col items-center md:items-end gap-1 shrink-0">
              <span>Designed and built by <span className="text-neutral-400 font-medium">Salman Ahmad</span></span>
-             <span className="text-neutral-700 tracking-wide">Morningstar.0 in-game</span>
-             <a href="https://portfolio.ahmxd.net" target="_blank" rel="noopener noreferrer" className="text-red-500/60 hover:text-red-500 transition-colors mt-1">
-               portfolio.ahmxd.net
+             <span className="text-[10px] text-red-500/70 font-mono tracking-widest uppercase mb-1">Morningstar.0</span>
+             <a href="https://portfolio.ahmxd.net" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2 mt-1 opacity-60 hover:opacity-100 transition-opacity">
+               <Image 
+                 src="https://portfolio.ahmxd.net/assets/logo.svg" 
+                 alt="Salman Ahmad Logo" 
+                 width={24} 
+                 height={24} 
+                 className="w-5 h-5 invert"
+               />
+               <span className="text-red-500/80 group-hover:text-red-500 transition-colors">portfolio.ahmxd.net</span>
              </a>
           </div>
       </div>

@@ -2,7 +2,7 @@ import { events } from '@/data/mock';
 import { Card } from '@/components/ui/Card';
 import { EventCard } from '@/components/events/EventCard';
 import { Metadata } from 'next';
-import { CalendarDays, Flag } from 'lucide-react';
+import { CalendarDays, Flag, Radio } from 'lucide-react';
 import { CinematicBackground } from '@/components/features/CinematicBackground';
 
 export const metadata: Metadata = {
@@ -11,72 +11,34 @@ export const metadata: Metadata = {
 };
 
 export default function EventsPage() {
-  const activeEvents = events.filter(e => e.status === 'active');
-  const upcomingEvents = events.filter(e => e.status === 'upcoming');
-  const completedEvents = events.filter(e => e.status === 'completed');
+  // Events are currently disabled/TBA
+  const activeEvents: any[] = []; 
+  const upcomingEvents: any[] = [];
+  const completedEvents: any[] = [];
 
   return (
     <CinematicBackground backgroundImageSrc="/Images/3.jpg">
       <div className="min-h-screen pt-32 pb-20 container mx-auto px-6 relative z-10">
-        <div className="relative mb-20">
+        <div className="relative mb-20 text-center flex flex-col items-center">
+          <div className="mb-6 inline-flex p-4 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-500">
+             <Radio className="w-12 h-12 animate-pulse" />
+          </div>
           <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">Operations & <span className="text-red-500">Events</span></h1>
-          <p className="text-neutral-400 max-w-2xl text-lg">
-             Engage in server-wide operations, treasure hunts, and community challenges. Earn unique rewards and bragging rights.
+          <p className="text-neutral-400 max-w-2xl text-lg mb-8">
+             Engage in server-wide operations, treasure hunts, and community challenges.
           </p>
-        </div>
-
-        <div className="space-y-20">
-          {/* Active Events */}
-          {activeEvents.length > 0 && (
-            <section>
-               <div className="flex items-center gap-3 mb-8">
-                  <div className="w-12 h-12 rounded-full bg-red-900/20 border border-red-500/30 flex items-center justify-center text-red-500">
-                    <Flag size={24} />
-                  </div>
-                  <h2 className="text-3xl font-heading font-bold text-white">Active Operations</h2>
-               </div>
-               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                  {activeEvents.map(event => (
-                    <EventCard key={event.id} event={event} />
-                  ))}
-               </div>
-            </section>
-          )}
-
-          {/* Upcoming Events */}
-          <section>
-            <div className="flex items-center gap-3 mb-8">
-               <div className="w-12 h-12 rounded-full bg-blue-900/20 border border-blue-500/30 flex items-center justify-center text-blue-500">
-                 <CalendarDays size={24} />
-               </div>
-               <h2 className="text-3xl font-heading font-bold text-white">Upcoming Briefings</h2>
-            </div>
-            {upcomingEvents.length > 0 ? (
-               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {upcomingEvents.map(event => (
-                  <EventCard key={event.id} event={event} />
-                ))}
-               </div>
-            ) : (
-              <Card className="p-8 border-dashed border-neutral-800 bg-neutral-900/30 text-center">
-                 <p className="text-neutral-500">No upcoming events scheduled. Check back soon!</p>
-              </Card>
-            )}
-          </section>
-
-          {/* Past Events */}
-          {completedEvents.length > 0 && (
-            <section className="opacity-60 hover:opacity-100 transition-opacity">
-               <h2 className="text-2xl font-heading font-bold text-neutral-500 mb-6 border-b border-white/5 pb-4">
-                 Mission Logs (Past Events)
-               </h2>
-               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {completedEvents.map(event => (
-                    <EventCard key={event.id} event={event} />
-                  ))}
-               </div>
-            </section>
-          )}
+          
+          <Card className="max-w-3xl w-full p-12 bg-neutral-900/60 border-neutral-800 backdrop-blur-md text-center">
+             <h2 className="text-2xl font-bold text-white mb-4">Transmission Incoming...</h2>
+             <p className="text-neutral-300 text-lg mb-6">
+               Command is currently planning the next phase of operations. 
+               New community events and challenges will be announced shortly.
+             </p>
+             <div className="inline-flex items-center gap-2 text-amber-500 font-mono tracking-widest text-sm uppercase px-4 py-2 bg-amber-500/10 rounded border border-amber-500/20">
+                <CalendarDays size={16} />
+                Schedule: TBA
+             </div>
+          </Card>
         </div>
       </div>
     </CinematicBackground>

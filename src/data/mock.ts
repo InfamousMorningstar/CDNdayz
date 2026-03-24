@@ -97,18 +97,18 @@ export const rulesData: RuleSection[] = [
   {
     title: 'General Conduct',
     rules: [
-      'Be respectful to all players and staff.',
+      'Be respectful to all survivors and staff.',
       'No hate speech, racism, or harassment of any kind.',
-      'English only in global chat.',
+      'English only in global comms.',
       'No advertising other servers or networks.',
     ],
   },
   {
     title: 'PvE Rules',
     rules: [
-      'No killing other players (except in designated PvP zones).',
-      'No stealing from player bases or vehicles.',
-      'No griefing or intentionally destroying player property.',
+      'No killing other survivors (except in designated PvP zones).',
+      'No stealing from survivor bases or vehicles.',
+      'No griefing or intentionally destroying survivor property.',
       'Loot cycling is prohibited.',
     ],
   },

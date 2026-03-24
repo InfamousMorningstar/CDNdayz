@@ -62,7 +62,7 @@ export default function NewPlayerPage() {
               <h2 className="text-3xl font-bold text-white mb-6 border-l-4 border-rose-500 pl-4">III. Establishing a Base</h2>
                <div className="prose prose-invert max-w-none text-neutral-300">
                   <p>
-                    Once you have resources, build a territory flag. This protects your area from despawning and other players building nearby.
+                    Once you have resources, build a territory flag. This protects your area from despawning and other survivors building nearby.
                     Use the custom building menu (default key: B) to access advanced structures.
                   </p>
                </div>

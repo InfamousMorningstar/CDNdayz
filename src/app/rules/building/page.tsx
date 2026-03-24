@@ -167,7 +167,7 @@ export default function BuildingRulesPage() {
                  <h3 className="text-white font-bold text-lg border-b border-white/5 pb-2">Public Access & Griefing</h3>
                  <div className="space-y-4 text-neutral-300 text-sm leading-relaxed">
                    <p>
-                     <strong className="text-rose-400">Do not block</strong> other players, player bases or any public access points/monuments.
+                     <strong className="text-rose-400">Do not block</strong> other survivors, bases or any public access points/monuments.
                    </p>
                    <p>
                      Griefing is frowned upon. Basically, <span className="italic text-white">if it isn’t your base, do not obstruct it.</span>

@@ -61,11 +61,11 @@ export function ServerRow({ name, map, players, maxPlayers, status, ping, connec
           </div>
        </div>
 
-       {/* Players Section */}
+       {/* Survivors Section */}
        <div className="w-full md:w-48 flex flex-col gap-1.5">
           <div className="flex justify-between text-xs font-medium">
              <span className="text-neutral-400 flex items-center gap-1.5">
-                <Users className="w-3.5 h-3.5" /> Players
+                <Users className="w-3.5 h-3.5" /> Survivors
              </span>
              <span className="text-white font-mono">{players} <span className="text-neutral-600">/ {maxPlayers}</span></span>
           </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { ServerCard } from '@/components/server/ServerCard';
+import ServerCardTactical from '@/components/server/ServerCardTactical';
 import { ServerStatus } from '@/lib/servers'; // Importing shared type
 
 export function ServerList() {
@@ -54,7 +54,7 @@ export function ServerList() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
       {servers.map((server) => (
-        <ServerCard 
+        <ServerCardTactical 
           key={server.id}
           name={server.name}
           map={server.map}

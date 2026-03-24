@@ -114,7 +114,7 @@ export default function FeaturesPage() {
             
             <h2 className="text-2xl font-heading font-bold text-white mb-4">Vanilla+</h2>
             <p className="text-neutral-400 text-sm mb-6 leading-relaxed">
-              The classic DayZ experience with slight quality of life improvements. Utilizes standard building mechanics. Perfect for players who enjoy the authentic feel.
+              The classic DayZ experience with slight quality of life improvements. Utilizes standard building mechanics. Perfect for survivors who enjoy the authentic feel.
             </p>
 
             <div className="space-y-3">

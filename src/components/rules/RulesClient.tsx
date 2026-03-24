@@ -149,7 +149,7 @@ export function RulesClient() {
                         <p className="text-neutral-400 text-sm mb-2">Admins reserve the right to:</p>
                         <ul className="space-y-1 text-neutral-300 text-sm pl-2">
                            <li>1. Remove messages they deem inappropriate.</li>
-                           <li>2. Remove users they deem disruptive to the CDN server.</li>
+                           <li>2. Remove survivors they deem disruptive to the CDN server.</li>
                            <li>3. Ignore anyone arguing with them about their choices.</li>
                         </ul>
                       </div>
@@ -308,7 +308,7 @@ export function RulesClient() {
                         </li>
                         <li className="flex gap-2">
                           <span className="text-red-500">•</span>
-                          <span><strong>Obstruction:</strong> Do not block other players, bases, or public access points/monuments. Griefing is frowned upon.</span>
+                          <span><strong>Obstruction:</strong> Do not block other survivors, bases, or public access points/monuments. Griefing is frowned upon.</span>
                         </li>
                         <li className="flex gap-2">
                           <span className="text-red-500">•</span>

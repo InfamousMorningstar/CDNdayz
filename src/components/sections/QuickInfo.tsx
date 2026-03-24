@@ -11,21 +11,21 @@ export function QuickInfo() {
     {
       title: "Server Rules",
       icon: <Shield className="w-8 h-8 text-red-500" />,
-      description: "We enforce strict PvE rules. No Kill-on-Sight (KOS) outside designated zones. No base raiding allowed. Respect fellow survivors.",
+      description: "We enforce strict PvE rules. Player damage is disabled server-wide. No raiding allowed. Respect fellow survivors.",
       link: "/rules",
       cta: "Full Ruleset"
     },
     {
       title: "Community Events",
       icon: <Calendar className="w-8 h-8 text-amber-500" />,
-      description: "Participate in daily automated events like Convoys and Keycard Bunkers, or join staff-hosted Boss Fights every weekend.",
+      description: "Community events are currently being planned and will be announced soon. Stay tuned for immersive operations.",
       link: "/events",
-      cta: "Event Schedule"
+      cta: "Schedule TBA"
     },
     {
       title: "Support the Server",
       icon: <Store className="w-8 h-8 text-emerald-500" />,
-      description: "Love the server? Check out our donation store for Priority Queue access, Custom Bases, and Loadout Kits to kickstart your wipe.",
+      description: "Love the server? Check out our donation store for Custom Bases, Vehicles, and Loadout Kits to kickstart your wipe.",
       link: "/store",
       cta: "Visit Store"
     }
@@ -83,8 +83,8 @@ export function QuickInfo() {
                         <div className="mb-4 pb-4 border-b border-white/5 flex items-center gap-2">
                              <Rss className="w-4 h-4 text-red-500 animate-pulse" />
                              <div>
-                                <span className="text-[10px] font-mono text-neutral-500 tracking-widest uppercase block leading-none mb-1">Official Feed</span>
-                                <h3 className="text-lg font-bold text-white leading-none">Global News</h3>
+                                <span className="text-[10px] font-mono text-neutral-500 tracking-widest uppercase block leading-none mb-1">Official Comms</span>
+                                <h3 className="text-lg font-bold text-white leading-none">Global Intel</h3>
                              </div>
                         </div>
                         <div className="flex-1 overflow-y-auto pr-1 custom-scrollbar">

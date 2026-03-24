@@ -2,7 +2,7 @@ import { CinematicBackground } from '@/components/features/CinematicBackground';
 import { Badge } from '@/components/ui/Badge';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
-import { Shield, Crown, Package, Zap, ExternalLink } from 'lucide-react';
+import { Shield, Crown, Package, Zap, ExternalLink, Shirt, Car, Hammer } from 'lucide-react';
 import Link from 'next/link';
 import { Metadata } from 'next';
 
@@ -16,15 +16,34 @@ const DISCORD_LINK = "https://discord.gg/2Wf3N6r9kR"; // Using the Discord link 
 export default function StorePage() {
   const categories = [
     {
-      title: "Priority Queue",
-      icon: <Zap className="w-8 h-8 text-amber-500" />,
-      description: "Skip the line and get into the action instantly. Essential for peak hours.",
-      price: "From $10/mo",
+      title: "Equipment & Supplies",
+      icon: <Shirt className="w-8 h-8 text-emerald-500" />,
+      description: "Gear up for survival with premium clothing and essential items.",
+      price: "From $5 USD",
       features: [
-        "Instant server access",
-        "Reserved slot",
-        "Discord Role",
-        "Supporter Chat Access"
+        "DayZ Clothing",
+        "DayZ Items",
+        "Sci-Fi Gear",
+        "Sci-Fi Items"
+      ],
+      classes: {
+        border: "hover:border-emerald-500/30",
+        gradient: "from-emerald-500/5",
+        iconBox: "bg-emerald-900/20 border-emerald-500/20",
+        price: "text-emerald-400",
+        bullet: "bg-emerald-500",
+        button: "bg-emerald-600 hover:bg-emerald-500 hover:shadow-emerald-500/20"
+      }
+    },
+    {
+      title: "Transport",
+      icon: <Car className="w-8 h-8 text-amber-500" />,
+      description: "Traverse the map in style with our selection of vehicles.",
+      price: "From $15 USD",
+      features: [
+        "Sci-Fi Vehicles",
+        "Helicopters",
+        "Vehicle Insurance"
       ],
       classes: {
         border: "hover:border-amber-500/30",
@@ -36,15 +55,13 @@ export default function StorePage() {
       }
     },
     {
-      title: "Custom Bases",
-      icon: <Shield className="w-8 h-8 text-red-500" />,
-      description: "Secure your legacy with a professionally built custom base or compound.",
-      price: "From $25",
+      title: "Territories",
+      icon: <Hammer className="w-8 h-8 text-red-500" />,
+      description: "Establish your dominance with custom bases and secure compounds.",
+      price: "From $50 USD",
       features: [
-        "NPC Guard option",
-        "Custom Layout",
-        "Map Marker",
-        "Safe Zone Radius"
+        "Custom Bases",
+        "Sci-Fi Bases"
       ],
       classes: {
         border: "hover:border-red-500/30",
@@ -53,26 +70,6 @@ export default function StorePage() {
         price: "text-red-400",
         bullet: "bg-red-500",
         button: "bg-red-600 hover:bg-red-500 hover:shadow-red-500/20"
-      }
-    },
-    {
-      title: "Loadout Kits",
-      icon: <Package className="w-8 h-8 text-emerald-500" />,
-      description: "Start your wipe with the gear you need to survive and thrive.",
-      price: "From $5",
-      features: [
-        "Weapons Cases",
-        "Building Supplies",
-        "Medical Crates",
-        "Vehicle Spawns"
-      ],
-      classes: {
-        border: "hover:border-emerald-500/30",
-        gradient: "from-emerald-500/5",
-        iconBox: "bg-emerald-900/20 border-emerald-500/20",
-        price: "text-emerald-400",
-        bullet: "bg-emerald-500",
-        button: "bg-emerald-600 hover:bg-emerald-500 hover:shadow-emerald-500/20"
       }
     }
   ];
@@ -144,6 +141,13 @@ export default function StorePage() {
                 </h3>
                 
                 <div className="space-y-8 text-neutral-300">
+                    <div className="bg-neutral-950/50 border border-neutral-800/50 p-5 rounded-xl">
+                        <strong className="text-emerald-400 block mb-2 text-lg">Server Configuration</strong>
+                        <p className="text-neutral-300 leading-relaxed">
+                            <span className="text-white font-semibold">Player vs Environment (PvE) Only.</span> Player-to-player damage is globally disabled across all our servers. Equipment and vehicles purchased here are intended for use against environmental threats and AI challenges.
+                        </p>
+                    </div>
+
                     <div className="bg-red-900/20 border border-red-500/20 p-5 rounded-xl">
                         <strong className="text-red-400 block mb-2 text-lg">Wipe Rollover Policy</strong>
                         <p className="text-neutral-300 leading-relaxed">
