@@ -12,7 +12,7 @@ export function Hero() {
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/80 to-black z-10" />
         {/* Hero image */}
-        <div className="w-full h-full bg-neutral-900 bg-[url('/images/wp1886390-dayz-wallpapers.jpg')] bg-cover bg-center opacity-50" />
+        <div className="w-full h-full bg-neutral-900 bg-[url('/Images/wp1886390-dayz-wallpapers.jpg')] bg-cover bg-center opacity-50" />
       </div>
 
       <div className="container relative z-20 px-6 flex flex-col items-center text-center">
