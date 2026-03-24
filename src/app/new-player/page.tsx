@@ -1,6 +1,7 @@
 import { Card } from '@/components/ui/Card';
 import { Metadata } from 'next';
 import Link from 'next/link';
+import { CinematicBackground } from '@/components/features/CinematicBackground';
 
 export const metadata: Metadata = {
   title: 'Survival Guide | CDN',
@@ -9,9 +10,10 @@ export const metadata: Metadata = {
 
 export default function NewPlayerPage() {
   return (
-    <div className="min-h-screen pt-32 pb-20 container mx-auto px-6">
-      <div className="max-w-4xl mx-auto">
-        <header className="mb-16 text-center">
+    <CinematicBackground backgroundImageSrc="/Images/2.jpg">
+      <div className="min-h-screen pt-32 pb-20 container mx-auto px-6 relative z-10">
+        <div className="max-w-4xl mx-auto">
+          <header className="mb-16 text-center">
             <span className="text-red-500 font-mono text-sm tracking-widest uppercase mb-4 block">New Recruit Induction</span>
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">Survival <span className="text-neutral-500">Manual</span></h1>
             <p className="text-neutral-400 text-lg max-w-2xl mx-auto">
@@ -74,5 +76,6 @@ export default function NewPlayerPage() {
         </div>
       </div>
     </div>
+    </CinematicBackground>
   );
 }

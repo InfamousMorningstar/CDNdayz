@@ -4,9 +4,10 @@ import React, { useEffect, useRef, useState } from 'react';
 
 interface CinematicBackgroundProps {
   children: React.ReactNode;
+  backgroundImageSrc?: string;
 }
 
-export function CinematicBackground({ children }: CinematicBackgroundProps) {
+export function CinematicBackground({ children, backgroundImageSrc = "/Images/S3F8X.jpg" }: CinematicBackgroundProps) {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -129,7 +130,7 @@ export function CinematicBackground({ children }: CinematicBackgroundProps) {
       <div 
         className="absolute inset-[-20px] bg-cover bg-center bg-no-repeat transition-transform duration-100 ease-out z-0"
         style={{
-          backgroundImage: 'url("/Images/S3F8X.jpg")',
+          backgroundImage: `url("${backgroundImageSrc}")`,
           transform: `translate(${mousePosition.x * -10}px, ${mousePosition.y * -10}px) scale(1.05)`,
         }}
       >
