@@ -46,7 +46,7 @@ export function ServerList() {
     return (
       <div className="flex flex-col items-center justify-center p-12 bg-neutral-900/40 rounded-xl border border-red-900/30 text-center w-full">
         <div className="text-red-500 mb-2 font-bold text-lg">Unable to load server status</div>
-        <p className="text-neutral-400">Please check our Discord for live updates.</p>
+        <p className="text-neutral-400">Please check our <a href="https://discord.gg/sBPzcjzBcT" target="_blank" className="text-red-400 hover:underline">Discord</a> for live updates.</p>
       </div>
     );
   }

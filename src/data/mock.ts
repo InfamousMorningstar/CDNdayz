@@ -22,7 +22,7 @@ export const servers: Server[] = [
     map: 'Deer Isle',
     ip: '127.0.0.1', // Placeholder
     port: 2302,
-    discord: '#',
+    discord: 'https://discord.gg/sBPzcjzBcT',
     playersOnline: 42,
     maxPlayers: 100,
     status: 'online',
@@ -35,7 +35,7 @@ export const servers: Server[] = [
     map: 'Namalsk',
     ip: '127.0.0.1', // Placeholder
     port: 2402,
-    discord: '#',
+    discord: 'https://discord.gg/sBPzcjzBcT',
     playersOnline: 88,
     maxPlayers: 100,
     status: 'online',
@@ -48,7 +48,7 @@ export const servers: Server[] = [
     map: 'Chernarus',
     ip: '127.0.0.1', // Placeholder
     port: 2502,
-    discord: '#',
+    discord: 'https://discord.gg/sBPzcjzBcT',
     playersOnline: 12,
     maxPlayers: 60,
     status: 'restarting',

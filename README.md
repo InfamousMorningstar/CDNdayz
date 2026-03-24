@@ -13,12 +13,14 @@ This generic web portal is designed to provide players with real-time informatio
 ### Key Features
 -   **Live Server Monitoring**: Real-time status, player counts, and connection details for all 12 CDN servers.
 -   **Community Integration**: Built to work alongside our Discord server.
--   **Information Hub**: Centralized location for server rules (PvE/Zones), interactive maps, and trading information.
+-   **Comprehensive Rules Hub**: New tabbed interface separating **General/Discord** conduct from detailed **Base Building** regulations (Radius, Bunkers, Special Zones).
+-   **Server Systems Guide**: Interactive breakdown of building systems (Expansion, Vanilla+, BBP) active on each server.
 -   **Event Tracking**: Schedule and details for upcoming community events.
 
 ## 🛠️ Tech Stack
 -   **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
--   **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+-   **Styling**: [Tailwind CSS](https://tailwindcss.com/) with custom "Tactical/Apocalyptic" theme.
+-   **Fonts**: Rajdhani (Headings), Inter (Body), JetBrains Mono (Data).
 -   **Language**: [TypeScript](https://www.typescriptlang.org/)
 -   **Server Query**: [Gamedig](https://github.com/gamedig/node-gamedig)
 

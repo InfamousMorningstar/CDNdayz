@@ -23,7 +23,7 @@ export function JoinCTA() {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-6 mt-8 w-full sm:w-auto">
-          <Button size="lg" className="h-14 px-8 text-lg font-bold shadow-[0_0_40px_rgba(220,38,38,0.3)] hover:shadow-[0_0_60px_rgba(220,38,38,0.5)] transition-shadow duration-500">
+          <Button size="lg" className="h-14 px-8 text-lg font-bold shadow-[0_0_40px_rgba(220,38,38,0.3)] hover:shadow-[0_0_60px_rgba(220,38,38,0.5)] transition-shadow duration-500" onClick={() => window.open('https://discord.gg/sBPzcjzBcT', '_blank')}>
             Join Discord Community
           </Button>
           <Button size="lg" variant="outline" className="h-14 px-8 text-lg border-neutral-700 hover:bg-neutral-800" asChild>

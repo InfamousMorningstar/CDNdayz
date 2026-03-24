@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Globe, Shield, BookOpen, Calendar, HelpCircle } from 'lucide-react';
+import { Menu, X, Globe, Shield, BookOpen, Calendar, HelpCircle, Hammer } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/Button';
 import Image from 'next/image';
@@ -12,6 +12,7 @@ import Image from 'next/image';
 const navItems = [
   { name: 'Home', href: '/', icon: Globe },
   { name: 'Servers', href: '/servers', icon: Shield },
+  { name: 'Features', href: '/features', icon: Hammer },
   { name: 'Events', href: '/events', icon: Calendar },
   { name: 'Rules', href: '/rules', icon: BookOpen },
   { name: 'Join Guide', href: '/join', icon: HelpCircle },
@@ -70,12 +71,7 @@ export function Navbar() {
           })}
         </div>
         <div className="hidden md:flex items-center gap-4">
-          <Button variant="outline" size="sm" className="hidden lg:flex" onClick={() => window.open('https://discord.gg/yourinvite', '_blank')}>
-            Discord
-          </Button>
-          <Button size="sm" className="bg-red-600/90 text-white hover:bg-red-500" asChild>
-            <Link href="/servers">Play Now</Link>
-          </Button>
+          {/* Discord button moved to Hero section */}
         </div>
         <button
           className="md:hidden text-neutral-400 hover:text-white"
@@ -104,14 +100,7 @@ export function Navbar() {
                   {item.name}
                 </Link>
               ))}
-              <div className="flex flex-col gap-3 mt-4">
-                <Button variant="outline"  className="w-full justify-center">
-                  Join Discord
-                </Button>
-                <Button className="w-full justify-center">
-                  Start Playing
-                </Button>
-              </div>
+              {/* Mobile buttons removed */}
             </div>
           </motion.div>
         )}

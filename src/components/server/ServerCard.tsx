@@ -51,59 +51,62 @@ export function ServerCard({ name, map, players, maxPlayers, status, ping, conne
   const bgImage = `/maps/${mapSlug}.jpg`;
 
   return (
-    <Card className={`group flex flex-col h-full bg-neutral-900/40 backdrop-blur-sm border-neutral-800 transition-all duration-300 hover:bg-neutral-900/60 ${borderColor}`}>
+    <Card className={`group flex flex-col h-full bg-neutral-900/60 backdrop-blur-sm border-neutral-800 transition-all duration-300 hover:bg-neutral-900/80 hover:border-red-900/40 hover:shadow-[0_0_20px_rgba(220,38,38,0.1)] ${borderColor}`}>
       {/* Header Image */}
-      <div className="h-40 w-full bg-neutral-950 relative overflow-hidden">
-        <div className="absolute inset-0 bg-black/40 z-10 transition-opacity duration-300 group-hover:opacity-30" />
+      <div className="h-40 w-full bg-neutral-950 relative overflow-hidden border-b border-white/5">
+        <div className="absolute inset-0 bg-black/50 z-10 transition-opacity duration-300 group-hover:opacity-30 mix-blend-multiply" />
         
         {/* Map Background with Fallback */}
         <div 
-          className="absolute inset-0 bg-cover bg-center opacity-60 transition-transform duration-700 group-hover:scale-105"
+          className="absolute inset-0 bg-cover bg-center opacity-60 transition-transform duration-700 group-hover:scale-105 grayscale group-hover:grayscale-0"
           style={{ backgroundImage: `url('${bgImage}'), url('/hero-placeholder.jpg')` }} 
         />
         
         {/* Status Badge */}
-        <div className="absolute top-4 right-4 z-20 flex gap-2">
-            {isOnline && ping !== undefined && (
-                <Badge variant="outline" className="bg-black/50 backdrop-blur-md border-white/10 text-neutral-300">
-                    <Signal className="w-3 h-3 mr-1" />
-                    {ping}ms
-                </Badge>
-            )}
+        <div className="absolute top-4 right-4 z-20 flex flex-col items-end gap-2">
             <Badge 
                 variant={badgeVariant} 
-                className="shadow-lg backdrop-blur-md font-mono tracking-wider"
+                className="shadow-lg backdrop-blur-md font-mono tracking-widest text-xs uppercase border border-white/10"
             >
-                {status.toUpperCase()}
+                {status}
             </Badge>
+            {isOnline && ping !== undefined && (
+                <div className="flex items-center gap-1.5 bg-black/60 backdrop-blur-md px-2 py-1 rounded border border-white/5 text-[10px] font-mono text-neutral-400">
+                    <Signal className={`w-3 h-3 ${ping < 100 ? "text-green-500" : "text-amber-500"}`} />
+                    {ping}ms
+                </div>
+            )}
         </div>
       </div>
 
       {/* Content */}
-      <div className="flex-1 p-6 flex flex-col gap-6">
-        <div>
-          <h3 className="text-xl font-bold text-white mb-2 group-hover:text-red-400 transition-colors truncate">{name}</h3>
-          <div className="flex items-center gap-2 text-neutral-400 text-sm">
-            <Map className="w-4 h-4 text-neutral-500" />
+      <div className="flex-1 p-6 flex flex-col gap-6 relative">
+        {/* Decorative corner accent */}
+        <div className="absolute top-0 left-0 w-8 h-8 border-l-2 border-t-2 border-white/5 group-hover:border-red-500/30 transition-colors" />
+
+        <div className="relative">
+          <h3 className="text-2xl font-heading text-white mb-1 group-hover:text-red-500 transition-colors truncate tracking-wide">{name}</h3>
+          <div className="flex items-center gap-2 text-neutral-500 text-xs uppercase tracking-widest font-sans font-bold">
+            <Map className="w-3 h-3 mb-0.5" />
             <span>{map}</span>
           </div>
         </div>
 
-        {/* Player Count Bar */}
+        {/* Player Count Bar - Sector usage */}
         <div className="space-y-3">
-          <div className="flex justify-between text-sm items-end">
-            <div className="flex items-center gap-2 text-neutral-300 font-medium">
-              <Users className="w-4 h-4 text-red-500" />
-              <span>Players Online</span>
+          <div className="flex justify-between text-xs items-end font-mono">
+            <div className="flex items-center gap-2 text-neutral-400 font-medium uppercase tracking-wider">
+              <Users className="w-3 h-3 text-red-500" />
+              <span>Survivors</span>
             </div>
-            <span className="font-mono text-white text-lg leading-none">
-                {players} <span className="text-neutral-600 text-sm">/ {maxPlayers}</span>
+            <span className="text-white text-base leading-none">
+                {players}<span className="text-neutral-600 text-xs px-1">/</span>{maxPlayers}
             </span>
           </div>
           
-          <div className="h-2 w-full bg-neutral-800 rounded-full overflow-hidden p-[1px]">
+          <div className="h-2 w-full bg-black/60 rounded-sm overflow-hidden border border-white/5">
             <motion.div 
-              className={`h-full rounded-full ${isOnline ? 'bg-gradient-to-r from-red-600 to-red-500' : 'bg-neutral-700'}`}
+              className={`h-full ${isOnline ? 'bg-red-600' : 'bg-neutral-800'}`}
               initial={{ width: 0 }}
               animate={{ width: `${percentage}%` }}
               transition={{ duration: 1, ease: "easeOut" }}
