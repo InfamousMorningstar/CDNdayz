@@ -17,7 +17,7 @@ interface ServerCardProps {
     map: string;
     players: number;
     maxPlayers: number;
-    status: "online" | "offline" | "starting" | "maintenance";
+    status: "online" | "offline" | "starting" | "maintenance" | "restarting";
     ping?: number;
     connect: string;
 }
@@ -32,6 +32,7 @@ const ServerCardTactical: React.FC<ServerCardProps> = ({
     connect 
 }) => {
     const isOnline = status === "online";
+    const isRestarting = status === "restarting";
     const percentage = Math.round((players / maxPlayers) * 100);
 
     // Determine Theme based on Map
@@ -121,7 +122,7 @@ const ServerCardTactical: React.FC<ServerCardProps> = ({
                             {ping}ms
                         </Badge>
                     )}
-                    <Badge className={`${isOnline ? "bg-green-500/20 text-green-400 hover:bg-green-500/30" : "bg-red-500/20 text-red-500 hover:bg-red-500/30"} border-0 uppercase tracking-widest text-[10px]`}>
+                    <Badge className={`${isOnline ? "bg-green-500/20 text-green-400 hover:bg-green-500/30" : isRestarting ? "bg-amber-500/20 text-amber-500 hover:bg-amber-500/30" : "bg-red-500/20 text-red-500 hover:bg-red-500/30"} border-0 uppercase tracking-widest text-[10px]`}>
                         {status}
                     </Badge>
                 </div>

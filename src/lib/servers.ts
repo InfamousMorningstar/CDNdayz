@@ -18,7 +18,7 @@ export interface ServerStatus {
   maxPlayers: number;
   ping: number;
   connect: string;
-  status: 'online' | 'offline';
+  status: 'online' | 'offline' | 'restarting';
 }
 
 export const servers: ServerConfig[] = [

@@ -28,10 +28,15 @@ export function ServerRow({ name, map, players, maxPlayers, status, ping, connec
 
   const percentage = maxPlayers > 0 ? Math.min((players / maxPlayers) * 100, 100) : 0;
   const isOnline = status === 'online';
+  const isRestarting = status === 'restarting';
   
   // Status colors
-  const statusColor = isOnline ? 'bg-green-500' : 'bg-red-500';
-  const glowColor = isOnline ? 'shadow-[0_0_10px_rgba(34,197,94,0.3)]' : 'shadow-[0_0_10px_rgba(239,68,68,0.3)]';
+  const statusColor = isOnline ? 'bg-green-500' : isRestarting ? 'bg-amber-500' : 'bg-red-500';
+  const glowColor = isOnline 
+    ? 'shadow-[0_0_10px_rgba(34,197,94,0.3)]' 
+    : isRestarting 
+        ? 'shadow-[0_0_10px_rgba(245,158,11,0.3)]'
+        : 'shadow-[0_0_10px_rgba(239,68,68,0.3)]';
 
   return (
     <div className="group relative overflow-hidden rounded-lg bg-neutral-900/40 border border-neutral-800 hover:border-neutral-700 transition-all duration-300 p-4 flex flex-col md:flex-row md:items-center gap-4">
@@ -50,6 +55,14 @@ export function ServerRow({ name, map, players, maxPlayers, status, ping, connec
                       <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-green-500"></span>
                     </span>
                     Online
+                </div>
+             ) : isRestarting ? (
+                 <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-[10px] font-mono text-amber-500 uppercase tracking-wider">
+                    <span className="relative flex h-1.5 w-1.5">
+                        <span className="animate-pulse absolute inline-flex h-full w-full rounded-full bg-amber-400/50 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-amber-500"></span>
+                    </span>
+                    Restarting
                 </div>
              ) : (
                 <Badge variant="destructive" className="h-5 text-[10px] px-2 uppercase">OFFLINE</Badge>

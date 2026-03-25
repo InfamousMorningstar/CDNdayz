@@ -56,7 +56,6 @@ export function Footer() {
               <div className="flex flex-col gap-2">
                 <FooterLink href="/rules">Server Rules</FooterLink>
                 <FooterLink href="/join">Join Guide</FooterLink>
-                <FooterLink href="https://discord.gg/cdn" target="_blank">Submit Ticket</FooterLink>
               </div>
             </div>
 
