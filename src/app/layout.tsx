@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, Rajdhani, JetBrains_Mono } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import './globals.css'
 import { cn } from '@/lib/utils'
 import { Navbar } from '@/components/layout/Navbar'
@@ -9,19 +9,6 @@ import { Analytics } from "@vercel/analytics/react"
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
-  display: 'swap',
-})
-
-const rajdhani = Rajdhani({
-  weight: ['300', '400', '500', '600', '700'],
-  subsets: ['latin'],
-  variable: '--font-rajdhani',
-  display: 'swap',
-})
-
-const mono = JetBrains_Mono({
-  subsets: ['latin'],
-  variable: '--font-jetbrains-mono',
   display: 'swap',
 })
 
@@ -37,12 +24,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark scroll-smooth">
-      <body className={cn(
-        "min-h-screen bg-background font-sans antialiased text-foreground selection:bg-red-500/20",
-        inter.variable,
-        rajdhani.variable,
-        mono.variable
-      )}>
+      <body 
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased text-foreground selection:bg-red-500/20",
+          inter.variable
+        )}
+        suppressHydrationWarning
+      >
         <div className="relative flex min-h-screen flex-col">
           <Navbar />
           <main className="flex-1 relative z-10">{children}</main>

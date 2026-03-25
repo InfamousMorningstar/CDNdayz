@@ -4,9 +4,10 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Globe, Shield, BookOpen, Calendar, HelpCircle, Hammer, ShoppingBag } from 'lucide-react';
+import { Menu, X, Globe, Shield, BookOpen, Calendar, HelpCircle, Hammer, ShoppingBag, Flame } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/Button';
+import { ScrambleLink } from '@/components/ui/ScrambleLink';
 import Image from 'next/image';
 
 const navItems = [
@@ -16,6 +17,7 @@ const navItems = [
   { name: 'Events', href: '/events', icon: Calendar },
   { name: 'Store', href: '/store', icon: ShoppingBag },
   { name: 'Rules', href: '/rules', icon: BookOpen },
+  { name: 'Wipe Info', href: '/wipe-info', icon: Flame, special: true },
   { name: 'Join Guide', href: '/join', icon: HelpCircle },
 ];
 
@@ -35,8 +37,10 @@ export function Navbar() {
   return (
     <nav
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-white/0",
-        isScrolled ? "bg-black/80 backdrop-blur-md border-white/5 py-4" : "bg-transparent py-6"
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b",
+        isScrolled 
+          ? "bg-black/60 backdrop-blur-xl border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.1)] py-4" 
+          : "bg-transparent border-transparent py-6"
       )}
     >
       <div className="container mx-auto px-6 flex items-center justify-between">
@@ -46,8 +50,9 @@ export function Navbar() {
               src="/Logo/Logo.png" 
               alt="CDN Logo" 
               width={40} 
-              height={40} 
+              height={40}
               className="object-contain"
+              priority
             />
           </div>
           <span className="font-bold text-xl tracking-tight text-white hidden sm:block">
@@ -57,17 +62,23 @@ export function Navbar() {
         <div className="hidden md:flex items-center gap-8">
           {navItems.map((item) => {
             const isActive = pathname === item.href;
+            // @ts-ignore
+            const isSpecial = item.special;
+            
             return (
-              <Link
+              <ScrambleLink
                 key={item.href}
                 href={item.href}
+                label={item.name}
+                icon={isSpecial ? item.icon : undefined}
                 className={cn(
-                  "text-sm font-medium transition-colors hover:text-red-400 flex items-center gap-2",
-                  isActive ? "text-white" : "text-neutral-400"
+                  "text-sm font-medium transition-colors flex items-center gap-2",
+                  isSpecial 
+                    ? "text-red-500 hover:text-red-400 font-bold animate-pulse hover:animate-none" 
+                    : "hover:text-red-400",
+                  isActive && !isSpecial ? "text-white" : isActive && isSpecial ? "text-red-400" : !isSpecial ? "text-neutral-400" : ""
                 )}
-              >
-                {item.name}
-              </Link>
+              />
             );
           })}
         </div>
@@ -92,14 +103,13 @@ export function Navbar() {
           >
             <div className="container mx-auto px-6 py-6 flex flex-col gap-4">
               {navItems.map((item) => (
-                <Link
+                <ScrambleLink
                   key={item.href}
                   href={item.href}
+                  label={item.name}
                   className="text-lg font-medium text-neutral-300 hover:text-red-400 py-2 border-b border-white/5"
                   onClick={() => setIsOpen(false)}
-                >
-                  {item.name}
-                </Link>
+                />
               ))}
               {/* Mobile buttons removed */}
             </div>

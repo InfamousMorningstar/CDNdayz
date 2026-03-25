@@ -22,8 +22,8 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["var(--font-inter)", "sans-serif"],
-        mono: ["var(--font-jetbrains-mono)", "monospace"],
-        heading: ["var(--font-rajdhani)", "sans-serif"],
+        mono: ["var(--font-inter)", "monospace"], // Unifying to Inter for consistency as requested
+        heading: ["var(--font-inter)", "sans-serif"], // Unifying to Inter
       },
       animation: {
         'pulse-slow': 'pulse 8s ease-in-out infinite',

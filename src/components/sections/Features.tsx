@@ -2,7 +2,7 @@
 
 import { Card } from '@/components/ui/Card';
 import { motion } from 'framer-motion';
-import { Shield, Zap, Users, Code, Hammer, Gift } from 'lucide-react';
+import { Shield, Zap, Users, Code, Globe, Headphones } from 'lucide-react';
 
 const features = [
   {
@@ -30,15 +30,15 @@ const features = [
     color: 'text-purple-400',
   },
   {
-    title: 'Base Building ++',
-    description: 'Expanded building options with territory protection and customized base items.',
-    icon: Hammer,
+    title: 'Diverse Playstyles',
+    description: 'Experience everything from Hardcore survival and Sci-Fi adventures to Noob-friendly servers.',
+    icon: Globe,
     color: 'text-rose-400',
   },
   {
-    title: 'Daily Events',
-    description: 'Automated and staff-run events including convoys, keycards, and boss fights.',
-    icon: Gift,
+    title: 'Active Support',
+    description: 'Dedicated staff and helpful community members ready to assist you in-game and on Discord 24/7.',
+    icon: Headphones,
     color: 'text-indigo-400',
   },
 ];
