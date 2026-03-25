@@ -181,6 +181,25 @@ export default function StorePage() {
                     Payment Methods
                 </h3>
 
+                <div className="mb-6 p-4 bg-amber-500/10 border border-amber-500/20 rounded-xl relative overflow-hidden">
+                    <div className="absolute top-0 right-0 p-2 opacity-10">
+                        <Zap size={48} />
+                    </div>
+                    <h4 className="text-amber-400 font-bold mb-2 flex items-center gap-2">
+                        <span className="animate-pulse w-2 h-2 rounded-full bg-amber-500"></span>
+                        Proof of Purchase
+                    </h4>
+                    <p className="text-neutral-300 text-sm leading-relaxed mb-3">
+                        <strong className="text-white">Always open a ticket when you purchase.</strong>
+                        <br />
+                        No matter which payment method you use, opening a ticket helps admins verify your transaction immediately.
+                    </p>
+                    <div className="flex items-start gap-2 text-xs text-neutral-400 bg-black/20 p-2 rounded">
+                        <span className="text-amber-500 mt-0.5">ℹ</span>
+                        <span>A screenshot of the transaction is highly encouraged to make the process smoother.</span>
+                    </div>
+                </div>
+
                 <div className="space-y-6 mb-8">
                      <div className="p-5 bg-neutral-800/50 rounded-xl border border-neutral-700 relative overflow-hidden">
                         <div className="absolute top-0 right-0 bg-amber-500 text-black text-[10px] font-bold px-2 py-1 uppercase tracking-widest rounded-bl-lg">Preferred</div>

@@ -60,28 +60,32 @@ export function RulesClient() {
                     <Users className="text-red-500 w-6 h-6" />
                     <h2 className="text-2xl font-heading font-bold text-white">Community Standards</h2>
                   </div>
-                  <ul className="space-y-4 text-neutral-300">
+                  <ul className="space-y-4 text-neutral-300 text-sm">
                     <li className="flex gap-3">
                       <span className="text-red-500">•</span>
-                      <span>Above all, let's keep our space friendly, respectful, and fun for everyone. We have mostly PVE servers, and being kind can go a long way.</span>
+                      <span>Above all, let{`'`}s keep our space friendly, respectful, and fun for everyone. We have mostly PVE servers, and being kind can go a long way.</span>
                     </li>
                     <li className="flex gap-3">
                       <span className="text-red-500">•</span>
-                      <span>We're here to build a community where everyone feels welcome. Please use the ticket system (#support) and forums to get help or share your thoughts.</span>
+                      <span>We{`'`}re here to build a community where everyone feels welcome. Please use the ticket system and forums to get help or share your thoughts.</span>
                     </li>
                     <li className="flex gap-3">
                       <span className="text-red-500">•</span>
-                      <span>Do not DM the admins about game issues unless specifically given permission to do so. Use the #support ticket system.</span>
+                      <span>Do not DM the admins about game issues unless specifically given permission to do so for a specific case. Use the ticket system.</span>
                     </li>
                     <li className="flex gap-3">
                       <span className="text-red-500">•</span>
-                      <span>Keep nicknames relatively appropriate (no blank, offensive, sexually explicit, unreadable/untaggable Unicode).</span>
+                      <span>Admins are here to keep things running smoothly, and the ticket system helps us help you.</span>
                     </li>
                     <li className="flex gap-3">
                       <span className="text-red-500">•</span>
-                      <span>Keep profile pictures relatively appropriate (no offensive, graphic, sexually explicit).</span>
+                      <span>Keep nicknames relatively appropriate (no blank, offensive, sexually explicit, unreadable/untaggable Unicode)</span>
                     </li>
                     <li className="flex gap-3">
+                      <span className="text-red-500">•</span>
+                      <span>Keep profile pictures relatively appropriate (no offensive, graphic, sexually explicit)</span>
+                    </li>
+                     <li className="flex gap-3">
                       <span className="text-red-500">•</span>
                       <span>Always ask before sending direct messages to other members.</span>
                     </li>
@@ -92,20 +96,27 @@ export function RulesClient() {
                 <Card className="p-8 bg-neutral-900/60 border-neutral-800">
                   <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/5">
                     <Terminal className="text-red-500 w-6 h-6" />
-                    <h2 className="text-2xl font-heading font-bold text-white">Ticket System (#support)</h2>
+                    <h2 className="text-2xl font-heading font-bold text-white">Ticket System</h2>
                   </div>
-                  <p className="text-neutral-400 mb-4">Use this whenever you want to chat with an Admin or if you have an in-game issue. Open a ticket in the #support channel on Discord.</p>
-                  <div className="bg-black/40 p-4 rounded border border-white/5 mb-4 font-mono text-sm text-neutral-300">
-                    <p className="text-neutral-500 mb-2">// Required Layout (Other entries deleted)</p>
+                  <p className="text-neutral-400 mb-4 text-sm">Use when you want to chat with an Admin or if you have an in-game issue.</p>
+                  <div className="bg-black/40 p-4 rounded border border-white/5 mb-4 font-mono text-xs text-neutral-300">
+                    <p className="text-neutral-500 mb-2 border-b border-white/5 pb-1 uppercase tracking-widest font-bold text-[10px]">Required Layout</p>
                     <p>Game: Server Name/Map</p>
                     <p>Issue: Description</p>
                     <p>Location on the map (if needed):</p>
-                    <p>In-game name: Your Name</p>
+                    <p>In-game name:</p>
                   </div>
-                  <div className="space-y-2 text-sm text-neutral-400">
-                     <p><span className="text-red-500">⚠</span> Use the above layout; any other entry will be deleted until the ticket has this info.</p>
-                     <p><span className="text-red-500">⚠</span> Admins do want to help you. Though writing "heli went missing" or "drop/give dono gear" doesn't help anyone.</p>
-                     <p className="italic">Politeness will also make things go smoother. Our admins are on throughout the day, but not all day, so please be patient when making a ticket.</p>
+                  <div className="space-y-3 text-sm text-neutral-400">
+                     <p className="flex gap-2">
+                       <span className="text-red-500 font-bold">⚠</span>
+                       <span>Use the above layout; any other entry will be deleted until the ticket has this info.</span>
+                     </p>
+                     <p>
+                       Admins do want to help you. Though writing &quot;heli went missing&quot; or &quot;drop/give dono gear&quot; doesn{`'`}t help anyone.
+                     </p>
+                     <p className="italic text-neutral-500">
+                       Politeness will also make things go smoother. Our admins are on throughout the day, but not all day, so please be patient when making a ticket.
+                     </p>
                   </div>
                 </Card>
 
@@ -116,6 +127,7 @@ export function RulesClient() {
                     <h2 className="text-2xl font-heading font-bold text-white">Communication Protocols</h2>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
+                    {/* Text Chat */}
                     <div>
                       <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
                         <Terminal size={16} /> Text Chat
@@ -124,14 +136,16 @@ export function RulesClient() {
                         <li className="flex gap-2"><span className="text-red-500">›</span> Respect everyone you interact with here.</li>
                         <li className="flex gap-2"><span className="text-red-500">›</span> No NSFW/NSFL content (Sexually explicit, gore).</li>
                         <li className="flex gap-2"><span className="text-red-500">›</span> Keep chat spam to a minimum so everyone can enjoy the conversation.</li>
-                        <li className="flex gap-2"><span className="text-red-500">›</span> Do not publish personal information (names, addresses, emails, bank info, etc).</li>
+                        <li className="flex gap-2"><span className="text-red-500">›</span> Do not publish personal information (including real names, addresses, emails, passwords, bank information, etc.)</li>
                         <li className="flex gap-2"><span className="text-red-500">›</span> Keep disagreements focused on the topic, not on each other.</li>
-                        <li className="flex gap-2"><span className="text-red-500">›</span> No offensive content (racism, sexism, hate speech, etc).</li>
+                        <li className="flex gap-2"><span className="text-red-500">›</span> No offensive content (racism, sexism, hate speech, etc.)</li>
                         <li className="flex gap-2"><span className="text-red-500">›</span> Do not advertise without permission.</li>
                         <li className="flex gap-2"><span className="text-red-500">›</span> Help us keep channels organized by chatting about the right topics in the right places.</li>
                       </ul>
                     </div>
-                    <div className="space-y-6">
+                    
+                    <div className="space-y-8">
+                      {/* Voice Chat */}
                       <div>
                         <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
                           <Users size={16} /> Voice Chat
@@ -141,17 +155,44 @@ export function RulesClient() {
                           <li className="flex gap-2"><span className="text-red-500">›</span> Avoid mic spam and keep your audio clear and pleasant for everyone.</li>
                         </ul>
                       </div>
-                      
-                      <div className="pt-4 border-t border-white/5">
-                        <h3 className="text-lg font-bold text-red-500 mb-2 flex items-center gap-2">
-                           <AlertTriangle size={16} /> Admin Rights
+
+                      {/* In-Game */}
+                      <div>
+                        <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                          <Shield size={16} /> In-Game
                         </h3>
-                        <p className="text-neutral-400 text-sm mb-2">Admins reserve the right to:</p>
-                        <ul className="space-y-1 text-neutral-300 text-sm pl-2">
-                           <li>1. Remove messages they deem inappropriate.</li>
-                           <li>2. Remove survivors they deem disruptive to the CDN server.</li>
-                           <li>3. Ignore anyone arguing with them about their choices.</li>
+                        <ul className="space-y-2 text-neutral-300 text-sm">
+                          <li className="flex gap-2">
+                            <span className="text-red-500">›</span> 
+                            <span>Please claim any AI missions or Drops you are about to take on. Claim radius - within shooting distance (500m is a good reference point).</span>
+                          </li>
+                          <li className="flex gap-2">
+                            <span className="text-red-500">›</span> 
+                            <span>Reiterating: Respect everyone you interact with here. <strong className="text-white">Toxicity is not welcome on the CDN servers.</strong></span>
+                          </li>
                         </ul>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Admin Rights */}
+                  <div className="pt-6 border-t border-white/5">
+                    <h3 className="text-lg font-bold text-red-500 mb-3 flex items-center gap-2">
+                        <AlertTriangle size={16} /> Admin Rights
+                    </h3>
+                    <p className="text-neutral-400 text-sm mb-3 font-medium">Admins reserve the right to:</p>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-neutral-300">
+                      <div className="bg-neutral-950/30 p-3 rounded border border-white/5">
+                        <span className="text-red-500 font-bold mr-2">1.</span>
+                        Remove messages they deem inappropriate.
+                      </div>
+                      <div className="bg-neutral-950/30 p-3 rounded border border-white/5">
+                         <span className="text-red-500 font-bold mr-2">2.</span>
+                         Remove users they deem disruptive to the CDN server.
+                      </div>
+                      <div className="bg-neutral-950/30 p-3 rounded border border-white/5">
+                         <span className="text-red-500 font-bold mr-2">3.</span>
+                         Ignore anyone arguing with them about their choices.
                       </div>
                     </div>
                   </div>
@@ -222,15 +263,15 @@ export function RulesClient() {
                   <div className="space-y-4">
                     <div>
                       <Badge variant="outline" className="mb-2 text-red-400 border-red-500/30">Expansion Building</Badge>
-                      <p className="text-xs text-neutral-500">DeerIsle, Bitterroot, Sakhal, Chernarus (Noob Friendly)</p>
+                      <p className="text-xs text-neutral-500">DeerIsle, Bitterroot, Sakhal, Hardcore Hashima, Chernarus (Noob Friendly)</p>
                     </div>
                     <div>
-                      <Badge variant="outline" className="mb-2 text-amber-400 border-amber-500/30">Hardcore</Badge>
-                      <p className="text-xs text-neutral-500">Hardcore Hashima, Livonia (Hardcore), Chernarus (Hardcore)</p>
+                      <Badge variant="outline" className="mb-2 text-amber-400 border-amber-500/30">Base Building Plus</Badge>
+                      <p className="text-xs text-neutral-500">Hardcore Livonia</p>
                     </div>
                     <div>
-                      <Badge variant="outline" className="mb-2 text-emerald-400 border-emerald-500/30">Vanilla+</Badge>
-                      <p className="text-xs text-neutral-500">Livonia (Regular), Chernarus (Regular), Banov, Banov Sci-Fi, Namalsk</p>
+                      <Badge variant="outline" className="mb-2 text-emerald-400 border-emerald-500/30">No Mod</Badge>
+                      <p className="text-xs text-neutral-500">Reg Livonia, Reg Chernarus, Banov, Scifi Banov, Namalsk</p>
                     </div>
                     <div className="pt-2">
                          <a href="/features" className="text-xs text-red-500 hover:text-red-400 underline decoration-red-500/30 underline-offset-4">

@@ -4,7 +4,13 @@
 > This website is currently in **BETA**. It is not a finished product.  
 > This project is being actively developed to serve as the companion web portal for the **CDN DayZ Discord Community**. Features, designs, and content are subject to change.
 
-## 🔗 Repository
+## � Recent Updates (March 2026)
+-   **Building Protocol Overhaul**: Updated rules to include specific exclusion zones for AI Missions (500m), detailed bunker construction guides (Purchasable vs. Craftable), and grace period enforcement policies.
+-   **Server Systems Categorization**: Reorganized the "Features" page to accurately reflect active mods per server (Expansion, Base Building Plus, and No Mod/Standard), correcting previous inaccuracies.
+-   **Rules & Governance Update**: Refined general community standards, communication protocols, and removed non-functional website interactions (Discord reactions).
+-   **Store Policy Clarification**: Updated payment methods section to emphasize the ticket-based verification process for all transactions.
+
+## �🔗 Repository
 [https://github.com/InfamousMorningstar/CDNdayz](https://github.com/InfamousMorningstar/CDNdayz)
 
 ## 📋 Overview
@@ -36,7 +42,7 @@ This generic web portal is designed to provide players with real-time informatio
 #### ⚙️ Technical Highlights
 -   **Tactical Data Cards**: CSS-only server status cards that auto-theme based on map type (Namalsk/Arctic, Livonia/Woodland) without requiring image assets.
 -   **Performance Optimized**: Server-side caching for external APIs (Steam News) to ensure fast load times.
--   **Mobile-First Design**: Fully responsive layout optimized for access on phones and tablets.
+-   **Desktop-First Design**: Immersive cinematic experience optimized for large screens, with functional mobile responsiveness.
 -   **Real-time Data Fetching**: Auto-refreshing server status components.
 
 ## 🛠️ Tech Stack

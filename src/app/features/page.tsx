@@ -53,7 +53,8 @@ export default function FeaturesPage() {
                   'Deer Isle',
                   'Bitterroot',
                   'Sakhal',
-                  'Chernarus (Noob Friendly)'
+                  'Hardcore Hashima',
+                  'Noob Chernarus'
                 ].map((server) => (
                   <li key={server} className="flex items-center gap-2 text-neutral-300 text-sm font-sans">
                     <span className="w-1.5 h-1.5 rounded-full bg-red-500 shadow-[0_0_8px_rgba(220,38,38,0.5)]"></span>
@@ -65,20 +66,20 @@ export default function FeaturesPage() {
           </div>
         </Card>
 
-        {/* Hardcore Servers */}
-        <Card className="p-8 bg-neutral-900/40 border-neutral-800 hover:border-red-600/30 transition-all group relative overflow-hidden">
+        {/* Base Building Plus (BBP) */}
+        <Card className="p-8 bg-neutral-900/40 border-neutral-800 hover:border-orange-500/30 transition-all group relative overflow-hidden">
           <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-            <Shield size={120} />
+            <Hammer size={120} />
           </div>
           
           <div className="relative z-10">
-            <div className="w-12 h-12 rounded bg-red-900/20 border border-red-600/30 flex items-center justify-center text-red-500 mb-6 group-hover:scale-110 transition-transform duration-300">
-              <Shield size={24} />
+            <div className="w-12 h-12 rounded bg-orange-900/20 border border-orange-500/30 flex items-center justify-center text-orange-500 mb-6 group-hover:scale-110 transition-transform duration-300">
+              <Hammer size={24} />
             </div>
             
-            <h2 className="text-2xl font-heading font-bold text-white mb-4">Hardcore</h2>
+            <h2 className="text-2xl font-heading font-bold text-white mb-4">Base Building Plus</h2>
             <p className="text-neutral-400 text-sm mb-6 leading-relaxed">
-              A gritty survival experience with limited building options. Focuses on stealth, improvisation, and utilizing the environment rather than constructing massive bases.
+              Extensive base building mod offering distinct tiers of construction (Wood, Metal, Concrete) plus a variety of doors, windows, and decorative elements.
             </p>
 
             <div className="space-y-3">
@@ -87,12 +88,10 @@ export default function FeaturesPage() {
               </h3>
               <ul className="space-y-2">
                 {[
-                  'Hardcore Hashima',
-                  'Livonia (Hardcore)',
-                  'Chernarus (Hardcore)'
+                  'Hardcore Livonia'
                 ].map((server) => (
                   <li key={server} className="flex items-center gap-2 text-neutral-300 text-sm font-sans">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-600 shadow-[0_0_8px_rgba(220,38,38,0.5)]"></span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.5)]"></span>
                     {server}
                   </li>
                 ))}
@@ -101,7 +100,7 @@ export default function FeaturesPage() {
           </div>
         </Card>
 
-        {/* Vanilla+ / Regular */}
+        {/* Standard / Regular Building */}
         <Card className="p-8 bg-neutral-900/40 border-neutral-800 hover:border-emerald-500/30 transition-all group relative overflow-hidden">
           <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
             <Shield size={120} />
@@ -112,9 +111,9 @@ export default function FeaturesPage() {
               <Shield size={24} />
             </div>
             
-            <h2 className="text-2xl font-heading font-bold text-white mb-4">Vanilla+</h2>
+            <h2 className="text-2xl font-heading font-bold text-white mb-4">No Expansion or Base Building Plus</h2>
             <p className="text-neutral-400 text-sm mb-6 leading-relaxed">
-              The classic DayZ experience with slight quality of life improvements. Utilizes standard building mechanics. Perfect for survivors who enjoy the authentic feel.
+              Utilizes the default base building mechanics. No additional construction mods are enabled on these servers.
             </p>
 
             <div className="space-y-3">
@@ -123,10 +122,10 @@ export default function FeaturesPage() {
               </h3>
               <ul className="space-y-2">
                 {[
-                  'Livonia (Regular)',
-                  'Chernarus (Regular)',
+                  'Reg Livonia',
+                  'Reg Chernarus',
                   'Banov',
-                  'Banov Sci-Fi',
+                  'Scifi Banov',
                   'Namalsk'
                 ].map((server) => (
                   <li key={server} className="flex items-center gap-2 text-neutral-300 text-sm font-sans">
@@ -138,9 +137,8 @@ export default function FeaturesPage() {
             </div>
           </div>
         </Card>
-
       </div>
-      </div>
+    </div>
     </CinematicBackground>
   );
 }

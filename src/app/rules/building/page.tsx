@@ -36,6 +36,11 @@ export default function BuildingRulesPage() {
               Strict construction guidelines to ensure server stability and fair play. 
               Violation of these zones may result in base deletion.
             </p>
+            <div className="mt-4">
+               <Link href="/features" className="text-red-400 hover:text-red-300 text-sm flex items-center gap-2 transition-colors underline decoration-red-500/30 underline-offset-4">
+                 Check which building system applies to your server &rarr;
+               </Link>
+            </div>
           </div>
           
           <Badge variant="outline" className="h-fit py-2 px-4 border-red-500/30 text-red-400 bg-red-500/5">
@@ -85,10 +90,26 @@ export default function BuildingRulesPage() {
                     <strong className="text-red-400">500m radius</strong> from any trader.
                   </li>
                 </ul>
-                <div className="mt-4 p-3 bg-amber-500/10 border border-amber-500/20 rounded text-sm text-amber-200/80 flex gap-2">
-                   <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
-                   <p>Note: Some maps can make this difficult. If your territory sits ~30m within that 1000m, you should be good. Do your best to stick to the 1000m radius.</p>
-                </div>
+              </div>
+
+              <div>
+                <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500" />
+                  AI Missions
+                </h3>
+                <ul className="space-y-3 pl-4 border-l border-white/5 ml-1">
+                  <li className="text-neutral-300 text-sm">
+                    <strong className="text-red-400">500m radius</strong> from any AI Mission.
+                  </li>
+                  <li className="text-neutral-400 text-xs italic">
+                    Building too close causes problems for other players trying to do the mission.
+                  </li>
+                </ul>
+              </div>
+
+              <div className="mt-4 p-3 bg-amber-500/10 border border-amber-500/20 rounded text-sm text-amber-200/80 flex gap-2">
+                 <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
+                 <p>Note: Some maps can make this difficult. If your territory sits ~30m within that 1000m, you should be good. Do your best to stick to the 1000m radius.</p>
               </div>
             </Card>
           </section>
@@ -101,56 +122,189 @@ export default function BuildingRulesPage() {
               <h2 className="text-2xl font-bold text-white">Bunkers</h2>
             </div>
             
-            <Card className="p-6 bg-neutral-900/40 border-neutral-800">
-              <p className="text-neutral-400 mb-6">
-                Bunkers can be purchased from the Supplies Trader. <span className="text-white font-medium">You will need 2 flags when using a bunker.</span>
-              </p>
-              
-              <ol className="space-y-4 relative before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-px before:bg-white/10">
-                <li className="pl-8 relative">
-                   <span className="absolute left-0 top-1 w-6 h-6 rounded-full bg-neutral-800 border border-white/10 flex items-center justify-center text-xs font-mono">1</span>
-                   <p className="text-neutral-300 text-sm">
-                     Place your <strong className="text-white">Main flag</strong> and make a territory, then you can place your bunker down.
-                   </p>
-                </li>
-                <li className="pl-8 relative">
-                   <span className="absolute left-0 top-1 w-6 h-6 rounded-full bg-neutral-800 border border-white/10 flex items-center justify-center text-xs font-mono">2</span>
-                   <p className="text-neutral-300 text-sm">
-                     Ensure the bunker is placed on <strong className="text-white">solid ground</strong> or a ground floor to avoid falling under the structure when exiting.
-                   </p>
-                </li>
-                 <li className="pl-8 relative">
-                   <span className="absolute left-0 top-1 w-6 h-6 rounded-full bg-neutral-800 border border-white/10 flex items-center justify-center text-xs font-mono">3</span>
-                   <p className="text-neutral-300 text-sm">
-                     Put a <strong className="text-white">Code Lock</strong> on the entrance immediately.
-                   </p>
-                </li>
-                <li className="pl-8 relative">
-                   <span className="absolute left-0 top-1 w-6 h-6 rounded-full bg-neutral-800 border border-white/10 flex items-center justify-center text-xs font-mono">4</span>
-                   <p className="text-neutral-300 text-sm">
-                     Once inside, place down the <strong className="text-white">second flag</strong> and make a territory.
-                     <br />
-                     <span className="text-neutral-500 italic text-xs block mt-1">Tip: Use the same name as your main territory with a 1 or 2 added at the end.</span>
-                   </p>
-                </li>
-              </ol>
-            </Card>
+            <div className="space-y-6">
+              {/* Option 1: Purchasable */}
+              <Card className="p-6 bg-neutral-900/40 border-neutral-800">
+                <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                  <span className="bg-red-500/20 text-red-500 text-xs px-2 py-1 rounded uppercase tracking-wider">Option 1</span>
+                  Purchasable Bunker
+                </h3>
+                <p className="text-neutral-400 mb-6 text-sm">
+                  Buy the Kit and 2 territory flag kits from the Building Trader.
+                </p>
+                
+                <ol className="space-y-4 relative before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-px before:bg-white/10">
+                  <li className="pl-8 relative">
+                     <span className="absolute left-0 top-1 w-6 h-6 rounded-full bg-neutral-800 border border-white/10 flex items-center justify-center text-xs font-mono">1</span>
+                     <p className="text-neutral-300 text-sm">
+                       Place your <strong className="text-white">Main flag</strong> and create a territory, then place your bunker down.
+                     </p>
+                  </li>
+                  <li className="pl-8 relative">
+                     <span className="absolute left-0 top-1 w-6 h-6 rounded-full bg-neutral-800 border border-white/10 flex items-center justify-center text-xs font-mono">2</span>
+                     <p className="text-neutral-300 text-sm">
+                       Ensure the bunker is placed on <strong className="text-white">solid ground</strong> or a ground floor.
+                     </p>
+                  </li>
+                  <li className="pl-8 relative">
+                     <span className="absolute left-0 top-1 w-6 h-6 rounded-full bg-neutral-800 border border-white/10 flex items-center justify-center text-xs font-mono">3</span>
+                     <p className="text-neutral-300 text-sm">
+                       Open the bunker lid to attach your <strong className="text-white">Code Lock</strong>.
+                     </p>
+                  </li>
+                  <li className="pl-8 relative">
+                     <span className="absolute left-0 top-1 w-6 h-6 rounded-full bg-neutral-800 border border-white/10 flex items-center justify-center text-xs font-mono">4</span>
+                     <p className="text-neutral-300 text-sm">
+                       Once inside, place down the <strong className="text-white">second flag</strong>.
+                       <br />
+                       <span className="text-neutral-500 italic text-xs block mt-1">Tip: Use the same name as your main territory with a 1 or 2 added.</span>
+                     </p>
+                  </li>
+                </ol>
+              </Card>
+
+              {/* Option 2: Craftable */}
+              <Card className="p-6 bg-neutral-900/40 border-neutral-800">
+                <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                  <span className="bg-amber-500/20 text-amber-500 text-xs px-2 py-1 rounded uppercase tracking-wider">Option 2</span>
+                  Craftable Bunker (Shovel)
+                </h3>
+                
+                <div className="mb-6 p-4 bg-neutral-950/50 rounded border border-white/5">
+                  <h4 className="text-xs font-bold text-neutral-400 uppercase tracking-wider mb-3">Required Equipment</h4>
+                  <div className="grid grid-cols-2 gap-2 text-sm text-neutral-300">
+                    <span className="flex items-center gap-2"><div className="w-1 h-1 bg-amber-500 rounded-full"/> Bunker Shovel</span>
+                    <span className="flex items-center gap-2"><div className="w-1 h-1 bg-amber-500 rounded-full"/> Pickaxe (Digging)</span>
+                    <span className="flex items-center gap-2"><div className="w-1 h-1 bg-neutral-500 rounded-full"/> Hammer (Supports)</span>
+                    <span className="flex items-center gap-2"><div className="w-1 h-1 bg-neutral-500 rounded-full"/> Axe/Hatchet (Logs)</span>
+                    <span className="flex items-center gap-2"><div className="w-1 h-1 bg-neutral-500 rounded-full"/> Saw (Planks)</span>
+                    <span className="flex items-center gap-2"><div className="w-1 h-1 bg-neutral-500 rounded-full"/> Nails, Logs, Stone</span>
+                    <span className="col-span-2 flex items-center gap-2"><div className="w-1 h-1 bg-blue-500 rounded-full"/> H7 Headlights & Cable Reels</span>
+                  </div>
+                </div>
+
+                <ol className="space-y-4 relative before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-px before:bg-white/10">
+                  <li className="pl-8 relative">
+                     <span className="absolute left-0 top-1 w-6 h-6 rounded-full bg-neutral-800 border border-white/10 flex items-center justify-center text-xs font-mono">1</span>
+                     <p className="text-neutral-300 text-sm">
+                       Find your spot and use the <strong className="text-white">Bunker Shovel</strong> to dig out the entrance.
+                     </p>
+                  </li>
+                  <li className="pl-8 relative">
+                     <span className="absolute left-0 top-1 w-6 h-6 rounded-full bg-neutral-800 border border-white/10 flex items-center justify-center text-xs font-mono">2</span>
+                     <p className="text-neutral-300 text-sm">
+                       Immediately put a <strong className="text-white">Code Lock</strong> on it.
+                     </p>
+                  </li>
+                  <li className="pl-8 relative">
+                     <span className="absolute left-0 top-1 w-6 h-6 rounded-full bg-neutral-800 border border-white/10 flex items-center justify-center text-xs font-mono">3</span>
+                     <p className="text-neutral-300 text-sm">
+                       Go inside and place your <strong className="text-white">Territory Flag</strong> (50m radius).
+                     </p>
+                  </li>
+                  <li className="pl-8 relative">
+                     <span className="absolute left-0 top-1 w-6 h-6 rounded-full bg-neutral-800 border border-white/10 flex items-center justify-center text-xs font-mono">4</span>
+                     <p className="text-neutral-300 text-sm">
+                       Use your Inventory Key (Tab) to see required supplies for each section and expand as you like!
+                     </p>
+                  </li>
+                </ol>
+              </Card>
+            </div>
           </section>
         </div>
 
-        {/* General Guidelines */}
+        {/* General Guidelines - Column 2 */}
         <div className="space-y-8">
-           <section className="h-full">
+          
+          {/* Enforcement / Grace Period */}
+          <section>
             <div className="flex items-center gap-3 mb-6">
               <div className="p-2 rounded-lg bg-red-500/10 text-red-500">
+                <AlertTriangle size={24} />
+              </div>
+              <h2 className="text-2xl font-bold text-white">Enforcement</h2>
+            </div>
+            <Card className="p-6 bg-red-900/10 border-red-500/30 text-neutral-300 space-y-4">
+              <p>
+                Those who do not adhere to the exclusion zone rules may find their base deleted after a grace period.
+              </p>
+              <div className="space-y-2 text-sm">
+                <div className="flex gap-3">
+                  <span className="font-bold text-white">1.</span>
+                  <p>Admins will try to talk to you in person first if you are online.</p>
+                </div>
+                <div className="flex gap-3">
+                  <span className="font-bold text-white">2.</span>
+                  <p>If offline, an admin will place a sign by your base. <span className="text-white font-medium">Please follow the sign{`'`}s instructions.</span></p>
+                </div>
+              </div>
+              <p className="text-xs italic text-red-400">
+                We want everyone to have an enjoyable time, and sticking to these rules makes everyone{`'`}s life easier :)
+              </p>
+            </Card>
+          </section>
+
+          {/* Housing Options */}
+          <section>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="p-2 rounded-lg bg-blue-500/10 text-blue-500">
+                <Store size={24} />
+              </div>
+              <h2 className="text-2xl font-bold text-white">Housing Options</h2>
+            </div>
+            
+            <div className="space-y-6">
+              {/* Portable Housing */}
+              <Card className="p-6 bg-neutral-900/40 border-neutral-800">
+                <h3 className="text-lg font-bold text-white mb-3">Portable Housing</h3>
+                <p className="text-neutral-400 text-sm mb-4">
+                  Nine options available at the Build Trader, from small shacks to 2-story mansions. Each comes with a working fireplace/stove.
+                </p>
+                <div className="space-y-2 text-sm bg-neutral-950/50 p-3 rounded border border-white/5">
+                  <div className="flex items-start gap-2">
+                    <span className="text-blue-500 font-bold">1.</span>
+                    <p className="text-neutral-300">Buy a house and place it in your desired location.</p>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-blue-500 font-bold">2.</span>
+                    <p className="text-neutral-300">Look at the door and select <strong className="text-white">"Claim House"</strong> from the scroll menu.</p>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="text-blue-500 font-bold">3.</span>
+                    <p className="text-neutral-300">Use "Invite Members" to allow friends access.</p>
+                  </div>
+                </div>
+              </Card>
+
+              {/* Rag Cabins */}
+              <Card className="p-6 bg-neutral-900/40 border-neutral-800 relative overflow-hidden">
+                <div className="absolute top-0 right-0 px-3 py-1 bg-amber-500 text-neutral-950 text-xs font-bold font-mono rounded-bl-lg">
+                  NOOB CHERNO ONLY
+                </div>
+                <h3 className="text-lg font-bold text-white mb-3">Rag Cabins</h3>
+                <p className="text-neutral-400 text-sm mb-3">
+                  Available at the Building Trader. Place them anywhere within build rules.
+                </p>
+                <div className="flex items-center gap-2 text-amber-500 text-xs font-bold border border-amber-500/20 bg-amber-500/5 p-2 rounded">
+                  <AlertTriangle size={12} />
+                  <span>Be careful with placement - they do not break down well!</span>
+                </div>
+              </Card>
+            </div>
+          </section>
+
+          {/* General Guidelines (Simplified) */}
+           <section>
+            <div className="flex items-center gap-3 mb-6">
+              <div className="p-2 rounded-lg bg-neutral-500/10 text-neutral-400">
                 <Building2 size={24} />
               </div>
               <h2 className="text-2xl font-bold text-white">General Guidelines</h2>
             </div>
             
-            <Card className="p-8 bg-neutral-900/40 border-neutral-800 h-fit space-y-8 relative overflow-hidden">
-              <div className="absolute top-0 right-0 p-32 bg-red-500/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none" />
-              
+            <Card className="p-8 bg-neutral-900/40 border-neutral-800 space-y-8 relative overflow-hidden">
+               {/* Clutter & Optimization */}
               <div className="space-y-4">
                  <h3 className="text-white font-bold text-lg border-b border-white/5 pb-2">Clutter & Optimization</h3>
                  <div className="space-y-4 text-neutral-300 text-sm leading-relaxed">
@@ -163,6 +317,7 @@ export default function BuildingRulesPage() {
                  </div>
               </div>
 
+               {/* Public Access & Griefing */}
                <div className="space-y-4">
                  <h3 className="text-white font-bold text-lg border-b border-white/5 pb-2">Public Access & Griefing</h3>
                  <div className="space-y-4 text-neutral-300 text-sm leading-relaxed">
@@ -175,8 +330,9 @@ export default function BuildingRulesPage() {
                  </div>
               </div>
 
+              {/* Premade Bases */}
               <div className="p-4 rounded bg-neutral-950/50 border border-white/5 space-y-3">
-                 <h4 className="text-red-400 font-bold text-sm uppercase tracking-wider flex items-center gap-2">
+                 <h4 className="text-neutral-400 font-bold text-sm uppercase tracking-wider flex items-center gap-2">
                    <Store size={14} /> Premade Bases
                  </h4>
                  <p className="text-neutral-400 text-xs leading-relaxed">
