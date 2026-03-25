@@ -102,7 +102,7 @@ export default function BuildingRulesPage() {
                     <strong className="text-red-400">500m radius</strong> from any AI Mission.
                   </li>
                   <li className="text-neutral-400 text-xs italic">
-                    Building too close causes problems for other players trying to do the mission.
+                    We have seen too many bases being built on top of or too close to the missions, which then cause problems for other players trying to do said mission.
                   </li>
                 </ul>
               </div>
@@ -258,21 +258,24 @@ export default function BuildingRulesPage() {
               {/* Portable Housing */}
               <Card className="p-6 bg-neutral-900/40 border-neutral-800">
                 <h3 className="text-lg font-bold text-white mb-3">Portable Housing</h3>
-                <p className="text-neutral-400 text-sm mb-4">
-                  Nine options available at the Build Trader, from small shacks to 2-story mansions. Each comes with a working fireplace/stove.
-                </p>
-                <div className="space-y-2 text-sm bg-neutral-950/50 p-3 rounded border border-white/5">
-                  <div className="flex items-start gap-2">
-                    <span className="text-blue-500 font-bold">1.</span>
-                    <p className="text-neutral-300">Buy a house and place it in your desired location.</p>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <span className="text-blue-500 font-bold">2.</span>
-                    <p className="text-neutral-300">Look at the door and select <strong className="text-white">"Claim House"</strong> from the scroll menu.</p>
-                  </div>
-                  <div className="flex items-start gap-2">
-                    <span className="text-blue-500 font-bold">3.</span>
-                    <p className="text-neutral-300">Use "Invite Members" to allow friends access.</p>
+                <div className="space-y-4 text-sm text-neutral-300">
+                  <p>
+                    There are nine options, all purchasable at the Build Trader. From a small 1-room “shack” to a 2-story multi-room “Mansion.” 
+                    Each building comes with a working fireplace or stove.
+                  </p>
+                  <div className="bg-neutral-950/30 p-4 rounded border border-white/5 space-y-3">
+                    <div className="flex items-start gap-3">
+                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center text-xs font-bold ring-1 ring-blue-500/20">1</span>
+                      <p>Buy a house, find your awesome build location, and plop that building down.</p>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center text-xs font-bold ring-1 ring-blue-500/20">2</span>
+                      <p>Claim it as your own. Look at the door of the house to see scroll options.</p>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center text-xs font-bold ring-1 ring-blue-500/20">3</span>
+                      <p>Pick <strong className="text-white">“Claim House”</strong>. Boom, it{`'`}s yours. No one can enter unless you use the “Invite Members” option in the scroll menu.</p>
+                    </div>
                   </div>
                 </div>
               </Card>
@@ -309,7 +312,7 @@ export default function BuildingRulesPage() {
                  <h3 className="text-white font-bold text-lg border-b border-white/5 pb-2">Clutter & Optimization</h3>
                  <div className="space-y-4 text-neutral-300 text-sm leading-relaxed">
                    <p>
-                     Please only place items like tents etc that you are actively using. We ask this to avoid too much clutter on the server.
+                     Please only place items like tents etc that you are actively using. We ask this to prevent excessive clutter on the server.
                    </p>
                    <p>
                      Keep the hoarding of gear, weapons and all of the things down to a minimum. Again this is to avoid clutter on the server which in turn helps with server lag.
@@ -317,9 +320,9 @@ export default function BuildingRulesPage() {
                  </div>
               </div>
 
-               {/* Public Access & Griefing */}
+               {/* Base Spacing & Public Access */}
                <div className="space-y-4">
-                 <h3 className="text-white font-bold text-lg border-b border-white/5 pb-2">Public Access & Griefing</h3>
+                 <h3 className="text-white font-bold text-lg border-b border-white/5 pb-2">Base Spacing & Public Access</h3>
                  <div className="space-y-4 text-neutral-300 text-sm leading-relaxed">
                    <p>
                      <strong className="text-rose-400">Do not block</strong> other survivors, bases or any public access points/monuments.
@@ -327,22 +330,27 @@ export default function BuildingRulesPage() {
                    <p>
                      Griefing is frowned upon. Basically, <span className="italic text-white">if it isn’t your base, do not obstruct it.</span>
                    </p>
+                   <div className="bg-neutral-950/50 p-3 rounded border border-white/5 mt-2">
+                     <span className="text-amber-500 font-bold block mb-1 text-xs uppercase tracking-wider">Rendering Distance</span>
+                     <p>Please do not build within the rendering distance of another base; we don’t need to be on top of each other.</p>
+                   </div>
                  </div>
               </div>
 
-              {/* Premade Bases */}
+              {/* Dono Bases */}
               <div className="p-4 rounded bg-neutral-950/50 border border-white/5 space-y-3">
                  <h4 className="text-neutral-400 font-bold text-sm uppercase tracking-wider flex items-center gap-2">
-                   <Store size={14} /> Premade Bases
+                   <Store size={14} /> Dono Bases
                  </h4>
-                 <p className="text-neutral-400 text-xs leading-relaxed">
-                   You may come across slightly larger, sometimes fancier “premade” bases, which have not been occupied/claimed. 
-                   <strong className="text-white block mt-1">Do not move into them.</strong>
-                   These are Donation bases and may already be pre-claimed.
-                 </p>
-                 <Button variant="link" className="px-0 text-red-500 h-auto text-xs">
-                   Make a ticket in #support to inquire with staff &rarr;
-                 </Button>
+                 <div className="text-neutral-400 text-xs leading-relaxed space-y-2">
+                   <p>
+                     You may come across slightly larger, sometimes fancier “premade” bases, which have not been occupied/claimed. 
+                     <strong className="text-white"> Do not move into them.</strong> These are donation-based and may already be pre-claimed.
+                   </p>
+                   <p>
+                     If you are interested, please make a ticket to chat with an Admin/Mod.
+                   </p>
+                 </div>
               </div>
             </Card>
           </section>

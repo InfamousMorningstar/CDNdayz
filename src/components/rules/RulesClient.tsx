@@ -291,7 +291,7 @@ export function RulesClient() {
                   </div>
                   <div className="space-y-6">
                     <div>
-                      <h3 className="text-lg font-bold text-white mb-2 text-red-400">Type 1: Purchasable</h3>
+                      <h3 className="text-lg font-bold mb-2 text-red-400">Type 1: Purchasable</h3>
                       <ol className="list-decimal list-inside text-sm text-neutral-300 space-y-1 ml-2">
                         <li>Buy Kit & 2 Territory Flags from Building Trader.</li>
                         <li>Place Main Flag & create territory.</li>
@@ -301,7 +301,7 @@ export function RulesClient() {
                       </ol>
                     </div>
                     <div>
-                      <h3 className="text-lg font-bold text-white mb-2 text-red-400">Type 2: Crafted</h3>
+                      <h3 className="text-lg font-bold mb-2 text-red-400">Type 2: Crafted</h3>
                       <div className="text-sm text-neutral-400 mb-2">
                         <strong className="text-white block mb-1">Equipment Needed:</strong>
                         <ul className="grid grid-cols-2 gap-x-2 gap-y-1 text-xs">
@@ -339,6 +339,17 @@ export function RulesClient() {
                       <p className="text-sm text-neutral-300">
                         Purchasable at Building Trader. Place carefully as they do not break down well. Adhere to all build radii.
                       </p>
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-bold text-white mb-2">Portable Housing</h3>
+                      <p className="text-sm text-neutral-300 mb-2">
+                         9 options purchasable at Build Trader (Shacks to Mansions). Each includes a working fireplace/stove.
+                      </p>
+                      <ol className="list-decimal list-inside text-sm text-neutral-300 space-y-1 ml-2">
+                        <li>Buy & Place in a valid location.</li>
+                        <li>Look at door & select <strong className="text-white">"Claim House"</strong> from scroll options.</li>
+                        <li>Use "Invite Members" from scroll options to give access.</li>
+                      </ol>
                     </div>
                     <div>
                       <h3 className="text-lg font-bold text-white mb-2">General Building</h3>
