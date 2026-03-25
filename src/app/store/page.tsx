@@ -41,9 +41,9 @@ export default function StorePage() {
       description: "Traverse the map in style with our selection of vehicles.",
       price: "From $15 USD",
       features: [
+        "Vehicles",
         "Sci-Fi Vehicles",
-        "Helicopters",
-        "Vehicle Insurance"
+        "Sci-Fi Ships"
       ],
       classes: {
         border: "hover:border-amber-500/30",
@@ -55,7 +55,7 @@ export default function StorePage() {
       }
     },
     {
-      title: "Territories",
+      title: "Custom Base",
       icon: <Hammer className="w-8 h-8 text-red-500" />,
       description: "Establish your dominance with custom bases and secure compounds.",
       price: "From $50 USD",
@@ -153,6 +153,14 @@ export default function StorePage() {
                         <p className="text-neutral-300 leading-relaxed">
                             Donation items last a full wipe. If you donate for something in the <span className="text-white font-semibold">last month before a wipe</span>, 
                             it will roll over to the new wipe automatically.
+                        </p>
+                    </div>
+
+                    <div className="bg-amber-900/10 border border-amber-500/10 p-5 rounded-xl">
+                        <strong className="text-amber-400 block mb-2 text-lg">One Donation, All Servers</strong>
+                        <p className="text-neutral-300 leading-relaxed">
+                            If you donate for items on one server, you can open a ticket to extend them to other CDN servers you play on at no extra cost. 
+                            <span className="text-white font-semibold"> You do not need to donate multiple times.</span>
                         </p>
                     </div>
 
