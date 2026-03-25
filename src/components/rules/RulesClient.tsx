@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Shield, Hammer, MessageSquare, AlertTriangle, BookOpen, Terminal, Construction, Users } from 'lucide-react';
+import { Shield, Hammer, MessageSquare, AlertTriangle, BookOpen, Terminal, Construction, Users, Home } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { cn } from '@/lib/utils';
@@ -329,8 +329,8 @@ export function RulesClient() {
 
                 <Card className="p-8 bg-neutral-900/60 border-neutral-800">
                   <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/5">
-                    <AlertTriangle className="text-red-500 w-6 h-6" />
-                    <h2 className="text-2xl font-heading font-bold text-white">Special Rules</h2>
+                    <Home className="text-red-500 w-6 h-6" />
+                    <h2 className="text-2xl font-heading font-bold text-white">Housing</h2>
                   </div>
                   <div className="space-y-6">
                     <div>
