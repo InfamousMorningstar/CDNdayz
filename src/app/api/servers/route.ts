@@ -32,7 +32,7 @@ export async function GET() {
             port: server.port,
             maxAttempts: 2,
             socketTimeout: 2000
-          });
+          } as any);
         } catch (initialError) {
           // Fallback: Try querying the game port directly if disjoint
           // Many DayZ servers respond to Steam query on the game port too
@@ -43,7 +43,7 @@ export async function GET() {
                 port: server.gamePort, // Try game port
                 maxAttempts: 2,
                 socketTimeout: 2000
-             });
+             } as any);
           } else {
              throw initialError;
           }
