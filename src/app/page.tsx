@@ -9,9 +9,9 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <QuickStartGuide />
-      <Features />
       <QuickInfo />
+      <Features />
+      <QuickStartGuide />
       <ServersList />
       <JoinCTA />
     </>
