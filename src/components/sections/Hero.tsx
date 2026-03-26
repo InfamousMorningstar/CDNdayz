@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
 import { ChevronRight, ArrowDown } from 'lucide-react';
+import { NewsTicker } from '@/components/news/NewsTicker';
 
 export function Hero() {
   return (
@@ -62,6 +63,10 @@ export function Hero() {
             </Button>
           </div>
         </motion.div>
+
+        {/* Tactical News Ticker - Placed for visibility without scrolling */}
+        <NewsTicker />
+
       </div>
 
       <motion.div 
