@@ -43,8 +43,8 @@ export function NewsTicker() {
 
         fetchNews();
         
-        // Refresh every 5 minutes
-        const refreshInterval = setInterval(fetchNews, 5 * 60 * 1000); 
+        // Refresh every 30 seconds
+        const refreshInterval = setInterval(fetchNews, 30 * 1000); 
         return () => clearInterval(refreshInterval);
     }, []);
 
