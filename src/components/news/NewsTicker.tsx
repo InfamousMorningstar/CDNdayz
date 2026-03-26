@@ -21,19 +21,25 @@ export function NewsTicker() {
     const [news, setNews] = useState<NewsItem[]>(DEFAULT_NEWS);
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    // Fetch news from Gist
+    // Fetch news from Gist API to avoid CDN caching lag
     useEffect(() => {
-        // Use the raw URL without the commit hash to always get the latest version
-        const NEWS_URL = 'https://gist.githubusercontent.com/InfamousMorningstar/3051bd07566e72be5c52d560130b8b71/raw/news.json';
+        const NEWS_API_URL = 'https://api.github.com/gists/3051bd07566e72be5c52d560130b8b71';
         
         const fetchNews = async () => {
             try {
-                // Add a timestamp to prevent caching
-                const response = await fetch(`${NEWS_URL}?t=${Date.now()}`);
+                // Add a timestamp to prevent caching the API call itself
+                const response = await fetch(`${NEWS_API_URL}?t=${Date.now()}`);
                 if (response.ok) {
                     const data = await response.json();
-                    if (Array.isArray(data) && data.length > 0) {
-                        setNews(data);
+                    
+                    // The API returns the file content as a string inside the 'files' object
+                    const fileContent = data.files?.['news.json']?.content;
+                    
+                    if (fileContent) {
+                        const parsedNews = JSON.parse(fileContent);
+                        if (Array.isArray(parsedNews) && parsedNews.length > 0) {
+                            setNews(parsedNews);
+                        }
                     }
                 }
             } catch (error) {
@@ -43,8 +49,8 @@ export function NewsTicker() {
 
         fetchNews();
         
-        // Refresh every 30 seconds
-        const refreshInterval = setInterval(fetchNews, 30 * 1000); 
+        // Refresh every 60 seconds (Safe for unauthenticated GitHub API rate limit 60req/hour)
+        const refreshInterval = setInterval(fetchNews, 60 * 1000); 
         return () => clearInterval(refreshInterval);
     }, []);
 
