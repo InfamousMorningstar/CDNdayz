@@ -1,6 +1,5 @@
 import { events } from '@/data/mock';
 import { Card } from '@/components/ui/Card';
-import { EventCard } from '@/components/events/EventCard';
 import { Metadata } from 'next';
 import { CalendarDays, Flag, Radio } from 'lucide-react';
 import { CinematicBackground } from '@/components/features/CinematicBackground';
