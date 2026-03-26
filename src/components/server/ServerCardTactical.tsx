@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Badge } from "@/components/ui/Badge";
 import { 
     Users, 
@@ -9,7 +9,9 @@ import {
     Snowflake, 
     Trees, 
     Mountain,
-    Radio
+    Radio,
+    Copy,
+    Check
 } from "lucide-react";
 
 interface ServerCardProps {
@@ -34,6 +36,16 @@ const ServerCardTactical: React.FC<ServerCardProps> = ({
     const isOnline = status === "online";
     const isRestarting = status === "restarting";
     const percentage = Math.round((players / maxPlayers) * 100);
+    const [copied, setCopied] = useState(false);
+
+    const handleCopy = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        navigator.clipboard.writeText(connect);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+    };
+
+    // Determine Theme based on Map
 
     // Determine Theme based on Map
     const theme = useMemo(() => {
@@ -142,9 +154,17 @@ const ServerCardTactical: React.FC<ServerCardProps> = ({
             <div className="p-5 flex-1 flex flex-col justify-between gap-4">
                 <div>
                     <h3 className="text-xl font-heading text-white mb-1 group-hover:text-red-500 transition-colors truncate">{name}</h3>
-                    <p className="text-xs text-neutral-500 uppercase tracking-wider font-mono">
-                        {connect}
-                    </p>
+                    <div 
+                        onClick={handleCopy}
+                        className="group/copy flex items-center gap-2 cursor-pointer w-fit select-none"
+                    >
+                         <p className={`text-xs uppercase tracking-wider font-mono transition-colors duration-200 ${copied ? "text-green-400" : "text-neutral-500 group-hover:text-neutral-300"}`}>
+                            {copied ? "IP COPIED" : connect}
+                        </p>
+                        <div className={`transition-all duration-300 ${copied ? "opacity-100 scale-100" : "opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0"}`}>
+                             {copied ? <Check className="w-3 h-3 text-green-400" /> : <Copy className="w-3 h-3 text-neutral-400 group-hover/copy:text-white" />}
+                        </div>
+                    </div>
                 </div>
 
                 {/* Population Stats */}
@@ -163,13 +183,6 @@ const ServerCardTactical: React.FC<ServerCardProps> = ({
                             style={{ width: `${percentage}%` }}
                         />
                     </div>
-                </div>
-            </div>
-
-            {/* Hover Join Button visual cue */}
-            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none bg-black/60 backdrop-blur-[1px] z-20">
-                <div className="border border-white/20 bg-black/80 px-4 py-2 text-sm font-mono uppercase tracking-widest text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                    Connect
                 </div>
             </div>
         </div>
