@@ -53,7 +53,7 @@ const ServerCardTactical: React.FC<ServerCardProps> = ({
         const lowerName = name.toLowerCase();
         const isHardcore = lowerName.includes('hardcore');
 
-        if (lowerMap.includes('namalsk')) return { 
+        if (lowerMap.includes('namalsk') || lowerMap.includes('sakhal')) return { 
             color: 'text-cyan-400', 
             bg: 'bg-cyan-950', 
             bar: 'bg-cyan-400',
@@ -153,7 +153,9 @@ const ServerCardTactical: React.FC<ServerCardProps> = ({
             {/* Content Body */}
             <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between gap-4">
                 <div>
-                    <h3 className="text-lg sm:text-xl font-heading text-white mb-1 group-hover:text-red-500 transition-colors truncate">{name}</h3>
+                    <h3 className="text-sm sm:text-base md:text-lg font-heading text-white mb-1 group-hover:text-red-500 transition-colors leading-tight whitespace-normal break-words">
+                        {name}
+                    </h3>
                     <button
                         type="button"
                         onClick={handleCopy}

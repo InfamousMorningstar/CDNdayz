@@ -12,6 +12,45 @@ const CACHE_DURATION = 30 * 1000; // 30 seconds
 const offlineStartTimes = new Map<string, number>();
 const RESTART_WINDOW = 5 * 60 * 1000; // 5 minutes
 
+function normalizeMapName(mapValue: string): string {
+  const normalized = mapValue.trim().toLowerCase();
+
+  const mapAliases: Record<string, string> = {
+    chernarusplus: 'Chernarus',
+    enoch: 'Livonia',
+    deerisle: 'Deer Isle',
+    hashima: 'Hashima',
+    sakhal: 'Sakhal',
+    namalsk: 'Namalsk',
+    bitterroot: 'Bitterroot',
+    banov: 'Banov',
+  };
+
+  return mapAliases[normalized] || mapValue;
+}
+
+function getLiveServerName(state: unknown, fallback: string): string {
+  const candidate =
+    (state as any)?.name ||
+    (state as any)?.raw?.hostname ||
+    (state as any)?.raw?.name ||
+    fallback;
+
+  const safe = typeof candidate === 'string' ? candidate.trim() : fallback;
+  return safe || fallback;
+}
+
+function getLiveServerMap(state: unknown, fallback: string): string {
+  const candidate =
+    (state as any)?.map ||
+    (state as any)?.raw?.map ||
+    (state as any)?.raw?.mission ||
+    fallback;
+
+  const safe = typeof candidate === 'string' ? candidate.trim() : fallback;
+  return normalizeMapName(safe || fallback);
+}
+
 export async function GET() {
   const now = Date.now();
 
@@ -57,8 +96,8 @@ export async function GET() {
 
         return {
           id: server.id,
-          name: server.name,
-          map: server.map,
+          name: getLiveServerName(state, server.name),
+          map: getLiveServerMap(state, server.map),
           players: state.players.length || (state.raw as any)?.numplayers || 0,
           maxPlayers: state.maxplayers,
           ping: state.ping,

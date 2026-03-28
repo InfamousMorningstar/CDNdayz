@@ -1,6 +1,8 @@
 // Mock Data for CDN Website
 // Replace these with API calls or CMS data later
 
+import { DISCORD_INVITE_URL } from '@/lib/links';
+
 export interface Server {
   id: string;
   name: string;
@@ -22,7 +24,7 @@ export const servers: Server[] = [
     map: 'Deer Isle',
     ip: '127.0.0.1', // Placeholder
     port: 2302,
-    discord: 'https://discord.gg/sBPzcjzBcT',
+    discord: DISCORD_INVITE_URL,
     playersOnline: 42,
     maxPlayers: 100,
     status: 'online',
@@ -35,7 +37,7 @@ export const servers: Server[] = [
     map: 'Namalsk',
     ip: '127.0.0.1', // Placeholder
     port: 2402,
-    discord: 'https://discord.gg/sBPzcjzBcT',
+    discord: DISCORD_INVITE_URL,
     playersOnline: 88,
     maxPlayers: 100,
     status: 'online',
@@ -48,7 +50,7 @@ export const servers: Server[] = [
     map: 'Chernarus',
     ip: '127.0.0.1', // Placeholder
     port: 2502,
-    discord: 'https://discord.gg/sBPzcjzBcT',
+    discord: DISCORD_INVITE_URL,
     playersOnline: 12,
     maxPlayers: 60,
     status: 'restarting',

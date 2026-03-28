@@ -124,7 +124,7 @@ export const servers: ServerConfig[] = [
   {
     id: "walking-dead",
     name: "CDN Walking Dead Hardcore",
-    map: "Chernarus",
+    map: "Hashima",
     host: "99.199.82.20",
     port: 2534,
     gamePort: 2533,

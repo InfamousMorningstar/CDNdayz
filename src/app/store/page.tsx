@@ -93,6 +93,16 @@ export default function StorePage() {
           </p>
         </div>
 
+        {/* HC Warning Banner */}
+        <div className="max-w-6xl mx-auto mb-8">
+          <div className="flex items-center gap-3 px-5 py-4 rounded-xl bg-red-950/40 border border-red-500/30 text-red-300">
+            <span className="text-xl">⚠</span>
+            <p className="text-sm font-semibold tracking-wide">
+              <span className="text-red-400 font-bold">Hardcore Servers:</span> Donation items and spawned gear are <span className="text-white">not available</span> on HC servers. Donations apply to standard servers only.
+            </p>
+          </div>
+        </div>
+
         {/* Main Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8 max-w-6xl mx-auto mb-10 sm:mb-16">
           {categories.map((item, index) => (
@@ -120,12 +130,6 @@ export default function StorePage() {
                   ))}
                 </ul>
 
-                <Link href={DISCORD_LINK} target="_blank" rel="noopener noreferrer" className="w-full">
-                  <Button className={`w-full h-11 sm:h-10 text-white border-0 transition-all shadow-lg ${item.classes.button}`}>
-                    <span className="mr-2">Get on Discord</span>
-                    <ExternalLink size={16} />
-                  </Button>
-                </Link>
               </div>
             </Card>
           ))}
@@ -253,7 +257,7 @@ export default function StorePage() {
                         </Button>
                     </Link>
                     <p className="text-center mt-3 text-xs text-neutral-600">
-                        Secure transaction handling via Discord support tickets
+                        Transactions handled securely via PayPal, Cash App, Zelle, Venmo & more
                     </p>
                 </div>
             </Card>
