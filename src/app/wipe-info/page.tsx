@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/Button';
 import { Flame, RefreshCw, Calendar, AlertTriangle, ArrowRight, Shield, Database } from 'lucide-react';
 import Link from 'next/link';
 import { Metadata } from 'next';
+import { DISCORD_INVITE_URL } from '@/lib/links';
 
 export const metadata: Metadata = {
   title: 'Wipe Information | CDN',
@@ -60,8 +61,8 @@ export default function WipeInfoPage() {
                 </div>
 
                 <div className="mt-8 flex justify-center">
-                     <Button variant="outline" asChild>
-                        <Link href="https://discord.gg/2Wf3N6r9kR" target="_blank">
+                            <Button variant="outline" asChild>
+                                <Link href={DISCORD_INVITE_URL} target="_blank" rel="noopener noreferrer">
                            Check Discord for Live Updates <ArrowRight className="ml-2 w-4 h-4" />
                         </Link>
                      </Button>

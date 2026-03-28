@@ -1,86 +1,99 @@
-# CDN DayZ - Official Website (BETA)
+# CDN DayZ Website
 
-> **⚠️ WORK IN PROGRESS / BETA**  
-> This website is currently in **BETA**. It is not a finished product.  
-> This project is being actively developed to serve as the companion web portal for the **CDN DayZ Discord Community**. Features, designs, and content are subject to change.
+Companion website for the CDN DayZ community, built with Next.js App Router and TypeScript.
 
-## � Recent Updates (March 2026)
--   **Building Protocol Overhaul**: Updated rules to include specific exclusion zones for AI Missions (500m), detailed bunker construction guides (Purchasable vs. Craftable), and grace period enforcement policies.
--   **Server Systems Categorization**: Reorganized the "Features" page to accurately reflect active mods per server (Expansion, Base Building Plus, and No Mod/Standard), correcting previous inaccuracies.
--   **Rules & Governance Update**: Refined general community standards, communication protocols, and removed non-functional website interactions (Discord reactions).
--   **Store Policy Clarification**: Updated payment methods section to emphasize the ticket-based verification process for all transactions.
+## Status
 
-## �🔗 Repository
-[https://github.com/InfamousMorningstar/CDNdayz](https://github.com/InfamousMorningstar/CDNdayz)
+This project is actively developed and currently in beta.
 
-## 📋 Overview
-This generic web portal is designed to provide players with real-time information and resources for the CDN DayZ servers.
+## Repository
 
-### Key Features
+https://github.com/InfamousMorningstar/CDNdayz
 
-#### 🌐 Core Experience
--   **Live Server Monitoring**: Real-time Gamedig integration displaying status (Online/Offline), *survivor* counts, and map details for all CDN servers using custom tactical data cards.
--   **Quick Intel Dashboard**: Centralized homepage hub providing immediate access to critical server rules, upcoming operations, and the donation store.
--   **Official Comms**: Automated integration with Steam Community announcements, delivering real-time game updates and official status reports directly to the dashboard.
--   **Immersive Cinematic UI**: Dynamic, page-specific video and high-resolution image backgrounds creating a tactical, atmospheric user experience.
+## Recent Updates (March 2026)
 
-#### 📜 Rules & Governance
--   **Comprehensive Rules Hub**: Multi-tab interface clearly separating **General Conduct** from **PvE Regulations**.
--   **Base Building Regulations**: Dedicated section detailing building tiers, territory radiuses, and prohibited zones.
--   **Ticket System Integration**: Direct guidance linking users to the `#support` channel for effective issue resolution.
+- Information architecture updates:
+    - Features page renamed to Features & Mods.
+    - Live server mods overview moved to Features & Mods.
+    - Rules navigation updated to Rules & FAQ.
+- Rules and FAQ expansion:
+    - Added dedicated Hardcore rules callout (HC exceptions).
+    - Added categorized, collapsible FAQ (Gameplay, Rules, Technical).
+    - Copy updates to use Donation Items/Gear terminology.
+- Server and home UX updates:
+    - Added HC warning context under the Servers heading.
+    - Improved mobile behavior for home news ticker.
+    - Refined homepage section order for clearer progression.
+- Accessibility and semantics:
+    - Added skip-to-content link.
+    - Improved focus-visible styling and keyboard interactions.
+    - Added section labeling and active navigation semantics.
+    - Standardized external links with rel="noopener noreferrer".
+- Platform and reliability:
+    - Added canonical Discord link constant used across pages.
+    - Added live launcher-verified mod endpoint at /api/server-mods.
+    - Tuned cinematic background behavior for reduced-motion and lower-capability contexts.
 
-#### 🎮 Gameplay & Events
--   **Operations Status**: Real-time updates on server-wide operations (currently in planning phase).
--   **New Survivor Guide**: Step-by-step "Join the Operation" workflow simplifying modpack installation and server connection.
--   **Survival Manual**: Beginner-friendly breakdown of server mechanics, economy, and starting strategies.
+## Core Capabilities
 
-#### 💰 Store & Support
--   **Donation Transparency**: Clear breakdown of donor perks (Territories, Transport, Loadouts).
--   **PvE Focus**: Explicit confirmation that all gear is for PvE use only (No Player Damage).
--   **Wipe Protection Policy**: Explicit explanation of the "Roll Over" policy for donations made prior to server wipes.
+- Live server status via GameDig-backed API route.
+- Live per-server mod inventory via DayZSA query proxy route.
+- Official DayZ news and ticker integration.
+- Rules hub with hardcore policy visibility and FAQ support.
+- Store, join guide, wipe information, and legal pages.
 
-#### ⚙️ Technical Highlights
--   **Tactical Data Cards**: CSS-only server status cards that auto-theme based on map type (Namalsk/Arctic, Livonia/Woodland) without requiring image assets.
--   **Performance Optimized**: Server-side caching for external APIs (Steam News) to ensure fast load times.
--   **Desktop-First Design**: Immersive cinematic experience optimized for large screens, with functional mobile responsiveness.
--   **Real-time Data Fetching**: Auto-refreshing server status components.
+## API Endpoints
 
-## 🛠️ Tech Stack
--   **Framework**: [Next.js 15](https://nextjs.org/) (App Router)
--   **Styling**: [Tailwind CSS](https://tailwindcss.com/) with custom "Tactical/Apocalyptic" theme.
--   **Fonts**: Rajdhani (Headings), Inter (Body), JetBrains Mono (Data).
--   **Language**: [TypeScript](https://www.typescriptlang.org/)
--   **Server Query**: [Gamedig](https://github.com/gamedig/node-gamedig)
+- GET /api/servers
+    - Returns server status, population, and map data.
+- GET /api/server-mods
+    - Returns launcher-verified mod details per server.
+- GET /api/news
+    - Returns official DayZ news feed data.
+- GET /api/news-ticker
+    - Returns condensed ticker content for hero/news bar.
 
-## 🚀 Getting Started
+## Tech Stack
 
-### Prerequisites
--   Node.js 18.17 or later
--   npm
+- Next.js 15 (App Router)
+- React + TypeScript
+- Tailwind CSS
+- Framer Motion
+- Lucide React
+- GameDig
 
-### Installation
+## Local Development
 
-1.  **Clone the repository**:
-    ```bash
-    git clone https://github.com/InfamousMorningstar/CDNdayz.git
-    cd CDNdayz
-    ```
+Prerequisites:
 
-2.  **Install dependencies**:
-    ```bash
-    npm install
-    ```
+- Node.js 18.17+
+- npm
 
-3.  **Run the development server**:
-    ```bash
-    npm run dev
-    ```
+Install and run:
 
-4.  **Open the site**:
-    Visit [http://localhost:3000](http://localhost:3000) in your browser.
+```bash
+git clone https://github.com/InfamousMorningstar/CDNdayz.git
+cd CDNdayz
+npm install
+npm run dev
+```
 
-## 🤝 Contributing
-Contributions are welcome! If you find a bug or have a suggestion, please open an issue or submit a pull request on the GitHub repository.
+Open http://localhost:3000
 
----
-*Built for the CDN DayZ Community.*
+## Build and Start
+
+```bash
+npm run build
+npm run start
+```
+
+## Notes
+
+- Some server/UI data is intentionally cached in API routes to reduce upstream load.
+- If upstream launcher data is unavailable, mod records are returned with per-server error details instead of failing the entire request.
+
+## Contributing
+
+Issues and pull requests are welcome.
+
+Built for the CDN DayZ community.

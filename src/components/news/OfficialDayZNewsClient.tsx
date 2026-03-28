@@ -66,7 +66,7 @@ export function OfficialDayZNewsClient() {
               href={item.url} 
               target="_blank" 
               rel="noopener noreferrer"
-              className="group block"
+              className="group block rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/80"
             >
                 <Card className="bg-neutral-900/40 hover:bg-neutral-900/80 border-neutral-800 hover:border-red-500/30 transition-all p-4 relative overflow-hidden">
                     <div className="flex justify-between items-start gap-3">
@@ -104,7 +104,7 @@ export function OfficialDayZNewsClient() {
         ))}
         
         <div className="pt-2 text-center border-t border-white/5">
-             <a href="https://dayz.com/news" target="_blank" className="text-[10px] uppercase tracking-widest text-neutral-600 hover:text-red-500 transition-colors">
+             <a href="https://dayz.com/news" target="_blank" rel="noopener noreferrer" className="text-[10px] uppercase tracking-widest text-neutral-600 hover:text-red-500 transition-colors rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/80">
                 View All Official Updates &rarr;
              </a>
         </div>

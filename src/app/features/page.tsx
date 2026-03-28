@@ -3,10 +3,11 @@ import { Badge } from '@/components/ui/Badge';
 import { Metadata } from 'next';
 import { Hammer, Shield, Zap, Info } from 'lucide-react';
 import { CinematicBackground } from '@/components/features/CinematicBackground';
+import { ServerModsOverview } from '@/components/server/ServerModsOverview';
 
 export const metadata: Metadata = {
-  title: 'Server Features | CDN',
-  description: 'Detailed breakdown of building systems and features active on CDN DayZ servers.',
+  title: 'Features & Mods | CDN',
+  description: 'Building systems and live launcher-verified mod details for every CDN DayZ server.',
 };
 
 export default function FeaturesPage() {
@@ -18,7 +19,7 @@ export default function FeaturesPage() {
             System Configuration
           </Badge>
           <h1 className="text-4xl md:text-6xl font-heading font-bold text-white mb-6">
-            Server <span className="text-red-500">Systems</span>
+            Features & <span className="text-red-500">Mods</span>
           </h1>
         <p className="text-neutral-400 max-w-2xl text-lg font-sans">
           Different servers operate with different building rules and mods to cater to every playstyle. 
@@ -138,6 +139,8 @@ export default function FeaturesPage() {
           </div>
         </Card>
       </div>
+
+      <ServerModsOverview />
     </div>
     </CinematicBackground>
   );

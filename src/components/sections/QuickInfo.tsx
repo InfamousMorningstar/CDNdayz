@@ -11,7 +11,7 @@ export function QuickInfo() {
     {
       title: "Server Rules",
       icon: <Shield className="w-8 h-8 text-red-500" />,
-      description: "We enforce strict PvE rules. Player damage is disabled server-wide. No raiding allowed. Respect fellow survivors.",
+            description: "We enforce strict PvE rules as the network default. No raiding on standard PvE servers. Hardcore servers have clearly labeled exceptions.",
       link: "/rules",
       cta: "Full Ruleset"
     },
@@ -32,20 +32,20 @@ export function QuickInfo() {
   ];
 
   return (
-    <section className="py-20 bg-neutral-900/50 border-t border-white/5 relative">
+        <section aria-labelledby="essential-intel-heading" className="py-20 bg-neutral-900/50 border-t border-white/5 relative">
       <div className="container mx-auto px-6">
         
         {/* Section Header */}
         <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
             <div>
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">Essential <span className="text-red-500">Intel</span></h2>
+                <h2 id="essential-intel-heading" className="text-3xl md:text-4xl font-bold text-white mb-2">Essential <span className="text-red-500">Intel</span></h2>
                 <p className="text-neutral-400">Key information for new survivors.</p>
             </div>
-            <Button variant="outline" className="hidden md:flex gap-2" asChild>
-                <Link href="/join">
-                    Join Guide <ArrowRight size={16} />
+            <div className="hidden md:flex gap-2">
+                <Link href="/servers" className="flex items-center text-sm font-bold text-white hover:text-red-500 transition-colors gap-2 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/80">
+                    View Servers <ArrowRight size={16} />
                 </Link>
-            </Button>
+            </div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
@@ -67,7 +67,7 @@ export function QuickInfo() {
                         </div>
 
                          <div className="relative z-10 mt-auto pt-6 border-t border-white/5">
-                            <Link href={card.link} className="flex items-center text-sm font-bold text-white hover:text-red-500 transition-colors gap-2 group/link">
+                            <Link href={card.link} className="flex items-center text-sm font-bold text-white hover:text-red-500 transition-colors gap-2 group/link rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/80">
                                 {card.cta}
                                 <ArrowRight size={16} className="transform group-hover/link:translate-x-1 transition-transform" />
                             </Link>
@@ -83,7 +83,7 @@ export function QuickInfo() {
                         <div className="mb-4 pb-4 border-b border-white/5 flex items-center gap-2">
                              <Rss className="w-4 h-4 text-red-500 animate-pulse" />
                              <div>
-                                <span className="text-[10px] font-mono text-neutral-500 tracking-widest uppercase block leading-none mb-1">Official Comms</span>
+                                          <span className="text-[10px] font-mono text-neutral-400 tracking-widest uppercase block leading-none mb-1">Official Comms</span>
                                 <h3 className="text-lg font-bold text-white leading-none">Global Intel</h3>
                              </div>
                         </div>

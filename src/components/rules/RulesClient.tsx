@@ -9,6 +9,106 @@ import { cn } from '@/lib/utils';
 
 type Tab = 'general' | 'building';
 
+const faqData = {
+  gameplay: [
+    {
+      question: 'What type of server is this?',
+      answer:
+        `This is a PvE-focused server. That means survival, exploration, and cooperation come first. If you're here to ruin someone's day for fun... you're on the wrong server, mate.`,
+    },
+    {
+      question: 'How do I join the server?',
+      answer:
+        `Find us through the DayZ launcher (or use our direct connect info). If you get stuck, that's what Discord is for-don't suffer in silence.`,
+    },
+    {
+      question: 'Will there be events?',
+      answer:
+        `Yes. PvE events, challenges, and the occasional chaos-without turning the server into a warzone.`,
+    },
+    {
+      question: 'Is base building allowed?',
+      answer:
+        `Of course. Build your empire. Just don't expect it to survive bad decisions.`,
+    },
+    {
+      question: 'Will my progress be wiped?',
+      answer:
+        `Wipes happen when necessary (updates, major changes, etc.). We don't do it for fun-but sometimes DayZ demands sacrifice.`,
+    },
+    {
+      question: 'Can I suggest features or changes?',
+      answer:
+        `Absolutely. Good ideas get considered. Bad ideas... also get considered, briefly, before being ignored with respect.`,
+    },
+  ],
+  rules: [
+    {
+      question: 'Is PvP allowed at all?',
+      answer: `Nope.`,
+    },
+    {
+      question: 'What happens if I break the rules?',
+      answer:
+        `Depends on how creative you got. Could be a warning, could be a ban. We're fair-but we're not here to babysit.`,
+    },
+    {
+      question: 'Are there active admins?',
+      answer:
+        `Yes. We're around, watching, and occasionally fixing things before you even notice they broke.`,
+    },
+  ],
+  technical: [
+    {
+      question: 'Do I need to install mods?',
+      answer:
+        `Yes. The launcher will automatically download everything you need. If it doesn't... well, technology has chosen violence that day-restart and try again.`,
+    },
+    {
+      question: 'Who do I contact if something breaks?',
+      answer:
+        `Hit us up on Discord. If it's broken, we want to know. If it's really broken, we probably already know.`,
+    },
+    {
+      question: 'Why am I getting kicked with "Server has a more recent version" or PBO errors?',
+      answer:
+        `That's DayZ politely telling you: "your mods are outdated, fix your life."
+
+What's happening:
+The server updated a mod (like Expansion), but your local version didn't. Even being slightly behind = instant kick.
+
+How to fix it (properly, not guessing):
+Step 1 - ALWAYS join through the DayZ Launcher
+Not the in-game browser. The launcher actually syncs mods correctly.
+
+Step 2 - Let the launcher update everything
+Click the server
+Hit Join
+Click "Setup DLCs and Mods" if prompted
+Wait. Don't rush it. Let it finish.
+
+Step 3 - If you're still getting kicked (common with Expansion mods):
+Go to the Mods tab
+Find the problem mod (e.g. DayZ Expansion Bundle)
+Unsubscribe -> Resubscribe
+Let it fully reinstall
+
+Step 4 - Restart the launcher + Steam
+Yes, it matters. DayZ sometimes just refuses to cooperate until you do.
+
+Step 5 - Last resort (but works):
+Right-click DayZ in Steam -> Properties -> Installed Files -> Verify integrity
+Relaunch and join again
+
+Pro Tip:
+If you see words like "PBO", "more recent version", or "data verification error" - it's almost always a mod mismatch, not your internet, not the server "being broken".
+
+Still not working?
+Then it's actually our problem. Open a ticket in Discord, and we'll take a look.`,
+    },
+  ],
+} as const;
+
 export function RulesClient() {
   const [activeTab, setActiveTab] = useState<Tab>('general');
 
@@ -53,6 +153,35 @@ export function RulesClient() {
               transition={{ duration: 0.3 }}
               className="space-y-8"
             >
+              <Card className="p-6 md:p-8 bg-red-950/25 border-red-500/40 shadow-[0_0_35px_rgba(220,38,38,0.18)]">
+                <div className="flex items-center gap-3 mb-4">
+                  <AlertTriangle className="text-red-400 w-6 h-6" />
+                  <h2 className="text-2xl font-heading font-bold text-white">Hardcore Server Rules</h2>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="rounded-lg border border-red-500/25 bg-black/30 p-4">
+                    <p className="text-sm text-white font-semibold mb-2">Donation Items/Gear Policy</p>
+                    <p className="text-sm text-neutral-300">HC servers DO NOT allow Donation Items/Gear.</p>
+                    <p className="text-xs text-neutral-500 mt-2">
+                      Reason: Donation Items/Gear is OP and breaks hardcore gameplay balance.
+                    </p>
+                  </div>
+
+                  <div className="rounded-lg border border-red-500/25 bg-black/30 p-4">
+                    <p className="text-sm text-white font-semibold mb-2">Raiding Policy</p>
+                    <p className="text-sm text-neutral-300">HC servers ALLOW raiding.</p>
+                    <p className="text-xs text-neutral-500 mt-2">Players must record raids as proof.</p>
+                  </div>
+
+                  <div className="rounded-lg border border-red-500/25 bg-black/30 p-4 md:col-span-2">
+                    <p className="text-sm text-white font-semibold mb-2">Territories</p>
+                    <p className="text-sm text-neutral-300">Territories are PvP zones.</p>
+                    <p className="text-xs text-neutral-500 mt-2">No PvE protection in these areas.</p>
+                  </div>
+                </div>
+              </Card>
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {/* General Conduct */}
                 <Card className="p-8 bg-neutral-900/60 border-neutral-800">
@@ -112,7 +241,7 @@ export function RulesClient() {
                        <span>Use the above layout; any other entry will be deleted until the ticket has this info.</span>
                      </p>
                      <p>
-                       Admins do want to help you. Though writing &quot;heli went missing&quot; or &quot;drop/give dono gear&quot; doesn{`'`}t help anyone.
+                       Admins do want to help you. Though writing &quot;heli went missing&quot; or &quot;drop/give Donation Items/Gear&quot; doesn{`'`}t help anyone.
                      </p>
                      <p className="italic text-neutral-500">
                        Politeness will also make things go smoother. Our admins are on throughout the day, but not all day, so please be patient when making a ticket.
@@ -379,6 +508,78 @@ export function RulesClient() {
           )}
         </AnimatePresence>
       </div>
+
+      <section className="mt-14">
+        <div className="flex items-center gap-3 mb-6">
+          <BookOpen className="text-red-500 w-6 h-6" />
+          <h2 className="text-3xl md:text-4xl font-heading font-bold text-white">
+            Rules <span className="text-red-500">FAQ</span>
+          </h2>
+        </div>
+
+        <p className="text-neutral-400 mb-8 max-w-3xl">
+          Quick answers for gameplay, rule enforcement, and common technical joining/mod issues.
+        </p>
+        <p className="text-neutral-500 text-sm mb-8 max-w-3xl">
+          Note: Network default is PvE. Any Hardcore exceptions (territory PvP and raid policy) are explicitly listed in the Hardcore Server Rules section above.
+        </p>
+
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
+          <Card className="p-6 bg-neutral-900/60 border-neutral-800">
+            <div className="mb-4">
+              <h3 className="text-white font-bold mb-2">Gameplay</h3>
+              <Badge variant="outline" className="border-red-500/30 text-red-300 bg-red-900/10">Gameplay</Badge>
+            </div>
+            <div className="space-y-3">
+              {faqData.gameplay.map((item) => (
+                <details key={item.question} className="group rounded-lg border border-white/10 bg-black/20 p-4 open:border-red-500/30">
+                  <summary className="cursor-pointer list-none text-sm font-semibold text-white flex items-start justify-between gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/80 rounded">
+                    <span>{item.question}</span>
+                    <span className="text-red-400 text-xs group-open:rotate-45 transition-transform">+</span>
+                  </summary>
+                  <p className="text-sm text-neutral-400 mt-3 leading-relaxed whitespace-pre-line">{item.answer}</p>
+                </details>
+              ))}
+            </div>
+          </Card>
+
+          <Card className="p-6 bg-neutral-900/60 border-neutral-800">
+            <div className="mb-4">
+              <h3 className="text-white font-bold mb-2">Rules</h3>
+              <Badge variant="outline" className="border-amber-500/30 text-amber-300 bg-amber-900/10">Rules</Badge>
+            </div>
+            <div className="space-y-3">
+              {faqData.rules.map((item) => (
+                <details key={item.question} className="group rounded-lg border border-white/10 bg-black/20 p-4 open:border-amber-500/30">
+                  <summary className="cursor-pointer list-none text-sm font-semibold text-white flex items-start justify-between gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/80 rounded">
+                    <span>{item.question}</span>
+                    <span className="text-amber-400 text-xs group-open:rotate-45 transition-transform">+</span>
+                  </summary>
+                  <p className="text-sm text-neutral-400 mt-3 leading-relaxed whitespace-pre-line">{item.answer}</p>
+                </details>
+              ))}
+            </div>
+          </Card>
+
+          <Card className="p-6 bg-neutral-900/60 border-neutral-800">
+            <div className="mb-4">
+              <h3 className="text-white font-bold mb-2">Technical</h3>
+              <Badge variant="outline" className="border-sky-500/30 text-sky-300 bg-sky-900/10">Technical</Badge>
+            </div>
+            <div className="space-y-3">
+              {faqData.technical.map((item) => (
+                <details key={item.question} className="group rounded-lg border border-white/10 bg-black/20 p-4 open:border-sky-500/30">
+                  <summary className="cursor-pointer list-none text-sm font-semibold text-white flex items-start justify-between gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/80 rounded">
+                    <span>{item.question}</span>
+                    <span className="text-sky-400 text-xs group-open:rotate-45 transition-transform">+</span>
+                  </summary>
+                  <p className="text-sm text-neutral-400 mt-3 leading-relaxed whitespace-pre-line">{item.answer}</p>
+                </details>
+              ))}
+            </div>
+          </Card>
+        </div>
+      </section>
     </div>
   );
 }

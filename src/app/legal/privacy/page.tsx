@@ -1,6 +1,7 @@
 import { CinematicBackground } from '@/components/features/CinematicBackground';
 import { Card } from '@/components/ui/Card';
 import Link from 'next/link';
+import { DISCORD_INVITE_URL } from '@/lib/links';
 
 export const metadata = {
   title: 'Privacy Policy | CDN DayZ',
@@ -84,7 +85,7 @@ export default function PrivacyPage() {
                   This policy is effective as of 2024 and may be updated periodically. Your continued use of the website constitutes acceptance of any changes.
                 </p>
                 <p className="text-neutral-300 leading-relaxed mt-4">
-                  For questions regarding this policy or the website's data practices, please contact the developer, <strong>Salman Ahmad (Morningstar.0)</strong>, or the CDN Administration on <Link href="https://discord.gg/sBPzcjzBcT" className="text-red-400 hover:text-red-300 underline">Discord</Link>.
+                  For questions regarding this policy or the website's data practices, please contact the developer, <strong>Salman Ahmad (Morningstar.0)</strong>, or the CDN Administration on <Link href={DISCORD_INVITE_URL} className="text-red-400 hover:text-red-300 underline">Discord</Link>.
                 </p>
               </section>
 

@@ -7,7 +7,7 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative bg-black border-t border-white/10 pt-20 pb-10 text-neutral-400 overflow-hidden">
+    <footer aria-label="Site footer" className="relative bg-black border-t border-white/10 pt-20 pb-10 text-neutral-400 overflow-hidden">
       {/* Ambient background glow */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-red-900/10 blur-[120px] rounded-full pointer-events-none" />
 
@@ -54,7 +54,7 @@ export function Footer() {
             <div className="flex flex-col gap-4">
               <h3 className="font-semibold text-white tracking-wide text-sm uppercase">Support</h3>
               <div className="flex flex-col gap-2">
-                <FooterLink href="/rules">Server Rules</FooterLink>
+                <FooterLink href="/rules">Rules & FAQ</FooterLink>
                 <FooterLink href="/join">Join Guide</FooterLink>
               </div>
             </div>
@@ -120,7 +120,7 @@ function FooterLink({ href, children, className }: { href: string; children: Rea
     <Link 
       href={href} 
       className={cn(
-        "text-neutral-400 hover:text-white transition-colors text-sm w-fit relative group", 
+        "text-neutral-400 hover:text-white transition-colors text-sm w-fit relative group py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/80 rounded", 
         className
       )}
     >

@@ -10,9 +10,9 @@ export default function Home() {
     <>
       <Hero />
       <QuickInfo />
-      <Features />
-      <QuickStartGuide />
       <ServersList />
+      <QuickStartGuide />
+      <Features />
       <JoinCTA />
     </>
   );

@@ -9,13 +9,23 @@ interface CinematicBackgroundProps {
 
 export function CinematicBackground({ children, backgroundImageSrc = "/Images/S3F8X.jpg" }: CinematicBackgroundProps) {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [shouldAnimate, setShouldAnimate] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const finePointer = window.matchMedia('(pointer: fine)').matches;
+    const wideEnough = window.innerWidth >= 1024;
+
+    setShouldAnimate(!reducedMotion && finePointer && wideEnough);
+  }, []);
   
   // Parallax Effect
   useEffect(() => {
-    // Reduce motion check
-    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!shouldAnimate) return;
 
     const handleMouseMove = (e: MouseEvent) => {
       if (!containerRef.current) return;
@@ -31,11 +41,11 @@ export function CinematicBackground({ children, backgroundImageSrc = "/Images/S3
 
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+  }, [shouldAnimate]);
 
   // Particle System (Embers/Dust) - Optimized
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!shouldAnimate) return;
 
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -121,7 +131,7 @@ export function CinematicBackground({ children, backgroundImageSrc = "/Images/S3
       window.removeEventListener('resize', resizeCanvas);
       cancelAnimationFrame(animationFrameId);
     };
-  }, []);
+  }, [shouldAnimate]);
 
   return (
     <div ref={containerRef} className="relative min-h-screen w-full overflow-hidden bg-black text-white">
@@ -131,7 +141,9 @@ export function CinematicBackground({ children, backgroundImageSrc = "/Images/S3
         className="absolute inset-[-20px] bg-cover bg-center bg-no-repeat transition-transform duration-100 ease-out z-0"
         style={{
           backgroundImage: `url("${backgroundImageSrc}")`,
-          transform: `translate(${mousePosition.x * -10}px, ${mousePosition.y * -10}px) scale(1.05)`,
+          transform: shouldAnimate
+            ? `translate(${mousePosition.x * -10}px, ${mousePosition.y * -10}px) scale(1.05)`
+            : 'scale(1.02)',
         }}
       >
         {/* Dark Overlay for readability */}
@@ -139,10 +151,12 @@ export function CinematicBackground({ children, backgroundImageSrc = "/Images/S3
       </div>
 
       {/* 2. Particle Canvas (Embers) */}
-      <canvas 
-        ref={canvasRef} 
-        className="absolute inset-0 pointer-events-none z-10 opacity-40 mix-blend-screen"
-      />
+      {shouldAnimate && (
+        <canvas 
+          ref={canvasRef} 
+          className="absolute inset-0 pointer-events-none z-10 opacity-40 mix-blend-screen"
+        />
+      )}
 
       {/* 3. Subtle Muzzle Flash / Lighting Pulse */}
       {/* Creates a random faint orange flicker in the distance */}

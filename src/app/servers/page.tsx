@@ -17,6 +17,11 @@ export default function ServersPage() {
             <p className="text-neutral-400 max-w-xl text-lg">
               Monitor real-time status, player counts, and map rotation. All servers are hosted on dedicated high-performance hardware.
             </p>
+            <div className="mt-4 rounded-lg border border-red-500/40 bg-red-500/10 px-4 py-3">
+              <p className="text-sm md:text-base text-red-100 font-semibold tracking-wide">
+                ⚠ HC Servers: No Donation Items/Gear | Raiding enabled | Territories = PvP zones
+              </p>
+            </div>
           </div>
           
           <div className="flex flex-col items-end gap-2">

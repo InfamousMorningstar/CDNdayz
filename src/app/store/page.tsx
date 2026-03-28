@@ -5,13 +5,14 @@ import { Button } from '@/components/ui/Button';
 import { Shield, Crown, Package, Zap, ExternalLink, Shirt, Car, Hammer } from 'lucide-react';
 import Link from 'next/link';
 import { Metadata } from 'next';
+import { DISCORD_INVITE_URL } from '@/lib/links';
 
 export const metadata: Metadata = {
   title: 'Store | CDN',
   description: 'Support the server and get exclusive perks. All donations go directly to server upkeep and development.',
 };
 
-const DISCORD_LINK = "https://discord.gg/2Wf3N6r9kR"; // Using the Discord link from footer/context
+const DISCORD_LINK = DISCORD_INVITE_URL;
 
 export default function StorePage() {
   const categories = [
@@ -119,7 +120,7 @@ export default function StorePage() {
                   ))}
                 </ul>
 
-                <Link href={DISCORD_LINK} target="_blank" className="w-full">
+                <Link href={DISCORD_LINK} target="_blank" rel="noopener noreferrer" className="w-full">
                   <Button className={`w-full text-white border-0 transition-all shadow-lg ${item.classes.button}`}>
                     <span className="mr-2">Get on Discord</span>
                     <ExternalLink size={16} />
@@ -245,7 +246,7 @@ export default function StorePage() {
                         </li>
                     </ol>
 
-                    <Link href={DISCORD_LINK} target="_blank" className="block">
+                    <Link href={DISCORD_LINK} target="_blank" rel="noopener noreferrer" className="block">
                         <Button size="lg" className="w-full bg-[#5865F2] hover:bg-[#4752C4] text-white border-none py-6 text-lg font-bold shadow-xl shadow-indigo-500/10">
                         <span className="mr-2">Open Ticket on Discord</span>
                         <ExternalLink size={20} />

@@ -27,6 +27,11 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading tracking-wide uppercase;
   }
+
+  :where(a, button, [role="button"], summary, input, select, textarea):focus-visible {
+    outline: 2px solid rgba(239, 68, 68, 0.9);
+    outline-offset: 2px;
+  }
   
   /* Global Noise/Grain Overlay */
   body::before {
@@ -111,4 +116,27 @@
 
 .hero-gradient {
   background: radial-gradient(circle at center, rgba(220, 38, 38, 0.15) 0%, transparent 70%);
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(220, 38, 38, 0.5) rgba(255, 255, 255, 0.06);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, rgba(220, 38, 38, 0.75), rgba(185, 28, 28, 0.85));
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, rgba(239, 68, 68, 0.85), rgba(220, 38, 38, 0.95));
 }

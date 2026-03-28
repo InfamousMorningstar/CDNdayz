@@ -5,13 +5,24 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import { Download, Search, Check, Play, HelpCircle } from 'lucide-react';
 import { CinematicBackground } from '@/components/features/CinematicBackground';
+import { LucideIcon } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Join Guide | CDN - DayZ',
   description: 'Step-by-step instructions on how to join the CDN DayZ PvE servers.',
 };
 
-const steps = [
+type JoinStep = {
+  title: string;
+  description: string;
+  icon: LucideIcon;
+  action?: {
+    label: string;
+    url: string;
+  };
+};
+
+const steps: JoinStep[] = [
   {
     title: 'Install DayZ',
     description: 'Ensure you have DayZ installed via Steam.',
@@ -28,7 +39,6 @@ const steps = [
     title: 'Search for "CDN"',
     description: 'Open the launcher and type "CDN" in the filter bar.',
     icon: Search,
-    image: '/launcher-guide.jpg', // Placeholder
   },
   {
     title: 'Click Play',
@@ -47,6 +57,8 @@ export default function JoinPage() {
             Follow these steps to connect to the CDN network. Our servers use a curated modpack that is automatically downloaded.
           </p>
 
+          <h2 className="sr-only">Connection Steps</h2>
+
           <div className="space-y-12 relative before:absolute before:left-[19px] before:top-4 before:bottom-4 before:w-0.5 before:bg-gradient-to-b before:from-red-500 before:via-red-500/20 before:to-transparent">
             {steps.map((step, index) => (
               <div key={index} className="relative pl-12 md:pl-0 md:grid md:grid-cols-[200px_1fr] md:gap-8 items-start group">
@@ -58,11 +70,9 @@ export default function JoinPage() {
                 <Card className="p-8 bg-neutral-900/40 border-neutral-800 hover:border-red-500/30 transition-colors">
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-3">
-                      {/* @ts-ignore - icon is a component */}
                       <step.icon className="text-red-500 w-6 h-6" />
                       <h3 className="text-2xl font-bold text-white">{step.title}</h3>
                     </div>
-                    {/* @ts-ignore - action is optional */}
                     {step.action && (
                       <Button variant="outline" size="sm" asChild>
                         <a href={step.action.url} target="_blank" rel="noopener noreferrer">
@@ -75,13 +85,6 @@ export default function JoinPage() {
                   <p className="text-neutral-400 leading-relaxed text-lg mb-4">
                     {step.description}
                   </p>
-
-                  {/* @ts-ignore - image is optional */}
-                  {step.image && (
-                    <div className="w-full h-48 bg-black/50 rounded-lg border border-white/5 flex items-center justify-center text-neutral-600">
-                       <span className="text-sm">Screenshots/Images go here</span>
-                    </div>
-                  )}
                 </Card>
               </div>
             ))}

@@ -1,8 +1,10 @@
-import { events } from '@/data/mock';
 import { Card } from '@/components/ui/Card';
 import { Metadata } from 'next';
-import { CalendarDays, Flag, Radio } from 'lucide-react';
+import { CalendarDays, Radio, ArrowRight } from 'lucide-react';
 import { CinematicBackground } from '@/components/features/CinematicBackground';
+import { Button } from '@/components/ui/Button';
+import Link from 'next/link';
+import { DISCORD_INVITE_URL } from '@/lib/links';
 
 export const metadata: Metadata = {
   title: 'Events Schedule | CDN',
@@ -10,11 +12,6 @@ export const metadata: Metadata = {
 };
 
 export default function EventsPage() {
-  // Events are currently disabled/TBA
-  const activeEvents: any[] = []; 
-  const upcomingEvents: any[] = [];
-  const completedEvents: any[] = [];
-
   return (
     <CinematicBackground backgroundImageSrc="/Images/3.jpg">
       <div className="min-h-screen pt-32 pb-20 container mx-auto px-6 relative z-10">
@@ -36,6 +33,16 @@ export default function EventsPage() {
              <div className="inline-flex items-center gap-2 text-amber-500 font-mono tracking-widest text-sm uppercase px-4 py-2 bg-amber-500/10 rounded border border-amber-500/20">
                 <CalendarDays size={16} />
                 Schedule: TBA
+             </div>
+             <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+                <Button asChild>
+                  <Link href={DISCORD_INVITE_URL} target="_blank" rel="noopener noreferrer">
+                    Join Discord Alerts <ArrowRight className="ml-2 w-4 h-4" />
+                  </Link>
+                </Button>
+                <Button variant="outline" asChild>
+                  <Link href="/servers">View Live Servers</Link>
+                </Button>
              </div>
           </Card>
         </div>

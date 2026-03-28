@@ -73,12 +73,12 @@ export function NewsTicker() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
-            className="w-full max-w-2xl mx-auto mt-12 mb-8 relative z-30"
+            className="w-full max-w-2xl mx-auto mt-8 sm:mt-12 mb-6 sm:mb-8 relative z-30"
         >
-            <div className="bg-neutral-900/60 backdrop-blur-md border border-white/10 rounded-full pl-1 pr-6 py-1.5 flex items-center shadow-2xl relative overflow-hidden group">
+            <div className="bg-neutral-900/60 backdrop-blur-md border border-white/10 rounded-2xl sm:rounded-full px-2 sm:pl-1 sm:pr-6 py-2 sm:py-1.5 flex flex-col sm:flex-row sm:items-center shadow-2xl relative overflow-hidden group gap-2 sm:gap-0">
                 
                 {/* Pulse Indicator */}
-                <div className="bg-neutral-800/80 rounded-full px-3 py-1.5 mr-4 border border-white/5 flex items-center gap-2 shrink-0">
+                <div className="bg-neutral-800/80 rounded-full px-2.5 sm:px-3 py-1.5 sm:mr-4 border border-white/5 flex items-center gap-2 shrink-0 self-start sm:self-auto">
                      <span className="relative flex h-2 w-2">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
                         <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
@@ -87,7 +87,7 @@ export function NewsTicker() {
                 </div>
 
                 {/* Message Container */}
-                <div className="flex-1 relative h-6 overflow-hidden">
+                <div className="flex-1 relative h-10 sm:h-6 overflow-hidden min-w-0 w-full">
                     <AnimatePresence mode='wait'>
                         <motion.div
                             key={currentItem.id}
@@ -95,16 +95,16 @@ export function NewsTicker() {
                             animate={{ y: 0, opacity: 1 }}
                             exit={{ y: -20, opacity: 0 }}
                             transition={{ duration: 0.3, ease: "easeOut" }}
-                            className="absolute inset-0 flex items-center gap-3"
+                            className="absolute inset-0 flex items-start sm:items-center gap-2 sm:gap-3"
                         >
-                            {getIcon(currentItem.type)}
-                            <div className="flex items-center gap-2 overflow-hidden">
+                            <div className="pt-0.5 sm:pt-0 shrink-0">{getIcon(currentItem.type)}</div>
+                            <div className="flex items-start sm:items-center gap-2 overflow-hidden min-w-0">
                                 {currentItem.date && (
-                                    <span className="text-[10px] font-mono text-neutral-500 bg-neutral-800/50 px-1.5 py-0.5 rounded border border-white/5 shrink-0 whitespace-nowrap">
+                                    <span className="text-[10px] font-mono text-neutral-500 bg-neutral-800/50 px-1.5 py-0.5 rounded border border-white/5 shrink-0 whitespace-nowrap mt-0.5 sm:mt-0">
                                         {currentItem.date}
                                     </span>
                                 )}
-                                <span className="text-sm font-medium text-neutral-200 truncate cursor-default select-none">
+                                <span className="text-xs sm:text-sm font-medium text-neutral-200 leading-snug truncate cursor-default select-none min-w-0">
                                     {currentItem.message}
                                 </span>
                             </div>
@@ -113,12 +113,14 @@ export function NewsTicker() {
                 </div>
 
                 {/* Optional: Navigation Dots (visible on hover) */}
-                <div className="absolute right-4 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="flex justify-center sm:absolute sm:right-4 gap-2 sm:gap-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 pb-0.5 sm:pb-0">
                     {news.map((_, idx) => (
-                        <div 
+                        <button
+                            type="button"
                             key={idx}
                             onClick={() => setCurrentIndex(idx)}
-                            className={`w-1.5 h-1.5 rounded-full cursor-pointer transition-colors ${idx === currentIndex ? 'bg-white' : 'bg-white/20 hover:bg-white/50'}`}
+                            aria-label={`Show news item ${idx + 1}`}
+                            className={`w-2 h-2 sm:w-1.5 sm:h-1.5 rounded-full cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/80 ${idx === currentIndex ? 'bg-white' : 'bg-white/20 hover:bg-white/50'}`}
                         />
                     ))}
                 </div>
