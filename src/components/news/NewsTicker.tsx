@@ -87,7 +87,7 @@ export function NewsTicker() {
                 </div>
 
                 {/* Message Container */}
-                <div className="flex-1 relative h-10 sm:h-6 overflow-hidden min-w-0 w-full">
+                <div className="flex-1 relative h-12 sm:h-6 overflow-hidden min-w-0 w-full">
                     <AnimatePresence mode='wait'>
                         <motion.div
                             key={currentItem.id}
@@ -104,7 +104,7 @@ export function NewsTicker() {
                                         {currentItem.date}
                                     </span>
                                 )}
-                                <span className="text-xs sm:text-sm font-medium text-neutral-200 leading-snug truncate cursor-default select-none min-w-0">
+                                <span className="text-xs sm:text-sm font-medium text-neutral-200 leading-snug cursor-default select-none min-w-0 line-clamp-2 sm:line-clamp-1 break-words">
                                     {currentItem.message}
                                 </span>
                             </div>

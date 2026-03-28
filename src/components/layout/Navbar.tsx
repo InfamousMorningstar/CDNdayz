@@ -39,11 +39,11 @@ export function Navbar() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b",
         isScrolled 
-          ? "bg-black/60 backdrop-blur-xl border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.1)] py-4" 
-          : "bg-transparent border-transparent py-6"
+          ? "bg-black/60 backdrop-blur-xl border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.1)] py-3 sm:py-4" 
+          : "bg-transparent border-transparent py-4 sm:py-6"
       )}
     >
-      <div className="container mx-auto px-6 relative flex items-center justify-between">
+      <div className="container mx-auto px-4 sm:px-6 relative flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 group relative z-20">
           <div className="relative w-10 h-10 flex items-center justify-center transition-all group-hover:scale-105">
             <Image 
@@ -85,7 +85,7 @@ export function Navbar() {
         <div className="flex items-center gap-4 relative z-20">
           <button
             type="button"
-            className="lg:hidden text-neutral-400 hover:text-white"
+            className="lg:hidden text-neutral-400 hover:text-white rounded-md p-2 -mr-2"
             onClick={() => setIsOpen(!isOpen)}
             aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
             aria-expanded={isOpen}
@@ -105,14 +105,14 @@ export function Navbar() {
             className="lg:hidden bg-black/95 border-b border-white/10 overflow-hidden"
             id="mobile-navigation"
           >
-            <div className="container mx-auto px-6 py-6 flex flex-col gap-4">
+            <div className="container mx-auto px-4 sm:px-6 py-5 sm:py-6 flex flex-col gap-2">
               {navItems.map((item) => (
                 <ScrambleLink
                   key={item.href}
                   href={item.href}
                   label={item.name}
                   ariaCurrent={pathname === item.href ? 'page' : undefined}
-                  className="text-lg font-medium text-neutral-300 hover:text-red-400 py-3 border-b border-white/5"
+                  className="text-base sm:text-lg font-medium text-neutral-300 hover:text-red-400 py-3 border-b border-white/5"
                   onClick={() => setIsOpen(false)}
                 />
               ))}

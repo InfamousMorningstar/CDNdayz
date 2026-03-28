@@ -11,11 +11,11 @@ export const metadata = {
 export default function PrivacyPage() {
   return (
     <CinematicBackground>
-      <div className="min-h-screen pt-32 pb-20 container mx-auto px-6 relative z-10">
+      <div className="min-h-screen pt-28 sm:pt-32 pb-16 sm:pb-20 container mx-auto px-4 sm:px-6 relative z-10">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-8">Privacy Policy</h1>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6 sm:mb-8">Privacy Policy</h1>
           
-          <Card className="p-8 md:p-12 bg-neutral-900/60 border-neutral-800 backdrop-blur-md">
+          <Card className="p-5 sm:p-8 md:p-12 bg-neutral-900/60 border-neutral-800 backdrop-blur-md">
             <div className="prose prose-invert max-w-none space-y-8">
               
               <section>

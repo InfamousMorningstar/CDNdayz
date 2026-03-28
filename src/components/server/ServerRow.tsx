@@ -138,7 +138,7 @@ export function ServerRow({ name, map, players, maxPlayers, status, ping, connec
                 onClick={handleCopy}
                 disabled={!isOnline}
                 className={cn(
-                    "min-w-[130px] h-10 border-white/10 hover:border-red-500/50 transition-all font-mono text-xs tracking-widest group/btn relative overflow-hidden",
+                    "w-full sm:w-auto sm:min-w-[130px] h-10 border-white/10 hover:border-red-500/50 transition-all font-mono text-xs tracking-widest group/btn relative overflow-hidden",
                     copied ? "bg-green-500/10 text-green-400 border-green-500/50" : "bg-transparent hover:bg-red-950/20 text-neutral-300 hover:text-white"
                 )}
              >

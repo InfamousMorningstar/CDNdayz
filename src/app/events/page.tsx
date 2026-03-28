@@ -14,17 +14,17 @@ export const metadata: Metadata = {
 export default function EventsPage() {
   return (
     <CinematicBackground backgroundImageSrc="/Images/3.jpg">
-      <div className="min-h-screen pt-32 pb-20 container mx-auto px-6 relative z-10">
-        <div className="relative mb-20 text-center flex flex-col items-center">
+      <div className="min-h-screen pt-28 sm:pt-32 pb-16 sm:pb-20 container mx-auto px-4 sm:px-6 relative z-10">
+        <div className="relative mb-12 sm:mb-20 text-center flex flex-col items-center">
           <div className="mb-6 inline-flex p-4 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-500">
              <Radio className="w-12 h-12 animate-pulse" />
           </div>
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">Operations & <span className="text-red-500">Events</span></h1>
-          <p className="text-neutral-400 max-w-2xl text-lg mb-8">
+           <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-6">Operations & <span className="text-red-500">Events</span></h1>
+           <p className="text-neutral-400 max-w-2xl text-base sm:text-lg mb-8">
              Engage in server-wide operations, treasure hunts, and community challenges.
           </p>
           
-          <Card className="max-w-3xl w-full p-12 bg-neutral-900/60 border-neutral-800 backdrop-blur-md text-center">
+           <Card className="max-w-3xl w-full p-6 sm:p-12 bg-neutral-900/60 border-neutral-800 backdrop-blur-md text-center">
              <h2 className="text-2xl font-bold text-white mb-4">Transmission Incoming...</h2>
              <p className="text-neutral-300 text-lg mb-6">
                Command is currently planning the next phase of operations. 

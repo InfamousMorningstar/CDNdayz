@@ -161,7 +161,7 @@ export function CinematicBackground({ children, backgroundImageSrc = "/Images/S3
       {/* 3. Subtle Muzzle Flash / Lighting Pulse */}
       {/* Creates a random faint orange flicker in the distance */}
       <div className="absolute inset-0 pointer-events-none z-20 overflow-hidden mix-blend-overlay">
-        <div className="absolute top-1/4 left-1/4 w-[30vw] h-[30vw] min-w-[300px] bg-orange-500/5 rounded-full blur-[100px] animate-pulse-slow" />
+        <div className="absolute top-1/4 left-1/4 w-[42vw] h-[42vw] sm:w-[30vw] sm:h-[30vw] bg-orange-500/5 rounded-full blur-[100px] animate-pulse-slow" />
       </div>
 
       {/* 4. Vignette & Scanlines */}

@@ -64,13 +64,13 @@ export function ServerModsOverview() {
   };
 
   return (
-    <section aria-labelledby="server-mods-heading" className="mt-16">
+    <section aria-labelledby="server-mods-heading" className="mt-12 sm:mt-16">
       <div className="mb-8">
         <Badge variant="outline" className="mb-3 border-red-500/30 text-red-300 bg-red-500/10">
           <Layers className="w-3 h-3 mr-2" />
           Verified Mod Inventory
         </Badge>
-        <h2 id="server-mods-heading" className="text-3xl md:text-4xl text-white font-heading font-bold mb-3">
+        <h2 id="server-mods-heading" className="text-2xl sm:text-3xl md:text-4xl text-white font-heading font-bold mb-3">
           Server <span className="text-red-500">Mods</span>
         </h2>
         <p className="text-neutral-400 max-w-3xl">
@@ -78,7 +78,7 @@ export function ServerModsOverview() {
         </p>
       </div>
 
-      <Card className="p-6 bg-neutral-900/50 border-neutral-800 mb-8">
+      <Card className="p-4 sm:p-6 bg-neutral-900/50 border-neutral-800 mb-8">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4 text-white">
           <div className="flex items-center gap-2">
           <ShieldCheck className="w-4 h-4 text-green-400" />
@@ -199,9 +199,9 @@ export function ServerModsOverview() {
                       </div>
                     )}
 
-                    <p className="text-xs text-neutral-500 mt-3">Endpoint: {record.endpoint}</p>
-                    <p className="text-xs text-neutral-500 mt-1">Source: {record.source}</p>
-                    {record.lastVerified && <p className="text-xs text-neutral-500 mt-1">Verified: {record.lastVerified}</p>}
+                    <p className="text-xs text-neutral-500 mt-3 break-all">Endpoint: {record.endpoint}</p>
+                    <p className="text-xs text-neutral-500 mt-1 break-all">Source: {record.source}</p>
+                    {record.lastVerified && <p className="text-xs text-neutral-500 mt-1 break-all">Verified: {record.lastVerified}</p>}
                     {record.error && <p className="text-xs text-amber-300 mt-2">{record.error}</p>}
                   </div>
                 )}

@@ -77,26 +77,26 @@ export default function StorePage() {
 
   return (
     <CinematicBackground>
-      <div className="min-h-screen pt-32 pb-20 container mx-auto px-6 relative z-10">
+      <div className="min-h-screen pt-28 sm:pt-32 pb-16 sm:pb-20 container mx-auto px-4 sm:px-6 relative z-10">
         
         {/* Header */}
-        <div className="flex flex-col items-center text-center mb-16">
+        <div className="flex flex-col items-center text-center mb-10 sm:mb-16">
           <Badge variant="outline" className="mb-4 border-amber-500/30 text-amber-400 bg-amber-900/10 backdrop-blur-sm px-4 py-1">
             Server Support
           </Badge>
-          <h1 className="text-4xl md:text-6xl font-heading font-bold text-white mb-6">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-heading font-bold text-white mb-6">
             Donation <span className="text-amber-500">Store</span>
           </h1>
-          <p className="text-neutral-400 max-w-2xl text-lg font-sans">
+          <p className="text-neutral-400 max-w-2xl text-base sm:text-lg font-sans">
             Support the CDN community and receive exclusive in-game rewards. 
             All transactions are handled securely through our Discord ticket system to ensure you get exactly what you want.
           </p>
         </div>
 
         {/* Main Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8 max-w-6xl mx-auto mb-10 sm:mb-16">
           {categories.map((item, index) => (
-            <Card key={index} className={`p-8 bg-neutral-900/40 border-neutral-800 transition-all group relative overflow-hidden flex flex-col ${item.classes.border}`}>
+            <Card key={index} className={`p-5 sm:p-8 bg-neutral-900/40 border-neutral-800 transition-all group relative overflow-hidden flex flex-col ${item.classes.border}`}>
               {/* Hover Effect Background */}
               <div className={`absolute inset-0 bg-gradient-to-b to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${item.classes.gradient}`} />
               
@@ -121,7 +121,7 @@ export default function StorePage() {
                 </ul>
 
                 <Link href={DISCORD_LINK} target="_blank" rel="noopener noreferrer" className="w-full">
-                  <Button className={`w-full text-white border-0 transition-all shadow-lg ${item.classes.button}`}>
+                  <Button className={`w-full h-11 sm:h-10 text-white border-0 transition-all shadow-lg ${item.classes.button}`}>
                     <span className="mr-2">Get on Discord</span>
                     <ExternalLink size={16} />
                   </Button>
@@ -132,10 +132,10 @@ export default function StorePage() {
         </div>
 
         {/* Donation Info & Payment Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8 max-w-6xl mx-auto">
             
             {/* Info Card */}
-            <Card className="p-8 bg-neutral-900/60 border-neutral-800 flex flex-col backdrop-blur-md">
+            <Card className="p-5 sm:p-8 bg-neutral-900/60 border-neutral-800 flex flex-col backdrop-blur-md">
                 <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
                     <Shield className="text-red-500 w-6 h-6" />
                     Important Information
@@ -184,7 +184,7 @@ export default function StorePage() {
             </Card>
 
             {/* Payment & Steps Card */}
-            <Card className="p-8 bg-neutral-900/60 border-neutral-800 flex flex-col backdrop-blur-md">
+            <Card className="p-5 sm:p-8 bg-neutral-900/60 border-neutral-800 flex flex-col backdrop-blur-md">
                  <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
                     <Crown className="text-amber-500 w-6 h-6" />
                     Payment Methods

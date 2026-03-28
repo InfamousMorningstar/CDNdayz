@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 
 export default function BuildingRulesPage() {
   return (
-    <div className="min-h-screen pt-32 pb-20 container mx-auto px-6">
+    <div className="min-h-screen pt-28 sm:pt-32 pb-16 sm:pb-20 container mx-auto px-4 sm:px-6">
       <div className="mb-12">
         <Button variant="ghost" size="sm" asChild className="mb-6 -ml-4 text-neutral-400 hover:text-white">
           <Link href="/rules">
@@ -31,8 +31,8 @@ export default function BuildingRulesPage() {
         
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">Building <span className="text-red-500">Protocol</span></h1>
-            <p className="text-neutral-400 max-w-2xl text-lg">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-4">Building <span className="text-red-500">Protocol</span></h1>
+            <p className="text-neutral-400 max-w-2xl text-base sm:text-lg">
               Strict construction guidelines to ensure server stability and fair play. 
               Violation of these zones may result in base deletion.
             </p>

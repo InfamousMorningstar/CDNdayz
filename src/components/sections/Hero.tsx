@@ -9,7 +9,7 @@ import { DISCORD_INVITE_URL } from '@/lib/links';
 
 export function Hero() {
   return (
-    <section className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
+    <section className="relative h-screen min-h-[700px] sm:min-h-[760px] flex items-center justify-center overflow-hidden">
       {/* Background with overlay */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/80 to-black z-10" />
@@ -17,7 +17,7 @@ export function Hero() {
         <div className="w-full h-full bg-neutral-900 bg-[url('/Images/wp1886390-dayz-wallpapers.jpg')] bg-cover bg-center opacity-50" />
       </div>
 
-      <div className="container relative z-20 px-6 flex flex-col items-center text-center">
+      <div className="container relative z-20 px-4 sm:px-6 pt-20 sm:pt-0 flex flex-col items-center text-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -32,27 +32,35 @@ export function Hero() {
             <span className="text-xs font-mono text-green-400 tracking-widest uppercase">SIGNAL DETECTED</span>
           </div>
           
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter text-white max-w-5xl relative z-20">
-            <span className="inline-block drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]">SURVIVE</span>{' '}
+          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter text-white max-w-5xl relative z-20 leading-tight">
+            <span className="inline-block drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]">
+              <span className="inline-block">S</span>
+              <span className="inline-block animate-flicker-3 opacity-90">U</span>
+              <span className="inline-block opacity-100 shadow-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">R</span>
+              <span className="inline-block animate-flicker-1 text-white/80">V</span>
+              <span className="inline-block opacity-50 text-neutral-500">I</span>
+              <span className="inline-block animate-flicker-2">V</span>
+              <span className="inline-block opacity-90">E</span>
+            </span>{' '}
             <span className="text-red-600 drop-shadow-[0_0_20px_rgba(220,38,38,0.45)]">TOGETHER</span>
             <br />
-            <span className="text-3xl md:text-5xl lg:text-6xl font-heading text-transparent bg-clip-text bg-gradient-to-b from-neutral-200 to-neutral-600 tracking-wide opacity-90">
+            <span className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-heading text-transparent bg-clip-text bg-gradient-to-b from-neutral-200 to-neutral-600 tracking-wide opacity-90">
               THRIVE FOREVER
             </span>
           </h1>
           
-          <p className="text-base md:text-lg text-neutral-400 max-w-xl leading-relaxed font-sans font-light tracking-wide">
+          <p className="text-sm sm:text-base md:text-lg text-neutral-300 max-w-xl leading-relaxed font-sans font-light tracking-wide px-2 sm:px-0">
             CDN is a premium DayZ PvE network built for immersion, community, and tactical gameplay. 
             Experience a curated survival journey without the toxicity.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 mt-6 w-full sm:w-auto">
-            <Button size="lg" className="h-12 px-6 text-base gap-2 font-heading tracking-wider" asChild>
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-5 sm:mt-6 w-full sm:w-auto">
+            <Button size="lg" className="h-12 px-6 text-base gap-2 font-heading tracking-wider w-full sm:w-auto" asChild>
               <Link href="/servers">
                 View Servers <ChevronRight className="w-4 h-4" />
               </Link>
             </Button>
-            <Button size="lg" variant="outline" className="h-12 px-6 text-base font-heading tracking-wider border-neutral-500/30 hover:border-red-500/50 hover:bg-red-900/20 hover:text-red-400 transition-all" onClick={() => window.open(DISCORD_INVITE_URL, '_blank')}>
+            <Button size="lg" variant="outline" className="h-12 px-6 text-base font-heading tracking-wider border-neutral-500/30 hover:border-red-500/50 hover:bg-red-900/20 hover:text-red-400 transition-all w-full sm:w-auto" onClick={() => window.open(DISCORD_INVITE_URL, '_blank')}>
               Join Comms
             </Button>
           </div>
@@ -67,7 +75,7 @@ export function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1, duration: 1 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-neutral-500 flex flex-col items-center gap-2"
+        className="hidden sm:flex absolute bottom-10 left-1/2 -translate-x-1/2 text-neutral-500 flex-col items-center gap-2"
       >
         <span className="text-xs uppercase tracking-widest font-sans font-medium">Scroll to Explore</span>
         <ArrowDown className="w-4 h-4 animate-bounce" />

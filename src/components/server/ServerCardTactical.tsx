@@ -151,16 +151,16 @@ const ServerCardTactical: React.FC<ServerCardProps> = ({
             </div>
 
             {/* Content Body */}
-            <div className="p-5 flex-1 flex flex-col justify-between gap-4">
+            <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between gap-4">
                 <div>
-                    <h3 className="text-xl font-heading text-white mb-1 group-hover:text-red-500 transition-colors truncate">{name}</h3>
+                    <h3 className="text-lg sm:text-xl font-heading text-white mb-1 group-hover:text-red-500 transition-colors truncate">{name}</h3>
                     <button
                         type="button"
                         onClick={handleCopy}
                         className="group/copy flex items-center gap-2 cursor-pointer w-fit select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/80 rounded"
                         aria-label={`Copy server connect address for ${name}`}
                     >
-                         <p className={`text-xs uppercase tracking-wider font-mono transition-colors duration-200 ${copied ? "text-green-400" : "text-neutral-500 group-hover:text-neutral-300"}`}>
+                         <p className={`text-[11px] sm:text-xs uppercase tracking-wider font-mono transition-colors duration-200 break-all text-left ${copied ? "text-green-400" : "text-neutral-500 group-hover:text-neutral-300"}`}>
                             {copied ? "IP COPIED" : connect}
                         </p>
                         <div className={`transition-all duration-300 ${copied ? "opacity-100 scale-100" : "opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0"}`}>

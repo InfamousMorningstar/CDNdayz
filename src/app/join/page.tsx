@@ -50,16 +50,16 @@ const steps: JoinStep[] = [
 export default function JoinPage() {
   return (
     <CinematicBackground backgroundImageSrc="/Images/3.jpg">
-      <div className="min-h-screen pt-32 pb-20 container mx-auto px-6 relative z-10">
+      <div className="min-h-screen pt-28 sm:pt-32 pb-16 sm:pb-20 container mx-auto px-4 sm:px-6 relative z-10">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 text-center">Join the <span className="text-red-500">Operation</span></h1>
-          <p className="text-neutral-400 text-center text-lg mb-16 max-w-2xl mx-auto">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-6 text-center">Join the <span className="text-red-500">Operation</span></h1>
+          <p className="text-neutral-400 text-center text-base sm:text-lg mb-10 sm:mb-16 max-w-2xl mx-auto">
             Follow these steps to connect to the CDN network. Our servers use a curated modpack that is automatically downloaded.
           </p>
 
           <h2 className="sr-only">Connection Steps</h2>
 
-          <div className="space-y-12 relative before:absolute before:left-[19px] before:top-4 before:bottom-4 before:w-0.5 before:bg-gradient-to-b before:from-red-500 before:via-red-500/20 before:to-transparent">
+          <div className="space-y-8 sm:space-y-12 relative before:absolute before:left-[19px] before:top-4 before:bottom-4 before:w-0.5 before:bg-gradient-to-b before:from-red-500 before:via-red-500/20 before:to-transparent">
             {steps.map((step, index) => (
               <div key={index} className="relative pl-12 md:pl-0 md:grid md:grid-cols-[200px_1fr] md:gap-8 items-start group">
                 {/* Timeline dot */}
@@ -67,14 +67,14 @@ export default function JoinPage() {
                   <span className="font-mono font-bold text-white md:text-xl">{index + 1}</span>
                 </div>
                 
-                <Card className="p-8 bg-neutral-900/40 border-neutral-800 hover:border-red-500/30 transition-colors">
-                  <div className="flex items-start justify-between mb-4">
+                <Card className="p-5 sm:p-8 bg-neutral-900/40 border-neutral-800 hover:border-red-500/30 transition-colors">
+                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-4">
                     <div className="flex items-center gap-3">
                       <step.icon className="text-red-500 w-6 h-6" />
-                      <h3 className="text-2xl font-bold text-white">{step.title}</h3>
+                      <h3 className="text-xl sm:text-2xl font-bold text-white">{step.title}</h3>
                     </div>
                     {step.action && (
-                      <Button variant="outline" size="sm" asChild>
+                      <Button variant="outline" size="sm" asChild className="w-full sm:w-auto">
                         <a href={step.action.url} target="_blank" rel="noopener noreferrer">
                           {step.action.label}
                         </a>
@@ -82,7 +82,7 @@ export default function JoinPage() {
                     )}
                   </div>
                   
-                  <p className="text-neutral-400 leading-relaxed text-lg mb-4">
+                  <p className="text-neutral-400 leading-relaxed text-base sm:text-lg mb-4">
                     {step.description}
                   </p>
                 </Card>
@@ -90,7 +90,7 @@ export default function JoinPage() {
             ))}
           </div>
 
-          <div className="mt-20 pt-10 border-t border-white/5 flex flex-col items-center text-center">
+          <div className="mt-14 sm:mt-20 pt-8 sm:pt-10 border-t border-white/5 flex flex-col items-center text-center">
               <h3 className="text-2xl font-bold text-white mb-4">Already in?</h3>
               <p className="text-neutral-400 mb-8 max-w-lg">
                 Check out our New Player Guide to learn the basics of survival, trading, and base building on CDN.

@@ -15,18 +15,18 @@ export const metadata: Metadata = {
 export default function WipeInfoPage() {
   return (
     <CinematicBackground backgroundImageSrc="/Images/5.jpg">
-      <div className="min-h-screen pt-32 pb-20 container mx-auto px-6 relative z-10">
+            <div className="min-h-screen pt-28 sm:pt-32 pb-16 sm:pb-20 container mx-auto px-4 sm:px-6 relative z-10">
         
         {/* Header */}
-        <div className="flex flex-col items-center text-center mb-16">
+        <div className="flex flex-col items-center text-center mb-10 sm:mb-16">
           <Badge variant="outline" className="mb-4 border-red-500/30 text-red-400 bg-red-900/10 backdrop-blur-sm px-4 py-1">
             <Flame className="w-3 h-3 mr-2 fill-red-500" />
             Seasonal Reset Protocol
           </Badge>
-          <h1 className="text-4xl md:text-6xl font-heading font-bold text-white mb-6">
+                    <h1 className="text-3xl sm:text-4xl md:text-6xl font-heading font-bold text-white mb-6">
             Wipe <span className="text-red-500">Intelligence</span>
           </h1>
-          <p className="text-neutral-400 max-w-2xl text-lg font-sans">
+                    <p className="text-neutral-400 max-w-2xl text-base sm:text-lg font-sans">
             Understanding the lifecycle of our servers is key to your survival strategy. 
             Here is everything you need to know about map resets and progression.
           </p>
@@ -35,7 +35,7 @@ export default function WipeInfoPage() {
         <div className="max-w-4xl mx-auto space-y-12">
 
             {/* Schedule / Status */}
-            <Card className="p-8 bg-neutral-900/60 border-neutral-800 backdrop-blur-md">
+            <Card className="p-5 sm:p-8 bg-neutral-900/60 border-neutral-800 backdrop-blur-md">
                 <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
                     <Database className="text-amber-500 w-6 h-6" />
                     Wipe Schedule
@@ -70,7 +70,7 @@ export default function WipeInfoPage() {
             </Card>
             
             {/* The Cycle Card */}
-            <Card className="p-8 bg-neutral-900/60 border-neutral-800 backdrop-blur-md relative overflow-hidden">
+            <Card className="p-5 sm:p-8 bg-neutral-900/60 border-neutral-800 backdrop-blur-md relative overflow-hidden">
                 <div className="absolute top-0 right-0 p-8 opacity-5">
                     <RefreshCw size={120} />
                 </div>
@@ -105,7 +105,7 @@ export default function WipeInfoPage() {
             </Card>
 
             {/* Rollover Policy */}
-            <Card className="p-8 bg-neutral-900/60 border-neutral-800 backdrop-blur-md relative overflow-hidden">
+            <Card className="p-5 sm:p-8 bg-neutral-900/60 border-neutral-800 backdrop-blur-md relative overflow-hidden">
                  <div className="absolute top-0 right-0 w-full h-1 bg-gradient-to-r from-emerald-500 to-transparent" />
                  
                  <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">

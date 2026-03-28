@@ -32,13 +32,13 @@ export function QuickInfo() {
   ];
 
   return (
-        <section aria-labelledby="essential-intel-heading" className="py-20 bg-neutral-900/50 border-t border-white/5 relative">
-      <div className="container mx-auto px-6">
+                <section aria-labelledby="essential-intel-heading" className="py-16 sm:py-20 bg-neutral-900/50 border-t border-white/5 relative">
+            <div className="container mx-auto px-4 sm:px-6">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 sm:mb-12 gap-6">
             <div>
-                <h2 id="essential-intel-heading" className="text-3xl md:text-4xl font-bold text-white mb-2">Essential <span className="text-red-500">Intel</span></h2>
+                <h2 id="essential-intel-heading" className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2">Essential <span className="text-red-500">Intel</span></h2>
                 <p className="text-neutral-400">Key information for new survivors.</p>
             </div>
             <div className="hidden md:flex gap-2">
@@ -48,11 +48,11 @@ export function QuickInfo() {
             </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-5 sm:gap-8">
             {/* Quick Links Column (Span 3 on large screens) */}
-            <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-8 h-full">
+            <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8 h-full">
                 {infoCards.map((card, index) => (
-                    <Card key={index} className="p-8 bg-neutral-950/50 border-neutral-800 hover:border-red-500/30 transition-all group relative overflow-hidden flex flex-col h-full">
+                    <Card key={index} className="p-5 sm:p-8 bg-neutral-950/50 border-neutral-800 hover:border-red-500/30 transition-all group relative overflow-hidden flex flex-col h-full">
                         <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                         
                         <div className="relative z-10 flex-1">
@@ -78,7 +78,7 @@ export function QuickInfo() {
 
             {/* Official News Feed Column (Span 1) */}
             <div className="lg:col-span-1 h-full">
-                <Card className="h-full bg-neutral-950/80 border-neutral-800 p-6 relative overflow-hidden flex flex-col">
+                <Card className="h-full bg-neutral-950/80 border-neutral-800 p-4 sm:p-6 relative overflow-hidden flex flex-col">
                     <div className="relative z-10 h-full flex flex-col">
                         <div className="mb-4 pb-4 border-b border-white/5 flex items-center gap-2">
                              <Rss className="w-4 h-4 text-red-500 animate-pulse" />
@@ -95,10 +95,10 @@ export function QuickInfo() {
             </div>
         </div>
         
-        <div className="mt-12 md:hidden">
+        <div className="mt-10 md:hidden">
             <Button variant="outline" className="w-full justify-center gap-2" asChild>
-                <Link href="/join">
-                    Read Full Join Guide <ArrowRight size={16} />
+                <Link href="/servers">
+                    View Servers <ArrowRight size={16} />
                 </Link>
             </Button>
         </div>

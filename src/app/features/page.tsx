@@ -13,24 +13,24 @@ export const metadata: Metadata = {
 export default function FeaturesPage() {
   return (
     <CinematicBackground>
-      <div className="min-h-screen pt-32 pb-20 container mx-auto px-6 relative z-10">
-        <div className="flex flex-col items-center text-center mb-16">
+      <div className="min-h-screen pt-28 sm:pt-32 pb-16 sm:pb-20 container mx-auto px-4 sm:px-6 relative z-10">
+        <div className="flex flex-col items-center text-center mb-10 sm:mb-16">
           <Badge variant="outline" className="mb-4 border-red-500/30 text-red-400 bg-red-900/10 backdrop-blur-sm px-4 py-1">
             System Configuration
           </Badge>
-          <h1 className="text-4xl md:text-6xl font-heading font-bold text-white mb-6">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-heading font-bold text-white mb-6">
             Features & <span className="text-red-500">Mods</span>
           </h1>
-        <p className="text-neutral-400 max-w-2xl text-lg font-sans">
+        <p className="text-neutral-400 max-w-2xl text-base sm:text-lg font-sans">
           Different servers operate with different building rules and mods to cater to every playstyle. 
           Check which system is active on your favorite map below.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8 max-w-7xl mx-auto">
         
         {/* Expansion Building */}
-        <Card className="p-8 bg-neutral-900/40 border-neutral-800 hover:border-red-500/30 transition-all group relative overflow-hidden">
+        <Card className="p-5 sm:p-8 bg-neutral-900/40 border-neutral-800 hover:border-red-500/30 transition-all group relative overflow-hidden">
           <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
             <Hammer size={120} />
           </div>
@@ -68,7 +68,7 @@ export default function FeaturesPage() {
         </Card>
 
         {/* Base Building Plus (BBP) */}
-        <Card className="p-8 bg-neutral-900/40 border-neutral-800 hover:border-orange-500/30 transition-all group relative overflow-hidden">
+        <Card className="p-5 sm:p-8 bg-neutral-900/40 border-neutral-800 hover:border-orange-500/30 transition-all group relative overflow-hidden">
           <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
             <Hammer size={120} />
           </div>
@@ -102,7 +102,7 @@ export default function FeaturesPage() {
         </Card>
 
         {/* Standard / Regular Building */}
-        <Card className="p-8 bg-neutral-900/40 border-neutral-800 hover:border-emerald-500/30 transition-all group relative overflow-hidden">
+        <Card className="p-5 sm:p-8 bg-neutral-900/40 border-neutral-800 hover:border-emerald-500/30 transition-all group relative overflow-hidden">
           <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
             <Shield size={120} />
           </div>

@@ -10,12 +10,12 @@ export const metadata: Metadata = {
 export default function RulesPage() {
   return (
     <CinematicBackground backgroundImageSrc="/Images/2.jpg">
-      <div className="min-h-screen pt-32 pb-20 container mx-auto px-6 relative z-10">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-6xl font-heading font-bold text-white mb-6">
+      <div className="min-h-screen pt-28 sm:pt-32 pb-16 sm:pb-20 container mx-auto px-4 sm:px-6 relative z-10">
+        <div className="text-center mb-10 sm:mb-16">
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-heading font-bold text-white mb-6">
             Rules & <span className="text-red-500">FAQ</span>
           </h1>
-          <p className="text-neutral-400 max-w-2xl mx-auto text-lg font-sans">
+          <p className="text-neutral-400 max-w-2xl mx-auto text-base sm:text-lg font-sans">
             Review community standards, hardcore exceptions, base-building requirements, and technical troubleshooting in one place.
           </p>
         </div>

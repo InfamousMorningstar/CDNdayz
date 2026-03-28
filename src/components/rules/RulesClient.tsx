@@ -115,11 +115,11 @@ export function RulesClient() {
   return (
     <div className="max-w-6xl mx-auto">
       {/* Tab Navigation */}
-      <div className="flex flex-wrap justify-center gap-4 mb-12">
+      <div className="flex flex-wrap justify-center gap-3 mb-8 sm:mb-12">
         <button
           onClick={() => setActiveTab('general')}
           className={cn(
-            "flex items-center gap-2 px-8 py-4 rounded-full text-lg font-bold transition-all duration-300 border",
+            "w-full sm:w-auto justify-center flex items-center gap-2 px-4 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-bold transition-all duration-300 border",
             activeTab === 'general'
               ? "bg-red-600 border-red-500 text-white shadow-[0_0_20px_rgba(220,38,38,0.4)]"
               : "bg-neutral-900/50 border-neutral-800 text-neutral-400 hover:border-red-500/50 hover:text-white"
@@ -131,7 +131,7 @@ export function RulesClient() {
         <button
           onClick={() => setActiveTab('building')}
           className={cn(
-            "flex items-center gap-2 px-8 py-4 rounded-full text-lg font-bold transition-all duration-300 border",
+            "w-full sm:w-auto justify-center flex items-center gap-2 px-4 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-bold transition-all duration-300 border",
             activeTab === 'building'
               ? "bg-red-600 border-red-500 text-white shadow-[0_0_20px_rgba(220,38,38,0.4)]"
               : "bg-neutral-900/50 border-neutral-800 text-neutral-400 hover:border-red-500/50 hover:text-white"
@@ -142,7 +142,7 @@ export function RulesClient() {
         </button>
       </div>
 
-      <div className="min-h-[600px]">
+      <div className="min-h-[520px]">
         <AnimatePresence mode="wait">
           {activeTab === 'general' ? (
             <motion.div
@@ -182,9 +182,9 @@ export function RulesClient() {
                 </div>
               </Card>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8">
                 {/* General Conduct */}
-                <Card className="p-8 bg-neutral-900/60 border-neutral-800">
+                <Card className="p-5 sm:p-8 bg-neutral-900/60 border-neutral-800">
                   <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/5">
                     <Users className="text-red-500 w-6 h-6" />
                     <h2 className="text-2xl font-heading font-bold text-white">Community Standards</h2>
@@ -222,7 +222,7 @@ export function RulesClient() {
                 </Card>
 
                 {/* Ticket System */}
-                <Card className="p-8 bg-neutral-900/60 border-neutral-800">
+                <Card className="p-5 sm:p-8 bg-neutral-900/60 border-neutral-800">
                   <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/5">
                     <Terminal className="text-red-500 w-6 h-6" />
                     <h2 className="text-2xl font-heading font-bold text-white">Ticket System</h2>
@@ -250,7 +250,7 @@ export function RulesClient() {
                 </Card>
 
                 {/* Chat Rules */}
-                <Card className="p-8 bg-neutral-900/60 border-neutral-800 md:col-span-2">
+                <Card className="p-5 sm:p-8 bg-neutral-900/60 border-neutral-800 md:col-span-2">
                   <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/5">
                     <MessageSquare className="text-red-500 w-6 h-6" />
                     <h2 className="text-2xl font-heading font-bold text-white">Communication Protocols</h2>
@@ -338,8 +338,8 @@ export function RulesClient() {
               className="space-y-8"
             >
               {/* Build Radius & Restrictions */}
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <Card className="p-8 bg-neutral-900/60 border-neutral-800 lg:col-span-2">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-8">
+                <Card className="p-5 sm:p-8 bg-neutral-900/60 border-neutral-800 lg:col-span-2">
                   <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/5">
                     <Construction className="text-red-500 w-6 h-6" />
                     <h2 className="text-2xl font-heading font-bold text-white">Build Zones & Radius</h2>
@@ -384,7 +384,7 @@ export function RulesClient() {
                   </div>
                 </Card>
 
-                <Card className="p-8 bg-neutral-900/60 border-neutral-800">
+                <Card className="p-5 sm:p-8 bg-neutral-900/60 border-neutral-800">
                    <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/5">
                     <Hammer className="text-red-500 w-6 h-6" />
                     <h2 className="text-2xl font-heading font-bold text-white">Systems</h2>
@@ -412,8 +412,8 @@ export function RulesClient() {
               </div>
 
               {/* Bunkers & Specialty */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <Card className="p-8 bg-neutral-900/60 border-neutral-800">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8">
+                <Card className="p-5 sm:p-8 bg-neutral-900/60 border-neutral-800">
                   <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/5">
                     <Shield className="text-red-500 w-6 h-6" />
                     <h2 className="text-2xl font-heading font-bold text-white">Bunkers</h2>
@@ -456,7 +456,7 @@ export function RulesClient() {
                   </div>
                 </Card>
 
-                <Card className="p-8 bg-neutral-900/60 border-neutral-800">
+                <Card className="p-5 sm:p-8 bg-neutral-900/60 border-neutral-800">
                   <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/5">
                     <Home className="text-red-500 w-6 h-6" />
                     <h2 className="text-2xl font-heading font-bold text-white">Housing</h2>

@@ -11,17 +11,17 @@ export const metadata: Metadata = {
 export default function NewPlayerPage() {
   return (
     <CinematicBackground backgroundImageSrc="/Images/2.jpg">
-      <div className="min-h-screen pt-32 pb-20 container mx-auto px-6 relative z-10">
+      <div className="min-h-screen pt-28 sm:pt-32 pb-16 sm:pb-20 container mx-auto px-4 sm:px-6 relative z-10">
         <div className="max-w-4xl mx-auto">
-          <header className="mb-16 text-center">
+          <header className="mb-10 sm:mb-16 text-center">
             <span className="text-red-500 font-mono text-sm tracking-widest uppercase mb-4 block">New Recruit Induction</span>
-            <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">Survival <span className="text-neutral-500">Manual</span></h1>
-            <p className="text-neutral-400 text-lg max-w-2xl mx-auto">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-6">Survival <span className="text-neutral-500">Manual</span></h1>
+            <p className="text-neutral-400 text-base sm:text-lg max-w-2xl mx-auto">
               Welcome to Chernarus/Namalsk/Deer Isle. This guide will help you navigate your first hours and establish a foothold.
             </p>
         </header>
         
-        <div className="space-y-12">
+        <div className="space-y-8 sm:space-y-12">
            <section id="getting-started">
               <h2 className="text-3xl font-bold text-white mb-6 border-l-4 border-red-500 pl-4">I. Initial Deployment</h2>
               <div className="prose prose-invert max-w-none text-neutral-300">
