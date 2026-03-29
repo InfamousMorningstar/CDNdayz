@@ -208,14 +208,14 @@ export function ServerMiniCard({ name, map, players, maxPlayers, status, ping, c
           onClick={handleCopy}
           aria-label={`Copy connect address for ${name}`}
           className={cn(
-            "shrink-0 h-8 px-3 rounded text-xs font-mono uppercase tracking-wider transition-all duration-200 border border-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-0",
+            "shrink-0 h-8 px-4 rounded-full text-xs font-mono tracking-wider transition-all duration-200 border border-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-0",
             theme.focusRing,
             copied
               ? "bg-green-500/20 border-green-400/40 text-green-400"
               : cn("text-neutral-400", theme.copyHover)
           )}
         >
-          {copied ? 'Copied' : 'Copy'}
+          {copied ? 'Copied' : 'Copy IP'}
         </button>
       </div>
     </div>
