@@ -76,6 +76,12 @@ export function ServerModsOverview() {
         <p className="text-neutral-400 max-w-3xl">
           Live launcher data. This section pulls directly from the same DayZSA query source used by launcher server checks, so mod counts and mod names are not hand-written.
         </p>
+        <div className="mt-4 inline-flex items-start gap-2 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2 text-xs sm:text-sm text-amber-100 max-w-3xl">
+          <span className="mt-0.5 text-amber-300">⚠</span>
+          <p>
+            This server cluster runs a modified DayZ setup, so mechanics, client performance, and overall stability may differ from vanilla.
+          </p>
+        </div>
       </div>
 
       <Card className="p-4 sm:p-6 bg-neutral-900/50 border-neutral-800 mb-8">

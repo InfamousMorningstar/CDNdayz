@@ -80,6 +80,9 @@ export function Footer() {
               <p>
                 This website and the CDN DayZ community are unrelated to, not sponsored by, and not endorsed by Bohemia Interactive a.s. or any of its partners.
               </p>
+              <p className="text-amber-200/90">
+                ⚠ CDN servers run a modified DayZ experience, so gameplay systems, client performance, and overall stability may differ from vanilla.
+              </p>
               <p>
                 DayZ&reg;, Bohemia Interactive&reg;, and their respective logos are trademarks or registered trademarks of Bohemia Interactive a.s. All other trademarks, images, and assets used are the property of their respective owners and are used here for informational and community purposes only.
               </p>
