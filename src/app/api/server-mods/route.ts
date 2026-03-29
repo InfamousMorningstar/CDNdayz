@@ -11,6 +11,10 @@ interface DayzsaResult {
     ip?: string;
     port?: number;
   };
+  name?: string;
+  hostname?: string;
+  map?: string;
+  mission?: string;
   mods?: DayzsaMod[];
 }
 
@@ -36,6 +40,45 @@ let cache:
   | null = null;
 let lastFetch = 0;
 const CACHE_MS = 60 * 1000;
+
+function normalizeMapName(mapValue: string): string {
+  const normalized = mapValue.trim().toLowerCase();
+
+  const mapAliases: Record<string, string> = {
+    chernarusplus: 'Chernarus',
+    enoch: 'Livonia',
+    deerisle: 'Deer Isle',
+    hashima: 'Hashima',
+    sakhal: 'Sakhal',
+    namalsk: 'Namalsk',
+    bitterroot: 'Bitterroot',
+    banov: 'Banov',
+  };
+
+  return mapAliases[normalized] || mapValue;
+}
+
+function getLiveServerName(result: DayzsaResult | undefined, fallbackName: string): string {
+  if (!result) return fallbackName;
+
+  const raw = (result.name || result.hostname || '').trim();
+  return raw || fallbackName;
+}
+
+function getLiveServerMap(result: DayzsaResult | undefined, fallbackMap: string): string {
+  if (!result) return fallbackMap;
+
+  const raw = (result.map || result.mission || '').trim();
+  return normalizeMapName(raw || fallbackMap);
+}
+
+function getLiveEndpoint(result: DayzsaResult | undefined, fallbackEndpoint: string): string {
+  if (!result?.endpoint?.ip || !result?.endpoint?.port) {
+    return fallbackEndpoint;
+  }
+
+  return `${result.endpoint.ip}:${result.endpoint.port}`;
+}
 
 export async function GET() {
   const now = Date.now();
@@ -68,12 +111,15 @@ export async function GET() {
         }
 
         const mods = Array.isArray(data.result.mods) ? data.result.mods : [];
+        const liveServerName = getLiveServerName(data.result, server.name);
+        const liveServerMap = getLiveServerMap(data.result, server.map);
+        const liveEndpoint = getLiveEndpoint(data.result, endpoint);
 
         return {
           id: server.id,
-          serverName: server.name,
-          map: server.map,
-          endpoint,
+          serverName: liveServerName,
+          map: liveServerMap,
+          endpoint: liveEndpoint,
           modCount: mods.length,
           mods,
           source: 'dayzsalauncher.com/api/v1/query',
