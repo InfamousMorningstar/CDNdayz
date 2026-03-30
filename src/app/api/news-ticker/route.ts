@@ -5,6 +5,14 @@ import { join } from 'path';
 const NEWS_FILE = join(process.cwd(), 'src/data/news-feed.json');
 const NEWS_KEY = 'cdn:news-feed';
 
+type NewsItem = {
+    id: string | number;
+    type: 'alert' | 'event' | 'info' | 'update';
+    message: string;
+    date?: string;
+    publishedAt?: string;
+};
+
 function verifyAdminToken(req: NextRequest): boolean {
     const authHeader = req.headers.get('Authorization');
     if (!authHeader?.startsWith('Bearer ')) {
@@ -59,6 +67,29 @@ async function writeNews(data: any) {
     }
 }
 
+function normalizeNewsItems(items: unknown[]): NewsItem[] {
+    return items
+        .filter((item): item is Record<string, unknown> => typeof item === 'object' && item !== null)
+        .map((item) => {
+            const normalizedItem: NewsItem = {
+                id: typeof item.id === 'string' || typeof item.id === 'number' ? item.id : Date.now(),
+                type: item.type === 'alert' || item.type === 'event' || item.type === 'info' || item.type === 'update' ? item.type : 'info',
+                message: typeof item.message === 'string' ? item.message.trim() : '',
+            };
+
+            if (typeof item.date === 'string' && item.date.trim()) {
+                normalizedItem.date = item.date.trim();
+            }
+
+            if (typeof item.publishedAt === 'string' && !Number.isNaN(new Date(item.publishedAt).getTime())) {
+                normalizedItem.publishedAt = item.publishedAt;
+            }
+
+            return normalizedItem;
+        })
+        .filter((item) => item.message.length > 0);
+}
+
 export async function GET() {
     try {
         const news = await readNews();
@@ -92,8 +123,9 @@ export async function PUT(request: NextRequest) {
             );
         }
 
-        // Write to file
-        const success = await writeNews(newsData);
+        const normalizedNews = normalizeNewsItems(newsData);
+
+        const success = await writeNews(normalizedNews);
 
         if (!success) {
             return NextResponse.json(

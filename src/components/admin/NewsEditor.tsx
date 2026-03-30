@@ -9,6 +9,7 @@ export type NewsItem = {
     type: 'alert' | 'event' | 'info' | 'update';
     message: string;
     date?: string;
+    publishedAt?: string;
 };
 
 interface NewsEditorProps {
@@ -17,24 +18,30 @@ interface NewsEditorProps {
 
 const MAX_MESSAGE_LENGTH = 200;
 
-function formatCurrentDate(): string {
-    const now = new Date();
-    const time = now.toLocaleString('en-US', { 
-        weekday: 'short',
+function formatDisplayDate(item: NewsItem): string | undefined {
+    if (!item.publishedAt) {
+        return item.date;
+    }
+
+    const parsedDate = new Date(item.publishedAt);
+    if (Number.isNaN(parsedDate.getTime())) {
+        return item.date;
+    }
+
+    return new Intl.DateTimeFormat(undefined, {
         month: 'short',
         day: 'numeric',
-        hour: '2-digit',
+        hour: 'numeric',
         minute: '2-digit',
-        hour12: true
-    });
-    return time;
+        timeZoneName: 'short',
+    }).format(parsedDate);
 }
 
 const EXAMPLE_MESSAGE: NewsItem = {
     id: 'example',
     type: 'info',
     message: 'Welcome to CDN DayZ. Check out our new server rules.',
-    date: 'Example Format',
+    publishedAt: '2026-03-30T21:00:00.000Z',
 };
 
 export default function NewsEditor({ token }: NewsEditorProps) {
@@ -69,13 +76,11 @@ export default function NewsEditor({ token }: NewsEditorProps) {
             return;
         }
 
-        const currentDate = formatCurrentDate();
-
         const newItem: NewsItem = {
             id: Date.now(),
             type,
             message: message.trim(),
-            date: currentDate,
+            publishedAt: new Date().toISOString(),
         };
 
         const updatedNews = [...news, newItem];
@@ -151,8 +156,8 @@ export default function NewsEditor({ token }: NewsEditorProps) {
                                 <span className={`px-2 py-1 rounded text-xs font-semibold border ${getTypeColor(EXAMPLE_MESSAGE.type)}`}>
                                     {EXAMPLE_MESSAGE.type}
                                 </span>
-                                {EXAMPLE_MESSAGE.date && (
-                                    <span className="text-xs text-neutral-400">{EXAMPLE_MESSAGE.date}</span>
+                                {formatDisplayDate(EXAMPLE_MESSAGE) && (
+                                    <span className="text-xs text-neutral-400">{formatDisplayDate(EXAMPLE_MESSAGE)}</span>
                                 )}
                             </div>
                             <p className="text-neutral-300">{EXAMPLE_MESSAGE.message}</p>
@@ -160,7 +165,7 @@ export default function NewsEditor({ token }: NewsEditorProps) {
                     </div>
                 </div>
                 <p className="text-xs text-neutral-500 mt-3">
-                    ✓ Message is clear and concise • ✓ Type matches the content • ✓ Date will auto-populate when posted
+                    ✓ Message is clear and concise • ✓ Type matches the content • ✓ Time renders in each viewer's local timezone
                 </p>
             </div>
 
@@ -215,7 +220,7 @@ export default function NewsEditor({ token }: NewsEditorProps) {
                             <option value="event">📅 Event</option>
                             <option value="update">📢 Update</option>
                         </select>
-                        <p className="text-xs text-neutral-500 mt-2">Note: Date will auto-populate with current time when posted</p>
+                        <p className="text-xs text-neutral-500 mt-2">Note: New posts save in UTC and display in each viewer&apos;s local timezone</p>
                     </div>
 
                     <Button
@@ -244,8 +249,8 @@ export default function NewsEditor({ token }: NewsEditorProps) {
                                     <span className={`px-2 py-1 rounded text-xs font-semibold border ${getTypeColor(item.type)}`}>
                                         {item.type}
                                     </span>
-                                    {item.date && (
-                                        <span className="text-xs text-neutral-500">{item.date}</span>
+                                    {formatDisplayDate(item) && (
+                                        <span className="text-xs text-neutral-500">{formatDisplayDate(item)}</span>
                                     )}
                                 </div>
                                 <p className="text-neutral-100 break-words">{item.message}</p>

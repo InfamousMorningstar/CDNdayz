@@ -2,13 +2,14 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { AlertTriangle, Info, Calendar, Megaphone, Radio } from 'lucide-react';
+import { AlertTriangle, Info, Calendar, Megaphone } from 'lucide-react';
 
 export type NewsItem = {
     id: string | number;
     type: 'alert' | 'event' | 'info' | 'update';
     message: string;
-    date?: string; // Optional date field (e.g. "2023-10-27" or "Today")
+    date?: string;
+    publishedAt?: string;
 };
 
 const DEFAULT_NEWS: NewsItem[] = [
@@ -16,6 +17,25 @@ const DEFAULT_NEWS: NewsItem[] = [
     { id: 2, type: 'event', message: "Community Event: 'Operation Blackout' this Saturday @ 8PM EST.", date: "Sat, 8PM" },
     { id: 3, type: 'alert', message: "Server Maintenance scheduled for Wednesday 4AM - 5AM.", date: "Wed, 4AM" },
 ];
+
+function formatDisplayDate(item: NewsItem): string | undefined {
+    if (!item.publishedAt) {
+        return item.date;
+    }
+
+    const parsedDate = new Date(item.publishedAt);
+    if (Number.isNaN(parsedDate.getTime())) {
+        return item.date;
+    }
+
+    return new Intl.DateTimeFormat(undefined, {
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit',
+        timeZoneName: 'short',
+    }).format(parsedDate);
+}
 
 export function NewsTicker() {
     const [news, setNews] = useState<NewsItem[]>(DEFAULT_NEWS);
@@ -56,6 +76,7 @@ export function NewsTicker() {
     }, [news.length]);
 
     const currentItem = news[currentIndex];
+    const currentItemDate = formatDisplayDate(currentItem);
 
     const getIcon = (type: string) => {
         switch (type) {
@@ -87,7 +108,7 @@ export function NewsTicker() {
                 </div>
 
                 {/* Message Container */}
-                <div className="flex-1 relative h-12 sm:h-6 overflow-hidden min-w-0 w-full">
+                <div className="flex-1 relative min-h-[3.25rem] sm:h-6 overflow-hidden min-w-0 w-full">
                     <AnimatePresence mode='wait'>
                         <motion.div
                             key={currentItem.id}
@@ -95,13 +116,13 @@ export function NewsTicker() {
                             animate={{ y: 0, opacity: 1 }}
                             exit={{ y: -20, opacity: 0 }}
                             transition={{ duration: 0.3, ease: "easeOut" }}
-                            className="absolute inset-0 flex items-start sm:items-center gap-2 sm:gap-3"
+                            className="relative sm:absolute sm:inset-0 flex items-start sm:items-center gap-2 sm:gap-3"
                         >
                             <div className="pt-0.5 sm:pt-0 shrink-0">{getIcon(currentItem.type)}</div>
-                            <div className="flex items-start sm:items-center gap-2 overflow-hidden min-w-0">
-                                {currentItem.date && (
+                            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-2 overflow-hidden min-w-0">
+                                {currentItemDate && (
                                     <span className="text-[10px] font-mono text-neutral-500 bg-neutral-800/50 px-1.5 py-0.5 rounded border border-white/5 shrink-0 whitespace-nowrap mt-0.5 sm:mt-0">
-                                        {currentItem.date}
+                                        {currentItemDate}
                                     </span>
                                 )}
                                 <span className="text-xs sm:text-sm font-medium text-neutral-200 leading-snug cursor-default select-none min-w-0 line-clamp-2 sm:line-clamp-1 break-words">
