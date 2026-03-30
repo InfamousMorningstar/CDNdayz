@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Spotlight } from '@/components/ui/Spotlight';
 import { cn } from '@/lib/utils';
+import { FooterTicTacToe } from '@/components/layout/FooterTicTacToe';
 
 export function Footer() {
   const currentYear = new Date().getFullYear();
@@ -104,14 +105,13 @@ export function Footer() {
                  
                  <div className="flex flex-col justify-center">
                     <span className="text-[10px] uppercase tracking-wider text-neutral-500 font-medium leading-none mb-1">Designed & Built by</span>
-                    <div className="flex items-baseline gap-1.5">
-                       <span className="text-sm font-semibold text-neutral-300 group-hover:text-white transition-colors">Salman Ahmad</span>
-                       <span className="text-[10px] font-mono text-red-500/60 group-hover:text-red-400 transition-colors">Morningstar.0</span>
-                    </div>
+                    <span className="text-sm font-mono font-semibold text-red-400/90 group-hover:text-red-300 transition-colors tracking-wide">Morningstar.0</span>
                  </div>
               </div>
             </Spotlight>
           </a>
+
+          <FooterTicTacToe />
         </div>
       </div>
     </footer>
