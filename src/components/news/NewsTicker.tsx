@@ -94,12 +94,12 @@ export function NewsTicker() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
-            className="w-full max-w-2xl mx-auto mt-8 sm:mt-12 mb-6 sm:mb-8 relative z-30"
+            className="w-full max-w-5xl mx-auto mt-8 sm:mt-12 mb-6 sm:mb-8 relative z-30"
         >
-            <div className="bg-neutral-900/60 backdrop-blur-md border border-white/10 rounded-2xl sm:rounded-full px-2 sm:pl-1 sm:pr-6 py-2 sm:py-1.5 flex flex-col sm:flex-row sm:items-center shadow-2xl relative overflow-hidden group gap-2 sm:gap-0">
+            <div className="bg-neutral-900/60 backdrop-blur-md border border-white/10 rounded-2xl sm:rounded-[2rem] px-2 sm:px-4 py-2.5 sm:py-3 flex flex-col sm:flex-row sm:items-start shadow-2xl relative overflow-hidden group gap-2 sm:gap-3">
                 
                 {/* Pulse Indicator */}
-                <div className="bg-neutral-800/80 rounded-full px-2.5 sm:px-3 py-1.5 sm:mr-4 border border-white/5 flex items-center gap-2 shrink-0 self-start sm:self-auto">
+                <div className="bg-neutral-800/80 rounded-full px-2.5 sm:px-3 py-1.5 border border-white/5 flex items-center gap-2 shrink-0 self-start sm:self-center">
                      <span className="relative flex h-2 w-2">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
                         <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
@@ -108,7 +108,7 @@ export function NewsTicker() {
                 </div>
 
                 {/* Message Container */}
-                <div className="flex-1 relative min-h-[3.25rem] sm:h-6 overflow-hidden min-w-0 w-full">
+                <div className="flex-1 relative min-h-[3.5rem] sm:min-h-[4.5rem] min-w-0 w-full">
                     <AnimatePresence mode='wait'>
                         <motion.div
                             key={currentItem.id}
@@ -116,16 +116,16 @@ export function NewsTicker() {
                             animate={{ y: 0, opacity: 1 }}
                             exit={{ y: -20, opacity: 0 }}
                             transition={{ duration: 0.3, ease: "easeOut" }}
-                            className="relative sm:absolute sm:inset-0 flex items-start sm:items-center gap-2 sm:gap-3"
+                            className="relative flex items-start gap-2 sm:gap-3"
                         >
-                            <div className="pt-0.5 sm:pt-0 shrink-0">{getIcon(currentItem.type)}</div>
-                            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-2 overflow-hidden min-w-0">
+                            <div className="pt-0.5 shrink-0">{getIcon(currentItem.type)}</div>
+                            <div className="flex flex-col sm:flex-row items-start sm:items-start gap-1 sm:gap-2 min-w-0">
                                 {currentItemDate && (
-                                    <span className="text-[10px] font-mono text-neutral-500 bg-neutral-800/50 px-1.5 py-0.5 rounded border border-white/5 shrink-0 whitespace-nowrap mt-0.5 sm:mt-0">
+                                    <span className="text-[10px] font-mono text-neutral-500 bg-neutral-800/50 px-1.5 py-0.5 rounded border border-white/5 shrink-0 whitespace-nowrap mt-0.5">
                                         {currentItemDate}
                                     </span>
                                 )}
-                                <span className="text-xs sm:text-sm font-medium text-neutral-200 leading-snug cursor-default select-none min-w-0 line-clamp-2 sm:line-clamp-1 break-words">
+                                <span className="text-xs sm:text-sm font-medium text-neutral-200 leading-snug cursor-default select-none min-w-0 line-clamp-4 sm:line-clamp-3 break-words">
                                     {currentItem.message}
                                 </span>
                             </div>
@@ -134,7 +134,7 @@ export function NewsTicker() {
                 </div>
 
                 {/* Optional: Navigation Dots (visible on hover) */}
-                <div className="flex justify-center sm:absolute sm:right-4 gap-2 sm:gap-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 pb-0.5 sm:pb-0">
+                <div className="flex justify-center sm:justify-end sm:self-center gap-2 sm:gap-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 pb-0.5 sm:pb-0 shrink-0">
                     {news.map((_, idx) => (
                         <button
                             type="button"
