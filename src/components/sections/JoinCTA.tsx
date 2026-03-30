@@ -12,7 +12,7 @@ export function JoinCTA() {
       
       <div className="container relative z-10 px-6 mx-auto flex flex-col items-center gap-8">
         <span className="text-red-500 font-mono text-sm tracking-widest uppercase rounded-full px-4 py-1 border border-red-500/20 bg-red-500/5">
-          Join the Ranks
+          CDN OPERATIONS
         </span>
         
         <h2 id="join-cta-heading" className="text-4xl md:text-6xl font-bold text-white max-w-3xl">

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Globe, Shield, BookOpen, Calendar, HelpCircle, Hammer, ShoppingBag } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -24,6 +24,8 @@ export function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const logoTapCount = useRef(0);
+  const logoTapTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -32,6 +34,23 @@ export function Navbar() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleLogoClick = () => {
+    logoTapCount.current += 1;
+
+    if (logoTapTimer.current) {
+      clearTimeout(logoTapTimer.current);
+    }
+
+    logoTapTimer.current = setTimeout(() => {
+      logoTapCount.current = 0;
+    }, 1300);
+
+    if (logoTapCount.current >= 5) {
+      logoTapCount.current = 0;
+      window.dispatchEvent(new Event('cdn:easter-logo-streak'));
+    }
+  };
 
   return (
     <nav
@@ -44,7 +63,12 @@ export function Navbar() {
       )}
     >
       <div className="container mx-auto px-4 sm:px-6 relative flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-2 group relative z-20">
+        <Link
+          href="/"
+          className="flex items-center gap-2 group relative z-20"
+          title="There may be secrets in this network"
+          onClick={handleLogoClick}
+        >
           <div className="relative w-10 h-10 flex items-center justify-center transition-all group-hover:scale-105">
             <Image 
               src="/Logo/Logo.png" 

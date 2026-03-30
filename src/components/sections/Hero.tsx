@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
-import { ChevronRight, ArrowDown } from 'lucide-react';
+import { ChevronRight, Footprints } from 'lucide-react';
 import { NewsTicker } from '@/components/news/NewsTicker';
 import { DISCORD_INVITE_URL } from '@/lib/links';
 
@@ -29,7 +29,7 @@ export function Hero() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-green-600"></span>
             </span>
-            <span className="text-xs font-mono text-green-400 tracking-widest uppercase">SIGNAL DETECTED</span>
+            <span className="text-xs font-mono text-green-400 tracking-widest uppercase">CDN NETWORK ONLINE</span>
           </div>
           
           <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter text-white max-w-5xl relative z-20 leading-tight">
@@ -77,8 +77,8 @@ export function Hero() {
         transition={{ delay: 1, duration: 1 }}
         className="hidden sm:flex absolute bottom-10 left-1/2 -translate-x-1/2 text-neutral-500 flex-col items-center gap-2"
       >
-        <span className="text-xs uppercase tracking-widest font-sans font-medium">Scroll to Explore</span>
-        <ArrowDown className="w-4 h-4 animate-bounce" />
+    <span className="text-xs tracking-wide font-sans font-medium">Yeah, you gotta scroll.</span>
+    <Footprints className="w-4 h-4 animate-bounce" />
       </motion.div>
     </section>
   );

@@ -94,17 +94,16 @@ export function NewsTicker() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
-            className="w-full max-w-5xl mx-auto mt-8 sm:mt-12 mb-6 sm:mb-8 relative z-30"
+            className="w-full max-w-5xl self-start mr-auto mt-8 sm:mt-12 mb-6 sm:mb-8 relative z-30 text-left"
         >
-            <div className="bg-neutral-900/60 backdrop-blur-md border border-white/10 rounded-2xl sm:rounded-[2rem] px-2 sm:px-4 py-2.5 sm:py-3 flex flex-col sm:flex-row sm:items-start shadow-2xl relative overflow-hidden group gap-2 sm:gap-3">
-                
+            <div className="px-2 sm:px-4 py-2 flex flex-col relative group gap-2 sm:gap-3">
                 {/* Pulse Indicator */}
-                <div className="bg-neutral-800/80 rounded-full px-2.5 sm:px-3 py-1.5 border border-white/5 flex items-center gap-2 shrink-0 self-start sm:self-center">
+                <div className="rounded-full px-2.5 sm:px-3 py-1.5 border border-white/10 bg-black/25 backdrop-blur-sm flex items-center gap-2 shrink-0 self-start shadow-[0_8px_30px_rgba(0,0,0,0.25)]">
                      <span className="relative flex h-2 w-2">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
                         <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
                     </span>
-                    <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-400">HQ Feed</span>
+                    <span className="text-[11px] sm:text-xs font-mono uppercase tracking-widest text-neutral-300">HQ Feed</span>
                 </div>
 
                 {/* Message Container */}
@@ -118,14 +117,14 @@ export function NewsTicker() {
                             transition={{ duration: 0.3, ease: "easeOut" }}
                             className="relative flex items-start gap-2 sm:gap-3"
                         >
-                            <div className="pt-0.5 shrink-0">{getIcon(currentItem.type)}</div>
+                            <div className="pt-0.5 shrink-0 text-white/80 drop-shadow-[0_2px_10px_rgba(0,0,0,0.45)]">{getIcon(currentItem.type)}</div>
                             <div className="flex flex-col sm:flex-row items-start sm:items-start gap-1 sm:gap-2 min-w-0">
                                 {currentItemDate && (
-                                    <span className="text-[10px] font-mono text-neutral-500 bg-neutral-800/50 px-1.5 py-0.5 rounded border border-white/5 shrink-0 whitespace-nowrap mt-0.5">
+                                    <span className="text-[11px] sm:text-xs font-mono text-neutral-300 bg-black/25 px-2 py-0.5 rounded-full border border-white/10 backdrop-blur-sm shrink-0 whitespace-nowrap mt-0.5 shadow-[0_6px_18px_rgba(0,0,0,0.2)]">
                                         {currentItemDate}
                                     </span>
                                 )}
-                                <span className="text-xs sm:text-sm font-medium text-neutral-200 leading-snug cursor-default select-none min-w-0 line-clamp-4 sm:line-clamp-3 break-words">
+                                <span className="text-base sm:text-lg font-semibold text-neutral-50 leading-relaxed cursor-default select-none min-w-0 line-clamp-4 sm:line-clamp-3 break-words drop-shadow-[0_6px_24px_rgba(0,0,0,0.55)]">
                                     {currentItem.message}
                                 </span>
                             </div>
@@ -134,7 +133,7 @@ export function NewsTicker() {
                 </div>
 
                 {/* Optional: Navigation Dots (visible on hover) */}
-                <div className="flex justify-center sm:justify-end sm:self-center gap-2 sm:gap-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 pb-0.5 sm:pb-0 shrink-0">
+                <div className="flex justify-start gap-2 sm:gap-1 opacity-80 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 pb-0.5 sm:pb-0 shrink-0">
                     {news.map((_, idx) => (
                         <button
                             type="button"
