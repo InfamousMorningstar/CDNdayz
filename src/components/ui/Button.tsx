@@ -4,24 +4,24 @@ import { VariantProps, cva } from 'class-variance-authority';
 import { Slot } from "@radix-ui/react-slot";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center rounded-full text-sm font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500 disabled:pointer-events-none disabled:opacity-50 tracking-wide font-sans active:scale-95",
+  "inline-flex items-center justify-center rounded-sm text-sm font-bold transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-red-500 disabled:pointer-events-none disabled:opacity-50 uppercase tracking-widest font-sans",
   {
     variants: {
       variant: {
         default:
-          "bg-gradient-to-br from-red-600 to-red-700 text-white hover:from-red-500 hover:to-red-600 shadow-[0_4px_20px_rgba(220,38,38,0.3)] hover:shadow-[0_6px_25px_rgba(220,38,38,0.5)] border border-red-500/20 backdrop-blur-sm",
+          "bg-red-700 text-white hover:bg-red-600 shadow-[0_0_15px_rgba(220,38,38,0.2)] hover:shadow-[0_0_25px_rgba(220,38,38,0.4)] border border-red-500/20 active:scale-[0.98]",
         outline:
-          "border border-white/20 bg-white/5 hover:bg-white/10 hover:text-white hover:border-white/40 text-neutral-200 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.2)]",
-        ghost: "hover:bg-white/10 hover:text-white text-neutral-300 backdrop-blur-sm",
+          "border border-white/10 bg-black/40 hover:bg-white/5 hover:text-white hover:border-red-500/30 text-neutral-300 backdrop-blur-sm active:scale-[0.98]",
+        ghost: "hover:bg-white/5 hover:text-white text-neutral-400 active:scale-[0.98]",
         destructive:
-          "bg-rose-900/80 text-white hover:bg-rose-800 border border-rose-500/20 shadow-sm backdrop-blur-sm",
-        link: "text-red-500 underline-offset-4 hover:underline normal-case tracking-normal",
+          "bg-rose-900/80 text-white hover:bg-rose-800 border border-rose-500/20 shadow-sm",
+        link: "text-red-500 underline-offset-4 hover:underline normal-case tracking-normal font-sans",
       },
       size: {
-        default: "h-11 px-8 py-2.5",
-        sm: "h-8 px-4 text-xs",
-        lg: "h-14 px-10 text-lg",
-        icon: "h-10 w-10",
+        default: "h-11 px-6 py-2",
+        sm: "h-8 rounded-sm px-4 text-[10px]",
+        lg: "h-14 rounded-sm px-10 text-base",
+        icon: "h-9 w-9",
       },
     },
     defaultVariants: {
