@@ -159,7 +159,7 @@ const ServerCardTactical: React.FC<ServerCardProps> = ({
                     <button
                         type="button"
                         onClick={handleCopy}
-                        className="group/copy flex items-center gap-2 cursor-pointer w-fit select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/80 rounded"
+                        className="group/copy flex items-center gap-2 cursor-pointer w-fit select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/80 rounded-full"
                         aria-label={`Copy server connect address for ${name}`}
                     >
                          <p className={`text-[11px] sm:text-xs uppercase tracking-wider font-mono transition-colors duration-200 break-all text-left ${copied ? "text-green-400" : "text-neutral-500 group-hover:text-neutral-300"}`}>

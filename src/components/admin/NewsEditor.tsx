@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { AlertCircle, CheckCircle, Trash2, Info } from 'lucide-react';
+import { Button } from '@/components/ui/Button';
 
 export type NewsItem = {
     id: string | number;
@@ -217,13 +218,13 @@ export default function NewsEditor({ token }: NewsEditorProps) {
                         <p className="text-xs text-neutral-500 mt-2">Note: Date will auto-populate with current time when posted</p>
                     </div>
 
-                    <button
+                    <Button
                         type="submit"
                         disabled={isSaving || !message.trim()}
-                        className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-neutral-700 text-white font-medium rounded-lg transition"
+                        className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-neutral-700 text-white font-medium"
                     >
                         {isSaving ? 'Saving...' : 'Add News Item'}
-                    </button>
+                    </Button>
                 </form>
             </div>
 
@@ -249,13 +250,15 @@ export default function NewsEditor({ token }: NewsEditorProps) {
                                 </div>
                                 <p className="text-neutral-100 break-words">{item.message}</p>
                             </div>
-                            <button
+                            <Button
                                 onClick={() => handleDeleteNews(item.id)}
                                 disabled={isSaving}
-                                className="mt-1 p-2 hover:bg-neutral-800 rounded-lg text-neutral-400 hover:text-red-400 transition flex-shrink-0"
+                                variant="ghost"
+                                size="icon"
+                                className="mt-1 text-neutral-400 hover:bg-neutral-800 hover:text-red-400 flex-shrink-0"
                             >
                                 <Trash2 className="w-4 h-4" />
-                            </button>
+                            </Button>
                         </div>
                     ))
                 )}

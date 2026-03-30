@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { AlertCircle } from 'lucide-react';
+import { Button } from '@/components/ui/Button';
 
 interface LoginFormProps {
     onLogin: (token: string) => void;
@@ -68,13 +69,13 @@ export default function LoginForm({ onLogin }: LoginFormProps) {
                     />
                 </div>
 
-                <button
+                <Button
                     type="submit"
                     disabled={isLoading || !password}
-                    className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-neutral-700 text-white font-medium rounded-lg transition"
+                    className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-neutral-700 text-white font-medium"
                 >
                     {isLoading ? 'Logging in...' : 'Login'}
-                </button>
+                </Button>
             </form>
         </div>
     );

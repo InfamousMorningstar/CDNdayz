@@ -85,7 +85,7 @@ export function Navbar() {
         <div className="flex items-center gap-4 relative z-20">
           <button
             type="button"
-            className="lg:hidden text-neutral-400 hover:text-white rounded-md p-2 -mr-2"
+            className="lg:hidden text-neutral-400 hover:text-white rounded-full p-2 -mr-2"
             onClick={() => setIsOpen(!isOpen)}
             aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
             aria-expanded={isOpen}

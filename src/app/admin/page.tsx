@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import LoginForm from '@/components/admin/LoginForm';
 import NewsEditor from '@/components/admin/NewsEditor';
+import { Button } from '@/components/ui/Button';
 
 export default function AdminPage() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -51,12 +52,14 @@ export default function AdminPage() {
                     <>
                         <div className="flex justify-between items-center mb-6">
                             <h2 className="text-2xl font-semibold">HQ Feed Editor</h2>
-                            <button
+                            <Button
                                 onClick={handleLogout}
-                                className="px-4 py-2 bg-neutral-800 hover:bg-neutral-700 text-neutral-100 rounded-lg transition"
+                                variant="outline"
+                                size="sm"
+                                className="px-5 text-neutral-100 hover:bg-neutral-700"
                             >
                                 Logout
-                            </button>
+                            </Button>
                         </div>
                         <NewsEditor token={sessionStorage.getItem('admin-token') || ''} />
                     </>
