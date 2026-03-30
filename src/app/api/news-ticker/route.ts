@@ -3,6 +3,7 @@ import { promises as fs } from 'fs';
 import { join } from 'path';
 
 const NEWS_FILE = join(process.cwd(), 'src/data/news-feed.json');
+const NEWS_KEY = 'cdn:news-feed';
 
 function verifyAdminToken(req: NextRequest): boolean {
     const authHeader = req.headers.get('Authorization');
@@ -13,6 +14,19 @@ function verifyAdminToken(req: NextRequest): boolean {
 }
 
 async function readNews() {
+    // Use Vercel KV in production
+    if (process.env.KV_URL) {
+        try {
+            const { kv } = await import('@vercel/kv');
+            const data = await kv.get(NEWS_KEY);
+            return data || [];
+        } catch (error) {
+            console.error('Error reading from Vercel KV:', error);
+            // Fallback to file system
+        }
+    }
+
+    // Fallback to local file system (development)
     try {
         const content = await fs.readFile(NEWS_FILE, 'utf-8');
         return JSON.parse(content);
@@ -23,6 +37,19 @@ async function readNews() {
 }
 
 async function writeNews(data: any) {
+    // Use Vercel KV in production
+    if (process.env.KV_URL) {
+        try {
+            const { kv } = await import('@vercel/kv');
+            await kv.set(NEWS_KEY, data);
+            return true;
+        } catch (error) {
+            console.error('Error writing to Vercel KV:', error);
+            // Fallback to file system
+        }
+    }
+
+    // Fallback to local file system (development)
     try {
         await fs.writeFile(NEWS_FILE, JSON.stringify(data, null, 2));
         return true;
