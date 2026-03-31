@@ -249,6 +249,39 @@ export function RulesClient() {
                   </div>
                 </Card>
 
+                <Card className="p-5 sm:p-8 bg-neutral-900/60 border-neutral-800 md:col-span-2">
+                  <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/5">
+                    <AlertTriangle className="text-amber-400 w-6 h-6" />
+                    <h2 className="text-2xl font-heading font-bold text-white">Important Notes</h2>
+                  </div>
+                  <ul className="space-y-4 text-sm text-neutral-300">
+                    <li className="flex gap-3">
+                      <span className="text-amber-400">•</span>
+                      <span>Items, helis, and vehicles are not replaceable. Admins will not log in to fix or un-flip vehicles; use an in-game wrench or a fireplace instead.</span>
+                    </li>
+                    <li className="flex gap-3">
+                      <span className="text-amber-400">•</span>
+                      <span>DayZ vehicles are unstable at the best of times. Be aware of what you are risking before something, or someone, goes sideways at 150 km/h.</span>
+                    </li>
+                    <li className="flex gap-3">
+                      <span className="text-amber-400">•</span>
+                      <span>Items lost during restarts are not replaced. All servers give timed warnings so you can get yourself safe before the restart hits.</span>
+                    </li>
+                    <li className="flex gap-3">
+                      <span className="text-amber-400">•</span>
+                      <span>Our admins are on throughout the day, but not all day, so please be patient when making a ticket.</span>
+                    </li>
+                    <li className="flex gap-3">
+                      <span className="text-amber-400">•</span>
+                      <span>Do not DM admins unless they tell you otherwise, and do not join admin voice chats to ask for something that should be handled in a ticket.</span>
+                    </li>
+                    <li className="flex gap-3">
+                      <span className="text-amber-400">•</span>
+                      <span>The ticket system is for us as much as it is for you. It helps us track bugs and issues, and skipping that process breaks that workflow. Tickets can be made in Discord in the open-a-ticket channel.</span>
+                    </li>
+                  </ul>
+                </Card>
+
                 {/* Chat Rules */}
                 <Card className="p-5 sm:p-8 bg-neutral-900/60 border-neutral-800 md:col-span-2">
                   <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/5">
