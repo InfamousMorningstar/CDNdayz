@@ -257,7 +257,7 @@ export function RulesClient() {
                   <ul className="space-y-4 text-sm text-neutral-300">
                     <li className="flex gap-3">
                       <span className="text-amber-400">•</span>
-                      <span>Items, helis, and vehicles are not replaceable. Admins will not log in to fix or un-flip vehicles; use an in-game wrench or a fireplace instead.</span>
+                      <span>Items, helis, and vehicles are not replaceable. Admins will not log in to fix or un-flip vehicles; use a vehicle recovery cone instead (available at trader).</span>
                     </li>
                     <li className="flex gap-3">
                       <span className="text-amber-400">•</span>
@@ -560,8 +560,7 @@ export function RulesClient() {
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
           <Card className="p-6 bg-neutral-900/60 border-neutral-800">
             <div className="mb-4">
-              <h3 className="text-white font-bold mb-2">Gameplay</h3>
-              <Badge variant="outline" className="border-red-500/30 text-red-300 bg-red-900/10">Gameplay</Badge>
+              <h3 className="text-white font-bold">Gameplay</h3>
             </div>
             <div className="space-y-3">
               {faqData.gameplay.map((item) => (
@@ -578,8 +577,7 @@ export function RulesClient() {
 
           <Card className="p-6 bg-neutral-900/60 border-neutral-800">
             <div className="mb-4">
-              <h3 className="text-white font-bold mb-2">Rules</h3>
-              <Badge variant="outline" className="border-amber-500/30 text-amber-300 bg-amber-900/10">Rules</Badge>
+              <h3 className="text-white font-bold">Rules</h3>
             </div>
             <div className="space-y-3">
               {faqData.rules.map((item) => (
@@ -596,8 +594,7 @@ export function RulesClient() {
 
           <Card className="p-6 bg-neutral-900/60 border-neutral-800">
             <div className="mb-4">
-              <h3 className="text-white font-bold mb-2">Technical</h3>
-              <Badge variant="outline" className="border-sky-500/30 text-sky-300 bg-sky-900/10">Technical</Badge>
+              <h3 className="text-white font-bold">Technical</h3>
             </div>
             <div className="space-y-3">
               {faqData.technical.map((item) => (
