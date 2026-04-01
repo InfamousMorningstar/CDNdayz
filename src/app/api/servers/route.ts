@@ -56,7 +56,11 @@ export async function GET() {
 
   // Return cached data if valid
   if (cache && (now - lastFetchTime < CACHE_DURATION)) {
-    return NextResponse.json(cache);
+    return NextResponse.json(cache, {
+      headers: {
+        'x-server-fetched-at': String(lastFetchTime),
+      },
+    });
   }
 
   try {
@@ -142,7 +146,11 @@ export async function GET() {
     cache = results as ServerStatus[];
     lastFetchTime = now;
 
-    return NextResponse.json(results);
+    return NextResponse.json(results, {
+      headers: {
+        'x-server-fetched-at': String(lastFetchTime),
+      },
+    });
   } catch (error) {
     console.error('API Error:', error);
     return NextResponse.json({ error: 'Failed to fetch server status' }, { status: 500 });

@@ -9,13 +9,25 @@ export function ServerList() {
   const [servers, setServers] = useState<ServerStatus[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [lastUpdated, setLastUpdated] = useState<string | null>(null);
 
   const fetchServers = async () => {
     try {
       const response = await fetch('/api/servers');
       if (!response.ok) throw new Error('API Error');
       const data: ServerStatus[] = await response.json();
+      const fetchedAt = response.headers.get('x-server-fetched-at');
       setServers(data);
+      if (fetchedAt) {
+        setLastUpdated(
+          new Intl.DateTimeFormat(undefined, {
+            hour: 'numeric',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false,
+          }).format(new Date(Number(fetchedAt)))
+        );
+      }
       setError(false);
     } catch (err) {
       console.error(err);
@@ -53,19 +65,36 @@ export function ServerList() {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
-      {servers.map((server) => (
-        <ServerCardTactical 
-          key={server.id}
-          name={server.name}
-          map={server.map}
-          players={server.players}
-          maxPlayers={server.maxPlayers}
-          status={server.status}
-          ping={server.ping}
-          connect={server.connect}
-        />
-      ))}
+    <div className="w-full space-y-5">
+      <div className="flex flex-col items-start md:items-end gap-2 w-full md:w-auto ml-auto">
+        <div className="flex items-center gap-2 text-green-400">
+          <div className="relative flex items-center justify-center w-3 h-3 mr-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+          </div>
+          <span className="font-mono text-sm tracking-wider uppercase">Systems Operational</span>
+        </div>
+        <p className="text-neutral-500 text-sm font-mono">AUTO-REFRESH: 30s</p>
+        {lastUpdated && (
+          <p className="text-[11px] sm:text-xs font-mono uppercase tracking-[0.18em] text-neutral-500">
+            Last status sweep {lastUpdated}
+          </p>
+        )}
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
+        {servers.map((server) => (
+          <ServerCardTactical 
+            key={server.id}
+            name={server.name}
+            map={server.map}
+            players={server.players}
+            maxPlayers={server.maxPlayers}
+            status={server.status}
+            ping={server.ping}
+            connect={server.connect}
+          />
+        ))}
+      </div>
     </div>
   );
 }

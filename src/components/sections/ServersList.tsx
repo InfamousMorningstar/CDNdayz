@@ -9,6 +9,7 @@ import Link from 'next/link';
 export function ServersList() {
   const [servers, setServers] = useState<ServerStatus[]>([]);
   const [loading, setLoading] = useState(true);
+  const [lastUpdated, setLastUpdated] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchServers = async () => {
@@ -16,7 +17,18 @@ export function ServersList() {
         const response = await fetch('/api/servers');
         if (!response.ok) return;
         const data = await response.json();
+        const fetchedAt = response.headers.get('x-server-fetched-at');
         setServers(data);
+        if (fetchedAt) {
+          setLastUpdated(
+            new Intl.DateTimeFormat(undefined, {
+              hour: 'numeric',
+              minute: '2-digit',
+              second: '2-digit',
+              hour12: false,
+            }).format(new Date(Number(fetchedAt)))
+          );
+        }
       } catch (err) {
         console.error(err);
       } finally {
@@ -25,6 +37,8 @@ export function ServersList() {
     };
 
     fetchServers();
+    const interval = setInterval(fetchServers, 30000);
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -37,6 +51,11 @@ export function ServersList() {
               <p className="text-neutral-400 text-base sm:text-lg">
                 Select from our network of high-performance servers. Each offers a unique gameplay experience tailored to different survival styles.
               </p>
+              {lastUpdated && (
+                <p className="mt-4 text-[11px] sm:text-xs font-mono uppercase tracking-[0.18em] text-neutral-500">
+                  Last status sweep {lastUpdated}
+                </p>
+              )}
             </div>
             
             <Button variant="outline" size="lg" asChild className="shrink-0 w-full sm:w-auto">

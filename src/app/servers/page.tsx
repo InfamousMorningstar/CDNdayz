@@ -23,19 +23,6 @@ export default function ServersPage() {
               </p>
             </div>
           </div>
-          
-          <div className="flex flex-col items-start md:items-end gap-2 w-full md:w-auto">
-             <div className="flex items-center gap-2 text-green-400">
-               <div className="relative flex items-center justify-center w-3 h-3 mr-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
-               </div>
-               <span className="font-mono text-sm tracking-wider uppercase">Systems Operational</span>
-             </div>
-             <p className="text-neutral-500 text-sm font-mono">
-               AUTO-REFRESH: 30s
-             </p>
-          </div>
         </div>
 
         <ServerList />
