@@ -1,18 +1,69 @@
+"use client";
+
 import { CinematicBackground } from '@/components/features/CinematicBackground';
 import { Badge } from '@/components/ui/Badge';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Flame, RefreshCw, Calendar, AlertTriangle, ArrowRight, Shield, Database } from 'lucide-react';
 import Link from 'next/link';
-import { Metadata } from 'next';
 import { DISCORD_INVITE_URL } from '@/lib/links';
+import { useState, useEffect } from 'react';
 
-export const metadata: Metadata = {
-  title: 'Wipe Information | CDN',
-  description: 'Details on server wipes, schedules, and donation rollover policies.',
-};
+interface WipeDates {
+  nextWipeWindow: string;
+  wipeCycleMonths: number;
+  estimatedDaysUntilWipe: number;
+  lastWipeDate: string;
+  notes: string;
+}
 
 export default function WipeInfoPage() {
+  const [wipeDates, setWipeDates] = useState<WipeDates | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchWipeDates = async () => {
+      try {
+        const response = await fetch('/api/wipe-dates');
+        const data = await response.json();
+        setWipeDates(data);
+      } catch (error) {
+        console.error('Failed to fetch wipe dates:', error);
+        // Fall back to default values
+        setWipeDates({
+          nextWipeWindow: 'First Week of April 2026',
+          wipeCycleMonths: 4,
+          estimatedDaysUntilWipe: 120,
+          lastWipeDate: '2025-12-15',
+          notes: 'Subject to Change',
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchWipeDates();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <CinematicBackground backgroundImageSrc="/Images/5.jpg">
+        <div className="min-h-screen pt-28 sm:pt-32 pb-16 sm:pb-20 container mx-auto px-4 sm:px-6 relative z-10 flex items-center justify-center">
+          <div className="text-neutral-400">Loading wipe information...</div>
+        </div>
+      </CinematicBackground>
+    );
+  }
+
+  if (!wipeDates) {
+    return null;
+  }
+
+  // Parse the wipe window for display (e.g., "First Week of April 2026" -> parts for display)
+  const wipeParts = wipeDates.nextWipeWindow.split(' ');
+  const wipeDisplay = wipeParts.slice(0, -1).join(' '); // Remove year
+  const wipeYear = wipeParts[wipeParts.length - 1];
+
   return (
     <CinematicBackground backgroundImageSrc="/Images/5.jpg">
             <div className="min-h-screen pt-28 sm:pt-32 pb-16 sm:pb-20 container mx-auto px-4 sm:px-6 relative z-10">
@@ -49,10 +100,10 @@ export default function WipeInfoPage() {
                 <div className="bg-neutral-950/50 p-6 rounded-xl border border-white/5 flex flex-col items-center text-center">
                     <span className="text-neutral-500 text-sm mb-2">Next Projected Wipe Window</span>
                     <span className="text-3xl md:text-5xl font-bold text-white tracking-tight mb-2">
-                        First Week of April <span className="text-neutral-600">2026</span>
+                        {wipeDisplay} <span className="text-neutral-600">{wipeYear}</span>
                     </span>
                     <span className="text-xs text-red-500 uppercase tracking-widest font-bold bg-red-500/10 px-3 py-1 rounded-full">
-                        Subject to Change
+                        {wipeDates.notes}
                     </span>
                     <p className="mt-4 text-xs text-neutral-500 max-w-lg">
                         Dates are estimates. Always check the <span className="text-white">#announcements</span> channel 
@@ -78,12 +129,12 @@ export default function WipeInfoPage() {
                 <div className="relative z-10">
                     <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-3">
                         <Calendar className="text-red-500 w-8 h-8" />
-                        The 4-Month Cycle
+                        The {wipeDates.wipeCycleMonths}-Month Cycle
                     </h2>
                     <div className="space-y-6 text-lg text-neutral-300 leading-relaxed">
                         <p>
                             To ensure server stability, introduce new content, and keep the economy fresh, 
-                            all CDN servers undergo a full wipe approximately <strong className="text-white">every 4 months</strong>.
+                            all CDN servers undergo a full wipe approximately <strong className="text-white">every {wipeDates.wipeCycleMonths} months</strong>.
                         </p>
                         <p>
                             A wipe is a complete reset of the world. It clears all player bases, vehicles, stashed loot, 
@@ -94,7 +145,7 @@ export default function WipeInfoPage() {
                     <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="bg-neutral-950/50 p-4 rounded border border-white/5">
                             <span className="text-xs font-mono text-neutral-500 uppercase tracking-widest block mb-1">Current Frequency</span>
-                            <span className="text-xl font-bold text-white">~120 Days</span>
+                            <span className="text-xl font-bold text-white">~{wipeDates.estimatedDaysUntilWipe} Days</span>
                         </div>
                         <div className="bg-neutral-950/50 p-4 rounded border border-white/5">
                             <span className="text-xs font-mono text-neutral-500 uppercase tracking-widest block mb-1">Impact</span>
