@@ -181,5 +181,26 @@ export const dayzErrorCodes: DayzErrorCode[] = [
     ],
     status: "documented",
     sourceIds: ["R1", "R2", "R3", "R5", "R6", "R8", "R9", "R11"]
+  },
+  {
+    code: "0x00040074",
+    title: "MOD_VERSION_CONFLICT",
+    category: "Mods / Configuration",
+    description: "Server mod configuration or client mod version incompatibility.",
+    commonCauses: [
+      "Client mods do not match server mod list",
+      "Mod version mismatch between client and server",
+      "Corrupted or outdated mod files",
+      "Required mod not installed on client"
+    ],
+    recommendedFixes: [
+      "Verify all server mods are installed and up-to-date on your machine",
+      "Use mod manager (CUP, ACE, etc.) to sync mod versions",
+      "Delete mod cache and reinitialize (Documents/DayZ folder)",
+      "Ensure mods are launched in the correct load order",
+      "Check server mod list against your client configuration"
+    ],
+    status: "inferred",
+    sourceIds: ["COMMUNITY_REPORT"]
   }
 ];
