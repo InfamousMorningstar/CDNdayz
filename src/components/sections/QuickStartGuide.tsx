@@ -2,6 +2,7 @@
 
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
+import { Badge } from '@/components/ui/Badge';
 import { Download, Search, Play, ArrowRight, ExternalLink } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
@@ -32,18 +33,19 @@ const steps = [
 
 export function QuickStartGuide() {
   return (
-    <section aria-labelledby="start-journey-heading" className="py-20 bg-neutral-950 border-t border-white/5 relative overflow-hidden">
+    <section aria-labelledby="start-journey-heading" className="py-20 sm:py-28 bg-neutral-950 border-t border-white/5 relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-neutral-900 via-neutral-950 to-neutral-950 opacity-50" />
       
       <div className="container mx-auto px-6 relative z-10">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-          <div>
-            <h2 id="start-journey-heading" className="text-3xl md:text-5xl font-bold text-white mb-4">Start Your <span className="text-red-500">Journey</span></h2>
-            <p className="text-neutral-400 text-lg max-w-2xl">
-              From fresh spawn to veteran survivor in three simple steps. No complex whitelist application required.
-            </p>
-          </div>
+        <div className="flex flex-col items-center text-center mb-12 gap-3">
+          <Badge variant="outline" className="border-red-500/30 text-red-400 bg-red-900/10 backdrop-blur-sm px-4 py-1">
+            Get Online in Minutes
+          </Badge>
+          <h2 id="start-journey-heading" className="text-3xl md:text-5xl font-heading font-bold text-white">Start Your <span className="text-red-500">Journey</span></h2>
+          <p className="text-neutral-400 text-lg max-w-2xl">
+            From fresh spawn to veteran survivor in three simple steps. No complex whitelist application required.
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

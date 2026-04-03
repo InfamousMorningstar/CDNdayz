@@ -21,9 +21,9 @@ const config: Config = {
         border: "#262626", // Neutral 800
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "sans-serif"],
-        mono: ["var(--font-jetbrains-mono)", "monospace"],
-        heading: ["var(--font-rajdhani)", "sans-serif"],
+        sans: ["var(--font-inter)", "-apple-system", "BlinkMacSystemFont", "Helvetica Neue", "sans-serif"],
+        mono: ["JetBrains Mono", "monospace"],
+        heading: ["var(--font-inter)", "-apple-system", "BlinkMacSystemFont", "Helvetica Neue", "sans-serif"],
       },
       animation: {
         'pulse-slow': 'pulse 8s ease-in-out infinite',

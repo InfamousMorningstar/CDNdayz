@@ -1,6 +1,7 @@
 "use client";
 
 import { Card } from '@/components/ui/Card';
+import { Badge } from '@/components/ui/Badge';
 import { motion } from 'framer-motion';
 import { Shield, Zap, Users, Code, Globe, Headphones } from 'lucide-react';
 
@@ -45,13 +46,15 @@ const features = [
 
 export function Features() {
   return (
-    <section aria-labelledby="why-choose-cdn-heading" className="py-16 sm:py-24 bg-neutral-950 relative overflow-hidden">
+    <section aria-labelledby="why-choose-cdn-heading" className="py-20 sm:py-28 bg-neutral-950 relative overflow-hidden">
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-red-500/20 to-transparent" />
       
       <div className="container px-4 sm:px-6 mx-auto">
         <div className="flex flex-col items-center text-center mb-16">
-          <span className="text-red-500 font-mono text-sm tracking-widest uppercase mb-4">Why Choose CDN</span>
-          <h2 id="why-choose-cdn-heading" className="text-2xl sm:text-3xl md:text-5xl font-bold text-white mb-6">Designed for the <span className="text-neutral-500">Dedicated</span></h2>
+          <Badge variant="outline" className="mb-4 border-red-500/30 text-red-400 bg-red-900/10 backdrop-blur-sm px-4 py-1">
+            Why Choose CDN
+          </Badge>
+          <h2 id="why-choose-cdn-heading" className="text-2xl sm:text-3xl md:text-5xl font-heading font-bold text-white mb-5">Designed for the <span className="text-neutral-500">Dedicated</span></h2>
           <p className="text-neutral-400 max-w-2xl text-base sm:text-lg">
             We don't just host servers; we craft experiences. Every mod, every rule, and every event is designed to enhance your survival journey.
           </p>

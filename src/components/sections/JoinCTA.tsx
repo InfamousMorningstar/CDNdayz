@@ -1,19 +1,20 @@
 "use client";
 
 import { Button } from '@/components/ui/Button';
+import { Badge } from '@/components/ui/Badge';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { DISCORD_INVITE_URL } from '@/lib/links';
 
 export function JoinCTA() {
   return (
-    <section aria-labelledby="join-cta-heading" className="py-24 bg-gradient-to-br from-red-900/10 via-black to-neutral-900/30 text-center relative overflow-hidden">
+    <section aria-labelledby="join-cta-heading" className="py-20 sm:py-28 bg-gradient-to-br from-red-900/10 via-black to-neutral-900/30 text-center relative overflow-hidden">
       <div className="absolute inset-0 z-0 opacity-20 bg-[url('/grid.svg')] bg-[length:40px_40px]" />
       
       <div className="container relative z-10 px-6 mx-auto flex flex-col items-center gap-8">
-        <span className="text-red-500 font-mono text-sm tracking-widest uppercase rounded-full px-4 py-1 border border-red-500/20 bg-red-500/5">
-          CDN OPERATIONS
-        </span>
+        <Badge variant="outline" className="border-red-500/30 text-red-400 bg-red-900/10 backdrop-blur-sm px-4 py-1">
+          CDN Operations
+        </Badge>
         
         <h2 id="join-cta-heading" className="text-4xl md:text-6xl font-bold text-white max-w-3xl">
           Start Your <span className="text-red-500">Survival Story</span>

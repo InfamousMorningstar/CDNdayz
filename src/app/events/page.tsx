@@ -5,6 +5,7 @@ import { CinematicBackground } from '@/components/features/CinematicBackground';
 import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
 import { DISCORD_INVITE_URL } from '@/lib/links';
+import { Badge } from '@/components/ui/Badge';
 
 export const metadata: Metadata = {
   title: 'Events Schedule | CDN',
@@ -16,6 +17,9 @@ export default function EventsPage() {
     <CinematicBackground backgroundImageSrc="/Images/3.jpg">
       <div className="min-h-screen pt-28 sm:pt-32 pb-16 sm:pb-20 container mx-auto px-4 sm:px-6 relative z-10">
         <div className="relative mb-12 sm:mb-20 text-center flex flex-col items-center">
+          <Badge variant="outline" className="mb-6 border-amber-500/30 text-amber-400 bg-amber-900/10 backdrop-blur-sm px-4 py-1">
+            Live Operations
+          </Badge>
           <div className="mb-6 inline-flex p-4 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-500">
              <Radio className="w-12 h-12 animate-pulse" />
           </div>

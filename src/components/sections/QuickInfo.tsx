@@ -2,6 +2,7 @@
 
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
+import { Badge } from '@/components/ui/Badge';
 import { Shield, Calendar, Store, ArrowRight, Rss } from 'lucide-react';
 import Link from 'next/link';
 import { OfficialDayZNewsClient } from '@/components/news/OfficialDayZNewsClient';
@@ -32,20 +33,16 @@ export function QuickInfo() {
   ];
 
   return (
-                <section aria-labelledby="essential-intel-heading" className="py-16 sm:py-20 bg-neutral-900/50 border-t border-white/5 relative">
+    <section aria-labelledby="essential-intel-heading" className="py-20 sm:py-28 bg-neutral-900/50 border-t border-white/5 relative">
             <div className="container mx-auto px-4 sm:px-6">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 sm:mb-12 gap-6">
-            <div>
-                <h2 id="essential-intel-heading" className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2">Essential <span className="text-red-500">Intel</span></h2>
-                <p className="text-neutral-400">Key information for new survivors.</p>
-            </div>
-            <div className="hidden md:flex gap-2">
-                <Link href="/servers" className="flex items-center text-sm font-bold text-white hover:text-red-500 transition-colors gap-2 rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/80">
-                    View Servers <ArrowRight size={16} />
-                </Link>
-            </div>
+        <div className="flex flex-col items-center text-center mb-8 sm:mb-12 gap-3">
+            <Badge variant="outline" className="border-red-500/30 text-red-400 bg-red-900/10 backdrop-blur-sm px-4 py-1">
+              Essential Intel
+            </Badge>
+            <h2 id="essential-intel-heading" className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-white">Key Information for <span className="text-red-500">Survivors</span></h2>
+            <p className="text-neutral-400 max-w-xl">Everything you need to know before you spawn.</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-5 sm:gap-8">

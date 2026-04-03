@@ -6,7 +6,7 @@ import { VariantProps, cva } from 'class-variance-authority';
 import { motion, HTMLMotionProps } from 'framer-motion';
 
 const cardVariants = cva(
-  "rounded-3xl overflow-hidden backdrop-blur-xl transition-all duration-300 pointer-events-auto",
+  "rounded-2xl overflow-hidden backdrop-blur-xl transition-all duration-300 pointer-events-auto",
   {
     variants: {
       variant: {

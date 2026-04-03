@@ -22,6 +22,10 @@
 @layer base {
   html {
     overflow-x: hidden;
+    /* Fluid type scale — Apple uses optical sizing */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   body {
@@ -30,15 +34,19 @@
 
   * {
     min-width: 0;
+    /* Smooth sub-pixel transitions like native apps */
+    box-sizing: border-box;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-heading tracking-wide uppercase;
+    @apply font-heading;
   }
 
+  /* Apple-style focus ring — offset, crisp */
   :where(a, button, [role="button"], summary, input, select, textarea):focus-visible {
     outline: 2px solid rgba(239, 68, 68, 0.9);
-    outline-offset: 2px;
+    outline-offset: 3px;
+    border-radius: 4px;
   }
   
   /* Global Noise/Grain Overlay */

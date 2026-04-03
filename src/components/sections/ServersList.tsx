@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { ServerMiniCard } from '@/components/server/ServerMiniCard';
 import { ServerStatus } from '@/lib/servers';
 import { Button } from '@/components/ui/Button';
+import { Badge } from '@/components/ui/Badge';
 import Link from 'next/link';
 
 export function ServersList() {
@@ -42,23 +43,22 @@ export function ServersList() {
   }, []);
 
   return (
-    <section aria-labelledby="deployment-zones-heading" className="py-16 sm:py-24 bg-neutral-900/50 backdrop-blur-sm relative z-10" id="servers">
+    <section aria-labelledby="deployment-zones-heading" className="py-20 sm:py-28 bg-neutral-900/50 backdrop-blur-sm relative z-10" id="servers">
       <div className="container mx-auto px-4 sm:px-6">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-            <div className="max-w-2xl">
-              <span className="text-red-500 font-mono text-sm tracking-widest uppercase mb-4 block">Deployment Zones</span>
-              <h2 id="deployment-zones-heading" className="text-2xl sm:text-3xl md:text-5xl font-bold text-white mb-4">Choose Your <span className="text-neutral-500">Battleground</span></h2>
-              <p className="text-neutral-400 text-base sm:text-lg">
-                Select from our network of high-performance servers. Each offers a unique gameplay experience tailored to different survival styles.
+        <div className="flex flex-col items-center text-center mb-12 gap-3">
+            <Badge variant="outline" className="border-red-500/30 text-red-400 bg-red-900/10 backdrop-blur-sm px-4 py-1">
+              Deployment Zones
+            </Badge>
+            <h2 id="deployment-zones-heading" className="text-2xl sm:text-3xl md:text-5xl font-heading font-bold text-white">Choose Your <span className="text-neutral-500">Battleground</span></h2>
+            <p className="text-neutral-400 text-base sm:text-lg max-w-2xl">
+              Select from our network of high-performance servers. Each offers a unique gameplay experience tailored to different survival styles.
+            </p>
+            {lastUpdated && (
+              <p className="text-[11px] sm:text-xs font-mono uppercase tracking-[0.18em] text-neutral-500">
+                Last status sweep {lastUpdated}
               </p>
-              {lastUpdated && (
-                <p className="mt-4 text-[11px] sm:text-xs font-mono uppercase tracking-[0.18em] text-neutral-500">
-                  Last status sweep {lastUpdated}
-                </p>
-              )}
-            </div>
-            
-            <Button variant="outline" size="lg" asChild className="shrink-0 w-full sm:w-auto">
+            )}
+            <Button variant="outline" size="lg" asChild className="mt-2">
                <Link href="/servers">View Detailed Status</Link>
             </Button>
         </div>

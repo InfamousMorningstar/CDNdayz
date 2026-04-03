@@ -52,10 +52,17 @@ export default function JoinPage() {
     <CinematicBackground backgroundImageSrc="/Images/3.jpg">
       <div className="min-h-screen pt-28 sm:pt-32 pb-16 sm:pb-20 container mx-auto px-4 sm:px-6 relative z-10">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold text-white mb-6 text-center">Join the <span className="text-red-500">Operation</span></h1>
-          <p className="text-neutral-400 text-center text-base sm:text-lg mb-10 sm:mb-16 max-w-2xl mx-auto">
-            Follow these steps to connect to the CDN network. Our servers use a curated modpack that is automatically downloaded.
-          </p>
+          <div className="flex flex-col items-center text-center mb-10 sm:mb-16">
+            <Badge variant="outline" className="mb-4 border-red-500/30 text-red-400 bg-red-900/10 backdrop-blur-sm px-4 py-1">
+              Step-by-Step Guide
+            </Badge>
+            <h1 className="text-3xl sm:text-4xl md:text-6xl font-heading font-bold text-white mb-6">
+              Join the <span className="text-red-500">Operation</span>
+            </h1>
+            <p className="text-neutral-400 text-base sm:text-lg max-w-2xl">
+              Follow these steps to connect to the CDN network. Our servers use a curated modpack that is automatically downloaded.
+            </p>
+          </div>
 
           <h2 className="sr-only">Connection Steps</h2>
 
