@@ -4,11 +4,32 @@ Companion website for the CDN DayZ community, built with Next.js App Router and 
 
 ## Status
 
-This project is actively developed and currently in beta.
+Production.
+
+Live site: https://dayzcdn.com
 
 ## Repository
 
 https://github.com/InfamousMorningstar/CDNdayz
+
+## Changes Since Last README Update (April 2026)
+
+- Released DayZ Error Codes hub at `/dayz-error-codes` with:
+    - Search and category filtering.
+    - Per-code troubleshooting guidance.
+    - Source-linked references and inline evidence quotes.
+    - Coverage disclaimer for in-progress code discovery.
+- Added and refined admin/content workflows:
+    - Admin authentication and editor components for news/wipe management.
+    - Expanded API route coverage for admin/news/server/wipe flows.
+- Improved global design consistency and UX:
+    - Standardized page headers and badge patterns.
+    - Updated typography system and heading behavior.
+    - Refined navbar centering/alignment behavior.
+    - Polished card/button styling and section spacing rhythm.
+- Expanded legal/support surface:
+    - Added legal pages (privacy/terms) and supporting footer/nav updates.
+    - Continued rules/store/events/features content refinement.
 
 ## Recent Updates (March 2026)
 
@@ -62,38 +83,15 @@ https://github.com/InfamousMorningstar/CDNdayz
 - Lucide React
 - GameDig
 
-## Local Development
-
-Prerequisites:
-
-- Node.js 18.17+
-- npm
-
-Install and run:
-
-```bash
-git clone https://github.com/InfamousMorningstar/CDNdayz.git
-cd CDNdayz
-npm install
-npm run dev
-```
-
-Open http://localhost:3000
-
-## Build and Start
-
-```bash
-npm run build
-npm run start
-```
-
 ## Notes
 
 - Some server/UI data is intentionally cached in API routes to reduce upstream load.
 - If upstream launcher data is unavailable, mod records are returned with per-server error details instead of failing the entire request.
 
-## Contributing
+## Usage Notice
 
-Issues and pull requests are welcome.
+This website is built specifically for the CDN DayZ community and is not maintained as a public template product.
+
+If you want a custom website for your own community, reach out to discuss a dedicated build.
 
 Built for the CDN DayZ community.

@@ -63,10 +63,10 @@ export function Navbar() {
           : "bg-transparent border-transparent py-4 sm:py-6"
       )}
     >
-      <div className="container mx-auto px-4 sm:px-6 flex items-center gap-4">
+      <div className="container mx-auto px-4 sm:px-6 grid grid-cols-[auto_1fr_auto] lg:grid-cols-[1fr_auto_1fr] items-center gap-4">
         <Link
           href="/"
-          className="flex items-center gap-2 group relative z-20 shrink-0"
+          className="flex items-center gap-2 group relative z-20 shrink-0 justify-self-start"
           title="There may be secrets in this network"
           onClick={handleLogoClick}
         >
@@ -86,7 +86,7 @@ export function Navbar() {
         </Link>
         
         {/* Centered Navigation for Desktop */}
-        <div className="hidden lg:flex flex-1 items-center justify-center gap-4 xl:gap-6 min-w-0">
+        <div className="hidden lg:flex items-center justify-center gap-4 xl:gap-6 min-w-0 justify-self-center">
           {navItems.map((item) => {
             const isActive = pathname === item.href;
             
@@ -107,7 +107,7 @@ export function Navbar() {
           })}
         </div>
 
-        <div className="ml-auto flex items-center gap-4 relative z-20 shrink-0">
+        <div className="flex items-center gap-4 relative z-20 shrink-0 justify-self-end">
           <button
             type="button"
             className="lg:hidden text-neutral-400 hover:text-white rounded-full p-2 -mr-2"
