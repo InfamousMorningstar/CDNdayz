@@ -25,11 +25,11 @@ export default function TermsPage() {
                   1. Project Nature & Ownership
                 </h2>
                 <p className="text-neutral-300 leading-relaxed">
-                  The <strong>CDN DayZ Portal</strong> is an independent, community-driven project designed and built by <strong>Salman Ahmad (Morningstar.0)</strong> as a hobby and development playground.
+                  The <strong>CDN DayZ Portal</strong> is an independent, community-driven project designed and maintained for the CDN DayZ community.
                 </p>
                 <ul className="list-disc pl-6 space-y-2 text-neutral-400 mt-4">
                   <li>
-                    <strong>Design & Code:</strong> The underlying code, design architecture, and frontend implementation are the intellectual property of the developer, built with permission for the CDN DayZ community.
+                    <strong>Design & Code:</strong> The underlying code, design architecture, and frontend implementation are maintained for CDN DayZ operations and community use.
                   </li>
                   <li>
                     <strong>Server Content:</strong> All game-related data, server rules, lore, and community guidelines are provided and owned by the <strong>CDN DayZ Administration</strong>.
@@ -45,7 +45,7 @@ export default function TermsPage() {
               <section>
                 <h2 className="text-2xl font-bold text-white">2. Liability Disclaimer</h2>
                 <p className="text-neutral-300 leading-relaxed mt-4">
-                  This website is provided "as is" without any warranties. The developer, Salman Ahmad, is not responsible for:
+                  This website is provided "as is" without any warranties. The CDN web team is not responsible for:
                 </p>
                 <ul className="list-disc pl-6 space-y-2 text-neutral-400 mt-4">
                   <li>Temporary downtimes or interruptions in server status reporting.</li>
@@ -77,7 +77,7 @@ export default function TermsPage() {
                 <h2 className="text-2xl font-bold text-white">4. Contact</h2>
                 <div className="bg-neutral-950/50 p-6 rounded-lg border border-neutral-800 mt-4">
                   <p className="text-neutral-300 mb-4">
-                    <strong>For Website Issues:</strong> If you encounter bugs or technical errors on this site, please contact the developer.
+                    <strong>For Website Issues:</strong> If you encounter bugs or technical errors on this site, please contact <a href="https://portfolio.ahmxd.net" target="_blank" rel="noopener noreferrer" className="text-red-400 hover:text-red-300 underline">Morningstar.0</a>.
                   </p>
                   <p className="text-neutral-300">
                     <strong>For Server Issues:</strong> If you have issues with in-game griefing, bans, or donations, please open a ticket in the official <Link href={DISCORD_INVITE_URL} className="text-red-400 hover:text-red-300 underline">CDN Discord</Link>.

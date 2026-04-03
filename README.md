@@ -8,10 +8,6 @@ Production.
 
 Live site: https://dayzcdn.com
 
-## Repository
-
-https://github.com/InfamousMorningstar/CDNdayz
-
 ## Changes Since Last README Update (April 2026)
 
 - Released DayZ Error Codes hub at `/dayz-error-codes` with:

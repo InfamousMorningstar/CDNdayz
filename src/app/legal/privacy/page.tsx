@@ -82,10 +82,10 @@ export default function PrivacyPage() {
               <section>
                 <h2 className="text-2xl font-bold text-white">5. Updates & Contact</h2>
                 <p className="text-neutral-300 leading-relaxed mt-4">
-                  This policy is effective as of 2024 and may be updated periodically. Your continued use of the website constitutes acceptance of any changes.
+                  This policy is effective as of 2026 and may be updated periodically. Your continued use of the website constitutes acceptance of any changes.
                 </p>
                 <p className="text-neutral-300 leading-relaxed mt-4">
-                  For questions regarding this policy or the website's data practices, please contact the developer, <strong>Salman Ahmad (Morningstar.0)</strong>, or the CDN Administration on <Link href={DISCORD_INVITE_URL} className="text-red-400 hover:text-red-300 underline">Discord</Link>.
+                  For questions regarding this policy or the website&apos;s data practices, please contact <a href="https://portfolio.ahmxd.net" target="_blank" rel="noopener noreferrer" className="text-red-400 hover:text-red-300 underline">Morningstar.0</a> or the CDN Administration on <Link href={DISCORD_INVITE_URL} className="text-red-400 hover:text-red-300 underline">Discord</Link>.
                 </p>
               </section>
 
