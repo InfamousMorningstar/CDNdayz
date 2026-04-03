@@ -70,8 +70,8 @@ async function writeWipeDates(data: WipeDates) {
 function getDefaultWipeDates(): WipeDates {
     return {
         nextWipeWindow: 'First Week of April 2026',
-        wipeCycleMonths: 4,
-        estimatedDaysUntilWipe: 120,
+        wipeCycleMonths: 3,
+        estimatedDaysUntilWipe: 90,
         lastWipeDate: '2025-12-15',
         notes: 'Subject to Change',
     };
