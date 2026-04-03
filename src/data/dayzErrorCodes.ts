@@ -184,23 +184,27 @@ export const dayzErrorCodes: DayzErrorCode[] = [
   },
   {
     code: "0x00040074",
-    title: "MOD_VERSION_CONFLICT",
-    category: "Mods / Configuration",
-    description: "Server mod configuration or client mod version incompatibility.",
+    title: "VE_EXTRA_MOD",
+    category: "Mods / Verification",
+    description: "Client has a mod installed that is not present on the server, or mods failed to load/validate in time before server verification.",
     commonCauses: [
-      "Client mods do not match server mod list",
-      "Mod version mismatch between client and server",
-      "Corrupted or outdated mod files",
-      "Required mod not installed on client"
+      "Client has extra mods the server doesn't run",
+      "Mod was recently removed from server but client still has it",
+      "Client launched wrong mod set for this server",
+      "Mod manager activated mods not in server's active list",
+      "Mods stored on slow storage (external HDD ~80-120 MB/s) and didn't load/validate in time during login",
+      "Mod verification timeout due to system resource constraints or storage I/O bottleneck"
     ],
     recommendedFixes: [
-      "Verify all server mods are installed and up-to-date on your machine",
-      "Use mod manager (CUP, ACE, etc.) to sync mod versions",
-      "Delete mod cache and reinitialize (Documents/DayZ folder)",
-      "Ensure mods are launched in the correct load order",
-      "Check server mod list against your client configuration"
+      "Disable extra mods on your client that aren't on the server",
+      "Verify server's active mod list before joining",
+      "Use mod manager to synchronize your mods with server requirements",
+      "Create a separate profile for this server with matching mods only",
+      "Move game and mods to internal SSD (at minimum) or Thunderbolt SSD for consistent fast loading (90-98% success rate if HDD was the bottleneck)",
+      "Avoid external HDDs (USB suffers from high latency and poor seek time with thousands of small mod files)",
+      "Close background applications to free up system resources during mod loading"
     ],
-    status: "inferred",
-    sourceIds: ["COMMUNITY_REPORT"]
+    status: "documented",
+    sourceIds: ["BOHEMIA_WIKI", "USER_REPORT", "PERF_TEST"]
   }
 ];
