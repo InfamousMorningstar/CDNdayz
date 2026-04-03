@@ -111,7 +111,7 @@ export function FooterTicTacToe() {
               key={idx}
               type="button"
               onClick={() => play(idx)}
-              className="h-12 w-12 box-border m-0 p-0 appearance-none rounded-lg border border-white/10 bg-black/35 text-base font-bold text-neutral-100 hover:border-red-500/40 hover:bg-red-950/20 transition flex items-center justify-center leading-none"
+              className="h-12 w-12 box-border m-0 p-0 appearance-none rounded-lg border border-white/10 bg-black/35 text-base font-bold text-neutral-100 hover:border-red-500/40 hover:bg-red-950/20 transition flex items-center justify-center"
               aria-label={`Play cell ${idx + 1}`}
             >
               {cell ?? ''}

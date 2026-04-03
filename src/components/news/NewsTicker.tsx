@@ -115,9 +115,9 @@ export function NewsTicker() {
                             animate={{ y: 0, opacity: 1 }}
                             exit={{ y: -20, opacity: 0 }}
                             transition={{ duration: 0.3, ease: "easeOut" }}
-                            className="relative flex items-start gap-2 sm:gap-3"
+                            className="relative flex items-center gap-2 sm:gap-3"
                         >
-                            <div className="pt-0.5 shrink-0 text-white/80 drop-shadow-[0_2px_10px_rgba(0,0,0,0.45)]">{getIcon(currentItem.type)}</div>
+                            <div className="shrink-0 text-white/80 drop-shadow-[0_2px_10px_rgba(0,0,0,0.45)]">{getIcon(currentItem.type)}</div>
                             <div className="flex flex-col sm:flex-row items-start sm:items-start gap-1 sm:gap-2 min-w-0">
                                 {currentItemDate && (
                                     <span className="text-[11px] sm:text-xs font-mono text-neutral-300 bg-black/25 px-2 py-0.5 rounded-full border border-white/10 backdrop-blur-sm shrink-0 whitespace-nowrap mt-0.5 shadow-[0_6px_18px_rgba(0,0,0,0.2)]">
