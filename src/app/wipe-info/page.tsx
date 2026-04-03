@@ -3,10 +3,7 @@
 import { CinematicBackground } from '@/components/features/CinematicBackground';
 import { Badge } from '@/components/ui/Badge';
 import { Card } from '@/components/ui/Card';
-import { Button } from '@/components/ui/Button';
-import { Flame, RefreshCw, Calendar, AlertTriangle, ArrowRight, Shield, Database } from 'lucide-react';
-import Link from 'next/link';
-import { DISCORD_INVITE_URL } from '@/lib/links';
+import { Flame, RefreshCw, Calendar, AlertTriangle, Shield, Database } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 interface WipeDates {
@@ -64,6 +61,14 @@ export default function WipeInfoPage() {
   const wipeDisplay = wipeParts.slice(0, -1).join(' '); // Remove year
   const wipeYear = wipeParts[wipeParts.length - 1];
 
+  const formattedLastWipe = wipeDates.lastWipeDate
+    ? new Date(wipeDates.lastWipeDate + 'T00:00:00').toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      })
+    : 'Unknown';
+
   return (
     <CinematicBackground backgroundImageSrc="/Images/5.jpg">
             <div className="min-h-screen pt-28 sm:pt-32 pb-16 sm:pb-20 container mx-auto px-4 sm:px-6 relative z-10">
@@ -111,13 +116,13 @@ export default function WipeInfoPage() {
                     </p>
                 </div>
 
-                <div className="mt-8 flex justify-center">
-                            <Button variant="outline" asChild>
-                                <Link href={DISCORD_INVITE_URL} target="_blank" rel="noopener noreferrer">
-                           Check Discord for Live Updates <ArrowRight className="ml-2 w-4 h-4" />
-                        </Link>
-                     </Button>
+                <div className="mt-4 flex justify-center">
+                    <div className="bg-neutral-950/50 px-6 py-3 rounded-xl border border-white/5 flex items-center gap-3">
+                        <span className="text-xs font-mono text-neutral-500 uppercase tracking-widest">Last Wipe</span>
+                        <span className="text-sm font-bold text-neutral-300">{formattedLastWipe}</span>
+                    </div>
                 </div>
+
             </Card>
             
             {/* The Cycle Card */}
