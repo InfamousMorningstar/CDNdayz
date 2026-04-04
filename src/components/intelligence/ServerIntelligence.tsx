@@ -164,6 +164,14 @@ export function ServerIntelligence() {
     fetchHistory();
   }, [fetchHistory]);
 
+  // Auto-refresh every 60 seconds to pick up new snapshots (aligns with API cache TTL)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchHistory();
+    }, 60_000);
+    return () => clearInterval(interval);
+  }, [fetchHistory]);
+
   return (
     <section
       id="server-intelligence"
