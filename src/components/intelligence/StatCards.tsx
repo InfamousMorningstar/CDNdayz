@@ -36,7 +36,7 @@ function StatCard({
 }) {
   return (
     <div className={cn(
-      "flex flex-col gap-2 rounded-xl p-4 border bg-neutral-900/60 backdrop-blur-sm transition-colors",
+      "flex flex-col gap-2 rounded-xl p-3 sm:p-4 border bg-neutral-900/60 backdrop-blur-sm transition-colors",
       accent
         ? "border-red-500/20 bg-red-950/10 hover:border-red-500/35"
         : "border-white/5 hover:border-white/10",

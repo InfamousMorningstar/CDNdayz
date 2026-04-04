@@ -133,16 +133,16 @@ function TonightAtAGlance({ rows, loading }: { rows: CompareRow[]; loading: bool
   const topThree = rows.slice(0, 3);
 
   return (
-    <div className="rounded-xl border border-cyan-500/20 bg-cyan-950/10 backdrop-blur-sm p-4 sm:p-5">
+    <div className="rounded-xl border border-cyan-500/20 bg-cyan-950/10 backdrop-blur-sm p-3 sm:p-4">
       <div className="flex items-center gap-2 mb-3">
         <MoonStar className="w-4 h-4 text-cyan-300" />
         <p className="text-xs sm:text-sm font-medium uppercase tracking-wide text-cyan-100">Tonight At A Glance</p>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
         {topThree.map((row, idx) => (
           <div
             key={row.serverId}
-            className="rounded-lg border border-white/10 bg-black/25 p-3 flex flex-col gap-1"
+            className="rounded-lg border border-white/10 bg-black/25 p-2.5 flex flex-col gap-1"
           >
             <p className="text-[11px] uppercase tracking-wider text-neutral-500">
               #{idx + 1} recommendation
@@ -226,18 +226,18 @@ export function ServerIntelligence() {
     <section
       id="server-intelligence"
       aria-labelledby="intelligence-heading"
-      className="py-10 sm:py-14 bg-neutral-950/50 backdrop-blur-sm rounded-2xl border border-white/5 relative z-10"
+      className="py-8 sm:py-10 bg-neutral-950/50 backdrop-blur-sm rounded-2xl border border-white/5 relative z-10"
     >
       <div className="w-full px-4 sm:px-6">
 
         {/* ── Section header ─────────────────────────────────────────── */}
-        <div className="flex flex-col items-center text-center mb-8 gap-2">
+        <div className="flex flex-col items-center text-center mb-6 gap-1.5">
           <Badge
             variant="outline"
             className="border-sky-500/30 text-sky-400 bg-sky-900/10 backdrop-blur-sm px-4 py-1"
           >
             <BarChart2 className="w-3 h-3 mr-1.5 inline" />
-            Server Intelligence
+            Live Analytics
           </Badge>
 
           <h2
@@ -258,7 +258,7 @@ export function ServerIntelligence() {
         </div>
 
         {/* ── Controls ───────────────────────────────────────────────── */}
-        <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
           <div className="flex flex-wrap items-center gap-3">
             <ServerSelector value={selectedServer} onChange={setSelectedServer} />
             {analytics && <TrendBadge analytics={analytics} />}
@@ -305,10 +305,10 @@ export function ServerIntelligence() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3, ease: 'easeOut' }}
-              className="flex flex-col gap-5"
+              className="flex flex-col gap-4"
             >
               {/* Chart */}
-              <div className="rounded-xl border border-white/5 bg-neutral-900/40 backdrop-blur-sm p-4">
+              <div className="rounded-xl border border-white/5 bg-neutral-900/40 backdrop-blur-sm p-3 sm:p-4">
                 <PopulationChart
                   snapshots={analytics.snapshots}
                   timeRange={timeRange}

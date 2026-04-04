@@ -18,7 +18,7 @@ export function ForecastPanel({ analytics }: ForecastPanelProps) {
   const { forecast, forecastConfidence, anomalySummary, hasEnoughData } = analytics;
 
   return (
-    <div className="rounded-xl border border-white/5 bg-neutral-900/40 backdrop-blur-sm p-5 flex flex-col gap-4">
+    <div className="rounded-xl border border-white/5 bg-neutral-900/40 backdrop-blur-sm p-4 flex flex-col gap-3">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2 text-neutral-200">
           <AreaChart className="w-4 h-4 text-sky-400" />
@@ -48,7 +48,7 @@ export function ForecastPanel({ analytics }: ForecastPanelProps) {
           {forecast.map((point) => (
             <div
               key={point.hourOffset}
-              className="rounded-lg border border-white/5 bg-black/20 p-3 flex flex-col gap-1"
+              className="rounded-lg border border-white/5 bg-black/20 p-2.5 flex flex-col gap-1"
             >
               <p className="text-xs text-neutral-500">+{point.hourOffset}h</p>
               <p className="text-sm text-neutral-200 font-medium">{point.label}</p>

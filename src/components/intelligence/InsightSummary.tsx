@@ -18,7 +18,7 @@ export function InsightSummary({ analytics }: InsightSummaryProps) {
   const { insightSummary, bestTimeToPlay, hasEnoughData } = analytics;
 
   return (
-    <div className="rounded-xl border border-white/5 bg-neutral-900/40 backdrop-blur-sm p-5 flex flex-col gap-4">
+    <div className="rounded-xl border border-white/5 bg-neutral-900/40 backdrop-blur-sm p-4 flex flex-col gap-3">
       {/* Main insight */}
       <div className="flex gap-3">
         <span className="shrink-0 mt-0.5">
