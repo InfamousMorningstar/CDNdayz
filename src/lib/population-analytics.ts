@@ -31,11 +31,23 @@ export const DAY_NAMES = [
 /** Minimum online snapshots required before we trust the computed analytics. */
 const MIN_DATA_POINTS = 5;
 
+/** Minimum online snapshots required for trend calculation. */
+const MIN_TREND_SNAPSHOTS = 10;
+
+/** Relative percent threshold for trend direction. */
+const TREND_THRESHOLD_PERCENT = 8;
+
 /**
  * Minimum samples required in a single hour-bucket before we treat that
  * hour's average as reliable.
  */
 const MIN_HOURLY_SAMPLES = 2;
+
+/** Minimum number of reliable hour buckets before hour insights are shown. */
+const MIN_RELIABLE_HOUR_BUCKETS = 3;
+
+/** Minimum samples per weekday bucket before it is considered reliable. */
+const MIN_WEEKDAY_SAMPLES = 2;
 
 // ── Helpers ────────────────────────────────────────────────────────────────
 
@@ -54,11 +66,13 @@ function mean(values: number[]): number {
  * to determine whether population is growing, shrinking, or stable.
  */
 function calcTrend(snapshots: PopulationSnapshot[]): {
-  direction: 'up' | 'down' | 'stable';
+  direction: 'up' | 'down' | 'stable' | 'insufficient';
   percent: number;
 } {
   const online = onlineOnly(snapshots);
-  if (online.length < MIN_DATA_POINTS) return { direction: 'stable', percent: 0 };
+  if (online.length < MIN_TREND_SNAPSHOTS) {
+    return { direction: 'insufficient', percent: 0 };
+  }
 
   const mid = Math.floor(online.length / 2);
   const firstAvg = mean(online.slice(0, mid).map((s) => s.playerCount));
@@ -67,9 +81,13 @@ function calcTrend(snapshots: PopulationSnapshot[]): {
   if (firstAvg === 0) return { direction: 'stable', percent: 0 };
 
   const pct = ((secondAvg - firstAvg) / firstAvg) * 100;
-  if (pct > 5)  return { direction: 'up',     percent: Math.round(pct) };
-  if (pct < -5) return { direction: 'down',   percent: Math.round(Math.abs(pct)) };
-  return             { direction: 'stable', percent: Math.round(Math.abs(pct)) };
+  if (pct > TREND_THRESHOLD_PERCENT) {
+    return { direction: 'up', percent: Math.round(pct) };
+  }
+  if (pct < -TREND_THRESHOLD_PERCENT) {
+    return { direction: 'down', percent: Math.round(Math.abs(pct)) };
+  }
+  return { direction: 'stable', percent: Math.round(Math.abs(pct)) };
 }
 
 /**
@@ -110,7 +128,9 @@ function weekdayAverages(snapshots: PopulationSnapshot[]): Map<number, number> {
 
   const result = new Map<number, number>();
   for (const [d, counts] of buckets) {
-    result.set(d, mean(counts));
+    if (counts.length >= MIN_WEEKDAY_SAMPLES) {
+      result.set(d, mean(counts));
+    }
   }
   return result;
 }
@@ -130,10 +150,12 @@ function timeOfDayLabel(hour: number): string {
 
 function buildInsightSummary(
   hasEnoughData: boolean,
-  trendDirection: 'up' | 'down' | 'stable',
+  trendDirection: 'up' | 'down' | 'stable' | 'insufficient',
   trendPercent: number,
   busiestHour: number | null,
   quietestHour: number | null,
+  busiestDayOfWeek: number | null,
+  quietestDayOfWeek: number | null,
 ): string {
   if (!hasEnoughData) {
     return "Not enough data yet — keep checking back as more server activity is recorded.";
@@ -142,7 +164,9 @@ function buildInsightSummary(
   const parts: string[] = [];
 
   // Trend sentence
-  if (trendDirection === 'up') {
+  if (trendDirection === 'insufficient') {
+    parts.push('Trend: insufficient data in this range (need at least 10 online snapshots).');
+  } else if (trendDirection === 'up') {
     parts.push(`Population has been growing over this period (up ~${trendPercent}%).`);
   } else if (trendDirection === 'down') {
     parts.push(`Population has been quieting down over this period (down ~${trendPercent}%).`);
@@ -160,7 +184,13 @@ function buildInsightSummary(
   // Quietest period
   if (quietestHour !== null) {
     parts.push(
-      `Quietest time is around ${HOUR_LABELS[quietestHour]} — ideal for solo looting runs.`,
+      `Quietest time is around ${HOUR_LABELS[quietestHour]}.`,
+    );
+  }
+
+  if (busiestDayOfWeek !== null && quietestDayOfWeek !== null) {
+    parts.push(
+      `${DAY_NAMES[busiestDayOfWeek]} tends to be the busiest day, while ${DAY_NAMES[quietestDayOfWeek]} is usually quieter.`,
     );
   }
 
@@ -211,7 +241,7 @@ export function computeAnalytics(
   let busiestHour: number | null = null;
   let quietestHour: number | null = null;
 
-  if (hourly.size > 0) {
+  if (hourly.size >= MIN_RELIABLE_HOUR_BUCKETS) {
     const byValue = [...hourly.entries()].sort((a, b) => b[1] - a[1]);
     busiestHour  = byValue[0][0];
     quietestHour = byValue[byValue.length - 1][0];
@@ -221,7 +251,7 @@ export function computeAnalytics(
   let busiestDayOfWeek: number | null = null;
   let quietestDayOfWeek: number | null = null;
 
-  // Only trust weekday data if we have at least 3 different days
+  // Only trust weekday data if we have at least 3 reliable weekday buckets
   if (weekday.size >= 3) {
     const byValue = [...weekday.entries()].sort((a, b) => b[1] - a[1]);
     busiestDayOfWeek  = byValue[0][0];
@@ -232,7 +262,7 @@ export function computeAnalytics(
     serverId,
     serverName,
     timeRange,
-    snapshots: sorted,
+    snapshots: online,
     avgPlayers,
     peakPlayers,
     lowestPlayers,
@@ -247,7 +277,13 @@ export function computeAnalytics(
     hasEnoughData,
     dataPointCount: online.length,
     insightSummary: buildInsightSummary(
-      hasEnoughData, direction, percent, busiestHour, quietestHour,
+      hasEnoughData,
+      direction,
+      percent,
+      busiestHour,
+      quietestHour,
+      busiestDayOfWeek,
+      quietestDayOfWeek,
     ),
     bestTimeToPlay: buildBestTimeToPlay(quietestHour, quietestDayOfWeek),
   };

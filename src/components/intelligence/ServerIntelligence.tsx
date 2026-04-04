@@ -248,7 +248,10 @@ export function ServerIntelligence() {
             >
               {/* Chart */}
               <div className="rounded-xl border border-white/5 bg-neutral-900/40 backdrop-blur-sm p-4">
-                <PopulationChart snapshots={analytics.snapshots} />
+                <PopulationChart
+                  snapshots={analytics.snapshots}
+                  fallbackSummary={analytics.insightSummary}
+                />
               </div>
 
               {/* Stat cards */}

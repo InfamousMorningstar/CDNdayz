@@ -15,14 +15,10 @@ interface StatCardsProps {
   analytics: ServerAnalytics;
 }
 
-function TrendIcon({ direction }: { direction: 'up' | 'down' | 'stable' }) {
+function TrendIcon({ direction }: { direction: 'up' | 'down' | 'stable' | 'insufficient' }) {
   if (direction === 'up')   return <TrendingUp   className="w-4 h-4 text-green-400" />;
   if (direction === 'down') return <TrendingDown  className="w-4 h-4 text-rose-400" />;
   return <Minus className="w-4 h-4 text-neutral-400" />;
-}
-
-function trendColour(d: 'up' | 'down' | 'stable') {
-  return d === 'up' ? 'text-green-400' : d === 'down' ? 'text-rose-400' : 'text-neutral-400';
 }
 
 function StatCard({
@@ -58,12 +54,6 @@ function StatCard({
 function formatHour(hour: number | null): string {
   if (hour === null) return '—';
   return HOUR_LABELS[hour] ?? '—';
-}
-
-function formatDayHour(day: number | null, hour: number | null): string {
-  if (hour === null) return '—';
-  const dayStr = day !== null ? `${DAY_NAMES[day]}s, ` : '';
-  return `${dayStr}${HOUR_LABELS[hour]}`;
 }
 
 function formatTimestamp(iso: string | null): string {
@@ -157,10 +147,14 @@ export function TrendBadge({ analytics }: StatCardsProps) {
         ? 'bg-green-900/20 border-green-500/25 text-green-400'
         : trendDirection === 'down'
         ? 'bg-rose-900/20 border-rose-500/25 text-rose-400'
+        : trendDirection === 'insufficient'
+        ? 'bg-neutral-800/40 border-white/10 text-neutral-500'
         : 'bg-neutral-800/50 border-white/10 text-neutral-400',
     )}>
       <TrendIcon direction={trendDirection} />
-      {trendDirection === 'stable'
+      {trendDirection === 'insufficient'
+        ? 'Trend: insufficient data'
+        : trendDirection === 'stable'
         ? 'Stable'
         : `${trendPercent}% ${trendDirection}`}
     </span>

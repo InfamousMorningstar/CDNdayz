@@ -16,6 +16,7 @@ import { downsample } from '@/lib/population-analytics';
 
 interface PopulationChartProps {
   snapshots: PopulationSnapshot[];
+  fallbackSummary?: string;
 }
 
 const MIN_VISUAL_POINTS = 8;
@@ -69,17 +70,22 @@ function formatDateLabel(ts: number, totalDays: number): string {
   return d.toLocaleDateString(undefined, { month: 'short', year: '2-digit' });
 }
 
-export function PopulationChart({ snapshots }: PopulationChartProps) {
+export function PopulationChart({ snapshots, fallbackSummary }: PopulationChartProps) {
   const data = useMemo(() => downsample(snapshots, MAX_CHART_POINTS), [snapshots]);
 
   if (data.length < MIN_VISUAL_POINTS) {
     return (
-      <div className="flex items-center justify-center h-40 rounded-xl bg-neutral-900/60 border border-white/5">
-        <p className="text-sm text-neutral-500 text-center px-6">
-          {data.length === 0
-            ? 'No data recorded yet for this time window.'
-            : `Only ${data.length} snapshot${data.length === 1 ? '' : 's'} recorded so far — the chart will appear once more data is collected.`}
-        </p>
+      <div className="flex items-center justify-center h-40 rounded-xl bg-neutral-900/60 border border-white/5 px-6">
+        <div className="text-center space-y-2 max-w-2xl">
+          <p className="text-sm text-neutral-300 leading-relaxed">
+            {fallbackSummary || 'Not enough data yet — keep checking back as more server activity is recorded.'}
+          </p>
+          <p className="text-xs text-neutral-500">
+            {data.length === 0
+              ? 'No valid online snapshots recorded for this time window yet.'
+              : `Only ${data.length} valid snapshot${data.length === 1 ? '' : 's'} recorded. A trend chart appears at 8+ points.`}
+          </p>
+        </div>
       </div>
     );
   }

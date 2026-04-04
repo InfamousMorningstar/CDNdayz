@@ -30,13 +30,13 @@ export interface ServerAnalytics {
   serverId: string;
   serverName: string;
   timeRange: TimeRange;
-  /** Filtered, sorted snapshots used to compute these stats */
+  /** Online-only, sorted snapshots used to compute these stats */
   snapshots: PopulationSnapshot[];
   avgPlayers: number;
   peakPlayers: number;
   lowestPlayers: number;
   /** Trend based on first-half vs second-half average comparison */
-  trendDirection: 'up' | 'down' | 'stable';
+  trendDirection: 'up' | 'down' | 'stable' | 'insufficient';
   trendPercent: number;
   peakTime: string | null;       // ISO string (serialisable)
   quietestTime: string | null;   // ISO string (serialisable)
