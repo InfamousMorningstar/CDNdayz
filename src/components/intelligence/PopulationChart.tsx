@@ -11,13 +11,22 @@
  */
 
 import { useMemo } from 'react';
-import { PopulationSnapshot } from '@/types/intelligence';
+import { PopulationSnapshot, TimeRange } from '@/types/intelligence';
 import { downsample } from '@/lib/population-analytics';
 
 interface PopulationChartProps {
   snapshots: PopulationSnapshot[];
+  timeRange: TimeRange;
   fallbackSummary?: string;
 }
+
+const RANGE_DAYS: Record<TimeRange, number> = {
+  '7d': 7,
+  '30d': 30,
+  '90d': 90,
+  '6m': 182,
+  '1y': 365,
+};
 
 const MIN_VISUAL_POINTS = 8;
 const MAX_CHART_POINTS  = 120; // keep the SVG path manageable
@@ -60,9 +69,11 @@ function sparseLabels<T>(arr: T[], n: number): { item: T; index: number }[] {
 
 function formatDateLabel(ts: number, totalDays: number): string {
   const d = new Date(ts);
-  if (totalDays <= 7) {
-    // Show weekday + time
-    return d.toLocaleDateString(undefined, { weekday: 'short', hour: 'numeric' });
+  if (totalDays <= 2) {
+    return d.toLocaleString(undefined, { weekday: 'short', hour: 'numeric' });
+  }
+  if (totalDays <= 14) {
+    return d.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric' });
   }
   if (totalDays <= 90) {
     return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
@@ -70,7 +81,14 @@ function formatDateLabel(ts: number, totalDays: number): string {
   return d.toLocaleDateString(undefined, { month: 'short', year: '2-digit' });
 }
 
-export function PopulationChart({ snapshots, fallbackSummary }: PopulationChartProps) {
+function niceMax(value: number): number {
+  if (value <= 10) return 10;
+  if (value <= 20) return 20;
+  if (value <= 50) return Math.ceil(value / 5) * 5;
+  return Math.ceil(value / 10) * 10;
+}
+
+export function PopulationChart({ snapshots, timeRange, fallbackSummary }: PopulationChartProps) {
   const data = useMemo(() => downsample(snapshots, MAX_CHART_POINTS), [snapshots]);
 
   if (data.length < MIN_VISUAL_POINTS) {
@@ -90,17 +108,19 @@ export function PopulationChart({ snapshots, fallbackSummary }: PopulationChartP
     );
   }
 
-  // Compute Y domain — always start at 0, cap max slightly above peak for breathing room
-  const maxPlayers = Math.max(...data.map((s) => s.playerCount), 1);
-  const yMax = Math.ceil(maxPlayers * 1.15);
+  // Compute Y domain from observed values + configured slot caps.
+  const observedPlayers = Math.max(...data.map((s) => s.playerCount), 0);
+  const configuredCap = Math.max(...data.map((s) => s.maxPlayers), 0);
+  const yMax = niceMax(Math.max(observedPlayers, configuredCap, 1));
 
-  // Map snapshots to SVG coordinates
-  const tsMin = data[0].timestamp;
-  const tsMax = data[data.length - 1].timestamp;
-  const tsRange = tsMax - tsMin || 1;
+  // Always map X across the selected time range so axis matches 7d/30d/90d/etc.
+  const totalDays = RANGE_DAYS[timeRange];
+  const tsMax = Date.now();
+  const tsMin = tsMax - totalDays * 24 * 60 * 60 * 1000;
+  const tsRange = tsMax - tsMin;
 
   const pts = data.map((s) => ({
-    x: PAD_LEFT + ((s.timestamp - tsMin) / tsRange) * PLOT_W,
+    x: PAD_LEFT + (Math.min(Math.max(s.timestamp, tsMin), tsMax) - tsMin) / tsRange * PLOT_W,
     y: PAD_TOP  + (1 - s.playerCount / yMax) * PLOT_H,
     snap: s,
   }));
@@ -113,12 +133,15 @@ export function PopulationChart({ snapshots, fallbackSummary }: PopulationChartP
     ` L ${pts[pts.length - 1].x} ${PAD_TOP + PLOT_H}` +
     ` L ${pts[0].x} ${PAD_TOP + PLOT_H} Z`;
 
-  // Y-axis gridlines (4 lines at 0%, 33%, 67%, 100% of yMax)
-  const yTicks = [0, Math.round(yMax / 3), Math.round((2 * yMax) / 3), yMax];
+  // Y-axis gridlines
+  const yTicks = Array.from({ length: 5 }, (_, i) => Math.round((i * yMax) / 4));
 
-  // X-axis labels (up to 6 evenly-spaced timestamps)
-  const totalDays = (tsMax - tsMin) / (1000 * 60 * 60 * 24);
-  const xLabelItems = sparseLabels(pts, 6);
+  // X-axis labels are generated from range domain, not sparse sample points.
+  const xLabelItems = Array.from({ length: 6 }, (_, i) => {
+    const ts = tsMin + (i / 5) * tsRange;
+    const x = PAD_LEFT + (i / 5) * PLOT_W;
+    return { x, ts, index: i };
+  });
 
   return (
     <div className="w-full overflow-x-auto">
@@ -185,16 +208,16 @@ export function PopulationChart({ snapshots, fallbackSummary }: PopulationChartP
           ))}
 
         {/* X-axis date labels */}
-        {xLabelItems.map(({ item: pt, index }) => (
+        {xLabelItems.map((pt) => (
           <text
-            key={index}
+            key={pt.index}
             x={pt.x}
             y={H - 6}
             textAnchor="middle"
             fontSize="10"
             fill="#6b7280"
           >
-            {formatDateLabel(pt.snap.timestamp, totalDays)}
+            {formatDateLabel(pt.ts, totalDays)}
           </text>
         ))}
       </svg>

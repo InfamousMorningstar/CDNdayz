@@ -380,6 +380,7 @@ export function ServerIntelligence() {
               <div className="rounded-xl border border-white/5 bg-neutral-900/40 backdrop-blur-sm p-4">
                 <PopulationChart
                   snapshots={analytics.snapshots}
+                  timeRange={timeRange}
                   fallbackSummary={analytics.insightSummary}
                 />
               </div>
