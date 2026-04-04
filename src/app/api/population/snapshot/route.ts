@@ -4,17 +4,15 @@
  * Records a live population snapshot for every server.
  * Calls GameDig directly (via shared query-servers lib) — no HTTP self-call needed.
  *
- * ── CRON JOB ──────────────────────────────────────────────────────────────
- * Triggered every 5 minutes via vercel.json crons config.
- * Vercel automatically forwards CRON_SECRET as Authorization: Bearer <secret>.
+ * ── SCHEDULER ─────────────────────────────────────────────────────────────
+ * Trigger this endpoint from an external scheduler (GitHub Actions workflow).
  *
  * To trigger manually:
  *   GET https://your-domain.com/api/population/snapshot
  *   Authorization: Bearer <CRON_SECRET>
  *
  * Environment variables:
- *   CRON_SECRET  — set in Vercel dashboard; protects this endpoint
- *                  Vercel cron runner sends it automatically.
+ *   CRON_SECRET  — shared secret used by the scheduler and manual triggers.
  * ─────────────────────────────────────────────────────────────────────────
  */
 
@@ -25,8 +23,7 @@ import { PopulationSnapshot } from '@/types/intelligence';
 
 async function collectSnapshots(req: NextRequest): Promise<NextResponse> {
   // ── Auth check ──────────────────────────────────────────────────────────
-  // Vercel automatically passes CRON_SECRET as Authorization: Bearer <secret>
-  // for cron job requests. Same header works for manual triggers.
+  // Scheduler and manual calls must send Authorization: Bearer <CRON_SECRET>
   const secret = process.env.CRON_SECRET;
   if (secret) {
     const auth = req.headers.get('Authorization');
@@ -70,6 +67,6 @@ async function collectSnapshots(req: NextRequest): Promise<NextResponse> {
   return NextResponse.json({ timestamp, results: summary });
 }
 
-// Vercel cron always uses GET; POST is available for manual/external triggers
+// GET/POST both supported for scheduler and manual/external triggers.
 export const GET  = collectSnapshots;
 export const POST = collectSnapshots;
