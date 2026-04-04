@@ -45,8 +45,8 @@ export default function ServersPage() {
           </div>
         </div>
 
-        <ServerList />
         <ServerIntelligence />
+        <ServerList />
       </div>
     </CinematicBackground>
   );

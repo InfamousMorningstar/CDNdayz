@@ -9,6 +9,7 @@
  */
 
 import {
+  ForecastPoint,
   PopulationSnapshot,
   ServerAnalytics,
   TimeRange,
@@ -48,6 +49,7 @@ const MIN_RELIABLE_HOUR_BUCKETS = 3;
 
 /** Minimum samples per weekday bucket before it is considered reliable. */
 const MIN_WEEKDAY_SAMPLES = 2;
+const FORECAST_HOURS = 6;
 
 // ── Helpers ────────────────────────────────────────────────────────────────
 
@@ -206,6 +208,95 @@ function buildBestTimeToPlay(
   return `Best for quiet looting: ${dayPart}around ${HOUR_LABELS[quietestHour]}`;
 }
 
+function buildNextBestWindow(hourly: Map<number, number>): string | null {
+  if (hourly.size < MIN_RELIABLE_HOUR_BUCKETS) return null;
+
+  const now = new Date();
+  const currentHour = now.getHours();
+  const candidates = Array.from({ length: 24 }, (_, i) => (currentHour + i) % 24)
+    .map((hour) => ({ hour, avg: hourly.get(hour) }))
+    .filter((x): x is { hour: number; avg: number } => typeof x.avg === 'number');
+
+  if (candidates.length === 0) return null;
+
+  candidates.sort((a, b) => a.avg - b.avg);
+  const best = candidates[0];
+  const nextHour = (best.hour + 1) % 24;
+  return `Best quiet window in next 24h: ${HOUR_LABELS[best.hour]}-${HOUR_LABELS[nextHour]}`;
+}
+
+function buildReliabilityScore(snapshots: PopulationSnapshot[], hourly: Map<number, number>): number {
+  if (snapshots.length === 0) return 0;
+
+  const total = snapshots.length;
+  const online = snapshots.filter((s) => s.status === 'online').length;
+  const restarting = snapshots.filter((s) => s.status === 'restarting').length;
+  const offline = snapshots.filter((s) => s.status === 'offline').length;
+
+  const availabilityScore = (online / total) * 60;
+  const restartPenalty = (restarting / total) * 20;
+  const offlinePenalty = (offline / total) * 20;
+  const coverageScore = Math.min(20, hourly.size * 2.5);
+
+  const raw = availabilityScore + coverageScore - restartPenalty - offlinePenalty;
+  return Math.max(0, Math.min(100, Math.round(raw)));
+}
+
+function buildAnomalySummary(snapshots: PopulationSnapshot[], hourly: Map<number, number>): string | null {
+  const latest = [...snapshots].reverse().find((s) => s.status === 'online');
+  if (!latest) return null;
+
+  const h = new Date(latest.timestamp).getHours();
+  const baseline = hourly.get(h);
+  if (!baseline || baseline <= 0) return null;
+
+  const diffPct = ((latest.playerCount - baseline) / baseline) * 100;
+  if (Math.abs(diffPct) < 35 || Math.abs(latest.playerCount - baseline) < 5) {
+    return null;
+  }
+
+  if (diffPct > 0) {
+    return `Unusual surge: current players are ~${Math.round(diffPct)}% above the normal ${HOUR_LABELS[h]} baseline.`;
+  }
+
+  return `Unusual dip: current players are ~${Math.round(Math.abs(diffPct))}% below the normal ${HOUR_LABELS[h]} baseline.`;
+}
+
+function buildForecast(
+  snapshots: PopulationSnapshot[],
+  hourly: Map<number, number>,
+): { forecast: ForecastPoint[]; confidence: 'low' | 'medium' | 'high' } {
+  const online = onlineOnly(snapshots);
+  const recent = online.slice(-6);
+  const recentAvg = mean(recent.map((s) => s.playerCount));
+  const latest = online[online.length - 1]?.playerCount ?? recentAvg;
+  const momentum = latest - recentAvg;
+
+  const now = new Date();
+  const points: ForecastPoint[] = [];
+
+  for (let i = 1; i <= FORECAST_HOURS; i++) {
+    const hour = (now.getHours() + i) % 24;
+    const baseline = hourly.get(hour) ?? recentAvg;
+    const momentumWeight = (i / FORECAST_HOURS) * 0.35;
+    const predicted = Math.max(0, Math.round(baseline * 0.75 + recentAvg * 0.25 + momentum * momentumWeight));
+    points.push({
+      hourOffset: i,
+      label: HOUR_LABELS[hour],
+      predictedPlayers: predicted,
+    });
+  }
+
+  let confidence: 'low' | 'medium' | 'high' = 'low';
+  if (online.length >= 72 && hourly.size >= 8) {
+    confidence = 'high';
+  } else if (online.length >= 24 && hourly.size >= 4) {
+    confidence = 'medium';
+  }
+
+  return { forecast: points, confidence };
+}
+
 // ── Main export ─────────────────────────────────────────────────────────────
 
 /**
@@ -258,6 +349,14 @@ export function computeAnalytics(
     quietestDayOfWeek = byValue[byValue.length - 1][0];
   }
 
+  const { forecast, confidence } = buildForecast(sorted, hourly);
+  const reliabilityScore = buildReliabilityScore(sorted, hourly);
+  const anomalySummary = buildAnomalySummary(sorted, hourly);
+  const nextBestWindow = buildNextBestWindow(hourly);
+  const lastSnapshotTime = sorted.length > 0
+    ? new Date(sorted[sorted.length - 1].timestamp).toISOString()
+    : null;
+
   return {
     serverId,
     serverName,
@@ -286,6 +385,12 @@ export function computeAnalytics(
       quietestDayOfWeek,
     ),
     bestTimeToPlay: buildBestTimeToPlay(quietestHour, quietestDayOfWeek),
+    nextBestWindow,
+    reliabilityScore,
+    anomalySummary,
+    forecast,
+    forecastConfidence: confidence,
+    lastSnapshotTime,
   };
 }
 

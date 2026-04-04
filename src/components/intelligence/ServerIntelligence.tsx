@@ -18,6 +18,8 @@ import { Badge } from '@/components/ui/Badge';
 import { PopulationChart } from './PopulationChart';
 import { StatCards, TrendBadge } from './StatCards';
 import { InsightSummary } from './InsightSummary';
+import { ForecastPanel } from './ForecastPanel';
+import { CompareRow, ServerComparePanel } from './ServerComparePanel';
 import { computeAnalytics } from '@/lib/population-analytics';
 import {
   PopulationSnapshot,
@@ -127,6 +129,10 @@ export function ServerIntelligence() {
   const [fetchState, setFetchState]         = useState<FetchState>('idle');
   const [analytics, setAnalytics]           = useState<ServerAnalytics | null>(null);
   const [errorMsg, setErrorMsg]             = useState<string>('');
+  const [lastUpdatedAt, setLastUpdatedAt]   = useState<number | null>(null);
+  const [nowTick, setNowTick]               = useState<number>(Date.now());
+  const [compareRows, setCompareRows]       = useState<CompareRow[]>([]);
+  const [compareLoading, setCompareLoading] = useState<boolean>(false);
 
   const fetchHistory = useCallback(async () => {
     if (!selectedServer) return;
@@ -151,6 +157,7 @@ export function ServerIntelligence() {
       );
 
       setAnalytics(computed);
+      setLastUpdatedAt(Date.now());
       setFetchState('success');
     } catch (err) {
       console.error('[ServerIntelligence] fetch error:', err);
@@ -159,18 +166,85 @@ export function ServerIntelligence() {
     }
   }, [selectedServer, timeRange]);
 
+  const loadCompareRows = useCallback(async () => {
+    setCompareLoading(true);
+
+    try {
+      const analyticsRows = await Promise.all(
+        servers.map(async (s) => {
+          const res = await fetch(
+            `/api/population/history/${encodeURIComponent(s.id)}?range=${timeRange}`,
+          );
+          if (!res.ok) return null;
+
+          const body: { serverId: string; range: TimeRange; snapshots: PopulationSnapshot[] } =
+            await res.json();
+          const a = computeAnalytics(s.id, s.name, body.snapshots ?? [], body.range);
+
+          if (!a.hasEnoughData) return null;
+
+          const verdict =
+            a.reliabilityScore >= 80
+              ? 'Most consistent PvE population'
+              : a.trendDirection === 'up'
+              ? 'Momentum is building'
+              : a.trendDirection === 'down'
+              ? 'Cooling off recently'
+              : 'Stable day-to-day flow';
+
+          return {
+            serverId: s.id,
+            serverName: s.name,
+            avgPlayers: a.avgPlayers,
+            peakPlayers: a.peakPlayers,
+            reliabilityScore: a.reliabilityScore,
+            trendDirection: a.trendDirection,
+            verdict,
+          } as CompareRow;
+        }),
+      );
+
+      const ranked = analyticsRows
+        .filter((row): row is CompareRow => row !== null)
+        .sort((a, b) => {
+          if (b.reliabilityScore !== a.reliabilityScore) {
+            return b.reliabilityScore - a.reliabilityScore;
+          }
+          return b.avgPlayers - a.avgPlayers;
+        })
+        .slice(0, 8);
+
+      setCompareRows(ranked);
+    } catch (err) {
+      console.error('[ServerIntelligence] compare error:', err);
+      setCompareRows([]);
+    } finally {
+      setCompareLoading(false);
+    }
+  }, [timeRange]);
+
   // Fetch on mount and whenever the selection changes
   useEffect(() => {
     fetchHistory();
   }, [fetchHistory]);
 
+  useEffect(() => {
+    loadCompareRows();
+  }, [loadCompareRows]);
+
   // Auto-refresh every 60 seconds to pick up new snapshots (aligns with API cache TTL)
   useEffect(() => {
     const interval = setInterval(() => {
       fetchHistory();
+      loadCompareRows();
     }, 60_000);
     return () => clearInterval(interval);
-  }, [fetchHistory]);
+  }, [fetchHistory, loadCompareRows]);
+
+  useEffect(() => {
+    const ticker = setInterval(() => setNowTick(Date.now()), 15_000);
+    return () => clearInterval(ticker);
+  }, []);
 
   return (
     <section
@@ -202,6 +276,11 @@ export function ServerIntelligence() {
             Historical population data helps you find the right time to play — whether
             you prefer a busy server or a quiet loot run.
           </p>
+          {lastUpdatedAt && (
+            <p className="text-xs text-neutral-500">
+              Updated {Math.max(1, Math.floor((nowTick - lastUpdatedAt) / 1000))}s ago
+            </p>
+          )}
         </div>
 
         {/* ── Controls ───────────────────────────────────────────────── */}
@@ -265,8 +344,18 @@ export function ServerIntelligence() {
               {/* Stat cards */}
               <StatCards analytics={analytics} />
 
+              {/* Forecast + anomalies */}
+              <ForecastPanel analytics={analytics} />
+
               {/* Insight */}
               <InsightSummary analytics={analytics} />
+
+              {/* Cross-server comparison with verdicts */}
+              <ServerComparePanel
+                rows={compareRows}
+                selectedServerId={selectedServer}
+                loading={compareLoading}
+              />
             </motion.div>
           )}
         </AnimatePresence>

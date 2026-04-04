@@ -10,6 +10,12 @@ export interface PopulationSnapshot {
   status: 'online' | 'offline' | 'restarting';
 }
 
+export interface ForecastPoint {
+  hourOffset: number;
+  label: string;
+  predictedPlayers: number;
+}
+
 export type TimeRange = '7d' | '30d' | '90d' | '6m' | '1y';
 
 export interface TimeRangeOption {
@@ -48,6 +54,12 @@ export interface ServerAnalytics {
   quietestDayOfWeek: number | null;
   insightSummary: string;
   bestTimeToPlay: string | null;
+  nextBestWindow: string | null;
+  reliabilityScore: number;
+  anomalySummary: string | null;
+  forecast: ForecastPoint[];
+  forecastConfidence: 'low' | 'medium' | 'high';
+  lastSnapshotTime: string | null;
   hasEnoughData: boolean;
   dataPointCount: number;
 }

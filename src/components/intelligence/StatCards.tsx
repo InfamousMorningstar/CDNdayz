@@ -6,7 +6,7 @@
  * Grid of quick-glance stat cards derived from ServerAnalytics.
  */
 
-import { TrendingUp, TrendingDown, Minus, Users, Zap, Moon, Activity, Clock } from 'lucide-react';
+import { TrendingUp, TrendingDown, Minus, Users, Zap, Moon, Activity, Clock, ShieldCheck } from 'lucide-react';
 import { ServerAnalytics } from '@/types/intelligence';
 import { HOUR_LABELS, DAY_NAMES } from '@/lib/population-analytics';
 import { cn } from '@/lib/utils';
@@ -83,6 +83,8 @@ export function StatCards({ analytics }: StatCardsProps) {
     busiestDayOfWeek,
     quietestDayOfWeek,
     peakTime,
+    nextBestWindow,
+    reliabilityScore,
     hasEnoughData,
     dataPointCount,
   } = analytics;
@@ -91,7 +93,7 @@ export function StatCards({ analytics }: StatCardsProps) {
   const dash = '—';
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
       <StatCard
         icon={<Users className="w-4 h-4" />}
         label="Average"
@@ -130,6 +132,13 @@ export function StatCards({ analytics }: StatCardsProps) {
         sub={hasEnoughData && quietestDayOfWeek !== null
           ? `Often on ${DAY_NAMES[quietestDayOfWeek]}s`
           : undefined}
+      />
+
+      <StatCard
+        icon={<ShieldCheck className="w-4 h-4 text-emerald-400" />}
+        label="Reliability"
+        value={hasEnoughData ? `${reliabilityScore}%` : dash}
+        sub={hasEnoughData ? nextBestWindow ?? 'More samples needed for next-window guidance' : undefined}
       />
     </div>
   );

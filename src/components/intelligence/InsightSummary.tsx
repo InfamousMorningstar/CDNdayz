@@ -46,7 +46,7 @@ export function InsightSummary({ analytics }: InsightSummaryProps) {
       {hasEnoughData && (
         <p className="text-[11px] text-neutral-600 leading-none pt-1">
           Insights are derived automatically from recorded player-count snapshots.
-          Samples are taken every 30 minutes.
+          Samples are taken every 5 minutes and used for trend + forecast estimation.
         </p>
       )}
     </div>
