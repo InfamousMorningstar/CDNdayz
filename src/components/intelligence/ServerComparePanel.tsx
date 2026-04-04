@@ -30,7 +30,7 @@ export function ServerComparePanel({ rows, selectedServerId, loading }: ServerCo
     <div className="rounded-xl border border-white/5 bg-neutral-900/40 backdrop-blur-sm p-5 flex flex-col gap-4">
       <div className="flex items-center gap-2 text-neutral-200">
         <Signal className="w-4 h-4 text-cyan-400" />
-        <h3 className="text-sm font-semibold tracking-wide">Cross-Server Intelligence</h3>
+        <p className="text-xs font-medium uppercase tracking-wide">Cross-Server Intelligence</p>
       </div>
 
       {loading ? (

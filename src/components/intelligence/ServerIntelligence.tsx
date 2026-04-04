@@ -136,7 +136,7 @@ function TonightAtAGlance({ rows, loading }: { rows: CompareRow[]; loading: bool
     <div className="rounded-xl border border-cyan-500/20 bg-cyan-950/10 backdrop-blur-sm p-4 sm:p-5">
       <div className="flex items-center gap-2 mb-3">
         <MoonStar className="w-4 h-4 text-cyan-300" />
-        <h3 className="text-sm sm:text-base font-semibold text-cyan-100 tracking-wide">Tonight At A Glance</h3>
+        <p className="text-xs sm:text-sm font-medium uppercase tracking-wide text-cyan-100">Tonight At A Glance</p>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         {topThree.map((row, idx) => (
@@ -231,7 +231,7 @@ export function ServerIntelligence() {
       <div className="w-full px-4 sm:px-6">
 
         {/* ── Section header ─────────────────────────────────────────── */}
-        <div className="flex flex-col items-center text-center mb-10 gap-3">
+        <div className="flex flex-col items-center text-center mb-8 gap-2">
           <Badge
             variant="outline"
             className="border-sky-500/30 text-sky-400 bg-sky-900/10 backdrop-blur-sm px-4 py-1"
@@ -242,15 +242,13 @@ export function ServerIntelligence() {
 
           <h2
             id="intelligence-heading"
-            className="text-2xl sm:text-3xl md:text-5xl font-heading font-bold text-white"
+            className="text-xl sm:text-2xl md:text-3xl font-heading font-semibold text-white"
           >
-            When Are Servers{' '}
-            <span className="text-neutral-500">Most Active?</span>
+            Server Intelligence
           </h2>
 
-          <p className="text-neutral-400 text-base sm:text-lg max-w-2xl">
-            Historical population data helps you find the right time to play — whether
-            you prefer a busy server or a quiet loot run.
+          <p className="text-neutral-400 text-sm sm:text-base max-w-2xl">
+            Data-backed activity patterns to help you pick the right server and time.
           </p>
           {lastUpdatedAt && (
             <p className="text-xs text-neutral-500">

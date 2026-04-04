@@ -22,7 +22,7 @@ export function ForecastPanel({ analytics }: ForecastPanelProps) {
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2 text-neutral-200">
           <AreaChart className="w-4 h-4 text-sky-400" />
-          <h3 className="text-sm font-semibold tracking-wide">Next 6h (Historical Data)</h3>
+          <p className="text-xs font-medium uppercase tracking-wide">Next 6h (Historical Data)</p>
         </div>
         <span
           className={cn(
