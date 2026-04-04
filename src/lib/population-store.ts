@@ -13,8 +13,8 @@
 import { PopulationSnapshot } from '@/types/intelligence';
 
 // Maximum snapshots kept per server to prevent unbounded growth.
-// At a 30-minute collection interval this gives ~60 days of raw data.
-const MAX_SNAPSHOTS_PER_SERVER = 2_880;
+// At a 5-minute collection interval this gives ~60 days of raw data.
+const MAX_SNAPSHOTS_PER_SERVER = 17_280;
 
 const KV_KEY_PREFIX = 'cdn:pop:';
 

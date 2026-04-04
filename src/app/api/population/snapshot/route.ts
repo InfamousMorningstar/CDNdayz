@@ -5,7 +5,7 @@
  * Calls GameDig directly (via shared query-servers lib) — no HTTP self-call needed.
  *
  * ── CRON JOB ──────────────────────────────────────────────────────────────
- * Triggered every 30 minutes via vercel.json crons config.
+ * Triggered every 5 minutes via vercel.json crons config.
  * Vercel automatically forwards CRON_SECRET as Authorization: Bearer <secret>.
  *
  * To trigger manually:
