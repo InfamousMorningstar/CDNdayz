@@ -3,6 +3,7 @@ import { Metadata } from 'next';
 import { CinematicBackground } from '@/components/features/CinematicBackground';
 import { Badge } from '@/components/ui/Badge';
 import Link from 'next/link';
+import { ServerIntelligence } from '@/components/intelligence/ServerIntelligence';
 
 export const metadata: Metadata = {
   title: 'Servers | CDN - DayZ PvE Network',
@@ -45,6 +46,7 @@ export default function ServersPage() {
         </div>
 
         <ServerList />
+        <ServerIntelligence />
       </div>
     </CinematicBackground>
   );

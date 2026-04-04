@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/population/snapshot",
+      "schedule": "0,30 * * * *"
+    }
+  ]
+}

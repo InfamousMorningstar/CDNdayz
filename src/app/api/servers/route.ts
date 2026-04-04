@@ -1,155 +1,30 @@
 // src/app/api/servers/route.ts
 import { NextResponse } from 'next/server';
-import { GameDig } from 'gamedig';
-import { servers, ServerStatus } from '@/lib/servers';
+import { ServerStatus } from '@/lib/servers';
+import { queryAllServers } from '@/lib/query-servers';
 
 // Simple in-memory cache
 let cache: ServerStatus[] | null = null;
 let lastFetchTime = 0;
 const CACHE_DURATION = 30 * 1000; // 30 seconds
 
-// Track when servers went offline (Server ID -> Timestamp)
-const offlineStartTimes = new Map<string, number>();
-const RESTART_WINDOW = 5 * 60 * 1000; // 5 minutes
-
-function normalizeMapName(mapValue: string): string {
-  const normalized = mapValue.trim().toLowerCase();
-
-  const mapAliases: Record<string, string> = {
-    chernarusplus: 'Chernarus',
-    enoch: 'Livonia',
-    deerisle: 'Deer Isle',
-    hashima: 'Hashima',
-    sakhal: 'Sakhal',
-    namalsk: 'Namalsk',
-    bitterroot: 'Bitterroot',
-    banov: 'Banov',
-  };
-
-  return mapAliases[normalized] || mapValue;
-}
-
-function getLiveServerName(state: unknown, fallback: string): string {
-  const candidate =
-    (state as any)?.name ||
-    (state as any)?.raw?.hostname ||
-    (state as any)?.raw?.name ||
-    fallback;
-
-  const safe = typeof candidate === 'string' ? candidate.trim() : fallback;
-  return safe || fallback;
-}
-
-function getLiveServerMap(state: unknown, fallback: string): string {
-  const candidate =
-    (state as any)?.map ||
-    (state as any)?.raw?.map ||
-    (state as any)?.raw?.mission ||
-    fallback;
-
-  const safe = typeof candidate === 'string' ? candidate.trim() : fallback;
-  return normalizeMapName(safe || fallback);
-}
-
 export async function GET() {
   const now = Date.now();
 
   // Return cached data if valid
-  if (cache && (now - lastFetchTime < CACHE_DURATION)) {
+  if (cache && now - lastFetchTime < CACHE_DURATION) {
     return NextResponse.json(cache, {
-      headers: {
-        'x-server-fetched-at': String(lastFetchTime),
-      },
+      headers: { 'x-server-fetched-at': String(lastFetchTime) },
     });
   }
 
   try {
-    const promises = servers.map(async (server) => {
-      try {
-        // Try querying with the config port first
-        let state;
-        try {
-          state = await GameDig.query({
-            type: server.type as any,
-            host: server.host,
-            port: server.port,
-            maxAttempts: 2,
-            socketTimeout: 2000
-          } as any);
-        } catch (initialError) {
-          // Fallback: Try querying the game port directly if disjoint
-          // Many DayZ servers respond to Steam query on the game port too
-          if (server.port !== server.gamePort) {
-             state = await GameDig.query({
-                type: server.type as any,
-                host: server.host,
-                port: server.gamePort, // Try game port
-                maxAttempts: 2,
-                socketTimeout: 2000
-             } as any);
-          } else {
-             throw initialError;
-          }
-        }
-
-        // If we reach here, the server is ONLINE
-        // Clear any offline tracking for this server
-        if (offlineStartTimes.has(server.id)) {
-             offlineStartTimes.delete(server.id);
-        }
-
-        return {
-          id: server.id,
-          name: getLiveServerName(state, server.name),
-          map: getLiveServerMap(state, server.map),
-          players: state.players.length || (state.raw as any)?.numplayers || 0,
-          maxPlayers: state.maxplayers,
-          ping: state.ping,
-          connect: `${server.host}:${server.gamePort || server.port}`,
-          status: 'online' as const
-        };
-      } catch (error) {
-        console.error(`Failed to query ${server.name} (${server.host}:${server.port}):`, error instanceof Error ? error.message : error);
-        
-        let status: 'offline' | 'restarting' = 'offline';
-        const now = Date.now();
-
-        if (!offlineStartTimes.has(server.id)) {
-            // First time seeing it offline
-            offlineStartTimes.set(server.id, now);
-            status = 'restarting';
-        } else {
-            const downTime = now - (offlineStartTimes.get(server.id) || now);
-            if (downTime < RESTART_WINDOW) {
-                status = 'restarting';
-            } else {
-                status = 'offline';
-            }
-        }
-
-        return {
-          id: server.id,
-          name: server.name,
-          map: server.map,
-          players: 0,
-          maxPlayers: 0,
-          ping: 0,
-          connect: `${server.host}:${server.gamePort || server.port}`, // Fallback
-          status: status
-        };
-      }
-    });
-
-    const results = await Promise.all(promises);
-    
-    // Update cache
-    cache = results as ServerStatus[];
+    const results = await queryAllServers();
+    cache = results;
     lastFetchTime = now;
 
     return NextResponse.json(results, {
-      headers: {
-        'x-server-fetched-at': String(lastFetchTime),
-      },
+      headers: { 'x-server-fetched-at': String(lastFetchTime) },
     });
   } catch (error) {
     console.error('API Error:', error);
