@@ -22,7 +22,7 @@ export function ForecastPanel({ analytics }: ForecastPanelProps) {
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2 text-neutral-200">
           <AreaChart className="w-4 h-4 text-sky-400" />
-          <h3 className="text-sm font-semibold tracking-wide">Next 6h Forecast</h3>
+          <h3 className="text-sm font-semibold tracking-wide">Next 6h (Historical Data)</h3>
         </div>
         <span
           className={cn(
@@ -31,13 +31,17 @@ export function ForecastPanel({ analytics }: ForecastPanelProps) {
           )}
         >
           <Gauge className="w-3 h-3" />
-          {forecastConfidence} confidence
+          {forecastConfidence} coverage
         </span>
       </div>
 
       {!hasEnoughData ? (
         <p className="text-sm text-neutral-500 leading-relaxed">
-          Forecast needs more history. Once enough snapshots are recorded, this will project expected player counts for the next 6 hours.
+          More history is needed before this panel can show hour-by-hour historical expectations.
+        </p>
+      ) : forecast.length === 0 ? (
+        <p className="text-sm text-neutral-500 leading-relaxed">
+          Not enough hourly sample coverage yet for the next 6 hours.
         </p>
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">

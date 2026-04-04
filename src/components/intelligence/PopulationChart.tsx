@@ -41,10 +41,10 @@ const MIN_VISUAL_POINTS = 4;
 
 type ChartRow = {
   ts: number;
-  actual: number;
-  trend: number;
-  lower: number;
-  band: number;
+  actual: number | null;
+  trend: number | null;
+  lower: number | null;
+  band: number | null;
   sampleCount: number;
 };
 
@@ -106,32 +106,36 @@ export function PopulationChart({ snapshots, timeRange, fallbackSummary }: Popul
     }
 
     const actualSeries = buckets.map((samples) => {
-      if (samples.length === 0) return 0;
+      if (samples.length === 0) return null;
       return Math.round(samples.reduce((a, b) => a + b, 0) / samples.length);
     });
 
-    const volatility = stddev(actualSeries.filter((v) => v > 0));
-    const benchmark = actualSeries.length > 0
-      ? Math.round(actualSeries.reduce((a, b) => a + b, 0) / actualSeries.length)
+    const nonNullActual = actualSeries.filter((v): v is number => v !== null);
+    const volatility = stddev(nonNullActual.filter((v) => v > 0));
+    const benchmark = nonNullActual.length > 0
+      ? Math.round(nonNullActual.reduce((a, b) => a + b, 0) / nonNullActual.length)
       : 0;
 
     const rolling = actualSeries.map((_, i) => {
       const from = Math.max(0, i - 2);
-      const slice = actualSeries.slice(from, i + 1);
+      const slice = actualSeries.slice(from, i + 1).filter((v): v is number => v !== null);
+      if (slice.length === 0) return null;
       return Math.round(slice.reduce((a, b) => a + b, 0) / slice.length);
     });
 
     const rows: ChartRow[] = actualSeries.map((actual, i) => {
       const trend = rolling[i];
-      const lower = Math.max(0, Math.round(trend - volatility));
-      const upper = Math.max(lower, Math.round(trend + volatility));
+      const lowerValue = trend === null ? null : Math.max(0, Math.round(trend - volatility));
+      const upper = trend === null || lowerValue === null
+        ? null
+        : Math.max(lowerValue, Math.round(trend + volatility));
       const ts = rangeStart + i * bucketMs;
       return {
         ts,
         actual,
         trend,
-        lower,
-        band: upper - lower,
+        lower: lowerValue,
+        band: upper === null || lowerValue === null ? null : upper - lowerValue,
         sampleCount: buckets[i].length,
       };
     });
@@ -227,6 +231,9 @@ export function PopulationChart({ snapshots, timeRange, fallbackSummary }: Popul
               color: '#e5e7eb',
             }}
             formatter={(value: unknown, name: string | number | undefined) => {
+              if (value === null || typeof value === 'undefined') {
+                return ['No sample', String(name ?? '')];
+              }
               const n = Number(value ?? 0);
               if (name === 'actual') return [`${n} players`, 'Observed'];
               if (name === 'trend') return [`${n} players`, 'Trend (rolling)'];
@@ -254,6 +261,7 @@ export function PopulationChart({ snapshots, timeRange, fallbackSummary }: Popul
             stroke="#ef4444"
             fill="url(#actualFill)"
             strokeWidth={2}
+            connectNulls={false}
             name="actual"
           />
 
@@ -262,6 +270,7 @@ export function PopulationChart({ snapshots, timeRange, fallbackSummary }: Popul
             dataKey="trend"
             stroke="#22d3ee"
             strokeWidth={2}
+            connectNulls={false}
             dot={false}
             name="trend"
           />
