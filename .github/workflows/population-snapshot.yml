@@ -34,6 +34,22 @@ jobs:
         run: |
           set -euo pipefail
 
+          # Normalize common secret formatting mistakes (quotes/newlines/whitespace)
+          SNAPSHOT_URL_CLEAN="$(printf '%s' "${SNAPSHOT_URL}" \
+            | tr -d '\r\n' \
+            | sed -e 's/^[[:space:]]*//' \
+                  -e 's/[[:space:]]*$//' \
+                  -e 's/^"//' \
+                  -e 's/"$//' \
+                  -e "s/^'//" \
+                  -e "s/'$//")"
+
+          if ! printf '%s' "${SNAPSHOT_URL_CLEAN}" | grep -Eq '^https?://'; then
+            echo "SNAPSHOT_URL is invalid after normalization: '${SNAPSHOT_URL_CLEAN}'"
+            echo "Expected format: https://your-domain.com/api/population/snapshot"
+            exit 1
+          fi
+
           status_code=$(curl -sS \
             --retry 3 \
             --retry-delay 5 \
@@ -44,7 +60,7 @@ jobs:
             -H "Accept: application/json" \
             -o response.json \
             -w "%{http_code}" \
-            "${SNAPSHOT_URL}")
+            "${SNAPSHOT_URL_CLEAN}")
 
           echo "HTTP status: ${status_code}"
           echo "Response:"
