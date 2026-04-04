@@ -21,7 +21,6 @@ import {
   Area,
   Line,
   ReferenceLine,
-  Legend,
 } from 'recharts';
 
 interface PopulationChartProps {
@@ -42,7 +41,6 @@ const MIN_VISUAL_POINTS = 4;
 
 type ChartRow = {
   ts: number;
-  label: string;
   actual: number;
   trend: number;
   lower: number;
@@ -130,7 +128,6 @@ export function PopulationChart({ snapshots, timeRange, fallbackSummary }: Popul
       const ts = rangeStart + i * bucketMs;
       return {
         ts,
-        label: formatDateLabel(ts, totalDays),
         actual,
         trend,
         lower,
@@ -167,11 +164,31 @@ export function PopulationChart({ snapshots, timeRange, fallbackSummary }: Popul
   }
 
   return (
-    <div className="w-full h-[260px]">
+    <div className="w-full">
+      <div className="mb-2 flex flex-wrap items-center gap-3 text-[11px] text-neutral-400">
+        <span className="inline-flex items-center gap-1.5">
+          <span className="h-2 w-2 rounded-full bg-red-500" />
+          Observed
+        </span>
+        <span className="inline-flex items-center gap-1.5">
+          <span className="h-2 w-2 rounded-full bg-cyan-400" />
+          Trend
+        </span>
+        <span className="inline-flex items-center gap-1.5">
+          <span className="h-2 w-2 rounded-full bg-amber-400" />
+          Avg baseline
+        </span>
+        <span className="inline-flex items-center gap-1.5">
+          <span className="h-2 w-2 rounded-full bg-neutral-300" />
+          Slot cap
+        </span>
+      </div>
+
+      <div className="h-[260px] overflow-hidden rounded-lg">
       <ResponsiveContainer width="100%" height="100%">
         <ComposedChart
           data={rows}
-          margin={{ top: 8, right: 14, left: 0, bottom: 8 }}
+          margin={{ top: 8, right: 12, left: 0, bottom: 8 }}
         >
           <defs>
             <linearGradient id="actualFill" x1="0" y1="0" x2="0" y2="1">
@@ -191,6 +208,7 @@ export function PopulationChart({ snapshots, timeRange, fallbackSummary }: Popul
             type="number"
             domain={['dataMin', 'dataMax']}
             tickCount={6}
+            minTickGap={28}
             tick={{ fill: '#9ca3af', fontSize: 11 }}
             tickFormatter={(value) => formatDateLabel(Number(value), totalDays)}
           />
@@ -217,15 +235,6 @@ export function PopulationChart({ snapshots, timeRange, fallbackSummary }: Popul
             labelFormatter={(label) => formatDateLabel(Number(label), totalDays)}
           />
 
-          <Legend
-            wrapperStyle={{ fontSize: 11 }}
-            formatter={(value) => {
-              if (value === 'actual') return 'Observed';
-              if (value === 'trend') return 'Trend';
-              return value;
-            }}
-          />
-
           {/* Variance band around trend (control-band style). */}
           <Area type="monotone" dataKey="lower" stackId="band" fill="transparent" stroke="transparent" />
           <Area
@@ -233,6 +242,7 @@ export function PopulationChart({ snapshots, timeRange, fallbackSummary }: Popul
             dataKey="band"
             stackId="band"
             fill="url(#bandFill)"
+            fillOpacity={0.65}
             stroke="transparent"
             name="Expected range"
             isAnimationActive={false}
@@ -261,7 +271,6 @@ export function PopulationChart({ snapshots, timeRange, fallbackSummary }: Popul
             stroke="#f59e0b"
             strokeDasharray="5 5"
             ifOverflow="extendDomain"
-            label={{ value: 'Avg baseline', fill: '#f59e0b', fontSize: 10, position: 'insideTopRight' }}
           />
 
           {capacityLine && (
@@ -270,11 +279,11 @@ export function PopulationChart({ snapshots, timeRange, fallbackSummary }: Popul
               stroke="rgba(255,255,255,0.45)"
               strokeDasharray="2 4"
               ifOverflow="extendDomain"
-              label={{ value: 'Slot cap', fill: '#d1d5db', fontSize: 10, position: 'insideBottomRight' }}
             />
           )}
         </ComposedChart>
       </ResponsiveContainer>
+      </div>
     </div>
   );
 }

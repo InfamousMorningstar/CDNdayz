@@ -293,9 +293,9 @@ export function ServerIntelligence() {
     <section
       id="server-intelligence"
       aria-labelledby="intelligence-heading"
-      className="py-20 sm:py-28 bg-neutral-950/60 backdrop-blur-sm relative z-10"
+      className="py-10 sm:py-14 bg-neutral-950/50 backdrop-blur-sm rounded-2xl border border-white/5 relative z-10"
     >
-      <div className="container mx-auto px-4 sm:px-6">
+      <div className="w-full px-4 sm:px-6">
 
         {/* ── Section header ─────────────────────────────────────────── */}
         <div className="flex flex-col items-center text-center mb-10 gap-3">

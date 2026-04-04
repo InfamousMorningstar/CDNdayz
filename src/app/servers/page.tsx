@@ -46,6 +46,16 @@ export default function ServersPage() {
         </div>
 
         <ServerIntelligence />
+
+        <div className="mt-10 sm:mt-12 mb-6 sm:mb-7 text-center">
+          <h2 className="text-2xl sm:text-3xl font-heading font-bold text-white">
+            Live <span className="text-red-500">Server Status</span>
+          </h2>
+          <p className="text-neutral-400 mt-2 text-sm sm:text-base">
+            Real-time node health, population, and map activity across the full network.
+          </p>
+        </div>
+
         <ServerList />
       </div>
     </CinematicBackground>
