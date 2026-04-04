@@ -30,20 +30,30 @@ interface KVClient {
 }
 
 let kvClient: KVClient | false | null = null;
+let kvUnavailableReason: string | null = null;
+
+export interface PopulationStoreInfo {
+  backend: 'kv' | 'memory';
+  kvConfigured: boolean;
+  reason?: string;
+}
 
 async function getKV(): Promise<KVClient | false> {
   if (kvClient !== null) return kvClient;
 
   if (!process.env.KV_REST_API_URL || !process.env.KV_REST_API_TOKEN) {
+    kvUnavailableReason = 'KV_REST_API_URL or KV_REST_API_TOKEN is missing';
     kvClient = false;
     return false;
   }
 
   try {
     const { kv } = await import('@vercel/kv');
+    kvUnavailableReason = null;
     kvClient = kv as unknown as KVClient;
     return kvClient;
-  } catch {
+  } catch (err) {
+    kvUnavailableReason = err instanceof Error ? err.message : 'Failed to load @vercel/kv';
     kvClient = false;
     return false;
   }
@@ -51,6 +61,21 @@ async function getKV(): Promise<KVClient | false> {
 
 function storeKey(serverId: string): string {
   return `${KV_KEY_PREFIX}${serverId}`;
+}
+
+export async function getPopulationStoreInfo(): Promise<PopulationStoreInfo> {
+  const kv = await getKV();
+  const kvConfigured = Boolean(process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN);
+
+  if (kv) {
+    return { backend: 'kv', kvConfigured };
+  }
+
+  return {
+    backend: 'memory',
+    kvConfigured,
+    reason: kvUnavailableReason ?? 'Falling back to memory store',
+  };
 }
 
 // ── Public API ─────────────────────────────────────────────────────────────
@@ -62,6 +87,7 @@ function storeKey(serverId: string): string {
 export async function saveSnapshot(snapshot: PopulationSnapshot): Promise<void> {
   const kv = await getKV();
   const key = storeKey(snapshot.serverId);
+  const kvConfigured = Boolean(process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN);
 
   if (kv) {
     try {
@@ -72,8 +98,23 @@ export async function saveSnapshot(snapshot: PopulationSnapshot): Promise<void> 
       await kv.set(key, JSON.stringify(trimmed));
     } catch (err) {
       console.error(`[population-store] KV write failed for ${snapshot.serverId}:`, err);
+      throw new Error(
+        `[population-store] KV write failed for ${snapshot.serverId}: ${
+          err instanceof Error ? err.message : String(err)
+        }`,
+      );
     }
     return;
+  }
+
+  // In production, if KV is configured but unavailable, fail fast so schedulers
+  // surface the issue instead of silently reporting successful in-memory writes.
+  if (process.env.NODE_ENV === 'production' && kvConfigured) {
+    throw new Error(
+      `[population-store] KV is configured but unavailable. Reason: ${
+        kvUnavailableReason ?? 'unknown'
+      }`,
+    );
   }
 
   // In-memory fallback

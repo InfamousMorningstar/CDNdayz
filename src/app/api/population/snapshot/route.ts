@@ -18,7 +18,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { queryAllServers } from '@/lib/query-servers';
-import { saveSnapshot } from '@/lib/population-store';
+import { getPopulationStoreInfo, saveSnapshot } from '@/lib/population-store';
 import { PopulationSnapshot } from '@/types/intelligence';
 
 async function collectSnapshots(req: NextRequest): Promise<NextResponse> {
@@ -43,6 +43,7 @@ async function collectSnapshots(req: NextRequest): Promise<NextResponse> {
 
   // ── Persist one snapshot per server ─────────────────────────────────────
   const timestamp = Date.now();
+  const storeInfo = await getPopulationStoreInfo();
   const results = await Promise.allSettled(
     serverStatuses.map(async (server) => {
       const snapshot: PopulationSnapshot = {
@@ -64,7 +65,20 @@ async function collectSnapshots(req: NextRequest): Promise<NextResponse> {
     reason: r.status === 'rejected' ? String((r as PromiseRejectedResult).reason) : undefined,
   }));
 
-  return NextResponse.json({ timestamp, results: summary });
+  const failed = summary.filter((item) => !item.saved);
+  if (failed.length > 0) {
+    return NextResponse.json(
+      {
+        timestamp,
+        storage: storeInfo,
+        error: 'One or more snapshots failed to persist',
+        results: summary,
+      },
+      { status: 500 },
+    );
+  }
+
+  return NextResponse.json({ timestamp, storage: storeInfo, results: summary });
 }
 
 // GET/POST both supported for scheduler and manual/external triggers.
