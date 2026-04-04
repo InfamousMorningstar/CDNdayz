@@ -91,11 +91,12 @@ export async function saveSnapshot(snapshot: PopulationSnapshot): Promise<void> 
 
   if (kv) {
     try {
-      const raw = await kv.get<string>(key);
-      const existing: PopulationSnapshot[] = raw ? (JSON.parse(raw) as PopulationSnapshot[]) : [];
+      const raw = await kv.get<PopulationSnapshot[]>(key);
+      const existing: PopulationSnapshot[] = raw ?? [];
       existing.push(snapshot);
       const trimmed = existing.slice(-MAX_SNAPSHOTS_PER_SERVER);
-      await kv.set(key, JSON.stringify(trimmed));
+      // @vercel/kv handles serialization internally; pass object directly
+      await kv.set(key, trimmed as any);
     } catch (err) {
       console.error(`[population-store] KV write failed for ${snapshot.serverId}:`, err);
       throw new Error(
@@ -136,9 +137,9 @@ export async function getSnapshots(
 
   if (kv) {
     try {
-      const raw = await kv.get<string>(key);
-      if (!raw) return [];
-      const all = JSON.parse(raw) as PopulationSnapshot[];
+      const all = await kv.get<PopulationSnapshot[]>(key);
+      if (!all || all.length === 0) return [];
+      // @vercel/kv returns parsed objects directly
       return all
         .filter((s) => s.timestamp >= sinceTimestamp)
         .sort((a, b) => a.timestamp - b.timestamp);
