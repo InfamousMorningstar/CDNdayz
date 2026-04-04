@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
@@ -56,7 +56,7 @@ export function Features() {
           </Badge>
           <h2 id="why-choose-cdn-heading" className="text-2xl sm:text-3xl md:text-5xl font-heading font-bold text-white mb-5">Designed for the <span className="text-neutral-500">Dedicated</span></h2>
           <p className="text-neutral-400 max-w-2xl text-base sm:text-lg">
-            We don't just host servers; we craft experiences. Every mod, every rule, and every event is designed to enhance your survival journey.
+            We dont just host servers; we craft experiences. Every mod, every rule, and every event is designed to enhance your survival journey.
           </p>
         </div>
 

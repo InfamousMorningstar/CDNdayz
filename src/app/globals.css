@@ -17,6 +17,12 @@
   /* Fonts */
   --font-inter: 'Inter', sans-serif;
   --font-jetbrains-mono: 'JetBrains Mono', monospace;
+
+  /* Mobile safe areas */
+  --safe-top: env(safe-area-inset-top);
+  --safe-right: env(safe-area-inset-right);
+  --safe-bottom: env(safe-area-inset-bottom);
+  --safe-left: env(safe-area-inset-left);
 }
 
 @layer base {
@@ -26,6 +32,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    -webkit-tap-highlight-color: transparent;
   }
 
   body {
@@ -95,6 +102,26 @@
   
   .animate-glitch {
     animation: glitch 3s infinite;
+  }
+
+  .safe-bottom {
+    padding-bottom: max(0.75rem, var(--safe-bottom));
+  }
+
+  .safe-top {
+    padding-top: max(0.75rem, var(--safe-top));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-flicker-1,
+  .animate-flicker-2,
+  .animate-flicker-3,
+  .animate-glitch,
+  .animate-pulse,
+  .animate-ping,
+  .animate-bounce {
+    animation: none !important;
   }
 }
 

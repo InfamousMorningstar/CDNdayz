@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
@@ -9,7 +9,7 @@ import { DISCORD_INVITE_URL } from '@/lib/links';
 
 export function Hero() {
   return (
-    <section className="relative h-screen min-h-[700px] sm:min-h-[760px] flex items-center justify-center overflow-hidden">
+    <section className="relative h-screen min-h-[640px] sm:min-h-[760px] flex items-center justify-center overflow-hidden">
       {/* Background with overlay */}
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/80 to-black z-10" />
@@ -17,7 +17,7 @@ export function Hero() {
         <div className="w-full h-full bg-neutral-900 bg-[url('/Images/wp1886390-dayz-wallpapers.jpg')] bg-cover bg-center opacity-50" />
       </div>
 
-      <div className="container relative z-20 px-4 sm:px-6 pt-20 sm:pt-0 flex flex-col items-center text-center">
+      <div className="container relative z-20 px-4 sm:px-6 pt-[max(5.5rem,calc(env(safe-area-inset-top)+4.5rem))] sm:pt-0 flex flex-col items-center text-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -32,7 +32,7 @@ export function Hero() {
             <span className="text-xs font-mono text-green-400 tracking-widest uppercase">CDN NETWORK ONLINE</span>
           </div>
           
-          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter text-white max-w-5xl relative z-20 leading-tight">
+          <h1 className="text-[2.15rem] sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight sm:tracking-tighter text-white max-w-5xl relative z-20 leading-[1.03] sm:leading-tight">
             <span className="inline-block drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]">
               <span className="inline-block">S</span>
               <span className="inline-block animate-flicker-3 opacity-90">U</span>
@@ -44,12 +44,12 @@ export function Hero() {
             </span>{' '}
             <span className="text-red-600 drop-shadow-[0_0_20px_rgba(220,38,38,0.45)]">TOGETHER</span>
             <br />
-            <span className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-heading text-transparent bg-clip-text bg-gradient-to-b from-neutral-200 to-neutral-600 tracking-wide opacity-90">
+            <span className="text-[1.35rem] sm:text-3xl md:text-5xl lg:text-6xl font-heading text-transparent bg-clip-text bg-gradient-to-b from-neutral-200 to-neutral-600 tracking-[0.03em] sm:tracking-wide opacity-90">
               THRIVE FOREVER
             </span>
           </h1>
           
-          <p className="text-sm sm:text-base md:text-lg text-neutral-300 max-w-xl leading-relaxed font-sans font-light tracking-wide px-2 sm:px-0">
+          <p className="text-sm sm:text-base md:text-lg text-neutral-300 max-w-xl leading-relaxed font-sans font-light tracking-wide px-1 sm:px-0">
             CDN is a premium DayZ PvE network built for immersion, community, and tactical gameplay. 
             Experience a curated survival journey without the toxicity.
           </p>

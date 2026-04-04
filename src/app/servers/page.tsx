@@ -2,6 +2,7 @@ import { ServerList } from '@/components/server/ServerList';
 import { Metadata } from 'next';
 import { CinematicBackground } from '@/components/features/CinematicBackground';
 import { Badge } from '@/components/ui/Badge';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
   title: 'Servers | CDN - DayZ PvE Network',
@@ -26,6 +27,20 @@ export default function ServersPage() {
             <p className="text-sm md:text-base text-red-100 font-semibold leading-relaxed">
               ⚠ HC Servers: No Donation Items/Gear | Raiding enabled | Territories = PvP zones
             </p>
+          </div>
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-3 text-sm">
+            <Link
+              href="/join"
+              className="px-4 py-2 rounded-full border border-white/10 bg-black/30 text-neutral-200 hover:text-white hover:border-red-500/40 transition-colors"
+            >
+              New here? Open Join Guide
+            </Link>
+            <Link
+              href="/store"
+              className="px-4 py-2 rounded-full border border-white/10 bg-black/30 text-neutral-200 hover:text-white hover:border-amber-500/40 transition-colors"
+            >
+              Donation FAQ & Store
+            </Link>
           </div>
         </div>
 

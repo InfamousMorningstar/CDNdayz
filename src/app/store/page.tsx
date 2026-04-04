@@ -103,6 +103,48 @@ export default function StorePage() {
           </div>
         </div>
 
+        {/* Quick Start: How to Donate */}
+        <div className="max-w-6xl mx-auto mb-10 sm:mb-12">
+          <Card className="p-5 sm:p-8 bg-neutral-900/60 border-neutral-800 backdrop-blur-md">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-6">
+              <div>
+                <h3 className="text-2xl font-bold text-white mb-2 flex items-center gap-3">
+                  <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse"></span>
+                  How to Donate
+                </h3>
+                <p className="text-neutral-400 text-sm sm:text-base">
+                  New here? Follow these quick steps first, then choose what you want from the store below.
+                </p>
+              </div>
+              <Link href={DISCORD_LINK} target="_blank" rel="noopener noreferrer" className="block md:min-w-[260px]">
+                <Button size="lg" className="w-full bg-[#5865F2] hover:bg-[#4752C4] text-white border-none py-6 text-lg font-bold shadow-xl shadow-indigo-500/10">
+                  <span className="mr-2">Open Ticket on Discord</span>
+                  <ExternalLink size={20} />
+                </Button>
+              </Link>
+            </div>
+
+            <ol className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+              <li className="rounded-xl border border-neutral-800 bg-neutral-950/40 p-4 flex gap-3">
+                <span className="font-mono text-neutral-500 font-bold">01</span>
+                <span className="text-neutral-300">Join our Discord server</span>
+              </li>
+              <li className="rounded-xl border border-neutral-800 bg-neutral-950/40 p-4 flex gap-3">
+                <span className="font-mono text-neutral-500 font-bold">02</span>
+                <span className="text-neutral-300">Open a ticket in <span className="text-amber-500">#support</span></span>
+              </li>
+              <li className="rounded-xl border border-neutral-800 bg-neutral-950/40 p-4 flex gap-3">
+                <span className="font-mono text-neutral-500 font-bold">03</span>
+                <span className="text-neutral-300">Mention your desired items and payment method</span>
+              </li>
+            </ol>
+
+            <p className="text-center mt-5 text-xs text-neutral-600">
+              Transactions handled securely via PayPal, Cash App, Zelle, Venmo & more
+            </p>
+          </Card>
+        </div>
+
         {/* Main Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8 max-w-6xl mx-auto mb-10 sm:mb-16">
           {categories.map((item, index) => (
@@ -228,37 +270,6 @@ export default function StorePage() {
                             Cash App, Zelle, Venmo, etc. available upon request. Please open a ticket in #support.
                         </p>
                      </div>
-                </div>
-
-                <div className="mt-auto pt-6 border-t border-neutral-800">
-                    <h4 className="text-white font-bold mb-4 flex items-center gap-2">
-                        <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
-                        How to Donate
-                    </h4>
-                     <ol className="space-y-3 text-neutral-400 text-sm mb-6 pl-2">
-                        <li className="flex gap-3">
-                            <span className="font-mono text-neutral-600 font-bold">01</span>
-                            <span>Join our Discord server</span>
-                        </li>
-                        <li className="flex gap-3">
-                            <span className="font-mono text-neutral-600 font-bold">02</span>
-                            <span>Open a ticket in <span className="text-amber-500">#support</span></span>
-                        </li>
-                        <li className="flex gap-3">
-                            <span className="font-mono text-neutral-600 font-bold">03</span>
-                            <span>Mention your desired items and payment method</span>
-                        </li>
-                    </ol>
-
-                    <Link href={DISCORD_LINK} target="_blank" rel="noopener noreferrer" className="block">
-                        <Button size="lg" className="w-full bg-[#5865F2] hover:bg-[#4752C4] text-white border-none py-6 text-lg font-bold shadow-xl shadow-indigo-500/10">
-                        <span className="mr-2">Open Ticket on Discord</span>
-                        <ExternalLink size={20} />
-                        </Button>
-                    </Link>
-                    <p className="text-center mt-3 text-xs text-neutral-600">
-                        Transactions handled securely via PayPal, Cash App, Zelle, Venmo & more
-                    </p>
                 </div>
             </Card>
         </div>

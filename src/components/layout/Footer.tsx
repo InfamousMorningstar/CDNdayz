@@ -8,11 +8,11 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer aria-label="Site footer" className="relative bg-black border-t border-white/10 pt-20 pb-10 text-neutral-400 overflow-hidden">
+    <footer aria-label="Site footer" className="relative bg-black border-t border-white/10 pt-16 sm:pt-20 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:pb-10 text-neutral-400 overflow-hidden">
       {/* Ambient background glow */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-red-900/10 blur-[120px] rounded-full pointer-events-none" />
 
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
           {/* Brand Column */}
           <div className="md:col-span-5 flex flex-col gap-6">
@@ -31,7 +31,7 @@ export function Footer() {
                 <span className="text-xs text-red-500 font-mono tracking-widest uppercase">Network</span>
               </div>
             </Link>
-            <p className="text-neutral-400 leading-relaxed max-w-sm">
+            <p className="text-neutral-400 leading-relaxed max-w-sm text-sm sm:text-base">
               The ultimate DayZ PvE experience. We're building a community focused on immersive survival, custom events, and a toxic-free environment where every player's story matters.
             </p>
           </div>
@@ -123,7 +123,7 @@ function FooterLink({ href, children, className }: { href: string; children: Rea
     <Link 
       href={href} 
       className={cn(
-        "text-neutral-400 hover:text-white transition-colors text-sm w-fit relative group py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/80 rounded", 
+        "text-neutral-400 hover:text-white transition-colors text-sm w-fit relative group py-2 sm:py-1 min-h-[40px] sm:min-h-0 flex items-center touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/80 rounded", 
         className
       )}
     >
