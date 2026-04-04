@@ -20,9 +20,7 @@ import { StatCards, TrendBadge } from './StatCards';
 import { InsightSummary } from './InsightSummary';
 import { ForecastPanel } from './ForecastPanel';
 import { CompareRow, ServerComparePanel } from './ServerComparePanel';
-import { computeAnalytics } from '@/lib/population-analytics';
 import {
-  PopulationSnapshot,
   ServerAnalytics,
   TimeRange,
   TIME_RANGE_OPTIONS,
@@ -175,7 +173,6 @@ export function ServerIntelligence() {
   const [lastUpdatedAt, setLastUpdatedAt]   = useState<number | null>(null);
   const [nowTick, setNowTick]               = useState<number>(Date.now());
   const [compareRows, setCompareRows]       = useState<CompareRow[]>([]);
-  const [compareLoading, setCompareLoading] = useState<boolean>(false);
 
   const fetchHistory = useCallback(async () => {
     if (!selectedServer) return;
@@ -184,22 +181,20 @@ export function ServerIntelligence() {
 
     try {
       const res = await fetch(
-        `/api/population/history/${encodeURIComponent(selectedServer)}?range=${timeRange}`,
+        `/api/population/intelligence?serverId=${encodeURIComponent(selectedServer)}&range=${timeRange}`,
       );
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
-      const body: { serverId: string; range: TimeRange; snapshots: PopulationSnapshot[] } =
-        await res.json();
+      const body: {
+        serverId: string;
+        range: TimeRange;
+        analytics: ServerAnalytics | null;
+        compareRows: CompareRow[];
+        generatedAt: number;
+      } = await res.json();
 
-      const server = servers.find((s) => s.id === selectedServer);
-      const computed = computeAnalytics(
-        body.serverId,
-        server?.name ?? body.serverId,
-        body.snapshots ?? [],
-        body.range,
-      );
-
-      setAnalytics(computed);
+      setAnalytics(body.analytics);
+      setCompareRows(body.compareRows ?? []);
       setLastUpdatedAt(Date.now());
       setFetchState('success');
     } catch (err) {
@@ -209,80 +204,18 @@ export function ServerIntelligence() {
     }
   }, [selectedServer, timeRange]);
 
-  const loadCompareRows = useCallback(async () => {
-    setCompareLoading(true);
-
-    try {
-      const analyticsRows = await Promise.all(
-        servers.map(async (s) => {
-          const res = await fetch(
-            `/api/population/history/${encodeURIComponent(s.id)}?range=${timeRange}`,
-          );
-          if (!res.ok) return null;
-
-          const body: { serverId: string; range: TimeRange; snapshots: PopulationSnapshot[] } =
-            await res.json();
-          const a = computeAnalytics(s.id, s.name, body.snapshots ?? [], body.range);
-
-          if (!a.hasEnoughData) return null;
-
-          const verdict =
-            a.reliabilityScore >= 80
-              ? 'Most consistent PvE population'
-              : a.trendDirection === 'up'
-              ? 'Momentum is building'
-              : a.trendDirection === 'down'
-              ? 'Cooling off recently'
-              : 'Stable day-to-day flow';
-
-          return {
-            serverId: s.id,
-            serverName: s.name,
-            avgPlayers: a.avgPlayers,
-            peakPlayers: a.peakPlayers,
-            reliabilityScore: a.reliabilityScore,
-            trendDirection: a.trendDirection,
-            verdict,
-          } as CompareRow;
-        }),
-      );
-
-      const ranked = analyticsRows
-        .filter((row): row is CompareRow => row !== null)
-        .sort((a, b) => {
-          if (b.reliabilityScore !== a.reliabilityScore) {
-            return b.reliabilityScore - a.reliabilityScore;
-          }
-          return b.avgPlayers - a.avgPlayers;
-        })
-        .slice(0, 8);
-
-      setCompareRows(ranked);
-    } catch (err) {
-      console.error('[ServerIntelligence] compare error:', err);
-      setCompareRows([]);
-    } finally {
-      setCompareLoading(false);
-    }
-  }, [timeRange]);
-
   // Fetch on mount and whenever the selection changes
   useEffect(() => {
     fetchHistory();
   }, [fetchHistory]);
 
-  useEffect(() => {
-    loadCompareRows();
-  }, [loadCompareRows]);
-
   // Auto-refresh every 60 seconds to pick up new snapshots (aligns with API cache TTL)
   useEffect(() => {
     const interval = setInterval(() => {
       fetchHistory();
-      loadCompareRows();
     }, 60_000);
     return () => clearInterval(interval);
-  }, [fetchHistory, loadCompareRows]);
+  }, [fetchHistory]);
 
   useEffect(() => {
     const ticker = setInterval(() => setNowTick(Date.now()), 15_000);
@@ -389,7 +322,7 @@ export function ServerIntelligence() {
               <StatCards analytics={analytics} />
 
               {/* Tonight quick recommendations */}
-              <TonightAtAGlance rows={compareRows} loading={compareLoading} />
+              <TonightAtAGlance rows={compareRows} loading={false} />
 
               {/* Forecast + anomalies */}
               <ForecastPanel analytics={analytics} />
@@ -401,7 +334,7 @@ export function ServerIntelligence() {
               <ServerComparePanel
                 rows={compareRows}
                 selectedServerId={selectedServer}
-                loading={compareLoading}
+                loading={false}
               />
             </motion.div>
           )}
