@@ -1,0 +1,55 @@
+name: Population Snapshot Collector
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: population-snapshot
+  cancel-in-progress: false
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Validate required secrets
+        run: |
+          if [ -z "${{ secrets.SNAPSHOT_URL }}" ]; then
+            echo "SNAPSHOT_URL secret is missing"
+            exit 1
+          fi
+          if [ -z "${{ secrets.CRON_SECRET }}" ]; then
+            echo "CRON_SECRET secret is missing"
+            exit 1
+          fi
+
+      - name: Trigger snapshot endpoint
+        env:
+          SNAPSHOT_URL: ${{ secrets.SNAPSHOT_URL }}
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          set -euo pipefail
+
+          status_code=$(curl -sS \
+            --retry 3 \
+            --retry-delay 5 \
+            --retry-all-errors \
+            --connect-timeout 10 \
+            --max-time 45 \
+            -H "Authorization: Bearer ${CRON_SECRET}" \
+            -H "Accept: application/json" \
+            -o response.json \
+            -w "%{http_code}" \
+            "${SNAPSHOT_URL}")
+
+          echo "HTTP status: ${status_code}"
+          echo "Response:"
+          cat response.json
+
+          if [ "${status_code}" -lt 200 ] || [ "${status_code}" -ge 300 ]; then
+            echo "Snapshot collector failed with HTTP ${status_code}"
+            exit 1
+          fi
