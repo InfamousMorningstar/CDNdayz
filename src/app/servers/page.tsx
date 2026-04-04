@@ -19,10 +19,10 @@ export default function ServersPage() {
             Live Network
           </Badge>
           <h1 className="text-3xl sm:text-4xl md:text-6xl font-heading font-bold text-white mb-4">
-            Server <span className="text-red-500">Network</span>
+            Server Network <span className="text-red-500">Intelligence</span>
           </h1>
           <p className="text-neutral-400 max-w-xl text-base sm:text-lg mb-5">
-            Monitor real-time status, player counts, and map rotation. All servers are hosted on dedicated high-performance hardware.
+            Monitor live status, player patterns, and map activity with data-backed intelligence across the full network.
           </p>
           <div className="rounded-lg border border-red-500/40 bg-red-500/10 px-4 py-3 max-w-xl w-full">
             <p className="text-sm md:text-base text-red-100 font-semibold leading-relaxed">
