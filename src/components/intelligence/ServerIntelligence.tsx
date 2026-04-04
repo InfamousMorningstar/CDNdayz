@@ -242,7 +242,7 @@ export function ServerIntelligence() {
 
           <h2
             id="intelligence-heading"
-            className="text-xl sm:text-2xl md:text-3xl font-heading font-semibold text-white"
+            className="sr-only"
           >
             Server Intelligence
           </h2>
