@@ -13,7 +13,7 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { BarChart2, ChevronDown } from 'lucide-react';
+import { BarChart2, ChevronDown, MoonStar, Sparkles } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 import { PopulationChart } from './PopulationChart';
 import { StatCards, TrendBadge } from './StatCards';
@@ -117,6 +117,49 @@ function TimeRangePicker({
           {opt.label}
         </button>
       ))}
+    </div>
+  );
+}
+
+function TonightAtAGlance({ rows, loading }: { rows: CompareRow[]; loading: boolean }) {
+  if (loading) {
+    return (
+      <div className="rounded-xl border border-white/5 bg-neutral-900/40 backdrop-blur-sm p-4">
+        <p className="text-sm text-neutral-500">Preparing tonight recommendations...</p>
+      </div>
+    );
+  }
+
+  if (rows.length === 0) return null;
+
+  const topThree = rows.slice(0, 3);
+
+  return (
+    <div className="rounded-xl border border-cyan-500/20 bg-cyan-950/10 backdrop-blur-sm p-4 sm:p-5">
+      <div className="flex items-center gap-2 mb-3">
+        <MoonStar className="w-4 h-4 text-cyan-300" />
+        <h3 className="text-sm sm:text-base font-semibold text-cyan-100 tracking-wide">Tonight At A Glance</h3>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        {topThree.map((row, idx) => (
+          <div
+            key={row.serverId}
+            className="rounded-lg border border-white/10 bg-black/25 p-3 flex flex-col gap-1"
+          >
+            <p className="text-[11px] uppercase tracking-wider text-neutral-500">
+              #{idx + 1} recommendation
+            </p>
+            <p className="text-sm font-semibold text-white truncate" title={row.serverName}>
+              {row.serverName}
+            </p>
+            <p className="text-xs text-neutral-400">Reliability {row.reliabilityScore}% · Avg {row.avgPlayers}</p>
+            <p className="text-xs text-cyan-200 inline-flex items-center gap-1">
+              <Sparkles className="w-3 h-3" />
+              {row.verdict}
+            </p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -343,6 +386,9 @@ export function ServerIntelligence() {
 
               {/* Stat cards */}
               <StatCards analytics={analytics} />
+
+              {/* Tonight quick recommendations */}
+              <TonightAtAGlance rows={compareRows} loading={compareLoading} />
 
               {/* Forecast + anomalies */}
               <ForecastPanel analytics={analytics} />
