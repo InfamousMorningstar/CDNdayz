@@ -50,6 +50,41 @@ export function getLiveServerMap(state: unknown, fallback: string): string {
   return normalizeMapName(safe || fallback);
 }
 
+function toNumber(value: unknown): number | null {
+  if (typeof value === 'number' && Number.isFinite(value)) {
+    return value;
+  }
+  if (typeof value === 'string') {
+    const n = Number(value.trim());
+    return Number.isFinite(n) ? n : null;
+  }
+  return null;
+}
+
+function extractPlayers(state: any): number {
+  const fromArray = Array.isArray(state?.players) ? state.players.length : null;
+  const candidates = [
+    fromArray,
+    toNumber(state?.raw?.numplayers),
+    toNumber(state?.raw?.players),
+    toNumber(state?.raw?.clients),
+    toNumber(state?.raw?.NumPlayers),
+  ].filter((v): v is number => typeof v === 'number');
+
+  return candidates.length > 0 ? Math.max(...candidates) : 0;
+}
+
+function extractMaxPlayers(state: any): number {
+  const candidates = [
+    toNumber(state?.maxplayers),
+    toNumber(state?.raw?.maxplayers),
+    toNumber(state?.raw?.sv_maxclients),
+    toNumber(state?.raw?.MaxPlayers),
+  ].filter((v): v is number => typeof v === 'number' && v >= 0);
+
+  return candidates.length > 0 ? Math.max(...candidates) : 0;
+}
+
 // ── Per-server restart tracking (module-level, shared across routes) ───────
 
 const offlineStartTimes = new Map<string, number>();
@@ -94,8 +129,8 @@ export async function queryServer(server: ServerConfig): Promise<ServerStatus> {
       id: server.id,
       name: getLiveServerName(state, server.name),
       map: getLiveServerMap(state, server.map),
-      players: state.players.length || (state.raw as any)?.numplayers || 0,
-      maxPlayers: state.maxplayers,
+      players: extractPlayers(state),
+      maxPlayers: extractMaxPlayers(state),
       ping: state.ping,
       connect: `${server.host}:${server.gamePort || server.port}`,
       status: 'online',

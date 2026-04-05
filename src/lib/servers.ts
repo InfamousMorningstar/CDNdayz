@@ -51,7 +51,7 @@ export const servers: ServerConfig[] = [
   },
   {
     id: "chernarus-noob-65",
-    name: "CDN Chernarus Noob Friendly (65.7.2.44)",
+    name: "CDN Melkart PVP",
     map: "Chernarus",
     host: "65.7.2.44",
     port: 2493,
@@ -87,7 +87,7 @@ export const servers: ServerConfig[] = [
   },
   {
     id: "chernarus-noob",
-    name: "CDN Chernarus Noob Friendly",
+    name: "CDN Chernarus Noob Friendly (99.199.82.20)",
     map: "Chernarus",
     host: "99.199.82.20",
     port: 2493,
