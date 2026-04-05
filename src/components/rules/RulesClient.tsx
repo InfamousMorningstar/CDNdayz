@@ -1,11 +1,14 @@
 "use client";
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Shield, Hammer, MessageSquare, AlertTriangle, BookOpen, Terminal, Construction, Users, Home } from 'lucide-react';
+import { Shield, Hammer, MessageSquare, AlertTriangle, BookOpen, Terminal, Construction, Users, Home, ExternalLink } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
+import { Button } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
+import { DISCORD_SUPPORT_CHANNEL_URL } from '@/lib/links';
 
 type Tab = 'general' | 'building';
 
@@ -228,6 +231,12 @@ export function RulesClient() {
                     <h2 className="text-2xl font-heading font-bold text-white">Ticket System</h2>
                   </div>
                   <p className="text-neutral-400 mb-4 text-sm">Use when you want to chat with an Admin or if you have an in-game issue.</p>
+                  <Link href={DISCORD_SUPPORT_CHANNEL_URL} target="_blank" rel="noopener noreferrer" className="inline-block mb-4">
+                    <Button className="bg-[#5865F2] hover:bg-[#4752C4] text-white border-none">
+                      <span className="mr-2">Open a Ticket</span>
+                      <ExternalLink className="w-4 h-4" />
+                    </Button>
+                  </Link>
                   <div className="bg-black/40 p-4 rounded border border-white/5 mb-4 font-mono text-xs text-neutral-300">
                     <p className="text-neutral-500 mb-2 border-b border-white/5 pb-1 uppercase tracking-widest font-bold text-[10px]">Required Layout</p>
                     <p>Game: Server Name/Map</p>
