@@ -1,11 +1,11 @@
 /**
- * GET /api/population/history/[serverId]?range=30d
+ * GET /api/population/history/[serverId]?range=1d
  *
  * Returns raw snapshots for one server within the requested time window.
  * The analytics are computed client-side so the API stays thin and cacheable.
  *
  * Query params:
- *   range — one of: 7d | 30d | 90d | 6m | 1y   (default: 30d)
+ *   range — one of: 6h | 1d | 7d | 30d | 90d | 6m | 1y   (default: 1d)
  */
 
 import { NextRequest, NextResponse } from 'next/server';
@@ -13,6 +13,8 @@ import { getSnapshots } from '@/lib/population-store';
 import { TimeRange } from '@/types/intelligence';
 
 const RANGE_DAYS: Record<TimeRange, number> = {
+  '6h':  0.25,
+  '1d':  1,
   '7d':  7,
   '30d': 30,
   '90d': 90,
@@ -25,8 +27,8 @@ export async function GET(
   { params }: { params: Promise<{ serverId: string }> },
 ) {
   const { serverId } = await params;
-  const raw = request.nextUrl.searchParams.get('range') ?? '30d';
-  const range = (raw in RANGE_DAYS ? raw : '30d') as TimeRange;
+  const raw = request.nextUrl.searchParams.get('range') ?? '1d';
+  const range = (raw in RANGE_DAYS ? raw : '1d') as TimeRange;
 
   const days = RANGE_DAYS[range];
   const since = Date.now() - days * 24 * 60 * 60 * 1000;

@@ -22,7 +22,7 @@ export interface WeekdayTrafficPoint {
   sampleCount: number;
 }
 
-export type TimeRange = '7d' | '30d' | '90d' | '6m' | '1y';
+export type TimeRange = '6h' | '1d' | '7d' | '30d' | '90d' | '6m' | '1y';
 
 export interface TimeRangeOption {
   label: string;
@@ -31,6 +31,8 @@ export interface TimeRangeOption {
 }
 
 export const TIME_RANGE_OPTIONS: TimeRangeOption[] = [
+  { label: '6H',  value: '6h',  days: 0.25 },
+  { label: '1D',  value: '1d',  days: 1 },
   { label: '7D',  value: '7d',  days: 7 },
   { label: '30D', value: '30d', days: 30 },
   { label: '90D', value: '90d', days: 90 },

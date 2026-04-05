@@ -30,6 +30,8 @@ interface PopulationChartProps {
 }
 
 const RANGE_DAYS: Record<TimeRange, number> = {
+  '6h': 0.25,
+  '1d': 1,
   '7d': 7,
   '30d': 30,
   '90d': 90,
@@ -46,6 +48,12 @@ type ChartRow = {
   lower: number | null;
   band: number | null;
   sampleCount: number;
+  coveragePct: number;
+};
+
+type BucketSample = {
+  ts: number;
+  players: number;
 };
 
 function formatDateLabel(ts: number, totalDays: number): string {
@@ -63,6 +71,8 @@ function formatDateLabel(ts: number, totalDays: number): string {
 }
 
 function bucketMsForRange(range: TimeRange): number {
+  if (range === '6h') return 30 * 60 * 1000; // 30m
+  if (range === '1d') return 60 * 60 * 1000; // 1h
   if (range === '7d') return 6 * 60 * 60 * 1000; // 6h
   if (range === '30d') return 12 * 60 * 60 * 1000; // 12h
   if (range === '90d') return 24 * 60 * 60 * 1000; // 1d
@@ -84,6 +94,41 @@ function stddev(values: number[]): number {
   return Math.sqrt(variance);
 }
 
+function timeWeightedBucketAverage(
+  samples: BucketSample[],
+  bucketStart: number,
+  bucketEnd: number,
+): { value: number | null; coverageMs: number } {
+  if (samples.length === 0 || bucketEnd <= bucketStart) {
+    return { value: null, coverageMs: 0 };
+  }
+
+  let weighted = 0;
+  let coverageMs = 0;
+
+  for (let i = 0; i < samples.length; i++) {
+    const current = samples[i];
+    const nextTs = i + 1 < samples.length ? samples[i + 1].ts : bucketEnd;
+    const segStart = Math.max(current.ts, bucketStart);
+    const segEnd = Math.min(nextTs, bucketEnd);
+
+    if (segEnd <= segStart) continue;
+
+    const duration = segEnd - segStart;
+    weighted += current.players * duration;
+    coverageMs += duration;
+  }
+
+  if (coverageMs <= 0) {
+    return { value: null, coverageMs: 0 };
+  }
+
+  return {
+    value: Math.round(weighted / coverageMs),
+    coverageMs,
+  };
+}
+
 export function PopulationChart({ snapshots, timeRange, fallbackSummary }: PopulationChartProps) {
   const totalDays = RANGE_DAYS[timeRange];
 
@@ -93,22 +138,29 @@ export function PopulationChart({ snapshots, timeRange, fallbackSummary }: Popul
     const bucketMs = bucketMsForRange(timeRange);
     const bucketCount = Math.max(1, Math.ceil((rangeEnd - rangeStart) / bucketMs));
 
-    const buckets: number[][] = Array.from({ length: bucketCount }, () => []);
+    const buckets: BucketSample[][] = Array.from({ length: bucketCount }, () => []);
     let maxPlayersSeen = 0;
     let maxCapacitySeen = 0;
 
     for (const s of snapshots) {
       if (s.timestamp < rangeStart || s.timestamp > rangeEnd) continue;
       const idx = Math.min(bucketCount - 1, Math.max(0, Math.floor((s.timestamp - rangeStart) / bucketMs)));
-      buckets[idx].push(s.playerCount);
+      buckets[idx].push({ ts: s.timestamp, players: s.playerCount });
       maxPlayersSeen = Math.max(maxPlayersSeen, s.playerCount);
       maxCapacitySeen = Math.max(maxCapacitySeen, s.maxPlayers);
     }
 
-    const actualSeries = buckets.map((samples) => {
-      if (samples.length === 0) return null;
-      return Math.round(samples.reduce((a, b) => a + b, 0) / samples.length);
+    const actualSeriesWithCoverage = buckets.map((samples, i) => {
+      const bucketStart = rangeStart + i * bucketMs;
+      const bucketEnd = Math.min(rangeEnd, bucketStart + bucketMs);
+      const { value, coverageMs } = timeWeightedBucketAverage(samples, bucketStart, bucketEnd);
+      return {
+        actual: value,
+        coveragePct: Math.max(0, Math.min(100, Math.round((coverageMs / Math.max(1, bucketMs)) * 100))),
+      };
     });
+
+    const actualSeries = actualSeriesWithCoverage.map((x) => x.actual);
 
     const nonNullActual = actualSeries.filter((v): v is number => v !== null);
     const volatility = stddev(nonNullActual.filter((v) => v > 0));
@@ -137,6 +189,7 @@ export function PopulationChart({ snapshots, timeRange, fallbackSummary }: Popul
         lower: lowerValue,
         band: upper === null || lowerValue === null ? null : upper - lowerValue,
         sampleCount: buckets[i].length,
+        coveragePct: actualSeriesWithCoverage[i].coveragePct,
       };
     });
 
@@ -172,19 +225,19 @@ export function PopulationChart({ snapshots, timeRange, fallbackSummary }: Popul
       <div className="mb-2 flex flex-wrap items-center gap-3 text-[11px] text-neutral-400">
         <span className="inline-flex items-center gap-1.5">
           <span className="h-2 w-2 rounded-full bg-red-500" />
-          Observed
+          Observed players
         </span>
         <span className="inline-flex items-center gap-1.5">
           <span className="h-2 w-2 rounded-full bg-cyan-400" />
-          Trend
+          Smoothed trend
         </span>
         <span className="inline-flex items-center gap-1.5">
           <span className="h-2 w-2 rounded-full bg-amber-400" />
-          Avg baseline
+          Range average
         </span>
         <span className="inline-flex items-center gap-1.5">
           <span className="h-2 w-2 rounded-full bg-neutral-300" />
-          Slot cap
+          Server slot cap
         </span>
       </div>
 
@@ -235,11 +288,16 @@ export function PopulationChart({ snapshots, timeRange, fallbackSummary }: Popul
                 return ['No sample', String(name ?? '')];
               }
               const n = Number(value ?? 0);
-              if (name === 'actual') return [`${n} players`, 'Observed'];
-              if (name === 'trend') return [`${n} players`, 'Trend (rolling)'];
+              if (name === 'actual') return [`${n} players`, 'Observed players'];
+              if (name === 'trend') return [`${n} players`, 'Smoothed trend'];
               return [`${n} players`, name];
             }}
-            labelFormatter={(label) => formatDateLabel(Number(label), totalDays)}
+            labelFormatter={(label, payload) => {
+              const date = formatDateLabel(Number(label), totalDays);
+              const row = (payload && payload.length > 0 ? payload[0].payload : null) as ChartRow | null;
+              if (!row) return date;
+              return `${date} • ${row.sampleCount} sample${row.sampleCount === 1 ? '' : 's'} • ${row.coveragePct}% bucket coverage`;
+            }}
           />
 
           {/* Variance band around trend (control-band style). */}

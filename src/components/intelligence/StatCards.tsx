@@ -136,8 +136,8 @@ export function StatCards({ analytics }: StatCardsProps) {
 
       <StatCard
         icon={<ShieldCheck className="w-4 h-4 text-emerald-400" />}
-        label="Reliability"
-        value={hasEnoughData ? `${reliabilityScore}%` : dash}
+        label="Reliability (est.)"
+        value={hasEnoughData ? `${reliabilityScore}%~` : dash}
         sub={hasEnoughData ? nextBestWindow ?? 'More samples needed for next-window guidance' : undefined}
       />
     </div>

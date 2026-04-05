@@ -64,6 +64,53 @@ function mean(values: number[]): number {
   return Math.round(values.reduce((a, b) => a + b, 0) / values.length);
 }
 
+function timeWeightedAverageInWindow(
+  snapshots: PopulationSnapshot[],
+  windowStart: number,
+  windowEnd: number,
+): number | null {
+  if (snapshots.length === 0 || windowEnd <= windowStart) return null;
+
+  let currentValue: number | null = null;
+  let currentTs = windowStart;
+  let weighted = 0;
+  let coverageMs = 0;
+
+  for (const s of snapshots) {
+    if (s.timestamp <= windowStart) {
+      currentValue = s.playerCount;
+      currentTs = windowStart;
+      continue;
+    }
+
+    if (s.timestamp >= windowEnd) break;
+
+    if (currentValue === null) {
+      currentValue = s.playerCount;
+      currentTs = s.timestamp;
+      continue;
+    }
+
+    if (s.timestamp > currentTs) {
+      const duration = s.timestamp - currentTs;
+      weighted += currentValue * duration;
+      coverageMs += duration;
+    }
+
+    currentValue = s.playerCount;
+    currentTs = s.timestamp;
+  }
+
+  if (currentValue !== null && currentTs < windowEnd) {
+    const duration = windowEnd - currentTs;
+    weighted += currentValue * duration;
+    coverageMs += duration;
+  }
+
+  if (coverageMs <= 0) return null;
+  return Math.round(weighted / coverageMs);
+}
+
 /**
  * Compare average player count in the first half of the window vs the second
  * to determine whether population is growing, shrinking, or stable.
@@ -77,9 +124,19 @@ function calcTrend(snapshots: PopulationSnapshot[]): {
     return { direction: 'insufficient', percent: 0 };
   }
 
-  const mid = Math.floor(online.length / 2);
-  const firstAvg = mean(online.slice(0, mid).map((s) => s.playerCount));
-  const secondAvg = mean(online.slice(mid).map((s) => s.playerCount));
+  const rangeStart = online[0]?.timestamp ?? 0;
+  const rangeEnd = online[online.length - 1]?.timestamp ?? 0;
+  if (rangeEnd <= rangeStart) {
+    return { direction: 'insufficient', percent: 0 };
+  }
+
+  const midTs = rangeStart + Math.floor((rangeEnd - rangeStart) / 2);
+  const firstAvg = timeWeightedAverageInWindow(online, rangeStart, midTs);
+  const secondAvg = timeWeightedAverageInWindow(online, midTs, rangeEnd);
+
+  if (firstAvg === null || secondAvg === null) {
+    return { direction: 'insufficient', percent: 0 };
+  }
 
   if (firstAvg === 0) return { direction: 'stable', percent: 0 };
 
@@ -251,7 +308,8 @@ function buildReliabilityScore(snapshots: PopulationSnapshot[]): number {
 
   const total = snapshots.length;
   const online = snapshots.filter((s) => s.status === 'online').length;
-  return Math.round((online / total) * 100);
+  // Reliability is an estimate, so we intentionally avoid ever showing 100%.
+  return Math.min(99, Math.round((online / total) * 100));
 }
 
 function buildAnomalySummary(snapshots: PopulationSnapshot[], hourly: Map<number, number>): string | null {
@@ -324,8 +382,12 @@ export function computeAnalytics(
 
   const hasEnoughData = online.length >= MIN_DATA_POINTS;
   const counts = online.map((s) => s.playerCount);
-
-  const avgPlayers  = mean(counts);
+  const rangeStart = online[0]?.timestamp ?? 0;
+  const rangeEnd = online[online.length - 1]?.timestamp ?? 0;
+  const avgPlayers =
+    rangeEnd > rangeStart
+      ? (timeWeightedAverageInWindow(online, rangeStart, rangeEnd) ?? mean(counts))
+      : mean(counts);
   const peakPlayers = counts.length > 0 ? Math.max(...counts) : 0;
   const lowestPlayers = counts.length > 0 ? Math.min(...counts) : 0;
 

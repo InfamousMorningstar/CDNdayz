@@ -46,9 +46,13 @@ export function InsightSummary({ analytics }: InsightSummaryProps) {
       {hasEnoughData && (
         <p className="text-[11px] text-neutral-600 leading-none pt-1">
           Insights are derived automatically from recorded player-count snapshots.
-          Samples are taken every 5 minutes and used for trend + historical expectation analysis.
+          Samples are taken on a variable schedule based on GitHub Actions runs; chart values are time-weighted within each bucket for trend + historical expectation analysis.
         </p>
       )}
+
+      <p className="text-[10px] text-neutral-700 leading-relaxed">
+        Accuracy note: metrics are data-driven but not 100% exact. Delayed scheduler runs, temporary server-query/network failures, restart/offline periods, and low sample coverage can affect short-window precision.
+      </p>
     </div>
   );
 }

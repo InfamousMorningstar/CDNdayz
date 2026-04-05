@@ -5,6 +5,8 @@ import { computeAnalytics } from '@/lib/population-analytics';
 import { TimeRange } from '@/types/intelligence';
 
 const RANGE_DAYS: Record<TimeRange, number> = {
+  '6h': 0.25,
+  '1d': 1,
   '7d': 7,
   '30d': 30,
   '90d': 90,
@@ -14,8 +16,8 @@ const RANGE_DAYS: Record<TimeRange, number> = {
 
 export async function GET(request: NextRequest) {
   const selectedServerId = request.nextUrl.searchParams.get('serverId') ?? servers[0]?.id;
-  const rawRange = request.nextUrl.searchParams.get('range') ?? '30d';
-  const range = (rawRange in RANGE_DAYS ? rawRange : '30d') as TimeRange;
+  const rawRange = request.nextUrl.searchParams.get('range') ?? '1d';
+  const range = (rawRange in RANGE_DAYS ? rawRange : '1d') as TimeRange;
 
   if (!selectedServerId) {
     return NextResponse.json({ error: 'No servers configured' }, { status: 500 });

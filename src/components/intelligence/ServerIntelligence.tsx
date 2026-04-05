@@ -151,7 +151,7 @@ function TonightAtAGlance({ rows, loading }: { rows: CompareRow[]; loading: bool
             <p className="text-sm font-semibold text-white truncate" title={row.serverName}>
               {row.serverName}
             </p>
-            <p className="text-xs text-neutral-400">Reliability {row.reliabilityScore}% · Avg {row.avgPlayers}</p>
+            <p className="text-xs text-neutral-400">Reliability {row.reliabilityScore}%~ · Avg {row.avgPlayers}</p>
             <p className="text-xs text-cyan-200 inline-flex items-center gap-1">
               <Sparkles className="w-3 h-3" />
               {row.verdict}
@@ -167,7 +167,7 @@ function TonightAtAGlance({ rows, loading }: { rows: CompareRow[]; loading: bool
 
 export function ServerIntelligence() {
   const [selectedServer, setSelectedServer] = useState<string>(servers[0]?.id ?? '');
-  const [timeRange, setTimeRange]           = useState<TimeRange>('30d');
+  const [timeRange, setTimeRange]           = useState<TimeRange>('1d');
   const [fetchState, setFetchState]         = useState<FetchState>('idle');
   const [analytics, setAnalytics]           = useState<ServerAnalytics | null>(null);
   const [errorMsg, setErrorMsg]             = useState<string>('');

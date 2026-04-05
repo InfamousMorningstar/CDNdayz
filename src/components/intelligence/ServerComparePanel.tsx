@@ -69,7 +69,7 @@ export function ServerComparePanel({ rows, selectedServerId, loading }: ServerCo
                     </td>
                     <td className="py-2.5 pr-3 text-white">{row.avgPlayers}</td>
                     <td className="py-2.5 pr-3 text-white">{row.peakPlayers}</td>
-                    <td className="py-2.5 pr-3 text-emerald-300">{row.reliabilityScore}%</td>
+                    <td className="py-2.5 pr-3 text-emerald-300">{row.reliabilityScore}%~</td>
                     <td className="py-2.5 pr-3">
                       <span className="inline-flex items-center gap-1 text-neutral-300">
                         <TrendGlyph direction={row.trendDirection} />
