@@ -3,6 +3,8 @@ const DISCORD_HOSTS = [
   'www.discord.gg',
   'discord.com',
   'www.discord.com',
+  'discordapp.com',
+  'www.discordapp.com',
   'canary.discord.com',
   'ptb.discord.com',
 ];

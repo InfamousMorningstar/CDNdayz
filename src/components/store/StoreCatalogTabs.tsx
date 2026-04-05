@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import {
   Car,
+  ExternalLink,
   Hammer,
   Package,
   Shield,
@@ -10,6 +11,8 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
+import { Button } from '@/components/ui/Button';
+import { DiscordLink } from '@/components/ui/DiscordLink';
 import {
   DISCORD_CUSTOM_BASES_CHANNEL_URL,
   DISCORD_DAYZ_CLOTHING_CHANNEL_URL,
@@ -127,7 +130,8 @@ export function StoreCatalogTabs() {
         </div>
 
         <div className="rounded-xl border border-[#2c2c2c] bg-[linear-gradient(160deg,#141414_0%,#0b0b0b_100%)] p-5 sm:p-7 shadow-[inset_0_1px_0_rgba(212,176,106,0.15)]">
-          <div className="max-w-2xl space-y-3">
+          <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+            <div className="max-w-2xl space-y-3">
             <div className="inline-flex items-center gap-2 rounded-md border border-[#d4b06a]/35 bg-[#d4b06a]/10 px-3 py-1.5 text-sm text-[#ecd8ae]">
               {current.icon}
               <span>{current.title}</span>
@@ -138,6 +142,14 @@ export function StoreCatalogTabs() {
             <p className="text-base text-neutral-300 leading-relaxed max-w-xl">
               {current.description}
             </p>
+            </div>
+
+            <DiscordLink href={current.channelUrl} className="lg:min-w-[220px]">
+              <Button variant="outline" className="w-full !rounded-md border-[#d4b06a]/45 text-[#e8d5ad] hover:bg-[#d4b06a]/10 hover:border-[#d4b06a]/70">
+                <span className="mr-2">Request This Category</span>
+                <ExternalLink size={16} />
+              </Button>
+            </DiscordLink>
           </div>
         </div>
       </div>
