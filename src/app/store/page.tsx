@@ -2,79 +2,23 @@ import { CinematicBackground } from '@/components/features/CinematicBackground';
 import { Badge } from '@/components/ui/Badge';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
-import { Shield, Crown, Package, Zap, ExternalLink, Shirt, Car, Hammer } from 'lucide-react';
+import { Shield, Crown, Zap, ExternalLink } from 'lucide-react';
 import Link from 'next/link';
 import { Metadata } from 'next';
-import { DISCORD_INVITE_URL } from '@/lib/links';
+import {
+  DISCORD_STORE_CHANNEL_URL,
+  DISCORD_SUPPORT_CHANNEL_URL,
+} from '@/lib/links';
+import { StoreCatalogTabs } from '@/components/store/StoreCatalogTabs';
 
 export const metadata: Metadata = {
   title: 'Store | CDN',
   description: 'Support the server and get exclusive perks. All donations go directly to server upkeep and development.',
 };
 
-const DISCORD_LINK = DISCORD_INVITE_URL;
+const DISCORD_LINK = DISCORD_STORE_CHANNEL_URL;
 
 export default function StorePage() {
-  const categories = [
-    {
-      title: "Equipment & Supplies",
-      icon: <Shirt className="w-8 h-8 text-emerald-500" />,
-      description: "Gear up for survival with premium clothing and essential items.",
-      price: "From $5 USD",
-      features: [
-        "DayZ Clothing",
-        "DayZ Items",
-        "Sci-Fi Gear",
-        "Sci-Fi Items"
-      ],
-      classes: {
-        border: "hover:border-emerald-500/30",
-        gradient: "from-emerald-500/5",
-        iconBox: "bg-emerald-900/20 border-emerald-500/20",
-        price: "text-emerald-400",
-        bullet: "bg-emerald-500",
-        button: "bg-emerald-600 hover:bg-emerald-500 hover:shadow-emerald-500/20"
-      }
-    },
-    {
-      title: "Transport",
-      icon: <Car className="w-8 h-8 text-amber-500" />,
-      description: "Traverse the map in style with our selection of vehicles.",
-      price: "From $15 USD",
-      features: [
-        "Vehicles",
-        "Sci-Fi Vehicles",
-        "Sci-Fi Ships"
-      ],
-      classes: {
-        border: "hover:border-amber-500/30",
-        gradient: "from-amber-500/5",
-        iconBox: "bg-amber-900/20 border-amber-500/20",
-        price: "text-amber-400",
-        bullet: "bg-amber-500",
-        button: "bg-amber-600 hover:bg-amber-500 hover:shadow-amber-500/20"
-      }
-    },
-    {
-      title: "Custom Base",
-      icon: <Hammer className="w-8 h-8 text-red-500" />,
-      description: "Establish your dominance with custom bases and secure compounds.",
-      price: "From $50 USD",
-      features: [
-        "Custom Bases",
-        "Sci-Fi Bases"
-      ],
-      classes: {
-        border: "hover:border-red-500/30",
-        gradient: "from-red-500/5",
-        iconBox: "bg-red-900/20 border-red-500/20",
-        price: "text-red-400",
-        bullet: "bg-red-500",
-        button: "bg-red-600 hover:bg-red-500 hover:shadow-red-500/20"
-      }
-    }
-  ];
-
   return (
     <CinematicBackground>
       <div className="min-h-screen pt-28 sm:pt-32 pb-16 sm:pb-20 container mx-auto px-4 sm:px-6 relative z-10">
@@ -131,7 +75,12 @@ export default function StorePage() {
               </li>
               <li className="rounded-xl border border-neutral-800 bg-neutral-950/40 p-4 flex gap-3">
                 <span className="font-mono text-neutral-500 font-bold">02</span>
-                <span className="text-neutral-300">Open a ticket in <span className="text-amber-500">#support</span></span>
+                <span className="text-neutral-300">
+                  Open a ticket in{' '}
+                  <Link href={DISCORD_STORE_CHANNEL_URL} target="_blank" rel="noopener noreferrer" className="text-amber-500 hover:underline">
+                    your store channel
+                  </Link>
+                </span>
               </li>
               <li className="rounded-xl border border-neutral-800 bg-neutral-950/40 p-4 flex gap-3">
                 <span className="font-mono text-neutral-500 font-bold">03</span>
@@ -145,37 +94,7 @@ export default function StorePage() {
           </Card>
         </div>
 
-        {/* Main Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8 max-w-6xl mx-auto mb-10 sm:mb-16">
-          {categories.map((item, index) => (
-            <Card key={index} className={`p-5 sm:p-8 bg-neutral-900/40 border-neutral-800 transition-all group relative overflow-hidden flex flex-col ${item.classes.border}`}>
-              {/* Hover Effect Background */}
-              <div className={`absolute inset-0 bg-gradient-to-b to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 ${item.classes.gradient}`} />
-              
-              <div className="relative z-10 flex-1 flex flex-col">
-                <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 border ${item.classes.iconBox}`}>
-                  {item.icon}
-                </div>
-                
-                <h3 className="text-2xl font-bold text-white mb-2">{item.title}</h3>
-                <div className={`text-xl font-mono mb-4 ${item.classes.price}`}>{item.price}</div>
-                <p className="text-neutral-400 text-sm mb-8 leading-relaxed">
-                  {item.description}
-                </p>
-
-                <ul className="space-y-3 mb-8 flex-1">
-                  {item.features.map((feature, i) => (
-                    <li key={i} className="flex items-center gap-3 text-neutral-300 text-sm">
-                      <div className={`w-1.5 h-1.5 rounded-full ${item.classes.bullet}`} />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-
-              </div>
-            </Card>
-          ))}
-        </div>
+        <StoreCatalogTabs />
 
         {/* Donation Info & Payment Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8 max-w-6xl mx-auto">
@@ -215,7 +134,11 @@ export default function StorePage() {
                         <strong className="text-white block text-lg">Flexible Support</strong>
                         <p className="text-neutral-400 leading-relaxed">
                             If you can't make a large donation, any small donation is appreciated! We can still offer you something, 
-                            so just make a ticket in #support with what you want. Items can be claimed across all servers.
+                            so just make a ticket in our{' '}
+                            <Link href={DISCORD_SUPPORT_CHANNEL_URL} target="_blank" rel="noopener noreferrer" className="text-red-400 hover:text-red-300 underline">
+                              support channel
+                            </Link>{' '}
+                            with what you want. Items can be claimed across all servers.
                         </p>
                     </div>
                     
@@ -267,7 +190,10 @@ export default function StorePage() {
                      <div className="p-5 rounded-xl border border-neutral-800 bg-neutral-900/30">
                         <div className="font-bold text-white mb-1">Other Options</div>
                         <p className="text-neutral-400 text-sm">
-                            Cash App, Zelle, Venmo, etc. available upon request. Please open a ticket in #support.
+                            Cash App, Zelle, Venmo, etc. available upon request. Please open a ticket in our{' '}
+                            <Link href={DISCORD_SUPPORT_CHANNEL_URL} target="_blank" rel="noopener noreferrer" className="text-red-400 hover:text-red-300 underline">
+                              support channel
+                            </Link>.
                         </p>
                      </div>
                 </div>
