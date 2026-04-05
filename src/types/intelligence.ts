@@ -16,6 +16,12 @@ export interface ForecastPoint {
   predictedPlayers: number;
 }
 
+export interface WeekdayTrafficPoint {
+  day: number;
+  avgPlayers: number | null;
+  sampleCount: number;
+}
+
 export type TimeRange = '7d' | '30d' | '90d' | '6m' | '1y';
 
 export interface TimeRangeOption {
@@ -59,6 +65,7 @@ export interface ServerAnalytics {
   anomalySummary: string | null;
   forecast: ForecastPoint[];
   forecastConfidence: 'low' | 'medium' | 'high';
+  weekdayTraffic: WeekdayTrafficPoint[];
   lastSnapshotTime: string | null;
   hasEnoughData: boolean;
   dataPointCount: number;

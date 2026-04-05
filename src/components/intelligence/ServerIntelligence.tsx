@@ -20,6 +20,7 @@ import { StatCards, TrendBadge } from './StatCards';
 import { InsightSummary } from './InsightSummary';
 import { ForecastPanel } from './ForecastPanel';
 import { CompareRow, ServerComparePanel } from './ServerComparePanel';
+import { WeekdayTrafficPanel } from './WeekdayTrafficPanel';
 import {
   ServerAnalytics,
   TimeRange,
@@ -237,7 +238,7 @@ export function ServerIntelligence() {
             className="border-sky-500/30 text-sky-400 bg-sky-900/10 backdrop-blur-sm px-4 py-1"
           >
             <BarChart2 className="w-3 h-3 mr-1.5 inline" />
-            Live Analytics
+            Server Intelligence
           </Badge>
 
           <h2
@@ -324,6 +325,9 @@ export function ServerIntelligence() {
 
               {/* Forecast + anomalies */}
               <ForecastPanel analytics={analytics} />
+
+              {/* Weekday traffic breakdown */}
+              <WeekdayTrafficPanel analytics={analytics} />
 
               {/* Insight */}
               <InsightSummary analytics={analytics} />

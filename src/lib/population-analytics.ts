@@ -13,6 +13,7 @@ import {
   PopulationSnapshot,
   ServerAnalytics,
   TimeRange,
+  WeekdayTrafficPoint,
 } from '@/types/intelligence';
 
 // ── Constants ──────────────────────────────────────────────────────────────
@@ -135,6 +136,26 @@ function weekdayAverages(snapshots: PopulationSnapshot[]): Map<number, number> {
     }
   }
   return result;
+}
+
+function weekdayTrafficPoints(snapshots: PopulationSnapshot[]): WeekdayTrafficPoint[] {
+  const buckets = new Map<number, number[]>();
+
+  for (const s of onlineOnly(snapshots)) {
+    const d = new Date(s.timestamp).getDay();
+    const bucket = buckets.get(d) ?? [];
+    bucket.push(s.playerCount);
+    buckets.set(d, bucket);
+  }
+
+  return Array.from({ length: 7 }, (_, day) => {
+    const counts = buckets.get(day) ?? [];
+    return {
+      day,
+      avgPlayers: counts.length >= MIN_WEEKDAY_SAMPLES ? mean(counts) : null,
+      sampleCount: counts.length,
+    };
+  });
 }
 
 /**
@@ -326,6 +347,7 @@ export function computeAnalytics(
   }
 
   const weekday = weekdayAverages(sorted);
+  const weekdayTraffic = weekdayTrafficPoints(sorted);
   let busiestDayOfWeek: number | null = null;
   let quietestDayOfWeek: number | null = null;
 
@@ -377,6 +399,7 @@ export function computeAnalytics(
     anomalySummary,
     forecast,
     forecastConfidence: confidence,
+    weekdayTraffic,
     lastSnapshotTime,
   };
 }
