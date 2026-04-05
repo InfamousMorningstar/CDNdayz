@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import {
   Car,
-  ExternalLink,
   Hammer,
   Package,
   Shield,
@@ -11,8 +10,6 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
-import { Button } from '@/components/ui/Button';
-import { DiscordLink } from '@/components/ui/DiscordLink';
 import {
   DISCORD_CUSTOM_BASES_CHANNEL_URL,
   DISCORD_DAYZ_CLOTHING_CHANNEL_URL,
@@ -20,7 +17,6 @@ import {
   DISCORD_ITEMS_CHANNEL_URL,
   DISCORD_SCIFI_BASE_ITEMS_CHANNEL_URL,
   DISCORD_SCIFI_GEAR_CHANNEL_URL,
-  DISCORD_STORE_CHANNEL_URL,
 } from '@/lib/links';
 import { cn } from '@/lib/utils';
 
@@ -98,24 +94,15 @@ export function StoreCatalogTabs() {
   return (
     <Card className="max-w-6xl mx-auto mb-10 sm:mb-16 p-4 sm:p-6 bg-gradient-to-b from-[#161616] to-[#0f0f0f] border-[#2a2a2a] backdrop-blur-md overflow-hidden relative">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#d4b06a]/60 to-transparent" />
-      <div className="flex flex-col gap-4 sm:gap-5 relative z-10">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p className="text-[11px] font-medium uppercase tracking-[0.28em] text-[#8d8d8d]">Maison CDN</p>
-            <p className="mt-1 text-lg sm:text-xl font-serif text-[#f4f1ea] tracking-wide">
-              Store Catalog
-            </p>
-            <p className="mt-1 text-sm text-neutral-400">
-              Choose a category, then place a ticket request with precision.
-            </p>
-          </div>
-
-          <DiscordLink href={current.channelUrl || DISCORD_STORE_CHANNEL_URL} className="sm:min-w-[220px]">
-            <Button size="default" className="w-full !rounded-md bg-[#d4b06a] text-black hover:bg-[#c49d55] border border-[#d4b06a]/60 shadow-[0_10px_30px_rgba(0,0,0,0.35)]">
-              <span className="mr-2">Open Ticket</span>
-              <ExternalLink size={16} />
-            </Button>
-          </DiscordLink>
+      <div className="relative z-10 flex flex-col gap-5 sm:gap-6">
+        <div className="space-y-1.5">
+          <p className="text-[11px] font-medium uppercase tracking-[0.28em] text-[#8d8d8d]">Maison CDN</p>
+          <p className="text-lg sm:text-xl font-serif text-[#f4f1ea] tracking-wide">
+            Store Catalog
+          </p>
+          <p className="text-sm text-neutral-400">
+            Choose a category, then open a ticket from the main store button above.
+          </p>
         </div>
 
         <div className="overflow-x-auto pb-1">
@@ -139,28 +126,19 @@ export function StoreCatalogTabs() {
           </div>
         </div>
 
-        <div className="rounded-xl border border-[#2c2c2c] bg-[linear-gradient(160deg,#141414_0%,#0b0b0b_100%)] p-5 sm:p-6 shadow-[inset_0_1px_0_rgba(212,176,106,0.15)]">
-          <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
-            <div className="max-w-2xl">
-              <div className="inline-flex items-center gap-2 rounded-md border border-[#d4b06a]/35 bg-[#d4b06a]/10 px-3 py-1.5 text-sm text-[#ecd8ae]">
-                {current.icon}
-                <span>{current.title}</span>
-              </div>
-
-              <p className="mt-2 text-[11px] uppercase tracking-[0.2em] text-[#8f7a4d]">{current.ref}</p>
-
-              <p className="mt-4 text-base text-neutral-300 leading-relaxed max-w-xl">
-                {current.description}
-              </p>
+        <div className="rounded-xl border border-[#2c2c2c] bg-[linear-gradient(160deg,#141414_0%,#0b0b0b_100%)] p-5 sm:p-7 shadow-[inset_0_1px_0_rgba(212,176,106,0.15)]">
+          <div className="max-w-2xl space-y-3">
+            <div className="inline-flex items-center gap-2 rounded-md border border-[#d4b06a]/35 bg-[#d4b06a]/10 px-3 py-1.5 text-sm text-[#ecd8ae]">
+              {current.icon}
+              <span>{current.title}</span>
             </div>
 
-            <DiscordLink href={current.channelUrl || DISCORD_STORE_CHANNEL_URL} className="lg:min-w-[220px]">
-              <Button variant="outline" className="w-full !rounded-md border-[#d4b06a]/45 text-[#e8d5ad] hover:bg-[#d4b06a]/10 hover:border-[#d4b06a]/70">
-                Request This Category
-              </Button>
-            </DiscordLink>
-          </div>
+            <p className="text-[11px] uppercase tracking-[0.2em] text-[#8f7a4d]">{current.ref}</p>
 
+            <p className="text-base text-neutral-300 leading-relaxed max-w-xl">
+              {current.description}
+            </p>
+          </div>
         </div>
       </div>
     </Card>

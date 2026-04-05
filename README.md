@@ -26,6 +26,27 @@ Live site: https://dayzcdn.com
 - Expanded legal/support surface:
     - Added legal pages (privacy/terms) and supporting footer/nav updates.
     - Continued rules/store/events/features content refinement.
+- Released Server Intelligence dashboard and data platform:
+    - Added server population intelligence UI on `/servers` with trend, volatility, peak/off-peak windows, and weekday traffic behavior.
+    - Added BI-style historical charting and "Tonight at a glance" summary blocks.
+    - Added cross-server comparison and reliability/anomaly indicators.
+    - Added forecast panel with confidence derived from available historical coverage.
+- Shipped data-quality hardening for intelligence metrics:
+    - Removed synthetic/guessed values from analytics and chart rendering.
+    - Enforced data sufficiency checks before producing trend/forecast signals.
+    - Preserved missing buckets as missing data (no zero-fill fabrication).
+- Added intelligence data retention and efficiency improvements:
+    - Implemented hybrid retention: raw snapshots for recent windows plus hourly aggregates for long-range history.
+    - Added single aggregated intelligence endpoint to reduce client fanout and free-tier load.
+    - Added response caching on intelligence API layer.
+- Store and support workflow overhaul:
+    - Removed public prices from catalog listings.
+    - Replaced category cards with tabbed catalog flow.
+    - Routed categories to channel-specific Discord support/store links.
+    - Added support CTA directly within rules experience.
+- Discord UX update (global):
+    - Added app-first Discord open behavior across major CTAs and support links.
+    - Uses Discord deep-link attempt first, then web fallback.
 
 ## Recent Updates (March 2026)
 
@@ -54,10 +75,58 @@ Live site: https://dayzcdn.com
 ## Core Capabilities
 
 - Live server status via GameDig-backed API route.
+- Server Intelligence system with historical snapshots, analytics, forecasts, anomalies, and compare views.
 - Live per-server mod inventory via DayZSA query proxy route.
 - Official DayZ news and ticker integration.
 - Rules hub with hardcore policy visibility and FAQ support.
 - Store, join guide, wipe information, and legal pages.
+
+## Server Intelligence System
+
+### What it Provides
+
+- Near-real-time server population telemetry and history exploration.
+- Actionable analytics for admins and players:
+    - Current trend and momentum context.
+    - Peak/off-peak hour windows.
+    - Volatility and reliability markers.
+    - Day-of-week traffic profiles.
+    - Cross-server comparison snapshots.
+
+### Data Pipeline
+
+- Snapshot collection runs on a schedule (GitHub Actions every 5 minutes).
+- Scheduler triggers protected snapshot API route with secret authentication.
+- API queries active server populations and persists normalized records.
+
+### Storage and Retention
+
+- Backed by Redis/KV (`@vercel/kv`).
+- Hybrid model:
+    - Raw snapshots retained for short-to-mid windows (high fidelity recent analysis).
+    - Hourly aggregate buckets retained for long windows (up to 1 year).
+- Read path merges raw + hourly sources to keep charts accurate while controlling storage/compute costs.
+
+### Analytics Rules
+
+- Data-first policy: no synthetic trend or forecast generation when data coverage is insufficient.
+- Forecast confidence is based on historical sample depth and consistency.
+- Missing historical intervals are represented as missing, not converted into fake zero values.
+
+### UI Surface
+
+- Lives in the Servers page intelligence section.
+- Includes:
+    - BI-style charting for historical population behavior.
+    - Stat cards and insight summaries.
+    - Forecast panel and weekday traffic panel.
+    - Server comparison panel.
+
+### Operational Notes
+
+- Snapshot scheduling is performed outside platform cron constraints using GitHub Actions.
+- Intelligence API is aggregated and cached to reduce client request fanout and free-tier pressure.
+- Storage path includes diagnostics/fail-fast handling to prevent silent persistence failures.
 
 ## API Endpoints
 
@@ -69,6 +138,12 @@ Live site: https://dayzcdn.com
     - Returns official DayZ news feed data.
 - GET /api/news-ticker
     - Returns condensed ticker content for hero/news bar.
+- POST /api/population/snapshot
+    - Protected endpoint used by scheduler to capture population snapshots.
+- GET /api/population/history/[serverId]
+    - Returns historical population points for the selected server and time window.
+- GET /api/population/intelligence
+    - Returns aggregated intelligence payload used by the Servers intelligence UI.
 
 ## Tech Stack
 
@@ -78,11 +153,16 @@ Live site: https://dayzcdn.com
 - Framer Motion
 - Lucide React
 - GameDig
+- Recharts
+- @vercel/kv (Redis/KV)
+- GitHub Actions (snapshot scheduler)
 
 ## Notes
 
 - Some server/UI data is intentionally cached in API routes to reduce upstream load.
 - If upstream launcher data is unavailable, mod records are returned with per-server error details instead of failing the entire request.
+- Server Intelligence uses strict data-coverage checks and intentionally avoids guessed analytics output.
+- Discord support/store/invite links are centralized and support app-first open behavior with web fallback.
 
 ## Usage Notice
 
