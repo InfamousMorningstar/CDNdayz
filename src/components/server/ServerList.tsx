@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import ServerCardTactical from '@/components/server/ServerCardTactical';
 import { ServerStatus } from '@/lib/servers'; // Importing shared type
 import { DISCORD_INVITE_URL } from '@/lib/links';
+import { DiscordLink } from '@/components/ui/DiscordLink';
 
 export function ServerList() {
   const [servers, setServers] = useState<ServerStatus[]>([]);
@@ -59,7 +60,7 @@ export function ServerList() {
     return (
       <div className="flex flex-col items-center justify-center p-12 bg-neutral-900/40 rounded-xl border border-red-900/30 text-center w-full">
         <div className="text-red-500 mb-2 font-bold text-lg">Unable to load server status</div>
-        <p className="text-neutral-400">Please check our <a href={DISCORD_INVITE_URL} target="_blank" rel="noopener noreferrer" className="text-red-400 hover:underline">Discord</a> for live updates.</p>
+        <p className="text-neutral-400">Please check our <DiscordLink href={DISCORD_INVITE_URL} className="text-red-400 hover:underline">Discord</DiscordLink> for live updates.</p>
       </div>
     );
   }

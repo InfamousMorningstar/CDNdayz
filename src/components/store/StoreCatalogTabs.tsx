@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from 'react';
-import Link from 'next/link';
 import {
   Car,
   ExternalLink,
@@ -13,6 +12,7 @@ import {
 } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
+import { DiscordLink } from '@/components/ui/DiscordLink';
 import {
   DISCORD_CUSTOM_BASES_CHANNEL_URL,
   DISCORD_DAYZ_CLOTHING_CHANNEL_URL,
@@ -110,12 +110,12 @@ export function StoreCatalogTabs() {
             </p>
           </div>
 
-          <Link href={current.channelUrl || DISCORD_STORE_CHANNEL_URL} target="_blank" rel="noopener noreferrer" className="sm:min-w-[220px]">
+          <DiscordLink href={current.channelUrl || DISCORD_STORE_CHANNEL_URL} className="sm:min-w-[220px]">
             <Button size="default" className="w-full !rounded-md bg-[#d4b06a] text-black hover:bg-[#c49d55] border border-[#d4b06a]/60 shadow-[0_10px_30px_rgba(0,0,0,0.35)]">
               <span className="mr-2">Open Ticket</span>
               <ExternalLink size={16} />
             </Button>
-          </Link>
+          </DiscordLink>
         </div>
 
         <div className="overflow-x-auto pb-1">
@@ -154,11 +154,11 @@ export function StoreCatalogTabs() {
               </p>
             </div>
 
-            <Link href={current.channelUrl || DISCORD_STORE_CHANNEL_URL} target="_blank" rel="noopener noreferrer" className="lg:min-w-[220px]">
+            <DiscordLink href={current.channelUrl || DISCORD_STORE_CHANNEL_URL} className="lg:min-w-[220px]">
               <Button variant="outline" className="w-full !rounded-md border-[#d4b06a]/45 text-[#e8d5ad] hover:bg-[#d4b06a]/10 hover:border-[#d4b06a]/70">
                 Request This Category
               </Button>
-            </Link>
+            </DiscordLink>
           </div>
 
         </div>

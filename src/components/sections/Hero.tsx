@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { ChevronRight, Footprints } from 'lucide-react';
 import { NewsTicker } from '@/components/news/NewsTicker';
 import { DISCORD_INVITE_URL } from '@/lib/links';
+import { openDiscordAppFirst } from '@/lib/discord';
 
 export function Hero() {
   return (
@@ -60,7 +61,7 @@ export function Hero() {
                 View Servers <ChevronRight className="w-4 h-4" />
               </Link>
             </Button>
-            <Button size="lg" variant="outline" className="h-12 px-6 text-base font-heading tracking-wider border-neutral-500/30 hover:border-red-500/50 hover:bg-red-900/20 hover:text-red-400 transition-all w-full sm:w-auto" onClick={() => window.open(DISCORD_INVITE_URL, '_blank')}>
+            <Button size="lg" variant="outline" className="h-12 px-6 text-base font-heading tracking-wider border-neutral-500/30 hover:border-red-500/50 hover:bg-red-900/20 hover:text-red-400 transition-all w-full sm:w-auto" onClick={() => openDiscordAppFirst(DISCORD_INVITE_URL)}>
               Join Comms
             </Button>
           </div>

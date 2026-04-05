@@ -1,8 +1,8 @@
 import { CinematicBackground } from '@/components/features/CinematicBackground';
 import { Card } from '@/components/ui/Card';
 import { Shield, Info } from 'lucide-react';
-import Link from 'next/link';
 import { DISCORD_INVITE_URL } from '@/lib/links';
+import { DiscordLink } from '@/components/ui/DiscordLink';
 
 export const metadata = {
   title: 'Terms of Service | CDN DayZ',
@@ -80,7 +80,7 @@ export default function TermsPage() {
                     <strong>For Website Issues:</strong> If you encounter bugs or technical errors on this site, please contact <a href="https://portfolio.ahmxd.net" target="_blank" rel="noopener noreferrer" className="text-red-400 hover:text-red-300 underline">Morningstar.0</a>.
                   </p>
                   <p className="text-neutral-300">
-                    <strong>For Server Issues:</strong> If you have issues with in-game griefing, bans, or donations, please open a ticket in the official <Link href={DISCORD_INVITE_URL} className="text-red-400 hover:text-red-300 underline">CDN Discord</Link>.
+                    <strong>For Server Issues:</strong> If you have issues with in-game griefing, bans, or donations, please open a ticket in the official <DiscordLink href={DISCORD_INVITE_URL} className="text-red-400 hover:text-red-300 underline">CDN Discord</DiscordLink>.
                   </p>
                 </div>
               </section>

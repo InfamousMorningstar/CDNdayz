@@ -3,13 +3,13 @@ import { Badge } from '@/components/ui/Badge';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Shield, Crown, Zap, ExternalLink } from 'lucide-react';
-import Link from 'next/link';
 import { Metadata } from 'next';
 import {
   DISCORD_STORE_CHANNEL_URL,
   DISCORD_SUPPORT_CHANNEL_URL,
 } from '@/lib/links';
 import { StoreCatalogTabs } from '@/components/store/StoreCatalogTabs';
+import { DiscordLink } from '@/components/ui/DiscordLink';
 
 export const metadata: Metadata = {
   title: 'Store | CDN',
@@ -60,12 +60,12 @@ export default function StorePage() {
                   New here? Follow these quick steps first, then choose what you want from the store below.
                 </p>
               </div>
-              <Link href={DISCORD_LINK} target="_blank" rel="noopener noreferrer" className="block md:min-w-[260px]">
+              <DiscordLink href={DISCORD_LINK} className="block md:min-w-[260px]">
                 <Button size="lg" className="w-full bg-[#5865F2] hover:bg-[#4752C4] text-white border-none py-6 text-lg font-bold shadow-xl shadow-indigo-500/10">
                   <span className="mr-2">Open Ticket on Discord</span>
                   <ExternalLink size={20} />
                 </Button>
-              </Link>
+              </DiscordLink>
             </div>
 
             <ol className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
@@ -77,9 +77,9 @@ export default function StorePage() {
                 <span className="font-mono text-neutral-500 font-bold">02</span>
                 <span className="text-neutral-300">
                   Open a ticket in{' '}
-                  <Link href={DISCORD_STORE_CHANNEL_URL} target="_blank" rel="noopener noreferrer" className="text-amber-500 hover:underline">
+                  <DiscordLink href={DISCORD_STORE_CHANNEL_URL} className="text-amber-500 hover:underline">
                     your store channel
-                  </Link>
+                  </DiscordLink>
                 </span>
               </li>
               <li className="rounded-xl border border-neutral-800 bg-neutral-950/40 p-4 flex gap-3">
@@ -135,9 +135,9 @@ export default function StorePage() {
                         <p className="text-neutral-400 leading-relaxed">
                             If you can't make a large donation, any small donation is appreciated! We can still offer you something, 
                             so just make a ticket in our{' '}
-                            <Link href={DISCORD_SUPPORT_CHANNEL_URL} target="_blank" rel="noopener noreferrer" className="text-red-400 hover:text-red-300 underline">
+                            <DiscordLink href={DISCORD_SUPPORT_CHANNEL_URL} className="text-red-400 hover:text-red-300 underline">
                               support channel
-                            </Link>{' '}
+                            </DiscordLink>{' '}
                             with what you want. Items can be claimed across all servers.
                         </p>
                     </div>
@@ -191,9 +191,9 @@ export default function StorePage() {
                         <div className="font-bold text-white mb-1">Other Options</div>
                         <p className="text-neutral-400 text-sm">
                             Cash App, Zelle, Venmo, etc. available upon request. Please open a ticket in our{' '}
-                            <Link href={DISCORD_SUPPORT_CHANNEL_URL} target="_blank" rel="noopener noreferrer" className="text-red-400 hover:text-red-300 underline">
+                            <DiscordLink href={DISCORD_SUPPORT_CHANNEL_URL} className="text-red-400 hover:text-red-300 underline">
                               support channel
-                            </Link>.
+                            </DiscordLink>.
                         </p>
                      </div>
                 </div>

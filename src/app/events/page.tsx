@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
 import { DISCORD_INVITE_URL } from '@/lib/links';
 import { Badge } from '@/components/ui/Badge';
+import { DiscordLink } from '@/components/ui/DiscordLink';
 
 export const metadata: Metadata = {
   title: 'Events Schedule | CDN',
@@ -40,9 +41,9 @@ export default function EventsPage() {
              </div>
              <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
                 <Button asChild>
-                  <Link href={DISCORD_INVITE_URL} target="_blank" rel="noopener noreferrer">
+                  <DiscordLink href={DISCORD_INVITE_URL}>
                     Join Discord Alerts <ArrowRight className="ml-2 w-4 h-4" />
-                  </Link>
+                  </DiscordLink>
                 </Button>
                 <Button variant="outline" asChild>
                   <Link href="/servers">View Live Servers</Link>
