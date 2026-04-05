@@ -30,9 +30,8 @@ type StoreTab = {
   title: string;
   description: string;
   channelUrl: string;
-  accent: string;
+  ref: string;
   icon: React.ReactNode;
-  examples: string[];
 };
 
 const STORE_TABS: StoreTab[] = [
@@ -42,9 +41,8 @@ const STORE_TABS: StoreTab[] = [
     title: 'DayZ Clothing',
     description: 'Premium survivor outfits and apparel bundles for standard DayZ loadouts.',
     channelUrl: DISCORD_DAYZ_CLOTHING_CHANNEL_URL,
-    accent: 'text-emerald-300 border-emerald-500/20 bg-emerald-950/15',
-    icon: <Shirt className="w-5 h-5 text-emerald-400" />,
-    examples: ['Civilian outfits', 'Military apparel', 'Cold-weather kits', 'Roleplay-ready sets'],
+    ref: 'REF. 01',
+    icon: <Shirt className="w-5 h-5 text-[#d4b06a]" />,
   },
   {
     id: 'dayz-vehicles',
@@ -52,9 +50,8 @@ const STORE_TABS: StoreTab[] = [
     title: 'DayZ Vehicles',
     description: 'Standard transport options for faster movement, convoy setups, and utility runs.',
     channelUrl: DISCORD_DAYZ_VEHICLES_CHANNEL_URL,
-    accent: 'text-amber-300 border-amber-500/20 bg-amber-950/15',
-    icon: <Car className="w-5 h-5 text-amber-400" />,
-    examples: ['Utility vehicles', 'Convoy-ready rides', 'Supply run transport', 'Map traversal setups'],
+    ref: 'REF. 02',
+    icon: <Car className="w-5 h-5 text-[#d4b06a]" />,
   },
   {
     id: 'items',
@@ -62,9 +59,8 @@ const STORE_TABS: StoreTab[] = [
     title: 'Items',
     description: 'Core survival equipment and supply packages tailored to your playstyle.',
     channelUrl: DISCORD_ITEMS_CHANNEL_URL,
-    accent: 'text-cyan-300 border-cyan-500/20 bg-cyan-950/15',
-    icon: <Package className="w-5 h-5 text-cyan-400" />,
-    examples: ['Medical supplies', 'Base essentials', 'Starter utility kits', 'General loot packages'],
+    ref: 'REF. 03',
+    icon: <Package className="w-5 h-5 text-[#d4b06a]" />,
   },
   {
     id: 'custom-bases',
@@ -72,9 +68,8 @@ const STORE_TABS: StoreTab[] = [
     title: 'Custom Bases',
     description: 'Purpose-built compounds and defended locations created around your server plans.',
     channelUrl: DISCORD_CUSTOM_BASES_CHANNEL_URL,
-    accent: 'text-rose-300 border-rose-500/20 bg-rose-950/15',
-    icon: <Hammer className="w-5 h-5 text-rose-400" />,
-    examples: ['Starter compounds', 'Expanded safe zones', 'Team bases', 'Custom layout requests'],
+    ref: 'REF. 04',
+    icon: <Hammer className="w-5 h-5 text-[#d4b06a]" />,
   },
   {
     id: 'scifi-gear',
@@ -82,9 +77,8 @@ const STORE_TABS: StoreTab[] = [
     title: 'Sci-Fi Gear',
     description: 'Specialized futuristic gear sets for sci-fi themed servers and character builds.',
     channelUrl: DISCORD_SCIFI_GEAR_CHANNEL_URL,
-    accent: 'text-violet-300 border-violet-500/20 bg-violet-950/15',
-    icon: <Sparkles className="w-5 h-5 text-violet-400" />,
-    examples: ['Sci-fi armor', 'Advanced weapon kits', 'Themed utility gear', 'Faction-style loadouts'],
+    ref: 'REF. 05',
+    icon: <Sparkles className="w-5 h-5 text-[#d4b06a]" />,
   },
   {
     id: 'scifi-base-items',
@@ -92,9 +86,8 @@ const STORE_TABS: StoreTab[] = [
     title: 'Sci-Fi Base Items',
     description: 'Futuristic structures, props, and specialty base pieces for themed builds.',
     channelUrl: DISCORD_SCIFI_BASE_ITEMS_CHANNEL_URL,
-    accent: 'text-sky-300 border-sky-500/20 bg-sky-950/15',
-    icon: <Shield className="w-5 h-5 text-sky-400" />,
-    examples: ['Sci-fi base props', 'Defensive structures', 'Theme expansion pieces', 'Custom base item requests'],
+    ref: 'REF. 06',
+    icon: <Shield className="w-5 h-5 text-[#d4b06a]" />,
   },
 ];
 
@@ -103,18 +96,22 @@ export function StoreCatalogTabs() {
   const current = STORE_TABS.find((tab) => tab.id === activeTab) ?? STORE_TABS[0];
 
   return (
-    <Card className="max-w-6xl mx-auto mb-10 sm:mb-16 p-4 sm:p-6 bg-neutral-900/50 border-neutral-800 backdrop-blur-md">
-      <div className="flex flex-col gap-4 sm:gap-5">
+    <Card className="max-w-6xl mx-auto mb-10 sm:mb-16 p-4 sm:p-6 bg-gradient-to-b from-[#161616] to-[#0f0f0f] border-[#2a2a2a] backdrop-blur-md overflow-hidden relative">
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#d4b06a]/60 to-transparent" />
+      <div className="flex flex-col gap-4 sm:gap-5 relative z-10">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p className="text-xs font-medium uppercase tracking-[0.22em] text-neutral-500">Store Catalog</p>
+            <p className="text-[11px] font-medium uppercase tracking-[0.28em] text-[#8d8d8d]">Maison CDN</p>
+            <p className="mt-1 text-lg sm:text-xl font-serif text-[#f4f1ea] tracking-wide">
+              Store Catalog
+            </p>
             <p className="mt-1 text-sm text-neutral-400">
-              Browse categories, then open a ticket with exactly what you want.
+              Choose a category, then place a ticket request with precision.
             </p>
           </div>
 
           <Link href={current.channelUrl || DISCORD_STORE_CHANNEL_URL} target="_blank" rel="noopener noreferrer" className="sm:min-w-[220px]">
-            <Button size="default" className="w-full bg-[#5865F2] hover:bg-[#4752C4] text-white border-none">
+            <Button size="default" className="w-full !rounded-md bg-[#d4b06a] text-black hover:bg-[#c49d55] border border-[#d4b06a]/60 shadow-[0_10px_30px_rgba(0,0,0,0.35)]">
               <span className="mr-2">Open Ticket</span>
               <ExternalLink size={16} />
             </Button>
@@ -129,10 +126,10 @@ export function StoreCatalogTabs() {
                 type="button"
                 onClick={() => setActiveTab(tab.id)}
                 className={cn(
-                  'rounded-full border px-4 py-2 text-sm font-medium transition-colors',
+                  'rounded-md border px-4 py-2 text-xs uppercase tracking-[0.14em] font-medium transition-colors',
                   activeTab === tab.id
-                    ? 'border-amber-500/35 bg-amber-500/10 text-white'
-                    : 'border-white/10 bg-black/25 text-neutral-400 hover:border-white/20 hover:text-white',
+                    ? 'border-[#d4b06a]/65 bg-[#d4b06a]/10 text-[#f4f1ea]'
+                    : 'border-white/10 bg-black/25 text-neutral-500 hover:border-white/20 hover:text-neutral-200',
                 )}
                 aria-pressed={activeTab === tab.id}
               >
@@ -142,33 +139,28 @@ export function StoreCatalogTabs() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-white/5 bg-black/20 p-5 sm:p-6">
+        <div className="rounded-xl border border-[#2c2c2c] bg-[linear-gradient(160deg,#141414_0%,#0b0b0b_100%)] p-5 sm:p-6 shadow-[inset_0_1px_0_rgba(212,176,106,0.15)]">
           <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
             <div className="max-w-2xl">
-              <div className={cn('inline-flex items-center gap-2 rounded-full border px-3 py-1 text-sm', current.accent)}>
+              <div className="inline-flex items-center gap-2 rounded-md border border-[#d4b06a]/35 bg-[#d4b06a]/10 px-3 py-1.5 text-sm text-[#ecd8ae]">
                 {current.icon}
                 <span>{current.title}</span>
               </div>
 
-              <p className="mt-4 text-base text-neutral-300 leading-relaxed">
+              <p className="mt-2 text-[11px] uppercase tracking-[0.2em] text-[#8f7a4d]">{current.ref}</p>
+
+              <p className="mt-4 text-base text-neutral-300 leading-relaxed max-w-xl">
                 {current.description}
               </p>
             </div>
 
             <Link href={current.channelUrl || DISCORD_STORE_CHANNEL_URL} target="_blank" rel="noopener noreferrer" className="lg:min-w-[220px]">
-              <Button variant="outline" className="w-full">
+              <Button variant="outline" className="w-full !rounded-md border-[#d4b06a]/45 text-[#e8d5ad] hover:bg-[#d4b06a]/10 hover:border-[#d4b06a]/70">
                 Request This Category
               </Button>
             </Link>
           </div>
 
-          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-            {current.examples.map((example) => (
-              <div key={example} className="rounded-xl border border-white/5 bg-neutral-950/40 px-4 py-3 text-sm text-neutral-300">
-                {example}
-              </div>
-            ))}
-          </div>
         </div>
       </div>
     </Card>
