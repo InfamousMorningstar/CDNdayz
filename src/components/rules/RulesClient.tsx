@@ -35,6 +35,14 @@ const faqData = {
         `Of course. Build your empire. Just don't expect it to survive bad decisions.`,
     },
     {
+      question: 'How do I dismantle / fold a BLR house kit?',
+      answer:
+        `Claim your house, make sure it's completely empty, and equip a hammer.
+Stand outside facing the door, look at it, and you'll get the "Fold" option.
+
+Note: If it's not working, something's off - either it's not claimed, not empty, or you're not at the door.`,
+    },
+    {
       question: 'Will my progress be wiped?',
       answer:
         `Wipes happen when necessary (updates, major changes, etc.). We don't do it for fun-but sometimes DayZ demands sacrifice.`,
