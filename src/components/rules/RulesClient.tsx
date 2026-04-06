@@ -563,7 +563,7 @@ export function RulesClient() {
         <div className="flex items-center gap-3 mb-6">
           <BookOpen className="text-red-500 w-6 h-6" />
           <h2 className="text-3xl md:text-4xl font-heading font-bold text-white">
-            Rules <span className="text-red-500">FAQ</span>
+            <span className="text-red-500">FAQs</span>
           </h2>
         </div>
 
