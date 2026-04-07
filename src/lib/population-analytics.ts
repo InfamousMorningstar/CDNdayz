@@ -14,6 +14,8 @@ import {
   ServerAnalytics,
   TimeRange,
   WeekdayTrafficPoint,
+  ActivityHeatmapData,
+  HeatmapCell,
 } from '@/types/intelligence';
 
 // ── Constants ──────────────────────────────────────────────────────────────
@@ -312,6 +314,99 @@ function buildReliabilityScore(snapshots: PopulationSnapshot[]): number {
   return Math.min(99, Math.round((online / total) * 100));
 }
 
+/**
+ * Build a 7x24 activity heatmap from snapshots.
+ * Each cell contains average players, occupancy %, and sample count for that day+hour.
+ * Cells with insufficient samples (< MIN_HOURLY_SAMPLES) are marked as null for avgPlayers/occupancy.
+ */
+function buildActivityHeatmap(snapshots: PopulationSnapshot[]): ActivityHeatmapData {
+  const online = onlineOnly(snapshots);
+  if (online.length === 0) {
+    return {
+      cells: Array.from({ length: 7 * 24 }, (_, idx) => ({
+        day: Math.floor(idx / 24),
+        hour: idx % 24,
+        avgPlayers: null,
+        avgOccupancyPercent: null,
+        sampleCount: 0,
+      })),
+      maxOccupancyPercent: 0,
+      minOccupancyPercent: 0,
+      hasEnoughData: false,
+    };
+  }
+
+  // Build buckets: [day][hour] -> { playerCounts, maxPlayersList }
+  const buckets = new Map<string, { players: number[]; maxPlayers: number[] }>();
+
+  for (const s of online) {
+    const date = new Date(s.timestamp);
+    const day = date.getDay();    // 0 = Sunday, 6 = Saturday
+    const hour = date.getHours(); // 0–23
+    const key = `${day}:${hour}`;
+
+    if (!buckets.has(key)) {
+      buckets.set(key, { players: [], maxPlayers: [] });
+    }
+    const bucket = buckets.get(key)!;
+    bucket.players.push(s.playerCount);
+    bucket.maxPlayers.push(s.maxPlayers);
+  }
+
+  // Compute cells and track occupancy percentages
+  const cells: HeatmapCell[] = [];
+  const occupancyValues: number[] = [];
+
+  for (let day = 0; day < 7; day++) {
+    for (let hour = 0; hour < 24; hour++) {
+      const key = `${day}:${hour}`;
+      const bucket = buckets.get(key);
+
+      let avgPlayers: number | null = null;
+      let avgOccupancyPercent: number | null = null;
+      const sampleCount = bucket?.players.length ?? 0;
+
+      if (bucket && bucket.players.length >= MIN_HOURLY_SAMPLES) {
+        avgPlayers = mean(bucket.players);
+
+        // Compute occupancy % using average maxPlayers for this cell
+        const avgMaxPlayers = mean(bucket.maxPlayers);
+        if (avgMaxPlayers > 0) {
+          avgOccupancyPercent = Math.round(
+            ((avgPlayers / avgMaxPlayers) * 100),
+          );
+          occupancyValues.push(avgOccupancyPercent);
+        }
+      }
+
+      cells.push({
+        day,
+        hour,
+        avgPlayers,
+        avgOccupancyPercent,
+        sampleCount,
+      });
+    }
+  }
+
+  // Determine thresholds for color scaling
+  const validOccupancies = occupancyValues.filter((v) => v > 0);
+  const maxOccupancyPercent = validOccupancies.length > 0 ? Math.max(...validOccupancies) : 0;
+  const minOccupancyPercent = validOccupancies.length > 0 ? Math.min(...validOccupancies) : 0;
+
+  // We consider a heatmap reliable if we have enough non-empty cells
+  // (at least 10% coverage across 168 possible cells)
+  const cellsCovered = cells.filter((c) => c.sampleCount > 0).length;
+  const hasEnoughData = cellsCovered >= 17; // ~10% of 168 cells
+
+  return {
+    cells,
+    maxOccupancyPercent,
+    minOccupancyPercent,
+    hasEnoughData,
+  };
+}
+
 function buildAnomalySummary(snapshots: PopulationSnapshot[], hourly: Map<number, number>): string | null {
   const latest = [...snapshots].reverse().find((s) => s.status === 'online');
   if (!latest) return null;
@@ -424,6 +519,7 @@ export function computeAnalytics(
   const reliabilityScore = buildReliabilityScore(sorted);
   const anomalySummary = buildAnomalySummary(sorted, hourly);
   const nextBestWindow = buildNextBestWindow(hourly);
+  const heatmapData = buildActivityHeatmap(sorted);
   const lastSnapshotTime = sorted.length > 0
     ? new Date(sorted[sorted.length - 1].timestamp).toISOString()
     : null;
@@ -462,6 +558,7 @@ export function computeAnalytics(
     forecast,
     forecastConfidence: confidence,
     weekdayTraffic,
+    heatmapData,
     lastSnapshotTime,
   };
 }

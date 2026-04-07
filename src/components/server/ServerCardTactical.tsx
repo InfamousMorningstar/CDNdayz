@@ -230,15 +230,15 @@ const ServerCardTactical: React.FC<ServerCardProps> = ({
                     </div>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 mt-3">
                     <button
                         type="button"
                         onClick={handleJoin}
-                        className="w-full min-h-11 rounded-full border border-red-500/35 bg-red-500/15 px-3 py-2.5 text-xs font-semibold uppercase tracking-widest text-red-200 hover:bg-red-500/25 transition-colors"
+                        className="min-h-9 rounded-full border border-red-500/35 bg-red-500/15 px-2.5 py-1.5 text-xs font-semibold uppercase tracking-widest text-red-200 hover:bg-red-500/25 transition-colors"
                     >
-                        <span className="inline-flex items-center gap-1.5">
+                        <span className="inline-flex items-center gap-1">
                             <Plug className="w-3 h-3" />
-                            {joinCopied ? 'Join Address Copied' : 'Join Server'}
+                            {joinCopied ? 'Copied' : 'Join'}
                         </span>
                     </button>
                 </div>

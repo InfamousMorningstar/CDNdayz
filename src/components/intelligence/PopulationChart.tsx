@@ -319,7 +319,7 @@ export function PopulationChart({ snapshots, timeRange, fallbackSummary }: Popul
             stroke="#ef4444"
             fill="url(#actualFill)"
             strokeWidth={2}
-            connectNulls={false}
+            connectNulls={true}
             name="actual"
           />
 
@@ -328,7 +328,7 @@ export function PopulationChart({ snapshots, timeRange, fallbackSummary }: Popul
             dataKey="trend"
             stroke="#22d3ee"
             strokeWidth={2}
-            connectNulls={false}
+            connectNulls={true}
             dot={false}
             name="trend"
           />

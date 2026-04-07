@@ -22,6 +22,30 @@ export interface WeekdayTrafficPoint {
   sampleCount: number;
 }
 
+export interface HeatmapCell {
+  /** Day of week: 0 = Sunday, 6 = Saturday */
+  day: number;
+  /** Hour of day: 0–23 */
+  hour: number;
+  /** Average player count for this cell */
+  avgPlayers: number | null;
+  /** Average occupancy % (0–100). null if maxPlayers unavailable */
+  avgOccupancyPercent: number | null;
+  /** Number of samples in this bucket */
+  sampleCount: number;
+}
+
+export interface ActivityHeatmapData {
+  /** 7x24 grid: [day][hour] */
+  cells: HeatmapCell[];
+  /** Maximum occupancy % in this heatmap (used for color scaling) */
+  maxOccupancyPercent: number;
+  /** Minimum occupancy % in this heatmap (for reference) */
+  minOccupancyPercent: number;
+  /** Whether enough data exists to show reliable patterns */
+  hasEnoughData: boolean;
+}
+
 export type TimeRange = '6h' | '1d' | '7d' | '30d' | '90d' | '6m' | '1y';
 
 export interface TimeRangeOption {
@@ -68,6 +92,7 @@ export interface ServerAnalytics {
   forecast: ForecastPoint[];
   forecastConfidence: 'low' | 'medium' | 'high';
   weekdayTraffic: WeekdayTrafficPoint[];
+  heatmapData: ActivityHeatmapData;
   lastSnapshotTime: string | null;
   hasEnoughData: boolean;
   dataPointCount: number;

@@ -13,7 +13,7 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { BarChart2, ChevronDown, MoonStar, Sparkles } from 'lucide-react';
+import { BarChart2, ChevronDown, MoonStar, Sparkles, ChevronUp } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
 import { PopulationChart } from './PopulationChart';
 import { StatCards, TrendBadge } from './StatCards';
@@ -21,6 +21,8 @@ import { InsightSummary } from './InsightSummary';
 import { ForecastPanel } from './ForecastPanel';
 import { CompareRow, ServerComparePanel } from './ServerComparePanel';
 import { WeekdayTrafficPanel } from './WeekdayTrafficPanel';
+import { ActivityHeatmap } from './ActivityHeatmap';
+import { HeatmapInsights } from './HeatmapInsights';
 import {
   ServerAnalytics,
   TimeRange,
@@ -208,6 +210,7 @@ export function ServerIntelligence() {
   const [lastUpdatedAt, setLastUpdatedAt]   = useState<number | null>(null);
   const [nowTick, setNowTick]               = useState<number>(Date.now());
   const [compareRows, setCompareRows]       = useState<CompareRow[]>([]);
+  const [expandedDetails, setExpandedDetails] = useState<boolean>(false);
 
   const fetchHistory = useCallback(async () => {
     if (!selectedServer) return;
@@ -242,6 +245,7 @@ export function ServerIntelligence() {
   // Fetch on mount and whenever the selection changes
   useEffect(() => {
     fetchHistory();
+    setExpandedDetails(false);
   }, [fetchHistory]);
 
   // Auto-refresh every 60 seconds to pick up new snapshots (aligns with API cache TTL)
@@ -342,9 +346,7 @@ export function ServerIntelligence() {
               transition={{ duration: 0.3, ease: 'easeOut' }}
               className="flex flex-col gap-4"
             >
-              <QuickInterpretation analytics={analytics} />
-
-              {/* Chart */}
+              {/* Minimal view: Chart + Basic Stats */}
               <div className="rounded-xl border border-white/5 bg-neutral-900/40 backdrop-blur-sm p-3 sm:p-4">
                 <PopulationChart
                   snapshots={analytics.snapshots}
@@ -353,27 +355,62 @@ export function ServerIntelligence() {
                 />
               </div>
 
-              {/* Stat cards */}
               <StatCards analytics={analytics} />
 
-              {/* Tonight quick recommendations */}
-              <TonightAtAGlance rows={compareRows} loading={false} />
+              {/* Expandable detailed analytics */}
+              <button
+                onClick={() => setExpandedDetails(!expandedDetails)}
+                className="flex items-center justify-center gap-2 py-2 text-xs font-medium uppercase tracking-wide text-neutral-400 hover:text-neutral-300 transition-colors"
+              >
+                {expandedDetails ? (
+                  <>
+                    <ChevronUp className="w-4 h-4" />
+                    Hide Details
+                  </>
+                ) : (
+                  <>
+                    <ChevronDown className="w-4 h-4" />
+                    Show More Analytics
+                  </>
+                )}
+              </button>
 
-              {/* Forecast + anomalies */}
-              <ForecastPanel analytics={analytics} />
+              {expandedDetails && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="flex flex-col gap-4"
+                >
+                  <QuickInterpretation analytics={analytics} />
 
-              {/* Weekday traffic breakdown */}
-              <WeekdayTrafficPanel analytics={analytics} />
+                  {/* Tonight quick recommendations */}
+                  <TonightAtAGlance rows={compareRows} loading={false} />
 
-              {/* Insight */}
-              <InsightSummary analytics={analytics} />
+                  {/* Forecast + anomalies */}
+                  <ForecastPanel analytics={analytics} />
 
-              {/* Cross-server comparison with verdicts */}
-              <ServerComparePanel
-                rows={compareRows}
-                selectedServerId={selectedServer}
-                loading={false}
-              />
+                  {/* Weekday traffic breakdown */}
+                  <WeekdayTrafficPanel analytics={analytics} />
+
+                  {/* Activity Heatmap - premium tactical dashboard */}
+                  <ActivityHeatmap heatmapData={analytics.heatmapData} />
+
+                  {/* Heatmap-derived insights */}
+                  <HeatmapInsights analytics={analytics} />
+
+                  {/* Insight */}
+                  <InsightSummary analytics={analytics} />
+
+                  {/* Cross-server comparison with verdicts */}
+                  <ServerComparePanel
+                    rows={compareRows}
+                    selectedServerId={selectedServer}
+                    loading={false}
+                  />
+                </motion.div>
+              )}
             </motion.div>
           )}
         </AnimatePresence>
