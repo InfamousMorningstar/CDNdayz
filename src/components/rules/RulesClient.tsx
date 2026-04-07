@@ -122,6 +122,21 @@ Then it's actually our problem. Open a ticket in Discord, and we'll take a look.
 
 export function RulesClient() {
   const [activeTab, setActiveTab] = useState<Tab>('general');
+  const [faqQuery, setFaqQuery] = useState('');
+
+  const filterFaq = (items: readonly { question: string; answer: string }[]) => {
+    const query = faqQuery.trim().toLowerCase();
+    if (!query) return items;
+    return items.filter((item) => {
+      const text = `${item.question} ${item.answer}`.toLowerCase();
+      return text.includes(query);
+    });
+  };
+
+  const filteredGameplay = filterFaq(faqData.gameplay);
+  const filteredRules = filterFaq(faqData.rules);
+  const filteredTechnical = filterFaq(faqData.technical);
+  const hasFaqResults = filteredGameplay.length > 0 || filteredRules.length > 0 || filteredTechnical.length > 0;
 
   return (
     <div className="max-w-6xl mx-auto">
@@ -574,13 +589,23 @@ export function RulesClient() {
           Note: Network default is PvE. Any Hardcore exceptions (territory PvP and raid policy) are explicitly listed in the Hardcore Server Rules section above.
         </p>
 
+        <div className="mb-6">
+          <input
+            value={faqQuery}
+            onChange={(event) => setFaqQuery(event.target.value)}
+            placeholder="Search FAQ (joining, mods, rules, performance...)"
+            className="w-full max-w-xl rounded-lg border border-white/10 bg-black/30 px-4 py-2 text-sm text-white placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-red-500/50"
+            aria-label="Search FAQ"
+          />
+        </div>
+
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
           <Card className="p-6 bg-neutral-900/60 border-neutral-800">
             <div className="mb-4">
               <h3 className="text-white font-bold">Gameplay</h3>
             </div>
             <div className="space-y-3">
-              {faqData.gameplay.map((item) => (
+              {filteredGameplay.map((item) => (
                 <details key={item.question} className="group rounded-lg border border-white/10 bg-black/20 p-4 open:border-red-500/30">
                   <summary className="cursor-pointer list-none text-sm font-semibold text-white flex items-start justify-between gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/80 rounded">
                     <span>{item.question}</span>
@@ -594,10 +619,10 @@ export function RulesClient() {
 
           <Card className="p-6 bg-neutral-900/60 border-neutral-800">
             <div className="mb-4">
-              <h3 className="text-white font-bold">Rules</h3>
+              <h3 className="text-white font-bold">Server Rules / Gameplay</h3>
             </div>
             <div className="space-y-3">
-              {faqData.rules.map((item) => (
+              {filteredRules.map((item) => (
                 <details key={item.question} className="group rounded-lg border border-white/10 bg-black/20 p-4 open:border-amber-500/30">
                   <summary className="cursor-pointer list-none text-sm font-semibold text-white flex items-start justify-between gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/80 rounded">
                     <span>{item.question}</span>
@@ -611,10 +636,10 @@ export function RulesClient() {
 
           <Card className="p-6 bg-neutral-900/60 border-neutral-800">
             <div className="mb-4">
-              <h3 className="text-white font-bold">Technical</h3>
+              <h3 className="text-white font-bold">Joining Issues / Mods / Performance</h3>
             </div>
             <div className="space-y-3">
-              {faqData.technical.map((item) => (
+              {filteredTechnical.map((item) => (
                 <details key={item.question} className="group rounded-lg border border-white/10 bg-black/20 p-4 open:border-sky-500/30">
                   <summary className="cursor-pointer list-none text-sm font-semibold text-white flex items-start justify-between gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/80 rounded">
                     <span>{item.question}</span>
@@ -626,6 +651,11 @@ export function RulesClient() {
             </div>
           </Card>
         </div>
+        {!hasFaqResults && (
+          <div className="mt-6 rounded-lg border border-white/10 bg-black/25 px-4 py-3 text-sm text-neutral-400">
+            No FAQ entries matched your search. Try broader keywords like &quot;mods&quot;, &quot;join&quot;, or &quot;wipe&quot;.
+          </div>
+        )}
       </section>
     </div>
   );

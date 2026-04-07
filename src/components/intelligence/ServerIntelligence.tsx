@@ -28,6 +28,7 @@ import {
 } from '@/types/intelligence';
 import { servers } from '@/lib/servers';
 import { cn } from '@/lib/utils';
+import { DAY_NAMES, HOUR_LABELS } from '@/lib/population-analytics';
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -163,6 +164,39 @@ function TonightAtAGlance({ rows, loading }: { rows: CompareRow[]; loading: bool
   );
 }
 
+function QuickInterpretation({ analytics }: { analytics: ServerAnalytics }) {
+  if (!analytics.hasEnoughData) return null;
+
+  const busiestHourLabel = analytics.busiestHour !== null ? HOUR_LABELS[analytics.busiestHour] : '—';
+  const quietestHourLabel = analytics.quietestHour !== null ? HOUR_LABELS[analytics.quietestHour] : '—';
+  const busiestDayLabel = analytics.busiestDayOfWeek !== null ? DAY_NAMES[analytics.busiestDayOfWeek] : '—';
+  const quietestDayLabel = analytics.quietestDayOfWeek !== null ? DAY_NAMES[analytics.quietestDayOfWeek] : '—';
+
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3">
+      <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/10 p-3">
+        <p className="text-[11px] uppercase tracking-widest text-emerald-200/80">Best Time To Play</p>
+        <p className="text-sm font-semibold text-white mt-1">{analytics.bestTimeToPlay ?? 'More samples needed'}</p>
+      </div>
+      <div className="rounded-xl border border-red-500/20 bg-red-500/10 p-3">
+        <p className="text-[11px] uppercase tracking-widest text-red-200/80">Peak Hour</p>
+        <p className="text-base font-bold text-white mt-1">{busiestHourLabel}</p>
+        <p className="text-xs text-neutral-300">Most active day: {busiestDayLabel}</p>
+      </div>
+      <div className="rounded-xl border border-cyan-500/20 bg-cyan-500/10 p-3">
+        <p className="text-[11px] uppercase tracking-widest text-cyan-100/80">Quiet Hour</p>
+        <p className="text-base font-bold text-white mt-1">{quietestHourLabel}</p>
+        <p className="text-xs text-neutral-300">Quietest day: {quietestDayLabel}</p>
+      </div>
+      <div className="rounded-xl border border-white/10 bg-black/25 p-3">
+        <p className="text-[11px] uppercase tracking-widest text-neutral-400">Reliability</p>
+        <p className="text-base font-bold text-white mt-1">{analytics.reliabilityScore}%~</p>
+        <p className="text-xs text-neutral-300">{analytics.nextBestWindow ?? 'Building next-window guidance'}</p>
+      </div>
+    </div>
+  );
+}
+
 // ── Main component ─────────────────────────────────────────────────────────
 
 export function ServerIntelligence() {
@@ -238,18 +272,18 @@ export function ServerIntelligence() {
             className="border-sky-500/30 text-sky-400 bg-sky-900/10 backdrop-blur-sm px-4 py-1"
           >
             <BarChart2 className="w-3 h-3 mr-1.5 inline" />
-            Server Intelligence
+            Population Intelligence
           </Badge>
 
           <h2
             id="intelligence-heading"
             className="sr-only"
           >
-            Server Intelligence
+            Population Intelligence
           </h2>
 
           <p className="text-neutral-400 text-sm sm:text-base max-w-2xl">
-            Data-backed activity patterns to help you pick the right server and time.
+            Premium activity analytics to help you pick the right server, right map, and right time window.
           </p>
           {lastUpdatedAt && (
             <p className="text-xs text-neutral-500">
@@ -308,6 +342,8 @@ export function ServerIntelligence() {
               transition={{ duration: 0.3, ease: 'easeOut' }}
               className="flex flex-col gap-4"
             >
+              <QuickInterpretation analytics={analytics} />
+
               {/* Chart */}
               <div className="rounded-xl border border-white/5 bg-neutral-900/40 backdrop-blur-sm p-3 sm:p-4">
                 <PopulationChart

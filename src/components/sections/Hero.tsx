@@ -50,16 +50,21 @@ export function Hero() {
             </span>
           </h1>
           
-          <p className="text-sm sm:text-base md:text-lg text-neutral-300 max-w-xl leading-relaxed font-sans font-light tracking-wide px-1 sm:px-0">
-            CDN is a premium DayZ PvE network built for immersion, community, and tactical gameplay. 
-            Experience a curated survival journey without the toxicity.
+          <p className="text-sm sm:text-base md:text-lg text-neutral-300 max-w-2xl leading-relaxed font-sans font-light tracking-wide px-1 sm:px-0">
+            Track every CDN server, required mods, wipe schedules, and live population intelligence from one place so you can join faster and plan smarter.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-5 sm:mt-6 w-full sm:w-auto">
+          <div className="flex flex-col sm:flex-row sm:flex-wrap justify-center gap-3 sm:gap-4 mt-5 sm:mt-6 w-full sm:w-auto">
             <Button size="lg" className="h-12 px-6 text-base gap-2 font-heading tracking-wider w-full sm:w-auto" asChild>
               <Link href="/servers">
                 View Servers <ChevronRight className="w-4 h-4" />
               </Link>
+            </Button>
+            <Button size="lg" variant="outline" className="h-12 px-6 text-base font-heading tracking-wider border-neutral-500/30 hover:border-red-500/50 hover:bg-red-900/20 hover:text-red-400 transition-all w-full sm:w-auto" asChild>
+              <Link href="/features">Browse Mods</Link>
+            </Button>
+            <Button size="lg" variant="outline" className="h-12 px-6 text-base font-heading tracking-wider border-neutral-500/30 hover:border-amber-500/50 hover:bg-amber-900/20 hover:text-amber-300 transition-all w-full sm:w-auto" asChild>
+              <Link href="/wipe-info">Wipe Status</Link>
             </Button>
             <Button size="lg" variant="outline" className="h-12 px-6 text-base font-heading tracking-wider border-neutral-500/30 hover:border-red-500/50 hover:bg-red-900/20 hover:text-red-400 transition-all w-full sm:w-auto" onClick={() => openDiscordAppFirst(DISCORD_INVITE_URL)}>
               Join Comms

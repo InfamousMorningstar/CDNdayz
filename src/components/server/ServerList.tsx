@@ -1,16 +1,85 @@
 "use client";
 
 import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import ServerCardTactical from '@/components/server/ServerCardTactical';
 import { ServerStatus } from '@/lib/servers'; // Importing shared type
 import { DISCORD_INVITE_URL } from '@/lib/links';
 import { DiscordLink } from '@/components/ui/DiscordLink';
+import { Badge } from '@/components/ui/Badge';
 
 export function ServerList() {
   const [servers, setServers] = useState<ServerStatus[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
+  const [favoriteIds, setFavoriteIds] = useState<string[]>([]);
+
+  useEffect(() => {
+    try {
+      const raw = window.localStorage.getItem('cdn:favourite-servers');
+      if (!raw) return;
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) {
+        setFavoriteIds(parsed.filter((item): item is string => typeof item === 'string'));
+      }
+    } catch {
+      // Keep default favorites state when local storage is unavailable.
+    }
+  }, []);
+
+  const toggleFavorite = (serverId: string) => {
+    setFavoriteIds((current) => {
+      const next = current.includes(serverId)
+        ? current.filter((id) => id !== serverId)
+        : [...current, serverId];
+
+      try {
+        window.localStorage.setItem('cdn:favourite-servers', JSON.stringify(next));
+      } catch {
+        // Ignore write failures (private mode / restricted browser environments).
+      }
+
+      return next;
+    });
+  };
+
+  const summary = useMemo(() => {
+    const online = servers.filter((server) => server.status === 'online');
+    const restarting = servers.filter((server) => server.status === 'restarting').length;
+    const offline = servers.filter((server) => server.status === 'offline').length;
+    const totalPlayers = online.reduce((total, server) => total + server.players, 0);
+    const mostPopulated = online.length > 0
+      ? [...online].sort((a, b) => b.players - a.players)[0]
+      : null;
+    const easyStart = online.length > 0
+      ? [...online]
+          .filter((server) => server.maxPlayers > 0)
+          .sort((a, b) => (a.players / a.maxPlayers) - (b.players / b.maxPlayers))[0]
+      : null;
+
+    return {
+      onlineCount: online.length,
+      restartingCount: restarting,
+      offlineCount: offline,
+      totalPlayers,
+      mostPopulated,
+      easyStart,
+    };
+  }, [servers]);
+
+  const sortedServers = useMemo(() => {
+    return [...servers].sort((a, b) => {
+      const aFav = favoriteIds.includes(a.id) ? 1 : 0;
+      const bFav = favoriteIds.includes(b.id) ? 1 : 0;
+      if (aFav !== bFav) return bFav - aFav;
+      if (a.status !== b.status) {
+        if (a.status === 'online') return -1;
+        if (b.status === 'online') return 1;
+      }
+      return b.players - a.players;
+    });
+  }, [servers, favoriteIds]);
 
   const fetchServers = async () => {
     try {
@@ -67,6 +136,38 @@ export function ServerList() {
 
   return (
     <div className="w-full space-y-5">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/10 p-3">
+          <p className="text-[11px] uppercase tracking-widest text-emerald-200/80">Online</p>
+          <p className="text-2xl font-bold text-white">{summary.onlineCount}</p>
+        </div>
+        <div className="rounded-xl border border-amber-500/20 bg-amber-500/10 p-3">
+          <p className="text-[11px] uppercase tracking-widest text-amber-200/80">Restarting</p>
+          <p className="text-2xl font-bold text-white">{summary.restartingCount}</p>
+        </div>
+        <div className="rounded-xl border border-white/10 bg-black/25 p-3">
+          <p className="text-[11px] uppercase tracking-widest text-neutral-400">Offline</p>
+          <p className="text-2xl font-bold text-white">{summary.offlineCount}</p>
+        </div>
+        <div className="rounded-xl border border-sky-500/20 bg-sky-500/10 p-3">
+          <p className="text-[11px] uppercase tracking-widest text-sky-100/80">Players Online</p>
+          <p className="text-2xl font-bold text-white">{summary.totalPlayers}</p>
+        </div>
+      </div>
+
+      <div className="flex flex-wrap gap-2">
+        {summary.mostPopulated && (
+          <Badge className="bg-red-500/20 text-red-200 border border-red-500/35 hover:bg-red-500/25">
+            Most Populated Right Now: {summary.mostPopulated.name}
+          </Badge>
+        )}
+        {summary.easyStart && (
+          <Badge className="bg-cyan-500/15 text-cyan-100 border border-cyan-500/35 hover:bg-cyan-500/25">
+            Low Population / Easy Start: {summary.easyStart.name}
+          </Badge>
+        )}
+      </div>
+
       <div className="flex flex-col items-start md:items-end gap-2 w-full md:w-auto ml-auto">
         <div className="flex items-center gap-2 text-green-400">
           <div className="relative flex items-center justify-center w-3 h-3 mr-2">
@@ -83,9 +184,10 @@ export function ServerList() {
         )}
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full">
-        {servers.map((server) => (
+        {sortedServers.map((server) => (
           <ServerCardTactical 
             key={server.id}
+            serverId={server.id}
             name={server.name}
             map={server.map}
             players={server.players}
@@ -93,6 +195,8 @@ export function ServerList() {
             status={server.status}
             ping={server.ping}
             connect={server.connect}
+            isFavorite={favoriteIds.includes(server.id)}
+            onToggleFavorite={toggleFavorite}
           />
         ))}
       </div>

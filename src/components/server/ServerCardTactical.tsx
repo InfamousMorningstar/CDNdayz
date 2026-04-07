@@ -11,38 +11,59 @@ import {
     Mountain,
     Radio,
     Copy,
-    Check
+    Check,
+    Star,
+    Plug
 } from "lucide-react";
 
 interface ServerCardProps {
+    serverId: string;
     name: string;
     map: string;
     players: number;
     maxPlayers: number;
-    status: "online" | "offline" | "starting" | "maintenance" | "restarting";
+    status: "online" | "offline" | "restarting";
     ping?: number;
     connect: string;
+    isFavorite?: boolean;
+    onToggleFavorite?: (serverId: string) => void;
 }
 
 const ServerCardTactical: React.FC<ServerCardProps> = ({ 
+    serverId,
     name, 
     map, 
     players, 
     maxPlayers, 
     status, 
     ping, 
-    connect 
+    connect,
+    isFavorite = false,
+    onToggleFavorite,
 }) => {
     const isOnline = status === "online";
     const isRestarting = status === "restarting";
     const percentage = Math.round((players / maxPlayers) * 100);
     const [copied, setCopied] = useState(false);
+    const [joinCopied, setJoinCopied] = useState(false);
 
     const handleCopy = (e: React.MouseEvent) => {
         e.stopPropagation();
         navigator.clipboard.writeText(connect);
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
+    };
+
+    const handleJoin = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        navigator.clipboard.writeText(connect);
+        setJoinCopied(true);
+        setTimeout(() => setJoinCopied(false), 2000);
+    };
+
+    const handleFavorite = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        onToggleFavorite?.(serverId);
     };
 
     // Determine Theme based on Map
@@ -100,6 +121,12 @@ const ServerCardTactical: React.FC<ServerCardProps> = ({
     }, [map, name]);
 
     const ThemeIcon = theme.icon;
+    const statusText = isOnline ? "Online" : isRestarting ? "Restarting" : "Offline";
+    const statusClass = isOnline
+        ? "bg-green-500/20 text-green-300 hover:bg-green-500/30"
+        : isRestarting
+        ? "bg-amber-500/20 text-amber-300 hover:bg-amber-500/30"
+        : "bg-red-500/20 text-red-300 hover:bg-red-500/30";
 
     // Grid Pattern SVG for background
     const GridPattern = () => (
@@ -129,13 +156,24 @@ const ServerCardTactical: React.FC<ServerCardProps> = ({
                 <ThemeIcon className={`absolute -right-4 -top-4 w-32 h-32 opacity-5 rotate-12 ${theme.color}`} />
                 
                 <div className="absolute top-4 right-4 flex gap-2">
+                    <button
+                        type="button"
+                        onClick={handleFavorite}
+                        className={`rounded-full border px-2 py-1 text-[10px] uppercase tracking-widest transition-colors ${isFavorite ? 'border-yellow-500/40 bg-yellow-500/15 text-yellow-300' : 'border-white/10 bg-black/30 text-neutral-400 hover:text-white'}`}
+                        aria-label={`${isFavorite ? 'Remove from' : 'Add to'} favourite servers`}
+                    >
+                        <span className="inline-flex items-center gap-1">
+                            <Star className={`w-3 h-3 ${isFavorite ? 'fill-yellow-300' : ''}`} />
+                            Fav
+                        </span>
+                    </button>
                      {isOnline && ping && (
                         <Badge variant="outline" className="bg-black/40 backdrop-blur border-white/10 text-neutral-400 font-mono text-[10px]">
                             {ping}ms
                         </Badge>
                     )}
-                    <Badge className={`${isOnline ? "bg-green-500/20 text-green-400 hover:bg-green-500/30" : isRestarting ? "bg-amber-500/20 text-amber-500 hover:bg-amber-500/30" : "bg-red-500/20 text-red-500 hover:bg-red-500/30"} border-0 uppercase tracking-widest text-[10px]`}>
-                        {status}
+                    <Badge className={`${statusClass} border-0 uppercase tracking-widest text-[10px]`}>
+                        {statusText}
                     </Badge>
                 </div>
 
@@ -156,6 +194,9 @@ const ServerCardTactical: React.FC<ServerCardProps> = ({
                     <h3 className="text-sm sm:text-base md:text-lg font-heading text-white mb-1 group-hover:text-red-500 transition-colors leading-tight whitespace-normal break-words">
                         {name}
                     </h3>
+                    <p className="text-[11px] uppercase tracking-wider font-mono text-neutral-500 mb-2">
+                        {map} | {statusText}
+                    </p>
                     <button
                         type="button"
                         onClick={handleCopy}
@@ -187,6 +228,19 @@ const ServerCardTactical: React.FC<ServerCardProps> = ({
                             style={{ width: `${percentage}%` }}
                         />
                     </div>
+                </div>
+
+                <div className="flex items-center gap-2">
+                    <button
+                        type="button"
+                        onClick={handleJoin}
+                        className="w-full rounded-full border border-red-500/35 bg-red-500/15 px-3 py-2 text-xs font-semibold uppercase tracking-widest text-red-200 hover:bg-red-500/25 transition-colors"
+                    >
+                        <span className="inline-flex items-center gap-1.5">
+                            <Plug className="w-3 h-3" />
+                            {joinCopied ? 'Join Address Copied' : 'Join Server'}
+                        </span>
+                    </button>
                 </div>
             </div>
         </div>

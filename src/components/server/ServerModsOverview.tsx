@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Badge } from '@/components/ui/Badge';
 import { Card } from '@/components/ui/Card';
-import { Layers, ListChecks, ShieldCheck } from 'lucide-react';
+import { Layers, ListChecks, Search, ShieldCheck } from 'lucide-react';
 
 interface ServerModRecord {
   id: string;
@@ -25,6 +25,8 @@ export function ServerModsOverview() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [openRecordId, setOpenRecordId] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [serverFilter, setServerFilter] = useState<string>('all');
 
   useEffect(() => {
     const fetchMods = async () => {
@@ -59,6 +61,30 @@ export function ServerModsOverview() {
     [records]
   );
 
+  const serverOptions = useMemo(
+    () => Array.from(new Set(records.map((record) => record.serverName))).sort((a, b) => a.localeCompare(b)),
+    [records]
+  );
+
+  const filteredRecords = useMemo(() => {
+    const query = searchTerm.trim().toLowerCase();
+
+    return records.filter((record) => {
+      const matchesServer = serverFilter === 'all' || record.serverName === serverFilter;
+      if (!matchesServer) return false;
+      if (!query) return true;
+
+      const serverText = `${record.serverName} ${record.map}`.toLowerCase();
+      if (serverText.includes(query)) return true;
+
+      return record.mods.some((mod) => {
+        const name = mod.name.toLowerCase();
+        const workshopId = mod.steamWorkshopId?.toLowerCase() ?? '';
+        return name.includes(query) || workshopId.includes(query);
+      });
+    });
+  }, [records, searchTerm, serverFilter]);
+
   const toggleRecord = (recordId: string) => {
     setOpenRecordId((current) => (current === recordId ? null : recordId));
   };
@@ -85,6 +111,33 @@ export function ServerModsOverview() {
       </div>
 
       <Card className="p-4 sm:p-6 bg-neutral-900/50 border-neutral-800 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-3 mb-4">
+          <label className="relative block">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" />
+            <input
+              value={searchTerm}
+              onChange={(event) => setSearchTerm(event.target.value)}
+              placeholder="Search mods, Workshop IDs, or server names"
+              className="w-full rounded-lg border border-white/10 bg-black/30 pl-9 pr-3 py-2 text-sm text-white placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-red-500/40"
+              aria-label="Search server mods"
+            />
+          </label>
+
+          <select
+            value={serverFilter}
+            onChange={(event) => setServerFilter(event.target.value)}
+            className="rounded-lg border border-white/10 bg-black/30 px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-red-500/40"
+            aria-label="Filter mods by server"
+          >
+            <option value="all">All Servers</option>
+            {serverOptions.map((serverName) => (
+              <option key={serverName} value={serverName}>
+                {serverName}
+              </option>
+            ))}
+          </select>
+        </div>
+
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4 text-white">
           <div className="flex items-center gap-2">
           <ShieldCheck className="w-4 h-4 text-green-400" />
@@ -97,6 +150,9 @@ export function ServerModsOverview() {
 
         <div className="mb-4 text-xs text-neutral-500">
           Total mods across verified servers: <span className="text-neutral-300 font-semibold">{totalModsAcrossServers}</span>
+        </div>
+        <div className="mb-4 text-xs text-neutral-500">
+          Showing <span className="text-neutral-300 font-semibold">{filteredRecords.length}</span> of <span className="text-neutral-300 font-semibold">{records.length}</span> servers
         </div>
 
         {loading && (
@@ -114,8 +170,9 @@ export function ServerModsOverview() {
         )}
 
         {!loading && !error && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
-          {records.map((record) => {
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
+              {filteredRecords.map((record) => {
             const isVerified = record.modCount !== null;
             const previewMods = record.mods.slice(0, 4);
             const isOpen = openRecordId === record.id;
@@ -193,10 +250,10 @@ export function ServerModsOverview() {
                                   href={workshopHref!}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="text-[11px] text-red-300 hover:text-red-200 transition-colors"
+                                  className="inline-flex items-center gap-1 text-[11px] text-red-300 hover:text-red-200 transition-colors"
                                   onClick={(event) => event.stopPropagation()}
                                 >
-                                  Workshop ID: {mod.steamWorkshopId}
+                                  Open Workshop ({mod.steamWorkshopId})
                                 </a>
                               )}
                             </div>
@@ -212,9 +269,15 @@ export function ServerModsOverview() {
                   </div>
                 )}
               </article>
-            );
-          })}
-        </div>
+              );
+            })}
+            </div>
+            {filteredRecords.length === 0 && (
+              <div className="rounded-lg border border-white/10 bg-black/20 p-4 text-sm text-neutral-400">
+                No mod records matched this search/filter. Try a different server filter or a shorter search term.
+              </div>
+            )}
+          </>
         )}
       </Card>
 

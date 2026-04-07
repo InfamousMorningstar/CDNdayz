@@ -3,7 +3,7 @@
 import { CinematicBackground } from '@/components/features/CinematicBackground';
 import { Badge } from '@/components/ui/Badge';
 import { Card } from '@/components/ui/Card';
-import { Flame, RefreshCw, Calendar, AlertTriangle, Shield, Database } from 'lucide-react';
+import { Flame, RefreshCw, Calendar, Shield, Database, Timer, AlertTriangle } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 interface WipeDates {
@@ -69,6 +69,18 @@ export default function WipeInfoPage() {
       })
     : 'Unknown';
 
+  const estimatedDaysRemaining = Math.max(0, Math.floor(wipeDates.estimatedDaysUntilWipe));
+  const estimatedHoursRemaining = estimatedDaysRemaining * 24;
+
+  // TODO: Introduce a dedicated wipeType field from backend/admin settings.
+  const wipeType = (() => {
+    const notes = wipeDates.notes.toLowerCase();
+    if (notes.includes('partial')) return 'Partial Wipe';
+    if (notes.includes('character')) return 'Character Wipe';
+    if (notes.includes('map')) return 'Map Wipe';
+    return 'Full Wipe';
+  })();
+
   return (
     <CinematicBackground backgroundImageSrc="/Images/5.jpg">
             <div className="min-h-screen pt-28 sm:pt-32 pb-16 sm:pb-20 container mx-auto px-4 sm:px-6 relative z-10">
@@ -89,6 +101,36 @@ export default function WipeInfoPage() {
         </div>
 
         <div className="max-w-4xl mx-auto space-y-12">
+            <Card className="p-5 sm:p-8 bg-red-950/25 border-red-500/40 backdrop-blur-md">
+              <div className="flex items-center gap-3 mb-4">
+                <Timer className="text-red-400 w-6 h-6" />
+                <h2 className="text-2xl font-bold text-white">Next Wipe Window</h2>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div className="rounded-xl border border-red-500/25 bg-black/30 p-4 sm:col-span-2">
+                  <p className="text-xs uppercase tracking-widest text-red-200/70 mb-2">Projected Window</p>
+                  <p className="text-2xl sm:text-4xl font-bold text-white leading-tight">
+                    {wipeDisplay} <span className="text-neutral-500">{wipeYear}</span>
+                  </p>
+                  <p className="mt-2 text-xs text-neutral-400">
+                    Treat this as planning guidance. Official timing is always announced in Discord.
+                  </p>
+                </div>
+
+                <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-4">
+                  <p className="text-xs uppercase tracking-widest text-amber-200/80 mb-2">Estimated Countdown</p>
+                  <p className="text-3xl font-bold text-white">{estimatedDaysRemaining}d</p>
+                  <p className="text-sm text-neutral-300">~{estimatedHoursRemaining}h remaining</p>
+                </div>
+              </div>
+
+              <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/30 px-3 py-1.5">
+                <AlertTriangle className="w-4 h-4 text-amber-300" />
+                <span className="text-sm text-neutral-200">Current wipe type emphasis:</span>
+                <span className="text-sm font-bold text-white">{wipeType}</span>
+              </div>
+            </Card>
 
             {/* Schedule / Status */}
             <Card className="p-5 sm:p-8 bg-neutral-900/60 border-neutral-800 backdrop-blur-md">

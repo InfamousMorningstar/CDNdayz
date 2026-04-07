@@ -11,14 +11,14 @@ import Image from 'next/image';
 
 const navItems = [
   { name: 'Home', href: '/', icon: Globe },
-  { name: 'Servers', href: '/servers', icon: Shield },
-  { name: 'Features & Mods', href: '/features', icon: Hammer },
+  { name: 'Servers & Analytics', href: '/servers', icon: Shield },
+  { name: 'Mods', href: '/features', icon: Hammer },
+  { name: 'Wipe Info', href: '/wipe-info', icon: Calendar },
+  { name: 'Rules & FAQ', href: '/rules', icon: BookOpen },
+  { name: 'Join Guide', href: '/join', icon: HelpCircle },
+  { name: 'Error Help', href: '/dayz-error-codes', icon: AlertTriangle },
   { name: 'Events', href: '/events', icon: Calendar },
   { name: 'Store', href: '/store', icon: ShoppingBag },
-  { name: 'Rules & FAQ', href: '/rules', icon: BookOpen },
-  { name: 'Error Codes', href: '/dayz-error-codes', icon: AlertTriangle },
-  { name: 'Wipe Info', href: '/wipe-info', icon: Shield },
-  { name: 'Join Guide', href: '/join', icon: HelpCircle },
 ];
 
 export function Navbar() {

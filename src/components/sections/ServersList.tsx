@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import { ServerMiniCard } from '@/components/server/ServerMiniCard';
 import { ServerStatus } from '@/lib/servers';
 import { Button } from '@/components/ui/Button';
@@ -11,6 +12,18 @@ export function ServersList() {
   const [servers, setServers] = useState<ServerStatus[]>([]);
   const [loading, setLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
+
+  const summary = useMemo(() => {
+    const online = servers.filter((server) => server.status === 'online');
+    const restarting = servers.filter((server) => server.status === 'restarting').length;
+    const totalPlayers = online.reduce((sum, server) => sum + server.players, 0);
+
+    return {
+      onlineCount: online.length,
+      restartingCount: restarting,
+      totalPlayers,
+    };
+  }, [servers]);
 
   useEffect(() => {
     const fetchServers = async () => {
@@ -53,6 +66,17 @@ export function ServersList() {
             <p className="text-neutral-400 text-base sm:text-lg max-w-2xl">
               Select from our network of high-performance servers. Each offers a unique gameplay experience tailored to different survival styles.
             </p>
+            <div className="mt-2 flex flex-wrap items-center justify-center gap-2">
+              <Badge className="bg-emerald-500/15 border border-emerald-500/35 text-emerald-200 hover:bg-emerald-500/20">
+                {summary.onlineCount} Online
+              </Badge>
+              <Badge className="bg-amber-500/15 border border-amber-500/35 text-amber-100 hover:bg-amber-500/20">
+                {summary.restartingCount} Restarting
+              </Badge>
+              <Badge className="bg-sky-500/15 border border-sky-500/35 text-sky-100 hover:bg-sky-500/20">
+                {summary.totalPlayers} Players Live
+              </Badge>
+            </div>
             {lastUpdated && (
               <p className="text-[11px] sm:text-xs font-mono uppercase tracking-[0.18em] text-neutral-500">
                 Last status sweep {lastUpdated}
