@@ -96,7 +96,7 @@ export function Navbar() {
   return (
     <nav
       aria-label="Primary"
-      className="fixed top-0 left-0 right-0 z-[70] py-4 sm:py-6"
+      className="fixed top-0 left-0 right-0 z-[70] py-3 sm:py-6"
     >
       <div className="container mx-auto px-4 sm:px-6 grid grid-cols-[auto_1fr_auto] lg:grid-cols-[1fr_auto_1fr] items-center gap-4">
         <Link
@@ -244,12 +244,12 @@ export function Navbar() {
                 transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 320, damping: 22, delay: 0.1 }}
                 whileHover={{ scale: 1.12, rotate: 90 }}
                 whileTap={{ scale: 0.88 }}
-                className="absolute top-[calc(env(safe-area-inset-top)+0.875rem)] right-4 sm:right-6 z-10 p-2.5 rounded-full bg-white/8 text-neutral-300 hover:text-white hover:bg-white/15 transition-colors touch-manipulation"
+                className="absolute top-[calc(env(safe-area-inset-top)+0.75rem)] right-4 sm:right-6 z-10 min-h-11 min-w-11 p-2.5 rounded-full bg-white/8 text-neutral-300 hover:text-white hover:bg-white/15 transition-colors touch-manipulation"
               >
                 <X className="w-5 h-5" strokeWidth={2.5} />
               </motion.button>
 
-            <div className="container mx-auto px-4 sm:px-6 pt-[calc(env(safe-area-inset-top)+1rem)] pb-[calc(env(safe-area-inset-bottom)+1.25rem)] min-h-[100svh] flex items-center justify-center">
+            <div className="container mx-auto px-4 sm:px-6 pt-[calc(env(safe-area-inset-top)+0.9rem)] pb-[calc(env(safe-area-inset-bottom)+1.2rem)] min-h-[100svh] flex items-center justify-center">
               <div className="w-full max-w-md flex flex-col items-center">
                 {navItems.map((item, index) => {
                   const isActive = pathname === item.href;
@@ -269,21 +269,30 @@ export function Navbar() {
                         aria-current={isActive ? 'page' : undefined}
                         onClick={() => setIsOpen(false)}
                         className={cn(
-                          'group block text-center py-2.5 transition-all duration-200',
+                          'group block w-full rounded-2xl border px-4 py-3.5 transition-all duration-200',
                           isActive
-                            ? 'text-white'
-                            : 'text-neutral-300 hover:text-white'
+                            ? 'text-white border-red-500/40 bg-red-500/10'
+                            : 'text-neutral-200 border-white/10 bg-white/[0.03] hover:text-white hover:border-white/25'
                         )}
                       >
-                        <span
-                          className={cn(
-                            'font-heading font-extrabold uppercase tracking-tight text-[2.2rem] sm:text-5xl leading-[0.95] transition-all duration-200',
-                            isActive
-                              ? 'drop-shadow-[0_0_12px_rgba(255,255,255,0.3)]'
-                              : 'opacity-90 group-hover:opacity-100 group-hover:translate-y-[-1px]'
-                          )}
-                        >
-                          {item.name}
+                        <span className="flex items-center justify-between gap-4">
+                          <span className="inline-flex items-center gap-3 min-w-0">
+                            <span className={cn(
+                              'inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border',
+                              isActive ? 'border-red-500/40 bg-red-500/15 text-red-200' : 'border-white/15 bg-black/25 text-neutral-300'
+                            )}>
+                              <item.icon className="w-4 h-4" />
+                            </span>
+                            <span className={cn(
+                              'font-heading font-bold uppercase tracking-wide text-base sm:text-lg leading-none truncate',
+                              isActive ? 'drop-shadow-[0_0_10px_rgba(255,255,255,0.25)]' : 'opacity-95 group-hover:opacity-100'
+                            )}>
+                              {item.name}
+                            </span>
+                          </span>
+                          <span className="text-xs uppercase tracking-[0.16em] text-neutral-500">
+                            {String(index + 1).padStart(2, '0')}
+                          </span>
                         </span>
                       </Link>
                     </motion.div>
@@ -294,7 +303,7 @@ export function Navbar() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: shouldReduceMotion ? 0 : 0.4, duration: shouldReduceMotion ? 0 : 0.25 }}
-                  className="mt-8 text-[11px] uppercase tracking-[0.22em] text-neutral-600"
+                  className="mt-7 text-[11px] uppercase tracking-[0.22em] text-neutral-600"
                 >
                   CDN Network Menu
                 </motion.p>

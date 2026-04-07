@@ -574,40 +574,40 @@ export function RulesClient() {
         </AnimatePresence>
       </div>
 
-      <section className="mt-14">
-        <div className="flex items-center gap-3 mb-6">
+      <section className="mt-12 sm:mt-14">
+        <div className="flex items-center gap-3 mb-5 sm:mb-6">
           <BookOpen className="text-red-500 w-6 h-6" />
-          <h2 className="text-3xl md:text-4xl font-heading font-bold text-white">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-white">
             <span className="text-red-500">FAQs</span>
           </h2>
         </div>
 
-        <p className="text-neutral-400 mb-8 max-w-3xl">
+        <p className="text-neutral-400 mb-6 sm:mb-8 max-w-3xl text-sm sm:text-base leading-relaxed">
           Quick answers for gameplay, rule enforcement, and common technical joining/mod issues.
         </p>
-        <p className="text-neutral-500 text-sm mb-8 max-w-3xl">
+        <p className="text-neutral-500 text-xs sm:text-sm mb-6 sm:mb-8 max-w-3xl leading-relaxed">
           Note: Network default is PvE. Any Hardcore exceptions (territory PvP and raid policy) are explicitly listed in the Hardcore Server Rules section above.
         </p>
 
-        <div className="mb-6">
+        <div className="mb-5 sm:mb-6">
           <input
             value={faqQuery}
             onChange={(event) => setFaqQuery(event.target.value)}
             placeholder="Search FAQ (joining, mods, rules, performance...)"
-            className="w-full max-w-xl rounded-lg border border-white/10 bg-black/30 px-4 py-2 text-sm text-white placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-red-500/50"
+            className="w-full max-w-xl min-h-11 rounded-lg border border-white/10 bg-black/30 px-4 py-2.5 text-sm text-white placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-red-500/50"
             aria-label="Search FAQ"
           />
         </div>
 
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-          <Card className="p-6 bg-neutral-900/60 border-neutral-800">
+          <Card className="p-4 sm:p-6 bg-neutral-900/60 border-neutral-800">
             <div className="mb-4">
               <h3 className="text-white font-bold">Gameplay</h3>
             </div>
             <div className="space-y-3">
               {filteredGameplay.map((item) => (
-                <details key={item.question} className="group rounded-lg border border-white/10 bg-black/20 p-4 open:border-red-500/30">
-                  <summary className="cursor-pointer list-none text-sm font-semibold text-white flex items-start justify-between gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/80 rounded">
+                <details key={item.question} className="group rounded-lg border border-white/10 bg-black/20 p-3.5 sm:p-4 open:border-red-500/30">
+                  <summary className="cursor-pointer list-none text-[15px] sm:text-sm font-semibold text-white leading-relaxed flex items-start justify-between gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/80 rounded min-h-10">
                     <span>{item.question}</span>
                     <span className="text-red-400 text-xs group-open:rotate-45 transition-transform">+</span>
                   </summary>
@@ -617,14 +617,14 @@ export function RulesClient() {
             </div>
           </Card>
 
-          <Card className="p-6 bg-neutral-900/60 border-neutral-800">
+          <Card className="p-4 sm:p-6 bg-neutral-900/60 border-neutral-800">
             <div className="mb-4">
               <h3 className="text-white font-bold">Server Rules / Gameplay</h3>
             </div>
             <div className="space-y-3">
               {filteredRules.map((item) => (
-                <details key={item.question} className="group rounded-lg border border-white/10 bg-black/20 p-4 open:border-amber-500/30">
-                  <summary className="cursor-pointer list-none text-sm font-semibold text-white flex items-start justify-between gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/80 rounded">
+                <details key={item.question} className="group rounded-lg border border-white/10 bg-black/20 p-3.5 sm:p-4 open:border-amber-500/30">
+                  <summary className="cursor-pointer list-none text-[15px] sm:text-sm font-semibold text-white leading-relaxed flex items-start justify-between gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/80 rounded min-h-10">
                     <span>{item.question}</span>
                     <span className="text-amber-400 text-xs group-open:rotate-45 transition-transform">+</span>
                   </summary>
@@ -634,14 +634,14 @@ export function RulesClient() {
             </div>
           </Card>
 
-          <Card className="p-6 bg-neutral-900/60 border-neutral-800">
+          <Card className="p-4 sm:p-6 bg-neutral-900/60 border-neutral-800">
             <div className="mb-4">
               <h3 className="text-white font-bold">Joining Issues / Mods / Performance</h3>
             </div>
             <div className="space-y-3">
               {filteredTechnical.map((item) => (
-                <details key={item.question} className="group rounded-lg border border-white/10 bg-black/20 p-4 open:border-sky-500/30">
-                  <summary className="cursor-pointer list-none text-sm font-semibold text-white flex items-start justify-between gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/80 rounded">
+                <details key={item.question} className="group rounded-lg border border-white/10 bg-black/20 p-3.5 sm:p-4 open:border-sky-500/30">
+                  <summary className="cursor-pointer list-none text-[15px] sm:text-sm font-semibold text-white leading-relaxed flex items-start justify-between gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/80 rounded min-h-10">
                     <span>{item.question}</span>
                     <span className="text-sky-400 text-xs group-open:rotate-45 transition-transform">+</span>
                   </summary>

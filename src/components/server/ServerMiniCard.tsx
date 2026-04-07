@@ -155,6 +155,7 @@ function getTheme(name: string, map: string): Theme {
 export function ServerMiniCard({ name, map, players, maxPlayers, status, ping, connect }: ServerMiniCardProps) {
   const [copied, setCopied] = useState(false);
   const isOnline = status === 'online';
+  const statusText = status === 'restarting' ? 'Restarting' : isOnline ? 'Online' : 'Offline';
   const theme = getTheme(name, map);
 
   const handleCopy = () => {
@@ -165,7 +166,7 @@ export function ServerMiniCard({ name, map, players, maxPlayers, status, ping, c
 
   return (
     <div className={cn(
-      "relative flex flex-col items-start justify-between rounded-xl p-3 sm:p-4 w-full min-w-0 border shadow-md transition-all duration-300 group overflow-hidden",
+      "relative flex flex-col items-start justify-between rounded-xl p-4 sm:p-4 w-full min-w-0 border shadow-md transition-all duration-300 group overflow-hidden",
       theme.bg,
       theme.border,
       theme.hoverShadow,
@@ -176,7 +177,7 @@ export function ServerMiniCard({ name, map, players, maxPlayers, status, ping, c
       <div className={cn("absolute inset-x-0 top-0 h-16 bg-gradient-to-b to-transparent opacity-60 pointer-events-none", theme.topGlow)} />
 
       {/* Name + map badge */}
-      <div className="relative flex flex-col gap-1 mb-3 w-full">
+      <div className="relative flex flex-col gap-1.5 mb-3.5 w-full">
         <div className="flex items-center gap-2">
           <span className={cn(
             "w-2 h-2 rounded-full shrink-0",
@@ -189,10 +190,16 @@ export function ServerMiniCard({ name, map, players, maxPlayers, status, ping, c
         <span className={cn("self-start text-[10px] font-mono px-2 py-0.5 rounded border uppercase tracking-widest", theme.badge)}>
           {map}
         </span>
+        <span className={cn(
+          "self-start text-[10px] font-mono px-2 py-0.5 rounded border uppercase tracking-widest",
+          isOnline ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-200' : 'border-white/15 bg-black/25 text-neutral-300'
+        )}>
+          {statusText}
+        </span>
       </div>
 
       {/* Stats row */}
-      <div className="relative flex items-center gap-2 text-xs text-neutral-400 mb-3 flex-wrap">
+      <div className="relative flex items-center gap-2.5 text-xs text-neutral-400 mb-3.5 flex-wrap">
         <Signal className={cn("w-3 h-3", ping && ping < 100 ? "text-green-400" : "text-yellow-400")} />
         <span className={cn(ping && ping < 100 ? "text-green-400" : "text-yellow-400")}>{ping ?? '--'}ms</span>
         <Users className={cn("w-3 h-3 ml-3", theme.accent)} />
@@ -201,14 +208,14 @@ export function ServerMiniCard({ name, map, players, maxPlayers, status, ping, c
 
       {/* Connect row */}
       <div className="relative flex items-center gap-2 w-full">
-        <span className="text-xs font-mono text-neutral-500 bg-black/20 border border-white/5 rounded px-2 py-1 min-w-0 flex-1 truncate">
+        <span className="text-xs font-mono text-neutral-400 bg-black/20 border border-white/10 rounded-md px-2.5 py-2 min-w-0 flex-1 truncate">
           {connect}
         </span>
         <button
           onClick={handleCopy}
           aria-label={`Copy connect address for ${name}`}
           className={cn(
-            "shrink-0 h-8 px-4 rounded-full text-xs font-mono tracking-wider transition-all duration-200 border border-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-0",
+            "shrink-0 min-h-10 px-4 rounded-full text-xs font-mono tracking-wider transition-all duration-200 border border-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-0",
             theme.focusRing,
             copied
               ? "bg-green-500/20 border-green-400/40 text-green-400"
