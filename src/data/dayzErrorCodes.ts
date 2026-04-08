@@ -11,6 +11,27 @@ export type DayzErrorCode = {
 
 export const dayzErrorCodes: DayzErrorCode[] = [
   {
+    code: "0xC0000409",
+    title: "PROCESS_CORRUPTION_FAST_FAIL",
+    category: "Client Crash / Runtime",
+    description: "Windows raised a non-continuable fast-fail exception (0xC0000409), indicating the process was considered corrupted and terminated immediately.",
+    commonCauses: [
+      "Critical runtime corruption detected by Windows fail-fast handling",
+      "Injected/blocked third-party files or security tooling conflicts in the game process path",
+      "Corrupted game/runtime files that destabilize startup or in-session execution",
+      "Corrupted or outdated mods causing client instability during load or gameplay"
+    ],
+    recommendedFixes: [
+      "Verify DayZ files in Steam (Installed Files -> Verify integrity of game files)",
+      "Repair BattlEye path and ensure BEService/launcher executables are not blocked by antivirus or firewall",
+      "Update all required server mods and repair/re-download corrupted Workshop mod content before reconnecting",
+      "Check for unexpected injected DLLs in the game directory (for example d3d9.dll, dxgi.dll, dsound.dll) and remove non-required hooks/overlays",
+      "Reboot and retest with minimal background software to isolate third-party conflicts"
+    ],
+    status: "documented",
+    sourceIds: ["R12", "R13", "R2", "R3"]
+  },
+  {
     code: "0x00040004",
     title: "NETWORK_TIMEOUT",
     category: "Network / Connection",

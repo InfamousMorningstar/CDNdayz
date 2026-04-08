@@ -9,6 +9,27 @@ export type DayzErrorReference = {
 
 export const dayzErrorReferences: DayzErrorReference[] = [
   {
+    id: 'R12',
+    title: 'Microsoft Learn - __fastfail intrinsic',
+    url: 'https://learn.microsoft.com/en-us/cpp/intrinsics/fastfail?view=msvc-170',
+    type: 'official',
+    note: 'Authoritative Microsoft explanation that user-mode fast-fail surfaces as exception code 0xC0000409 and indicates corrupted process state.',
+    evidenceQuotes: [
+      '"User-mode fast fail requests appear as a second chance non-continuable exception with exception code 0xC0000409..."',
+      '"This exception code indicates ... that the process is corrupted, and that minimal in-process actions should be taken in response to the failure."'
+    ]
+  },
+  {
+    id: 'R13',
+    title: 'Microsoft Learn - Specific Exceptions',
+    url: 'https://learn.microsoft.com/en-us/windows-hardware/drivers/debugger/specific-exceptions',
+    type: 'official',
+    note: 'Microsoft exception list that identifies STATUS_STACK_BUFFER_OVERRUN / stack buffer overflow as a specific exception class.',
+    evidenceQuotes: [
+      '"STATUS_STACK_BUFFER_OVERRUN | Stack buffer overflow | NtStatus.h"'
+    ]
+  },
+  {
     id: 'R1',
     title: 'Bohemia Community Wiki - DayZ Error Codes',
     url: 'https://community.bistudio.com/wiki/DayZ:Error_Codes',
