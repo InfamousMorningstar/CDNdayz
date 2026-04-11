@@ -126,7 +126,7 @@ export default function BuildingRulesPage() {
               <div className="rounded border border-blue-500/20 bg-blue-500/10 p-4 text-sm text-blue-100/90 flex gap-3">
                 <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5 text-blue-300" />
                 <p>
-                  To create a territory, place a <strong className="text-white">Flag Kit</strong>. On some maps it is sold at the Trader, and on others you can craft one with <strong className="text-white">3 short sticks and rope</strong>. If you place your territory and want to move it, press <strong className="text-white">B</strong>, open <strong className="text-white">Manage Territory</strong>, and delete it. You will get the Flag Kit back so you can place it somewhere else. The <strong className="text-white">B</strong> menu also has other useful territory info and tips.
+                  To create a territory, place a <strong className="text-white">Flag Kit</strong>. On some maps it is sold at the Trader, and on others you can craft one with <strong className="text-white">3 short sticks and rope</strong>. If you place your territory and want to move it, press <strong className="text-white">B</strong>, open <strong className="text-white">Manage Territory</strong>, and delete it. You will get the Flag Kit back so you can place it somewhere else. The <strong className="text-white">B</strong> menu also has other usefull in-game info and tips.
                 </p>
               </div>
             </Card>
