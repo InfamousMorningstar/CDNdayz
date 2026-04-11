@@ -476,6 +476,19 @@ export function RulesClient() {
                 </Card>
               </div>
 
+              <Card className="p-5 sm:p-8 bg-neutral-900/60 border-neutral-800 md:col-span-2">
+                <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/5">
+                  <BookOpen className="text-blue-400 w-6 h-6" />
+                  <h2 className="text-2xl font-heading font-bold text-white">Territory Setup</h2>
+                </div>
+                <div className="rounded border border-blue-500/20 bg-blue-500/10 p-4 text-sm text-blue-100/90 flex gap-3">
+                  <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5 text-blue-300" />
+                  <p>
+                    To create a territory, place a <strong className="text-white">Flag Kit</strong>. On some maps it is sold at the Trader, and on others you can craft one with <strong className="text-white">3 short sticks and rope</strong>. If you place your territory and want to move it, press <strong className="text-white">B</strong>, open <strong className="text-white">Manage Territory</strong>, and delete it. You will get the Flag Kit back so you can place it somewhere else. The <strong className="text-white">B</strong> menu also has other useful territory info and tips.
+                  </p>
+                </div>
+              </Card>
+
               {/* Bunkers & Specialty */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8">
                 <Card className="p-5 sm:p-8 bg-neutral-900/60 border-neutral-800">
