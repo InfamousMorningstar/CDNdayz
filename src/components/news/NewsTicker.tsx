@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { AlertTriangle, Info, Calendar, Megaphone } from 'lucide-react';
+import { AlertTriangle, Info, Calendar, Megaphone, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export type NewsItem = {
     id: string | number;
@@ -40,6 +40,29 @@ function formatDisplayDate(item: NewsItem): string | undefined {
 export function NewsTicker() {
     const [news, setNews] = useState<NewsItem[]>(DEFAULT_NEWS);
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [pausedUntil, setPausedUntil] = useState(0);
+
+    const pauseAutoCycle = () => {
+        setPausedUntil(Date.now() + 10000);
+    };
+
+    const navigateToIndex = (index: number) => {
+        if (!news.length) return;
+        pauseAutoCycle();
+        setCurrentIndex(index);
+    };
+
+    const goToPrevious = () => {
+        if (!news.length) return;
+        pauseAutoCycle();
+        setCurrentIndex((prev) => (prev - 1 + news.length) % news.length);
+    };
+
+    const goToNext = () => {
+        if (!news.length) return;
+        pauseAutoCycle();
+        setCurrentIndex((prev) => (prev + 1) % news.length);
+    };
 
     // Fetch news from internal API to avoid exposing Gist URL and handle caching
     useEffect(() => {
@@ -69,11 +92,12 @@ export function NewsTicker() {
         if (news.length <= 1) return;
         
         const timer = setInterval(() => {
+            if (Date.now() < pausedUntil) return;
             setCurrentIndex((prev) => (prev + 1) % news.length);
         }, 5000); // Change every 5 seconds
 
         return () => clearInterval(timer);
-    }, [news.length]);
+    }, [news.length, pausedUntil]);
 
     const currentItem = news[currentIndex];
     const currentItemDate = formatDisplayDate(currentItem);
@@ -132,17 +156,37 @@ export function NewsTicker() {
                     </AnimatePresence>
                 </div>
 
-                {/* Optional: Navigation Dots (visible on hover) */}
-                <div className="flex justify-start gap-2 sm:gap-1 opacity-80 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300 pb-0.5 sm:pb-0 shrink-0">
+                {/* Message Navigation */}
+                <div className="flex items-center justify-start gap-2 sm:gap-3 pb-0.5 sm:pb-0 shrink-0">
+                    <button
+                        type="button"
+                        onClick={goToPrevious}
+                        aria-label="Show previous message"
+                        className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-white/20 bg-black/25 text-white/80 hover:text-white hover:bg-white/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/80"
+                    >
+                        <ChevronLeft className="h-4 w-4" />
+                    </button>
+
+                    <div className="flex justify-start gap-2 sm:gap-1 opacity-90 transition-opacity duration-300">
                     {news.map((_, idx) => (
                         <button
                             type="button"
                             key={idx}
-                            onClick={() => setCurrentIndex(idx)}
+                            onClick={() => navigateToIndex(idx)}
                             aria-label={`Show news item ${idx + 1}`}
                             className={`w-2 h-2 sm:w-1.5 sm:h-1.5 rounded-full cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/80 ${idx === currentIndex ? 'bg-white' : 'bg-white/20 hover:bg-white/50'}`}
                         />
                     ))}
+                    </div>
+
+                    <button
+                        type="button"
+                        onClick={goToNext}
+                        aria-label="Show next message"
+                        className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-white/20 bg-black/25 text-white/80 hover:text-white hover:bg-white/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/80"
+                    >
+                        <ChevronRight className="h-4 w-4" />
+                    </button>
                 </div>
             </div>
         </motion.div>
