@@ -8,7 +8,7 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer aria-label="Site footer" className="relative bg-black border-t border-white/10 pt-16 sm:pt-20 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:pb-10 text-neutral-400 overflow-hidden">
+    <footer aria-label="Site footer" className="relative bg-white dark:bg-black border-t border-gray-200 dark:border-white/10 pt-16 sm:pt-20 pb-[max(1.5rem,env(safe-area-inset-bottom))] sm:pb-10 text-gray-500 dark:text-neutral-400 overflow-hidden">
       {/* Ambient background glow */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-red-900/10 blur-[120px] rounded-full pointer-events-none" />
 
@@ -17,7 +17,7 @@ export function Footer() {
           {/* Brand Column */}
           <div className="md:col-span-5 flex flex-col gap-6">
             <Link href="/" className="flex items-center gap-3 group w-fit">
-              <div className="relative w-12 h-12 flex items-center justify-center bg-gradient-to-br from-red-600/20 to-black rounded-2xl border border-white/5 transition-all duration-500 group-hover:scale-105 group-hover:shadow-[0_0_20px_rgba(220,38,38,0.3)]">
+              <div className="relative w-12 h-12 flex items-center justify-center bg-gradient-to-br from-red-600/10 to-gray-100 dark:from-red-600/20 dark:to-black rounded-2xl border border-gray-200 dark:border-white/5 transition-all duration-500 group-hover:scale-105 group-hover:shadow-[0_0_20px_rgba(220,38,38,0.3)]">
                 <Image 
                   src="/Logo/Logo.png" 
                   alt="CDN Logo" 
@@ -27,11 +27,11 @@ export function Footer() {
                 />
               </div>
               <div className="flex flex-col">
-                <span className="font-bold text-2xl tracking-tight text-white leading-none">CDN</span>
+                <span className="font-bold text-2xl tracking-tight text-gray-900 dark:text-white leading-none">CDN</span>
                 <span className="text-xs text-red-500 font-mono tracking-widest uppercase">Network</span>
               </div>
             </Link>
-            <p className="text-neutral-400 leading-relaxed max-w-sm text-sm sm:text-base">
+            <p className="text-gray-500 dark:text-neutral-400 leading-relaxed max-w-sm text-sm sm:text-base">
               The ultimate DayZ PvE experience. We're building a community focused on immersive survival, custom events, and a toxic-free environment where every player's story matters.
             </p>
           </div>
@@ -42,7 +42,7 @@ export function Footer() {
           {/* Links Columns */}
           <div className="md:col-span-6 grid grid-cols-2 sm:grid-cols-3 gap-8">
             <div className="flex flex-col gap-4">
-              <h3 className="font-semibold text-white tracking-wide text-sm uppercase">Explore</h3>
+              <h3 className="font-semibold text-gray-900 dark:text-white tracking-wide text-sm uppercase">Explore</h3>
               <div className="flex flex-col gap-2">
                 <FooterLink href="/servers">Our Servers</FooterLink>
                 <FooterLink href="/features">Features</FooterLink>
@@ -53,7 +53,7 @@ export function Footer() {
             </div>
 
             <div className="flex flex-col gap-4">
-              <h3 className="font-semibold text-white tracking-wide text-sm uppercase">Support</h3>
+              <h3 className="font-semibold text-gray-900 dark:text-white tracking-wide text-sm uppercase">Support</h3>
               <div className="flex flex-col gap-2">
                 <FooterLink href="/rules">Rules & FAQ</FooterLink>
                 <FooterLink href="/join">Join Guide</FooterLink>
@@ -61,7 +61,7 @@ export function Footer() {
             </div>
 
             <div className="flex flex-col gap-4">
-              <h3 className="font-semibold text-white tracking-wide text-sm uppercase">Legal</h3>
+              <h3 className="font-semibold text-gray-900 dark:text-white tracking-wide text-sm uppercase">Legal</h3>
               <div className="flex flex-col gap-2">
                 <FooterLink href="/legal/terms">Terms of Service</FooterLink>
                 <FooterLink href="/legal/privacy">Privacy Policy</FooterLink>
@@ -70,18 +70,18 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent mb-8" />
+        <div className="h-px w-full bg-gradient-to-r from-transparent via-gray-300 dark:via-white/10 to-transparent mb-8" />
 
         <div className="flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="text-sm text-center md:text-left max-w-2xl space-y-4">
-            <p className="text-neutral-300 font-medium tracking-wide">
+            <p className="text-gray-700 dark:text-neutral-300 font-medium tracking-wide">
               &copy; {currentYear} CDN Network. All rights reserved.
             </p>
-            <div className="space-y-2 text-xs text-neutral-500 leading-relaxed">
+            <div className="space-y-2 text-xs text-gray-400 dark:text-neutral-500 leading-relaxed">
               <p>
                 This website and the CDN DayZ community are unrelated to, not sponsored by, and not endorsed by Bohemia Interactive a.s. or any of its partners.
               </p>
-              <p className="text-amber-200/90">
+              <p className="text-amber-600 dark:text-amber-200/90">
                 ⚠ CDN servers run a modified DayZ experience, so gameplay systems, client performance, and overall stability may differ from vanilla.
               </p>
               <p>
@@ -91,15 +91,15 @@ export function Footer() {
           </div>
 
           <a href="https://portfolio.ahmxd.net" target="_blank" rel="noopener noreferrer" className="block w-full md:w-auto group">
-            <Spotlight className="rounded-full border border-white/5 bg-white/5 hover:bg-black/50 transition-all duration-300">
+            <Spotlight className="rounded-full border border-gray-200 dark:border-white/5 bg-gray-50 dark:bg-white/5 hover:bg-gray-100 dark:hover:bg-black/50 transition-all duration-300">
               <div className="flex items-center gap-4 py-2 pl-2 pr-6 relative z-10">
-                 <div className="relative w-10 h-10 rounded-full bg-black flex items-center justify-center border border-white/10 shadow-inner overflow-hidden group-hover:border-red-500/30 transition-colors">
+                 <div className="relative w-10 h-10 rounded-full bg-white dark:bg-black flex items-center justify-center border border-gray-200 dark:border-white/10 shadow-inner overflow-hidden group-hover:border-red-500/30 transition-colors">
                     <Image 
                       src="https://portfolio.ahmxd.net/assets/logo.svg" 
                       alt="Logo" 
                       width={20} 
                       height={20}
-                      className="w-5 h-5 invert opacity-70 group-hover:opacity-100 transition-opacity" 
+                      className="w-5 h-5 dark:invert opacity-70 group-hover:opacity-100 transition-opacity" 
                     />
                  </div>
                  
@@ -123,7 +123,7 @@ function FooterLink({ href, children, className }: { href: string; children: Rea
     <Link 
       href={href} 
       className={cn(
-        "text-neutral-400 hover:text-white transition-colors text-sm w-fit relative group py-2 sm:py-1 min-h-[40px] sm:min-h-0 flex items-center touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/80 rounded", 
+        "text-gray-500 dark:text-neutral-400 hover:text-gray-900 dark:hover:text-white transition-colors text-sm w-fit relative group py-2 sm:py-1 min-h-[40px] sm:min-h-0 flex items-center touch-manipulation focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/80 rounded", 
         className
       )}
     >

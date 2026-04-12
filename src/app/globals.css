@@ -3,16 +3,17 @@
 @tailwind utilities;
 
 :root {
-  --background: #0a0a0a;
-  --foreground: #ededed;
-  --card: #121212;
-  --card-hover: #1a1a1a;
-  --primary: #dc2626; /* Red 600 */
-  --secondary: #94a3b8; /* Silver/Slate */
+  /* ── Light mode (default) ── */
+  --background: #f5f3ee;
+  --foreground: #0f0f0f;
+  --card: #ffffff;
+  --card-hover: #f8f7f4;
+  --primary: #dc2626;
+  --secondary: #6b7280;
   --accent: #f59e0b;
-  --muted: #525252;
-  --muted-foreground: #a3a3a3;
-  --border: #262626;
+  --muted: #e5e3de;
+  --muted-foreground: #6b6b6b;
+  --border: #e0ded8;
 
   /* Fonts */
   --font-inter: 'Inter', sans-serif;
@@ -23,6 +24,189 @@
   --safe-right: env(safe-area-inset-right);
   --safe-bottom: env(safe-area-inset-bottom);
   --safe-left: env(safe-area-inset-left);
+
+  /* Theme switch flash origin */
+  --theme-flash-x: 50vw;
+  --theme-flash-y: 50vh;
+}
+
+.dark {
+  /* ── Dark mode ── */
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --card: #121212;
+  --card-hover: #1a1a1a;
+  --primary: #dc2626;
+  --secondary: #94a3b8;
+  --accent: #f59e0b;
+  --muted: #525252;
+  --muted-foreground: #a3a3a3;
+  --border: #262626;
+}
+
+html.theme-switching,
+html.theme-switching body,
+html.theme-switching * {
+  transition-property: background-color, color, border-color, fill, stroke, box-shadow, opacity;
+  transition-duration: 720ms;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html.theme-switching body {
+  animation: theme-breathe 860ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html.theme-switching [data-theme-toggle] {
+  box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.0), 0 0 0 0 rgba(59, 130, 246, 0.0);
+  animation: theme-toggle-ring 860ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html.theme-switching [data-theme-toggle-icon] {
+  display: inline-flex;
+  animation: theme-toggle-icon-spin 860ms cubic-bezier(0.22, 1, 0.36, 1);
+  transform-origin: center;
+}
+
+html.theme-switching body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 70;
+  background: radial-gradient(circle 0px at var(--theme-flash-x) var(--theme-flash-y), rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.1) 16%, transparent 38%);
+  animation: theme-radial-flash 860ms cubic-bezier(0.22, 1, 0.36, 1);
+  mix-blend-mode: soft-light;
+}
+
+@keyframes theme-breathe {
+  0% {
+    filter: saturate(1) brightness(1);
+  }
+  45% {
+    filter: saturate(1.08) brightness(1.04);
+  }
+  100% {
+    filter: saturate(1) brightness(1);
+  }
+}
+
+@keyframes theme-radial-flash {
+  0% {
+    opacity: 0;
+    background: radial-gradient(circle 0px at var(--theme-flash-x) var(--theme-flash-y), rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.12) 16%, transparent 38%);
+  }
+  35% {
+    opacity: 0.95;
+    background: radial-gradient(circle 220px at var(--theme-flash-x) var(--theme-flash-y), rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.1) 35%, transparent 64%);
+  }
+  100% {
+    opacity: 0;
+    background: radial-gradient(circle 900px at var(--theme-flash-x) var(--theme-flash-y), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0) 45%, transparent 75%);
+  }
+}
+
+@keyframes theme-toggle-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.0), 0 0 0 0 rgba(59, 130, 246, 0.0);
+  }
+  30% {
+    box-shadow: 0 0 0 6px rgba(220, 38, 38, 0.15), 0 0 26px 2px rgba(59, 130, 246, 0.28);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.0), 0 0 0 0 rgba(59, 130, 246, 0.0);
+  }
+}
+
+@keyframes theme-toggle-icon-spin {
+  0% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 0 rgba(220, 38, 38, 0));
+  }
+  35% {
+    transform: scale(1.16);
+    filter: drop-shadow(0 0 8px rgba(220, 38, 38, 0.45));
+  }
+  65% {
+    transform: scale(0.94);
+    filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.35));
+  }
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 0 rgba(220, 38, 38, 0));
+  }
+}
+
+@supports (view-transition-name: root) {
+  html {
+    view-transition-name: root;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 860ms;
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  ::view-transition-old(root) {
+    animation-name: theme-old-out;
+  }
+
+  ::view-transition-new(root) {
+    animation-name: theme-new-in;
+  }
+
+  @keyframes theme-old-out {
+    from {
+      opacity: 1;
+      filter: blur(0) saturate(1);
+      transform: scale(1);
+    }
+    to {
+      opacity: 0;
+      filter: blur(8px) saturate(1.1);
+      transform: scale(1.01);
+    }
+  }
+
+  @keyframes theme-new-in {
+    from {
+      opacity: 0;
+      filter: blur(10px) saturate(1.15);
+      transform: scale(0.99);
+    }
+    to {
+      opacity: 1;
+      filter: blur(0) saturate(1);
+      transform: scale(1);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.theme-switching,
+  html.theme-switching body,
+  html.theme-switching * {
+    transition: none !important;
+  }
+
+  html.theme-switching body {
+    animation: none !important;
+  }
+
+  html.theme-switching body::after {
+    animation: none !important;
+    content: none !important;
+  }
+
+  html.theme-switching [data-theme-toggle],
+  html.theme-switching [data-theme-toggle-icon] {
+    animation: none !important;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
 }
 
 @layer base {
@@ -67,6 +251,10 @@
     pointer-events: none;
     z-index: 50;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.4'/%3E%3C/svg%3E");
+    opacity: 0.02;
+    mix-blend-mode: multiply;
+  }
+  html.dark body::before {
     opacity: 0.05;
     mix-blend-mode: overlay;
   }
@@ -81,6 +269,9 @@
     height: 100%;
     pointer-events: none;
     z-index: 40;
+    background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.08) 100%);
+  }
+  html.dark body::after {
     background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.4) 100%);
   }
 }

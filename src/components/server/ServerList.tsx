@@ -117,7 +117,7 @@ export function ServerList() {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full animate-pulse">
         {[1, 2, 3].map((i) => (
-          <div key={i} className="h-48 bg-neutral-900/50 rounded-xl border border-neutral-800 relative overflow-hidden">
+          <div key={i} className="h-48 bg-gray-100 dark:bg-neutral-900/50 rounded-xl border border-gray-200 dark:border-neutral-800 relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-12 animate-shimmer" />
           </div>
         ))}
@@ -127,9 +127,9 @@ export function ServerList() {
 
   if (error && servers.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center p-12 bg-neutral-900/40 rounded-xl border border-red-900/30 text-center w-full">
+      <div className="flex flex-col items-center justify-center p-12 bg-white dark:bg-neutral-900/40 rounded-xl border border-red-900/30 text-center w-full">
         <div className="text-red-500 mb-2 font-bold text-lg">Unable to load server status</div>
-        <p className="text-neutral-400">Please check our <DiscordLink href={DISCORD_INVITE_URL} className="text-red-400 hover:underline">Discord</DiscordLink> for live updates.</p>
+        <p className="text-gray-500 dark:text-neutral-400">Please check our <DiscordLink href={DISCORD_INVITE_URL} className="text-red-400 hover:underline">Discord</DiscordLink> for live updates.</p>
       </div>
     );
   }
@@ -137,48 +137,48 @@ export function ServerList() {
   return (
     <div className="w-full space-y-5">
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-        <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/10 p-3">
-          <p className="text-[11px] uppercase tracking-widest text-emerald-200/80">Online</p>
-          <p className="text-2xl font-bold text-white">{summary.onlineCount}</p>
+        <div className="rounded-xl border border-emerald-300 dark:border-emerald-500/20 bg-emerald-100/80 dark:bg-emerald-500/10 p-3">
+          <p className="text-[11px] uppercase tracking-widest text-emerald-800 dark:text-emerald-200/80">Online</p>
+          <p className="text-2xl font-bold text-gray-900 dark:text-white">{summary.onlineCount}</p>
         </div>
         <div className="rounded-xl border border-amber-500/20 bg-amber-500/10 p-3">
-          <p className="text-[11px] uppercase tracking-widest text-amber-200/80">Restarting</p>
-          <p className="text-2xl font-bold text-white">{summary.restartingCount}</p>
+          <p className="text-[11px] uppercase tracking-widest text-amber-700 dark:text-amber-200/80">Restarting</p>
+          <p className="text-2xl font-bold text-gray-900 dark:text-white">{summary.restartingCount}</p>
         </div>
-        <div className="rounded-xl border border-white/10 bg-black/25 p-3">
-          <p className="text-[11px] uppercase tracking-widest text-neutral-400">Offline</p>
-          <p className="text-2xl font-bold text-white">{summary.offlineCount}</p>
+        <div className="rounded-xl border border-gray-200 dark:border-white/10 bg-gray-100 dark:bg-black/25 p-3">
+          <p className="text-[11px] uppercase tracking-widest text-gray-500 dark:text-neutral-400">Offline</p>
+          <p className="text-2xl font-bold text-gray-900 dark:text-white">{summary.offlineCount}</p>
         </div>
         <div className="rounded-xl border border-sky-500/20 bg-sky-500/10 p-3">
-          <p className="text-[11px] uppercase tracking-widest text-sky-100/80">Players Online</p>
-          <p className="text-2xl font-bold text-white">{summary.totalPlayers}</p>
+          <p className="text-[11px] uppercase tracking-widest text-sky-700 dark:text-sky-100/80">Players Online</p>
+          <p className="text-2xl font-bold text-gray-900 dark:text-white">{summary.totalPlayers}</p>
         </div>
       </div>
 
       <div className="flex flex-wrap gap-2">
         {summary.mostPopulated && (
-          <Badge className="bg-red-500/20 text-red-200 border border-red-500/35 hover:bg-red-500/25">
+          <Badge className="bg-red-500/12 dark:bg-red-500/20 text-red-700 dark:text-red-200 border border-red-500/35 hover:bg-red-500/20 dark:hover:bg-red-500/25">
             Most Populated Right Now: {summary.mostPopulated.name}
           </Badge>
         )}
         {summary.easyStart && (
-          <Badge className="bg-cyan-500/15 text-cyan-100 border border-cyan-500/35 hover:bg-cyan-500/25">
+          <Badge className="bg-cyan-500/12 dark:bg-cyan-500/15 text-cyan-700 dark:text-cyan-100 border border-cyan-500/35 hover:bg-cyan-500/20 dark:hover:bg-cyan-500/25">
             Low Population / Easy Start: {summary.easyStart.name}
           </Badge>
         )}
       </div>
 
       <div className="flex flex-col items-start md:items-end gap-2 w-full md:w-auto ml-auto">
-        <div className="flex items-center gap-2 text-green-400">
+        <div className="flex items-center gap-2 text-green-700 dark:text-green-400">
           <div className="relative flex items-center justify-center w-3 h-3 mr-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
           </div>
           <span className="font-mono text-sm tracking-wider uppercase">Systems Operational</span>
         </div>
-        <p className="text-neutral-500 text-sm font-mono">AUTO-REFRESH: 30s</p>
+        <p className="text-gray-600 dark:text-neutral-500 text-sm font-mono">AUTO-REFRESH: 30s</p>
         {lastUpdated && (
-          <p className="text-[11px] sm:text-xs font-mono uppercase tracking-[0.18em] text-neutral-500">
+          <p className="text-[11px] sm:text-xs font-mono uppercase tracking-[0.18em] text-gray-600 dark:text-neutral-500">
             Last status sweep {lastUpdated}
           </p>
         )}

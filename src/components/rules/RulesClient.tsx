@@ -148,7 +148,7 @@ export function RulesClient() {
             "w-full sm:w-auto justify-center flex items-center gap-2 px-4 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-bold transition-all duration-300 border",
             activeTab === 'general'
               ? "bg-red-600 border-red-500 text-white shadow-[0_0_20px_rgba(220,38,38,0.4)]"
-              : "bg-neutral-900/50 border-neutral-800 text-neutral-400 hover:border-red-500/50 hover:text-white"
+              : "bg-white dark:bg-neutral-900/50 border-gray-200 dark:border-neutral-800 text-gray-500 dark:text-neutral-400 hover:border-red-500/50 hover:text-gray-900 dark:hover:text-white"
           )}
         >
           <Shield className="w-5 h-5" />
@@ -160,7 +160,7 @@ export function RulesClient() {
             "w-full sm:w-auto justify-center flex items-center gap-2 px-4 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-bold transition-all duration-300 border",
             activeTab === 'building'
               ? "bg-red-600 border-red-500 text-white shadow-[0_0_20px_rgba(220,38,38,0.4)]"
-              : "bg-neutral-900/50 border-neutral-800 text-neutral-400 hover:border-red-500/50 hover:text-white"
+              : "bg-white dark:bg-neutral-900/50 border-gray-200 dark:border-neutral-800 text-gray-500 dark:text-neutral-400 hover:border-red-500/50 hover:text-gray-900 dark:hover:text-white"
           )}
         >
           <Hammer className="w-5 h-5" />
@@ -182,40 +182,40 @@ export function RulesClient() {
               <Card className="p-6 md:p-8 bg-red-950/25 border-red-500/40 shadow-[0_0_35px_rgba(220,38,38,0.18)]">
                 <div className="flex items-center gap-3 mb-4">
                   <AlertTriangle className="text-red-400 w-6 h-6" />
-                  <h2 className="text-2xl font-heading font-bold text-white">Hardcore Server Rules</h2>
+                  <h2 className="text-2xl font-heading font-bold text-gray-900 dark:text-white">Hardcore Server Rules</h2>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="rounded-lg border border-red-500/25 bg-black/30 p-4">
-                    <p className="text-sm text-white font-semibold mb-2">Donation Items/Gear Policy</p>
-                    <p className="text-sm text-neutral-300">HC servers DO NOT allow Donation Items/Gear.</p>
-                    <p className="text-xs text-neutral-500 mt-2">
+                  <div className="rounded-lg border border-red-500/25 bg-gray-50 dark:bg-black/30 p-4">
+                    <p className="text-sm text-gray-900 dark:text-white font-semibold mb-2">Donation Items/Gear Policy</p>
+                    <p className="text-sm text-gray-600 dark:text-neutral-300">HC servers DO NOT allow Donation Items/Gear.</p>
+                    <p className="text-xs text-gray-400 dark:text-neutral-500 mt-2">
                       Reason: Donation Items/Gear is OP and breaks hardcore gameplay balance.
                     </p>
                   </div>
 
-                  <div className="rounded-lg border border-red-500/25 bg-black/30 p-4">
-                    <p className="text-sm text-white font-semibold mb-2">Raiding Policy</p>
-                    <p className="text-sm text-neutral-300">HC servers ALLOW raiding.</p>
-                    <p className="text-xs text-neutral-500 mt-2">Players must record raids as proof.</p>
+                  <div className="rounded-lg border border-red-500/25 bg-gray-50 dark:bg-black/30 p-4">
+                    <p className="text-sm text-gray-900 dark:text-white font-semibold mb-2">Raiding Policy</p>
+                    <p className="text-sm text-gray-600 dark:text-neutral-300">HC servers ALLOW raiding.</p>
+                    <p className="text-xs text-gray-400 dark:text-neutral-500 mt-2">Players must record raids as proof.</p>
                   </div>
 
-                  <div className="rounded-lg border border-red-500/25 bg-black/30 p-4 md:col-span-2">
-                    <p className="text-sm text-white font-semibold mb-2">Territories</p>
-                    <p className="text-sm text-neutral-300">Territories are PvP zones.</p>
-                    <p className="text-xs text-neutral-500 mt-2">No PvE protection in these areas.</p>
+                  <div className="rounded-lg border border-red-500/25 bg-gray-50 dark:bg-black/30 p-4 md:col-span-2">
+                    <p className="text-sm text-gray-900 dark:text-white font-semibold mb-2">Territories</p>
+                    <p className="text-sm text-gray-600 dark:text-neutral-300">Territories are PvP zones.</p>
+                    <p className="text-xs text-gray-400 dark:text-neutral-500 mt-2">No PvE protection in these areas.</p>
                   </div>
                 </div>
               </Card>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8">
                 {/* General Conduct */}
-                <Card className="p-5 sm:p-8 bg-neutral-900/60 border-neutral-800">
-                  <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/5">
+                <Card className="p-5 sm:p-8 bg-white/80 dark:bg-neutral-900/60 border-gray-200 dark:border-neutral-800">
+                  <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-white/5">
                     <Users className="text-red-500 w-6 h-6" />
-                    <h2 className="text-2xl font-heading font-bold text-white">Community Standards</h2>
+                    <h2 className="text-2xl font-heading font-bold text-gray-900 dark:text-white">Community Standards</h2>
                   </div>
-                  <ul className="space-y-4 text-neutral-300 text-sm">
+                  <ul className="space-y-4 text-gray-600 dark:text-neutral-300 text-sm">
                     <li className="flex gap-3">
                       <span className="text-red-500">•</span>
                       <span>Above all, let{`'`}s keep our space friendly, respectful, and fun for everyone. We have mostly PVE servers, and being kind can go a long way.</span>
@@ -248,26 +248,26 @@ export function RulesClient() {
                 </Card>
 
                 {/* Ticket System */}
-                <Card className="p-5 sm:p-8 bg-neutral-900/60 border-neutral-800">
-                  <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/5">
+                <Card className="p-5 sm:p-8 bg-white/80 dark:bg-neutral-900/60 border-gray-200 dark:border-neutral-800">
+                  <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-white/5">
                     <Terminal className="text-red-500 w-6 h-6" />
-                    <h2 className="text-2xl font-heading font-bold text-white">Ticket System</h2>
+                    <h2 className="text-2xl font-heading font-bold text-gray-900 dark:text-white">Ticket System</h2>
                   </div>
-                  <p className="text-neutral-400 mb-4 text-sm">Use when you want to chat with an Admin or if you have an in-game issue.</p>
+                  <p className="text-gray-500 dark:text-neutral-400 mb-4 text-sm">Use when you want to chat with an Admin or if you have an in-game issue.</p>
                   <DiscordLink href={DISCORD_SUPPORT_CHANNEL_URL} className="inline-block mb-4">
                     <Button className="bg-[#5865F2] hover:bg-[#4752C4] text-white border-none">
                       <span className="mr-2">Open a Ticket</span>
                       <ExternalLink className="w-4 h-4" />
                     </Button>
                   </DiscordLink>
-                  <div className="bg-black/40 p-4 rounded border border-white/5 mb-4 font-mono text-xs text-neutral-300">
+                  <div className="bg-gray-100 dark:bg-black/40 p-4 rounded border border-gray-200 dark:border-white/5 mb-4 font-mono text-xs text-gray-600 dark:text-neutral-300">
                     <p className="text-neutral-500 mb-2 border-b border-white/5 pb-1 uppercase tracking-widest font-bold text-[10px]">Required Layout</p>
                     <p>Game: Server Name/Map</p>
                     <p>Issue: Description</p>
                     <p>Location on the map (if needed):</p>
                     <p>In-game name:</p>
                   </div>
-                  <div className="space-y-3 text-sm text-neutral-400">
+                  <div className="space-y-3 text-sm text-gray-500 dark:text-neutral-400">
                      <p className="flex gap-2">
                        <span className="text-red-500 font-bold">⚠</span>
                        <span>Use the above layout; any other entry will be deleted until the ticket has this info.</span>
@@ -281,12 +281,12 @@ export function RulesClient() {
                   </div>
                 </Card>
 
-                <Card className="p-5 sm:p-8 bg-neutral-900/60 border-neutral-800 md:col-span-2">
-                  <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/5">
+                <Card className="p-5 sm:p-8 bg-white/80 dark:bg-neutral-900/60 border-gray-200 dark:border-neutral-800 md:col-span-2">
+                  <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-white/5">
                     <AlertTriangle className="text-amber-400 w-6 h-6" />
-                    <h2 className="text-2xl font-heading font-bold text-white">Important Notes</h2>
+                    <h2 className="text-2xl font-heading font-bold text-gray-900 dark:text-white">Important Notes</h2>
                   </div>
-                  <ul className="space-y-4 text-sm text-neutral-300">
+                  <ul className="space-y-4 text-sm text-gray-600 dark:text-neutral-300">
                     <li className="flex gap-3">
                       <span className="text-amber-400">•</span>
                       <span>Items, helis, and vehicles are not replaceable. Admins will not log in to fix or un-flip vehicles; use a vehicle recovery cone instead (available at trader).</span>
@@ -315,18 +315,18 @@ export function RulesClient() {
                 </Card>
 
                 {/* Chat Rules */}
-                <Card className="p-5 sm:p-8 bg-neutral-900/60 border-neutral-800 md:col-span-2">
-                  <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/5">
+                <Card className="p-5 sm:p-8 bg-white/80 dark:bg-neutral-900/60 border-gray-200 dark:border-neutral-800 md:col-span-2">
+                  <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-white/5">
                     <MessageSquare className="text-red-500 w-6 h-6" />
-                    <h2 className="text-2xl font-heading font-bold text-white">Communication Protocols</h2>
+                    <h2 className="text-2xl font-heading font-bold text-gray-900 dark:text-white">Communication Protocols</h2>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
                     {/* Text Chat */}
                     <div>
-                      <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                      <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
                         <Terminal size={16} /> Text Chat
                       </h3>
-                      <ul className="space-y-2 text-neutral-300 text-sm">
+                      <ul className="space-y-2 text-gray-600 dark:text-neutral-300 text-sm">
                         <li className="flex gap-2"><span className="text-red-500">›</span> Respect everyone you interact with here.</li>
                         <li className="flex gap-2"><span className="text-red-500">›</span> No NSFW/NSFL content (Sexually explicit, gore).</li>
                         <li className="flex gap-2"><span className="text-red-500">›</span> Keep chat spam to a minimum so everyone can enjoy the conversation.</li>
@@ -341,10 +341,10 @@ export function RulesClient() {
                     <div className="space-y-8">
                       {/* Voice Chat */}
                       <div>
-                        <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
                           <Users size={16} /> Voice Chat
                         </h3>
-                        <ul className="space-y-2 text-neutral-300 text-sm">
+                        <ul className="space-y-2 text-gray-600 dark:text-neutral-300 text-sm">
                           <li className="flex gap-2"><span className="text-red-500">›</span> Please use the voice channels that best fit your conversation.</li>
                           <li className="flex gap-2"><span className="text-red-500">›</span> Avoid mic spam and keep your audio clear and pleasant for everyone.</li>
                         </ul>
@@ -352,10 +352,10 @@ export function RulesClient() {
 
                       {/* In-Game */}
                       <div>
-                        <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2">
+                        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
                           <Shield size={16} /> In-Game
                         </h3>
-                        <ul className="space-y-2 text-neutral-300 text-sm">
+                        <ul className="space-y-2 text-gray-600 dark:text-neutral-300 text-sm">
                           <li className="flex gap-2">
                             <span className="text-red-500">›</span> 
                             <span>Please claim any AI missions or Drops you are about to take on. Claim radius - within shooting distance (500m is a good reference point).</span>
@@ -374,17 +374,17 @@ export function RulesClient() {
                     <h3 className="text-lg font-bold text-red-500 mb-3 flex items-center gap-2">
                         <AlertTriangle size={16} /> Admin Rights
                     </h3>
-                    <p className="text-neutral-400 text-sm mb-3 font-medium">Admins reserve the right to:</p>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-neutral-300">
-                      <div className="bg-neutral-950/30 p-3 rounded border border-white/5">
+                    <p className="text-gray-500 dark:text-neutral-400 text-sm mb-3 font-medium">Admins reserve the right to:</p>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-600 dark:text-neutral-300">
+                      <div className="bg-gray-50 dark:bg-neutral-950/30 p-3 rounded border border-gray-200 dark:border-white/5">
                         <span className="text-red-500 font-bold mr-2">1.</span>
                         Remove messages they deem inappropriate.
                       </div>
-                      <div className="bg-neutral-950/30 p-3 rounded border border-white/5">
+                      <div className="bg-gray-50 dark:bg-neutral-950/30 p-3 rounded border border-gray-200 dark:border-white/5">
                          <span className="text-red-500 font-bold mr-2">2.</span>
                          Remove users they deem disruptive to the CDN server.
                       </div>
-                      <div className="bg-neutral-950/30 p-3 rounded border border-white/5">
+                      <div className="bg-gray-50 dark:bg-neutral-950/30 p-3 rounded border border-gray-200 dark:border-white/5">
                          <span className="text-red-500 font-bold mr-2">3.</span>
                          Ignore anyone arguing with them about their choices.
                       </div>
@@ -404,10 +404,10 @@ export function RulesClient() {
             >
               {/* Build Radius & Restrictions */}
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-8">
-                <Card className="p-5 sm:p-8 bg-neutral-900/60 border-neutral-800 lg:col-span-2">
-                  <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/5">
+                <Card className="p-5 sm:p-8 bg-white/80 dark:bg-neutral-900/60 border-gray-200 dark:border-neutral-800 lg:col-span-2">
+                  <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-white/5">
                     <Construction className="text-red-500 w-6 h-6" />
-                    <h2 className="text-2xl font-heading font-bold text-white">Build Zones & Radius</h2>
+                    <h2 className="text-2xl font-heading font-bold text-gray-900 dark:text-white">Build Zones & Radius</h2>
                   </div>
                   <div className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -433,11 +433,11 @@ export function RulesClient() {
                       </div>
                     </div>
                     <div className="bg-neutral-800/30 p-4 rounded border-l-2 border-red-500 space-y-2">
-                      <p className="text-sm text-neutral-400">
-                        <strong className="text-white">Note:</strong> Some maps can make this difficult, so if your territory is within 25-30 metres of the 1,000-metre boundary, you should be good. Do your best to stick to the 1000-metre radius, though.
+                      <p className="text-sm text-neutral-400 dark:text-neutral-400">
+                        <strong className="text-gray-900 dark:text-white">Note:</strong> Some maps can make this difficult, so if your territory is within 25-30 metres of the 1,000-metre boundary, you should be good. Do your best to stick to the 1000-metre radius, though.
                       </p>
-                      <p className="text-sm text-neutral-400">
-                        <strong className="text-white">Grace Period:</strong> Those who do not adhere to these rules may find their base deleted.
+                      <p className="text-sm text-neutral-400 dark:text-neutral-400">
+                        <strong className="text-gray-900 dark:text-white">Grace Period:</strong> Those who do not adhere to these rules may find their base deleted.
                         <br/>
                         <span className="text-neutral-500 text-xs mt-1 block">
                           – If you are online: Admins will try to talk to you in person first.
@@ -449,10 +449,10 @@ export function RulesClient() {
                   </div>
                 </Card>
 
-                <Card className="p-5 sm:p-8 bg-neutral-900/60 border-neutral-800">
-                   <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/5">
+                <Card className="p-5 sm:p-8 bg-white/80 dark:bg-neutral-900/60 border-gray-200 dark:border-neutral-800">
+                   <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-white/5">
                     <Hammer className="text-red-500 w-6 h-6" />
-                    <h2 className="text-2xl font-heading font-bold text-white">Systems</h2>
+                    <h2 className="text-2xl font-heading font-bold text-gray-900 dark:text-white">Systems</h2>
                   </div>
                   <div className="space-y-4">
                     <div>
@@ -476,10 +476,10 @@ export function RulesClient() {
                 </Card>
               </div>
 
-              <Card className="p-5 sm:p-8 bg-neutral-900/60 border-neutral-800 md:col-span-2">
-                <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/5">
+              <Card className="p-5 sm:p-8 bg-white/80 dark:bg-neutral-900/60 border-gray-200 dark:border-neutral-800 md:col-span-2">
+                <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-white/5">
                   <BookOpen className="text-blue-400 w-6 h-6" />
-                  <h2 className="text-2xl font-heading font-bold text-white">Territory Setup</h2>
+                  <h2 className="text-2xl font-heading font-bold text-gray-900 dark:text-white">Territory Setup</h2>
                 </div>
                 <div className="rounded border border-blue-500/20 bg-blue-500/10 p-4 text-sm text-blue-100/90 flex gap-3">
                   <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5 text-blue-300" />
@@ -491,15 +491,15 @@ export function RulesClient() {
 
               {/* Bunkers & Specialty */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-8">
-                <Card className="p-5 sm:p-8 bg-neutral-900/60 border-neutral-800">
-                  <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/5">
+                <Card className="p-5 sm:p-8 bg-white/80 dark:bg-neutral-900/60 border-gray-200 dark:border-neutral-800">
+                  <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-white/5">
                     <Shield className="text-red-500 w-6 h-6" />
-                    <h2 className="text-2xl font-heading font-bold text-white">Bunkers</h2>
+                    <h2 className="text-2xl font-heading font-bold text-gray-900 dark:text-white">Bunkers</h2>
                   </div>
                   <div className="space-y-6">
                     <div>
                       <h3 className="text-lg font-bold mb-2 text-red-400">Type 1: Purchasable</h3>
-                      <ol className="list-decimal list-inside text-sm text-neutral-300 space-y-1 ml-2">
+                      <ol className="list-decimal list-inside text-sm text-gray-700 dark:text-neutral-300 space-y-1 ml-2">
                         <li>Buy Kit & 2 Territory Flags from Building Trader.</li>
                         <li>Place Main Flag & create territory.</li>
                         <li>Place Bunker – <span className="text-red-400">Must be on solid ground or a ground floor.</span> If you try anything else, you risk falling under the structure or into rocks when exiting.</li>
@@ -509,7 +509,7 @@ export function RulesClient() {
                     </div>
                     <div>
                       <h3 className="text-lg font-bold mb-2 text-red-400">Type 2: Crafted</h3>
-                      <div className="text-sm text-neutral-400 mb-2">
+                      <div className="text-sm text-gray-500 dark:text-neutral-400 mb-2">
                         <strong className="text-white block mb-1">Equipment Needed:</strong>
                         <ul className="grid grid-cols-2 gap-x-2 gap-y-1 text-xs">
                            <li>• Bunker Shovel (Trader)</li>
@@ -524,7 +524,7 @@ export function RulesClient() {
                            <li>• Territory Flag</li>
                         </ul>
                       </div>
-                      <ol className="list-decimal list-inside text-sm text-neutral-300 space-y-1 ml-2">
+                      <ol className="list-decimal list-inside text-sm text-gray-700 dark:text-neutral-300 space-y-1 ml-2">
                         <li>Find spot & dig entrance with Bunker Shovel.</li>
                         <li>Lock entrance.</li>
                         <li>Inside: Place Territory Flag (50m radius).</li>
@@ -534,22 +534,22 @@ export function RulesClient() {
                   </div>
                 </Card>
 
-                <Card className="p-5 sm:p-8 bg-neutral-900/60 border-neutral-800">
-                  <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/5">
+                <Card className="p-5 sm:p-8 bg-white/80 dark:bg-neutral-900/60 border-gray-200 dark:border-neutral-800">
+                  <div className="flex items-center gap-3 mb-6 pb-4 border-b border-gray-200 dark:border-white/5">
                     <Home className="text-red-500 w-6 h-6" />
-                    <h2 className="text-2xl font-heading font-bold text-white">Housing</h2>
+                    <h2 className="text-2xl font-heading font-bold text-gray-900 dark:text-white">Housing</h2>
                   </div>
                   <div className="space-y-6">
                     <div>
-                      <h3 className="text-lg font-bold text-white mb-2">Rag Cabins</h3>
-                      <p className="text-sm text-neutral-400 mb-2">Available ONLY on <span className="text-white">Noob Chernarus</span>.</p>
-                      <p className="text-sm text-neutral-300">
+                      <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Rag Cabins</h3>
+                      <p className="text-sm text-gray-500 dark:text-neutral-400 mb-2">Available ONLY on <span className="text-gray-900 dark:text-white">Noob Chernarus</span>.</p>
+                      <p className="text-sm text-gray-600 dark:text-neutral-300">
                         Purchasable at Building Trader. Place carefully as they do not break down well. Adhere to all build radii.
                       </p>
                     </div>
                     <div>
-                      <h3 className="text-lg font-bold text-white mb-2">Portable Housing</h3>
-                      <p className="text-sm text-neutral-300 mb-2">
+                      <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Portable Housing</h3>
+                      <p className="text-sm text-gray-600 dark:text-neutral-300 mb-2">
                          9 options purchasable at Build Trader (Shacks to Mansions). Each includes a working fireplace/stove.
                       </p>
                       <ol className="list-decimal list-inside text-sm text-neutral-300 space-y-1 ml-2">
@@ -559,8 +559,8 @@ export function RulesClient() {
                       </ol>
                     </div>
                     <div>
-                      <h3 className="text-lg font-bold text-white mb-2">General Building</h3>
-                      <ul className="text-sm text-neutral-300 space-y-3">
+                      <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">General Building</h3>
+                      <ul className="text-sm text-gray-600 dark:text-neutral-300 space-y-3">
                         <li className="flex gap-2">
                           <span className="text-red-500">•</span>
                           <span><strong>Clutter:</strong> Only place items like tents, etc., that you are actively using. Keep hoarding of gear/weapons to a minimum to avoid server lag.</span>
@@ -590,12 +590,12 @@ export function RulesClient() {
       <section className="mt-12 sm:mt-14">
         <div className="flex items-center gap-3 mb-5 sm:mb-6">
           <BookOpen className="text-red-500 w-6 h-6" />
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-white">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-gray-900 dark:text-white">
             <span className="text-red-500">FAQs</span>
           </h2>
         </div>
 
-        <p className="text-neutral-400 mb-6 sm:mb-8 max-w-3xl text-sm sm:text-base leading-relaxed">
+        <p className="text-gray-500 dark:text-neutral-400 mb-6 sm:mb-8 max-w-3xl text-sm sm:text-base leading-relaxed">
           Quick answers for gameplay, rule enforcement, and common technical joining/mod issues.
         </p>
         <p className="text-neutral-500 text-xs sm:text-sm mb-6 sm:mb-8 max-w-3xl leading-relaxed">
@@ -607,65 +607,65 @@ export function RulesClient() {
             value={faqQuery}
             onChange={(event) => setFaqQuery(event.target.value)}
             placeholder="Search FAQ (joining, mods, rules, performance...)"
-            className="w-full max-w-xl min-h-11 rounded-lg border border-white/10 bg-black/30 px-4 py-2.5 text-sm text-white placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-red-500/50"
+            className="w-full max-w-xl min-h-11 rounded-lg border border-gray-200 dark:border-white/10 bg-white dark:bg-black/30 px-4 py-2.5 text-sm text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-neutral-500 focus:outline-none focus:ring-2 focus:ring-red-500/50"
             aria-label="Search FAQ"
           />
         </div>
 
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-          <Card className="p-4 sm:p-6 bg-neutral-900/60 border-neutral-800">
+          <Card className="p-4 sm:p-6 bg-white/80 dark:bg-neutral-900/60 border-gray-200 dark:border-neutral-800">
             <div className="mb-4">
-              <h3 className="text-white font-bold">Gameplay</h3>
+              <h3 className="text-gray-900 dark:text-white font-bold">Gameplay</h3>
             </div>
             <div className="space-y-3">
               {filteredGameplay.map((item) => (
-                <details key={item.question} className="group rounded-lg border border-white/10 bg-black/20 p-3.5 sm:p-4 open:border-red-500/30">
-                  <summary className="cursor-pointer list-none text-[15px] sm:text-sm font-semibold text-white leading-relaxed flex items-start justify-between gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/80 rounded min-h-10">
+                <details key={item.question} className="group rounded-lg border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-black/20 p-3.5 sm:p-4 open:border-red-500/30">
+                  <summary className="cursor-pointer list-none text-[15px] sm:text-sm font-semibold text-gray-900 dark:text-white leading-relaxed flex items-start justify-between gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/80 rounded min-h-10">
                     <span>{item.question}</span>
                     <span className="text-red-400 text-xs group-open:rotate-45 transition-transform">+</span>
                   </summary>
-                  <p className="text-sm text-neutral-400 mt-3 leading-relaxed whitespace-pre-line">{item.answer}</p>
+                  <p className="text-sm text-gray-500 dark:text-neutral-400 mt-3 leading-relaxed whitespace-pre-line">{item.answer}</p>
                 </details>
               ))}
             </div>
           </Card>
 
-          <Card className="p-4 sm:p-6 bg-neutral-900/60 border-neutral-800">
+          <Card className="p-4 sm:p-6 bg-white/80 dark:bg-neutral-900/60 border-gray-200 dark:border-neutral-800">
             <div className="mb-4">
-              <h3 className="text-white font-bold">Server Rules / Gameplay</h3>
+              <h3 className="text-gray-900 dark:text-white font-bold">Server Rules / Gameplay</h3>
             </div>
             <div className="space-y-3">
               {filteredRules.map((item) => (
-                <details key={item.question} className="group rounded-lg border border-white/10 bg-black/20 p-3.5 sm:p-4 open:border-amber-500/30">
-                  <summary className="cursor-pointer list-none text-[15px] sm:text-sm font-semibold text-white leading-relaxed flex items-start justify-between gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/80 rounded min-h-10">
+                <details key={item.question} className="group rounded-lg border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-black/20 p-3.5 sm:p-4 open:border-amber-500/30">
+                  <summary className="cursor-pointer list-none text-[15px] sm:text-sm font-semibold text-gray-900 dark:text-white leading-relaxed flex items-start justify-between gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-500/80 rounded min-h-10">
                     <span>{item.question}</span>
                     <span className="text-amber-400 text-xs group-open:rotate-45 transition-transform">+</span>
                   </summary>
-                  <p className="text-sm text-neutral-400 mt-3 leading-relaxed whitespace-pre-line">{item.answer}</p>
+                  <p className="text-sm text-gray-500 dark:text-neutral-400 mt-3 leading-relaxed whitespace-pre-line">{item.answer}</p>
                 </details>
               ))}
             </div>
           </Card>
 
-          <Card className="p-4 sm:p-6 bg-neutral-900/60 border-neutral-800">
+          <Card className="p-4 sm:p-6 bg-white/80 dark:bg-neutral-900/60 border-gray-200 dark:border-neutral-800">
             <div className="mb-4">
-              <h3 className="text-white font-bold">Joining Issues / Mods / Performance</h3>
+              <h3 className="text-gray-900 dark:text-white font-bold">Joining Issues / Mods / Performance</h3>
             </div>
             <div className="space-y-3">
               {filteredTechnical.map((item) => (
-                <details key={item.question} className="group rounded-lg border border-white/10 bg-black/20 p-3.5 sm:p-4 open:border-sky-500/30">
-                  <summary className="cursor-pointer list-none text-[15px] sm:text-sm font-semibold text-white leading-relaxed flex items-start justify-between gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/80 rounded min-h-10">
+                <details key={item.question} className="group rounded-lg border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-black/20 p-3.5 sm:p-4 open:border-sky-500/30">
+                  <summary className="cursor-pointer list-none text-[15px] sm:text-sm font-semibold text-gray-900 dark:text-white leading-relaxed flex items-start justify-between gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/80 rounded min-h-10">
                     <span>{item.question}</span>
                     <span className="text-sky-400 text-xs group-open:rotate-45 transition-transform">+</span>
                   </summary>
-                  <p className="text-sm text-neutral-400 mt-3 leading-relaxed whitespace-pre-line">{item.answer}</p>
+                  <p className="text-sm text-gray-500 dark:text-neutral-400 mt-3 leading-relaxed whitespace-pre-line">{item.answer}</p>
                 </details>
               ))}
             </div>
           </Card>
         </div>
         {!hasFaqResults && (
-          <div className="mt-6 rounded-lg border border-white/10 bg-black/25 px-4 py-3 text-sm text-neutral-400">
+          <div className="mt-6 rounded-lg border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-black/25 px-4 py-3 text-sm text-gray-500 dark:text-neutral-400">
             No FAQ entries matched your search. Try broader keywords like &quot;mods&quot;, &quot;join&quot;, or &quot;wipe&quot;.
           </div>
         )}

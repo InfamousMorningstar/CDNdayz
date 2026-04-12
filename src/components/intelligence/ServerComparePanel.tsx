@@ -22,26 +22,26 @@ interface ServerComparePanelProps {
 function TrendGlyph({ direction }: { direction: CompareRow['trendDirection'] }) {
   if (direction === 'up') return <TrendingUp className="w-3.5 h-3.5 text-emerald-400" />;
   if (direction === 'down') return <TrendingDown className="w-3.5 h-3.5 text-rose-400" />;
-  return <Minus className="w-3.5 h-3.5 text-neutral-500" />;
+  return <Minus className="w-3.5 h-3.5 text-gray-400 dark:text-neutral-500" />;
 }
 
 export function ServerComparePanel({ rows, selectedServerId, loading }: ServerComparePanelProps) {
   return (
-    <div className="rounded-xl border border-white/5 bg-neutral-900/40 backdrop-blur-sm p-4 flex flex-col gap-3">
-      <div className="flex items-center gap-2 text-neutral-200">
+    <div className="rounded-xl border border-gray-200 dark:border-white/5 bg-white/70 dark:bg-neutral-900/40 backdrop-blur-sm p-4 flex flex-col gap-3">
+      <div className="flex items-center gap-2 text-gray-700 dark:text-neutral-200">
         <Signal className="w-4 h-4 text-cyan-400" />
         <p className="text-xs font-medium uppercase tracking-wide">Cross-Server Intelligence</p>
       </div>
 
       {loading ? (
-        <p className="text-sm text-neutral-500">Building cross-server comparison...</p>
+          <p className="text-sm text-gray-400 dark:text-neutral-500">Building cross-server comparison...</p>
       ) : rows.length === 0 ? (
-        <p className="text-sm text-neutral-500">Not enough shared data yet to rank servers.</p>
+          <p className="text-sm text-gray-400 dark:text-neutral-500">Not enough shared data yet to rank servers.</p>
       ) : (
         <div className="overflow-x-auto">
           <table className="w-full min-w-[680px] text-sm">
             <thead>
-              <tr className="text-left text-neutral-500 border-b border-white/5">
+              <tr className="text-left text-gray-400 dark:text-neutral-500 border-b border-gray-200 dark:border-white/5">
                 <th className="py-2 pr-3 font-medium">Server</th>
                 <th className="py-2 pr-3 font-medium">Avg</th>
                 <th className="py-2 pr-3 font-medium">Peak</th>
@@ -57,26 +57,26 @@ export function ServerComparePanel({ rows, selectedServerId, loading }: ServerCo
                   <tr
                     key={row.serverId}
                     className={cn(
-                      'border-b border-white/5 last:border-0',
-                      selected && 'bg-red-950/15',
+                      'border-b border-gray-200 dark:border-white/5 last:border-0',
+                      selected && 'bg-red-50 dark:bg-red-950/15',
                     )}
                   >
-                    <td className="py-2.5 pr-3 text-neutral-200">
+                    <td className="py-2.5 pr-3 text-gray-700 dark:text-neutral-200">
                       <div className="flex items-center gap-2">
                         {idx === 0 && <Medal className="w-3.5 h-3.5 text-amber-400" />}
-                        <span className={cn(selected && 'text-red-300 font-medium')}>{row.serverName}</span>
+                        <span className={cn(selected && 'text-red-600 dark:text-red-300 font-medium')}>{row.serverName}</span>
                       </div>
                     </td>
-                    <td className="py-2.5 pr-3 text-white">{row.avgPlayers}</td>
-                    <td className="py-2.5 pr-3 text-white">{row.peakPlayers}</td>
+                    <td className="py-2.5 pr-3 text-gray-900 dark:text-white">{row.avgPlayers}</td>
+                    <td className="py-2.5 pr-3 text-gray-900 dark:text-white">{row.peakPlayers}</td>
                     <td className="py-2.5 pr-3 text-emerald-300">{row.reliabilityScore}%~</td>
                     <td className="py-2.5 pr-3">
-                      <span className="inline-flex items-center gap-1 text-neutral-300">
+                      <span className="inline-flex items-center gap-1 text-gray-600 dark:text-neutral-300">
                         <TrendGlyph direction={row.trendDirection} />
                         {row.trendDirection}
                       </span>
                     </td>
-                    <td className="py-2.5 text-neutral-300">{row.verdict}</td>
+                    <td className="py-2.5 text-gray-600 dark:text-neutral-300">{row.verdict}</td>
                   </tr>
                 );
               })}

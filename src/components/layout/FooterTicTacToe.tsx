@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from 'react';
+import { useTheme } from '@/components/layout/ThemeProvider';
 
 type Cell = 'X' | 'O' | null;
 
@@ -51,6 +52,8 @@ function bestAIMove(board: Cell[]): number | null {
 }
 
 export function FooterTicTacToe() {
+  const { theme } = useTheme();
+  const isLight = theme === 'light';
   const [board, setBoard] = useState<Cell[]>(Array(9).fill(null));
   const [status, setStatus] = useState('Your move, Human.');
   const [cheatFlag, setCheatFlag] = useState(false);
@@ -101,9 +104,9 @@ export function FooterTicTacToe() {
 
   return (
     <div className="w-full md:w-auto md:min-w-[280px]">
-      <div className="rounded-2xl border border-white/10 bg-black/45 backdrop-blur-md p-3 text-center">
-        <p className="text-[10px] font-mono uppercase tracking-[0.16em] text-red-400">Tic-Tac-Toe: Ops Mode</p>
-        <p className="mt-1 text-xs text-neutral-300">You are X. The AI is O and absolutely not fair.</p>
+      <div className={`rounded-2xl backdrop-blur-md p-3 text-center ${isLight ? 'border border-gray-200 bg-white/85 shadow-sm' : 'border border-white/10 bg-black/45'}`}>
+        <p className={`text-[10px] font-mono uppercase tracking-[0.16em] ${isLight ? 'text-red-600' : 'text-red-400'}`}>Tic-Tac-Toe: Ops Mode</p>
+        <p className={`mt-1 text-xs ${isLight ? 'text-gray-600' : 'text-neutral-300'}`}>You are X. The AI is O and absolutely not fair.</p>
 
         <div className="mt-4 grid w-fit grid-cols-[repeat(3,3rem)] grid-rows-[repeat(3,3rem)] gap-2 mx-auto">
           {board.map((cell, idx) => (
@@ -111,7 +114,7 @@ export function FooterTicTacToe() {
               key={idx}
               type="button"
               onClick={() => play(idx)}
-              className="h-12 w-12 box-border m-0 p-0 appearance-none rounded-lg border border-white/10 bg-black/35 text-base font-bold text-neutral-100 hover:border-red-500/40 hover:bg-red-950/20 transition flex items-center justify-center"
+              className={`h-12 w-12 box-border m-0 p-0 appearance-none rounded-lg text-base font-bold transition flex items-center justify-center ${isLight ? 'border border-gray-200 bg-white text-gray-900 hover:border-red-400/60 hover:bg-red-50' : 'border border-white/10 bg-black/35 text-neutral-100 hover:border-red-500/40 hover:bg-red-950/20'}`}
               aria-label={`Play cell ${idx + 1}`}
             >
               {cell ?? ''}
@@ -119,11 +122,11 @@ export function FooterTicTacToe() {
           ))}
         </div>
 
-        <p className="mt-3 text-xs text-neutral-300">{status}</p>
+        <p className={`mt-3 text-xs ${isLight ? 'text-gray-600' : 'text-neutral-300'}`}>{status}</p>
         <button
           type="button"
           onClick={resetGame}
-          className="mt-3 rounded-full border border-white/15 px-3 py-1.5 text-[11px] font-mono uppercase tracking-wider text-neutral-300 hover:border-red-500/40 hover:text-white transition"
+          className={`mt-3 rounded-full border px-3 py-1.5 text-[11px] font-mono uppercase tracking-wider transition ${isLight ? 'border-gray-300 text-gray-700 hover:border-red-500/50 hover:text-red-700 hover:bg-red-50' : 'border-white/15 text-neutral-300 hover:border-red-500/40 hover:text-white'}`}
         >
           Reset Board
         </button>

@@ -4,10 +4,11 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { Menu, X, Globe, Shield, BookOpen, Calendar, HelpCircle, Hammer, ShoppingBag, AlertTriangle } from 'lucide-react';
+import { Menu, X, Globe, Shield, BookOpen, Calendar, HelpCircle, Hammer, ShoppingBag, AlertTriangle, Sun, Moon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { ScrambleLink } from '@/components/ui/ScrambleLink';
 import Image from 'next/image';
+import { useTheme } from '@/components/layout/ThemeProvider';
 
 const navItems = [
   { name: 'Home', href: '/', icon: Globe },
@@ -90,6 +91,23 @@ export function Navbar() {
     }
   };
 
+  const [clock, setClock] = useState('');
+
+  useEffect(() => {
+    const tick = () => {
+      const now = new Date();
+      const hh = String(now.getHours()).padStart(2, '0');
+      const mm = String(now.getMinutes()).padStart(2, '0');
+      const ss = String(now.getSeconds()).padStart(2, '0');
+      setClock(`${hh}:${mm}:${ss}`);
+    };
+    tick();
+    const id = setInterval(tick, 500);
+    return () => clearInterval(id);
+  }, []);
+
+  const { theme, toggle } = useTheme();
+
   const activeIndex = navItems.findIndex((item) => item.href === pathname);
   const activeItem = navItems[activeIndex >= 0 ? activeIndex : 0];
 
@@ -115,8 +133,8 @@ export function Navbar() {
               priority
             />
           </div>
-          <span className="font-bold text-xl tracking-tight text-white hidden sm:block">
-            CDN <span className="text-neutral-500 font-normal">Network</span>
+          <span className="font-bold text-xl tracking-tight text-gray-900 dark:text-white hidden sm:block">
+            CDN <span className="text-gray-400 dark:text-neutral-500 font-normal">Network</span>
           </span>
         </Link>
         
@@ -133,18 +151,18 @@ export function Navbar() {
             !isDockVisible && 'pointer-events-none'
           )}
         >
-          <div className="flex items-center gap-1.5 rounded-full border border-white/10 bg-black/60 px-2 py-2 shadow-[0_14px_40px_rgba(0,0,0,0.58)] backdrop-blur-xl backdrop-saturate-150">
+          <div className="flex items-center gap-1.5 rounded-full border border-black/10 dark:border-white/10 bg-white/90 dark:bg-black/60 px-2 py-2 shadow-[0_4px_20px_rgba(0,0,0,0.12)] dark:shadow-[0_14px_40px_rgba(0,0,0,0.58)] backdrop-blur-xl backdrop-saturate-150">
             <Link
               href={activeItem.href}
               aria-current="page"
-              className="group relative flex items-center gap-2 overflow-hidden rounded-full border border-red-500/20 bg-gradient-to-r from-red-500/16 to-red-950/20 px-3 py-2 text-white"
+              className="group relative flex items-center gap-2 overflow-hidden rounded-full border border-red-500/20 bg-gradient-to-r from-red-500/16 to-red-950/20 px-3 py-2 text-gray-900 dark:text-white"
             >
               <motion.span
                 layoutId="desktop-nav-active-chip"
                 className="absolute inset-0 rounded-full"
                 transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 320, damping: 26 }}
               />
-              <span className="relative z-10 flex h-7 w-7 items-center justify-center rounded-full bg-white/10 text-white">
+              <span className="relative z-10 flex h-7 w-7 items-center justify-center rounded-full bg-black/10 dark:bg-white/10 text-gray-800 dark:text-white">
                 <activeItem.icon className="h-3.5 w-3.5" strokeWidth={2.2} />
               </span>
               <span className={cn(
@@ -171,27 +189,48 @@ export function Navbar() {
                     <ScrambleLink
                       href={item.href}
                       label={item.name}
-                      className="group flex items-center justify-center rounded-full px-2.5 py-2 text-[10px] font-medium uppercase tracking-[0.18em] text-neutral-400 transition-colors hover:bg-white/6 hover:text-red-400"
+                      className="group flex items-center justify-center rounded-full px-2.5 py-2 text-[10px] font-medium uppercase tracking-[0.18em] text-gray-500 dark:text-neutral-400 transition-colors hover:bg-black/5 dark:hover:bg-white/6 hover:text-red-500 dark:hover:text-red-400"
                     />
                   </motion.div>
                 );
               })}
             </div>
 
-            <div className="hidden xl:flex items-center pl-1 pr-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-neutral-600">
+            <div className="hidden xl:flex items-center pl-1 pr-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-gray-400 dark:text-neutral-600">
               {String(activeIndex + 1).padStart(2, '0')}
             </div>
           </div>
         </motion.div>
 
-        <div className="flex items-center gap-4 relative z-20 shrink-0 justify-self-end">
+        <div className="flex items-center gap-2 relative z-20 shrink-0 justify-self-end">
+            {/* Theme toggle — desktop only */}
+            <motion.button
+              type="button"
+              onClick={(event) => {
+                const rect = event.currentTarget.getBoundingClientRect();
+                toggle({
+                  x: rect.left + rect.width / 2,
+                  y: rect.top + rect.height / 2,
+                });
+              }}
+              aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+              whileHover={shouldReduceMotion ? undefined : { scale: 1.08, y: -1 }}
+              whileTap={shouldReduceMotion ? undefined : { scale: 0.9 }}
+              transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 380, damping: 24 }}
+              className="hidden lg:flex text-gray-500 dark:text-neutral-400 hover:text-gray-900 dark:hover:text-white rounded-full p-2.5 bg-black/5 dark:bg-white/5 backdrop-blur-sm touch-manipulation transition-colors"
+              data-theme-toggle
+            >
+              <span data-theme-toggle-icon>
+                {theme === 'dark' ? <Sun className="w-4 h-4" strokeWidth={2} /> : <Moon className="w-4 h-4" strokeWidth={2} />}
+              </span>
+            </motion.button>
             <motion.button
             type="button"
               initial={false}
               whileHover={shouldReduceMotion ? undefined : { scale: 1.08, y: -1 }}
               whileTap={shouldReduceMotion ? undefined : { scale: 0.9, rotate: isOpen ? -90 : 90 }}
               transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 380, damping: 24 }}
-              className="lg:hidden text-neutral-300 hover:text-white rounded-full p-2.5 -mr-2 bg-black/30 backdrop-blur-sm touch-manipulation transition-colors"
+              className="lg:hidden text-gray-600 dark:text-neutral-300 hover:text-gray-900 dark:hover:text-white rounded-full p-2.5 -mr-2 bg-black/8 dark:bg-black/30 backdrop-blur-sm touch-manipulation transition-colors"
             onClick={() => setIsOpen(!isOpen)}
             aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
             aria-expanded={isOpen}
@@ -213,104 +252,108 @@ export function Navbar() {
 
       <AnimatePresence>
         {isOpen && (
-          <>
-            <motion.button
-              type="button"
-              aria-label="Close mobile menu"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: shouldReduceMotion ? 0 : 0.2 }}
-              className="lg:hidden fixed inset-0 z-40 bg-black/55 backdrop-blur-[2px]"
-              onClick={() => setIsOpen(false)}
-            />
-
-            <motion.div
-              initial={{ opacity: 0, y: shouldReduceMotion ? 0 : -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: shouldReduceMotion ? 0 : -8 }}
-              transition={{ duration: shouldReduceMotion ? 0 : 0.24, ease: 'easeOut' }}
-              className="lg:hidden fixed inset-x-0 top-0 z-50 border-b border-white/10 overflow-hidden bg-[radial-gradient(circle_at_top,rgba(185,28,28,0.14),transparent_52%),linear-gradient(to_bottom,rgba(7,7,7,0.98),rgba(2,2,2,0.99))]"
-              id="mobile-navigation"
-            >
-              {/* Animated close button */}
-              <motion.button
-                type="button"
-                aria-label="Close navigation menu"
-                onClick={() => setIsOpen(false)}
-                initial={{ opacity: 0, scale: 0.5, rotate: -90 }}
-                animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                exit={{ opacity: 0, scale: 0.5, rotate: 90 }}
-                transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 320, damping: 22, delay: 0.1 }}
-                whileHover={{ scale: 1.12, rotate: 90 }}
-                whileTap={{ scale: 0.88 }}
-                className="absolute top-[calc(env(safe-area-inset-top)+0.75rem)] right-4 sm:right-6 z-10 min-h-11 min-w-11 p-2.5 rounded-full bg-white/8 text-neutral-300 hover:text-white hover:bg-white/15 transition-colors touch-manipulation"
-              >
-                <X className="w-5 h-5" strokeWidth={2.5} />
-              </motion.button>
-
-            <div className="container mx-auto px-4 sm:px-6 pt-[calc(env(safe-area-inset-top)+0.9rem)] pb-[calc(env(safe-area-inset-bottom)+1.2rem)] min-h-[100svh] flex items-center justify-center">
-              <div className="w-full max-w-md flex flex-col items-center">
-                {navItems.map((item, index) => {
-                  const isActive = pathname === item.href;
-
-                  return (
-                    <motion.div
-                      key={item.href}
-                      initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 14, filter: shouldReduceMotion ? 'blur(0px)' : 'blur(6px)' }}
-                      animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                      exit={{ opacity: 0, y: shouldReduceMotion ? 0 : 8, filter: 'blur(0px)' }}
-                      transition={{ delay: shouldReduceMotion ? 0 : index * 0.04, duration: shouldReduceMotion ? 0 : 0.26, ease: 'easeOut' }}
-                      whileTap={{ scale: 0.985 }}
-                      className="w-full"
-                    >
-                      <Link
-                        href={item.href}
-                        aria-current={isActive ? 'page' : undefined}
-                        onClick={() => setIsOpen(false)}
-                        className={cn(
-                          'group block w-full rounded-2xl border px-4 py-3.5 transition-all duration-200',
-                          isActive
-                            ? 'text-white border-red-500/40 bg-red-500/10'
-                            : 'text-neutral-200 border-white/10 bg-white/[0.03] hover:text-white hover:border-white/25'
-                        )}
-                      >
-                        <span className="flex items-center justify-between gap-4">
-                          <span className="inline-flex items-center gap-3 min-w-0">
-                            <span className={cn(
-                              'inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border',
-                              isActive ? 'border-red-500/40 bg-red-500/15 text-red-200' : 'border-white/15 bg-black/25 text-neutral-300'
-                            )}>
-                              <item.icon className="w-4 h-4" />
-                            </span>
-                            <span className={cn(
-                              'font-heading font-bold uppercase tracking-wide text-base sm:text-lg leading-none truncate',
-                              isActive ? 'drop-shadow-[0_0_10px_rgba(255,255,255,0.25)]' : 'opacity-95 group-hover:opacity-100'
-                            )}>
-                              {item.name}
-                            </span>
-                          </span>
-                          <span className="text-xs uppercase tracking-[0.16em] text-neutral-500">
-                            {String(index + 1).padStart(2, '0')}
-                          </span>
-                        </span>
-                      </Link>
-                    </motion.div>
-                  );
-                })}
-
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: shouldReduceMotion ? 0 : 0.4, duration: shouldReduceMotion ? 0 : 0.25 }}
-                  className="mt-7 text-[11px] uppercase tracking-[0.22em] text-neutral-600"
+          <motion.div
+            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, clipPath: 'inset(0 0 100% 0)' }}
+            animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, clipPath: 'inset(0 0 0% 0)' }}
+            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, clipPath: 'inset(0 0 100% 0)' }}
+            transition={{ duration: shouldReduceMotion ? 0 : 0.38, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:hidden fixed inset-0 z-50 flex flex-col overflow-hidden bg-[#f5f3ee] dark:bg-[#040404]"
+            id="mobile-navigation"
+          >
+            {/* Red accent tint — dark mode only */}
+            <div className="absolute inset-0 pointer-events-none hidden dark:block" style={{ background: 'radial-gradient(ellipse at 60% 20%, rgba(185,28,28,0.12) 0%, transparent 55%)' }} />
+            {/* Top bar */}
+            <div className="flex items-center justify-between px-5 pt-[calc(env(safe-area-inset-top)+1rem)] pb-2 shrink-0">
+              <span className="text-[10px] uppercase tracking-[0.24em] text-gray-400 dark:text-neutral-600 font-mono">CDN_NAV</span>
+              <div className="flex items-center gap-2">
+                {/* Theme toggle inside mobile menu */}
+                <motion.button
+                  type="button"
+                  onClick={(event) => {
+                    const rect = event.currentTarget.getBoundingClientRect();
+                    toggle({
+                      x: rect.left + rect.width / 2,
+                      y: rect.top + rect.height / 2,
+                    });
+                  }}
+                  aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+                  whileTap={shouldReduceMotion ? undefined : { scale: 0.86 }}
+                  className="min-h-10 min-w-10 flex items-center justify-center rounded-full bg-black/5 dark:bg-white/8 text-gray-500 dark:text-neutral-400 hover:text-gray-900 dark:hover:text-white transition-colors touch-manipulation"
+                  data-theme-toggle
                 >
-                  CDN Network Menu
-                </motion.p>
+                  <span data-theme-toggle-icon>
+                    {theme === 'dark' ? <Sun className="w-4 h-4" strokeWidth={2} /> : <Moon className="w-4 h-4" strokeWidth={2} />}
+                  </span>
+                </motion.button>
+                <motion.button
+                  type="button"
+                  aria-label="Close navigation menu"
+                  onClick={() => setIsOpen(false)}
+                  initial={{ opacity: 0, scale: 0.6 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={shouldReduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 340, damping: 24, delay: 0.15 }}
+                  whileHover={shouldReduceMotion ? undefined : { scale: 1.12, rotate: 90 }}
+                  whileTap={shouldReduceMotion ? undefined : { scale: 0.86 }}
+                  className="min-h-11 min-w-11 flex items-center justify-center rounded-full bg-black/8 dark:bg-white/8 text-gray-600 dark:text-neutral-400 hover:text-gray-900 dark:hover:text-white transition-colors touch-manipulation"
+                >
+                  <X className="w-5 h-5" strokeWidth={2.5} />
+                </motion.button>
               </div>
             </div>
+
+            {/* Nav links — giant typographic */}
+            <nav className="flex-1 flex flex-col items-center justify-center gap-0.5 px-6">
+              {navItems.map((item, index) => {
+                const isActive = pathname === item.href;
+                return (
+                  <motion.div
+                    key={item.href}
+                    initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 32, filter: shouldReduceMotion ? 'none' : 'blur(12px)' }}
+                    animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                    exit={{ opacity: 0 }}
+                    transition={{ delay: shouldReduceMotion ? 0 : 0.05 + index * 0.055, duration: shouldReduceMotion ? 0 : 0.38, ease: [0.22, 1, 0.36, 1] }}
+                    whileHover={shouldReduceMotion ? undefined : { scale: 1.04, x: 6 }}
+                    whileTap={shouldReduceMotion ? undefined : { scale: 0.94 }}
+                    style={{ transformOrigin: 'left center' }}
+                  >
+                    <Link
+                      href={item.href}
+                      aria-current={isActive ? 'page' : undefined}
+                      onClick={() => setIsOpen(false)}
+                      className={cn(
+                        'block font-heading font-black uppercase leading-none tracking-tight touch-manipulation select-none transition-colors duration-100',
+                        'text-[min(8vw,2.8rem)]',
+                        isActive
+                          ? 'text-gray-900 dark:text-white [text-shadow:none] dark:[text-shadow:0_0_40px_rgba(255,255,255,0.28),0_2px_0_rgba(0,0,0,0.8)]'
+                          : 'text-gray-400 dark:text-neutral-500 hover:text-gray-900 dark:hover:text-white'
+                      )}
+                    >
+                      {item.name}
+                    </Link>
+                  </motion.div>
+                );
+              })}
+            </nav>
+
+            {/* HUD status bar */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: shouldReduceMotion ? 0 : 0.5, duration: 0.3 }}
+              className="shrink-0 flex items-end justify-between px-5 pb-[calc(env(safe-area-inset-bottom)+1.2rem)] pt-4 font-mono text-[10px] uppercase tracking-[0.18em] text-gray-400 dark:text-neutral-600"
+            >
+              <div className="flex flex-col gap-0.5">
+                <span className="flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-green-500/70 animate-pulse" />
+                  LINK_ESTABLISHED
+                </span>
+                <span>MEM: OPTIMAL</span>
+              </div>
+              <div className="text-right whitespace-pre leading-snug">
+                {clock}
+              </div>
+            </motion.div>
           </motion.div>
-          </>
         )}
       </AnimatePresence>
     </nav>

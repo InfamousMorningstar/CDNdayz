@@ -11,10 +11,10 @@ type ErrorCodeCardProps = {
 function DetailList({ title, items }: { title: string; items: string[] }) {
   return (
     <div className="space-y-2">
-      <h4 className="text-[11px] sm:text-xs uppercase tracking-[0.18em] text-neutral-500 font-mono">{title}</h4>
+      <h4 className="text-[11px] sm:text-xs uppercase tracking-[0.18em] text-gray-400 dark:text-neutral-500 font-mono">{title}</h4>
       <ul className="space-y-1.5">
         {items.map((entry) => (
-          <li key={entry} className="flex items-start gap-2 text-sm text-neutral-300 leading-relaxed">
+          <li key={entry} className="flex items-start gap-2 text-sm text-gray-600 dark:text-neutral-300 leading-relaxed">
             <span className="mt-2 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-red-500/80" />
             <span>{entry}</span>
           </li>
@@ -28,17 +28,17 @@ export function ErrorCodeCard({ item, references }: ErrorCodeCardProps) {
   return (
     <Card
       variant="outline"
-      className="group rounded-2xl border-white/10 bg-black/35 p-5 sm:p-6 hover:border-red-500/30 hover:bg-black/45"
+      className="group rounded-2xl border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-black/35 p-5 sm:p-6 hover:border-red-500/30 dark:hover:bg-black/45"
     >
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="space-y-2">
           <p className="font-mono text-red-300 text-base sm:text-lg tracking-wider">{item.code}</p>
-          <h3 className="text-lg sm:text-xl font-heading font-semibold text-white leading-tight">{item.title}</h3>
+          <h3 className="text-lg sm:text-xl font-heading font-semibold text-gray-900 dark:text-white leading-tight">{item.title}</h3>
         </div>
         <StatusBadge status={item.status} />
       </div>
 
-      <p className="mt-4 text-sm sm:text-base text-neutral-300 leading-relaxed">{item.description}</p>
+      <p className="mt-4 text-sm sm:text-base text-gray-600 dark:text-neutral-300 leading-relaxed">{item.description}</p>
 
       <div className="mt-6 grid gap-5 md:grid-cols-2">
         <DetailList title="Common Causes" items={item.commonCauses} />
@@ -46,8 +46,8 @@ export function ErrorCodeCard({ item, references }: ErrorCodeCardProps) {
       </div>
 
       {references.length > 0 ? (
-        <div className="mt-6 pt-4 border-t border-white/10">
-          <p className="text-[11px] sm:text-xs uppercase tracking-[0.18em] text-neutral-500 font-mono mb-2">Sources</p>
+        <div className="mt-6 pt-4 border-t border-gray-200 dark:border-white/10">
+          <p className="text-[11px] sm:text-xs uppercase tracking-[0.18em] text-gray-400 dark:text-neutral-500 font-mono mb-2">Sources</p>
           <div className="flex flex-wrap gap-2">
             {references.map((reference) => (
               <a
@@ -55,7 +55,7 @@ export function ErrorCodeCard({ item, references }: ErrorCodeCardProps) {
                 href={reference.url}
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-full border border-white/15 bg-white/[0.03] px-3 py-1 text-xs text-neutral-300 hover:border-red-500/40 hover:text-red-200 transition-colors"
+                className="rounded-full border border-gray-200 dark:border-white/15 bg-gray-100 dark:bg-white/[0.03] px-3 py-1 text-xs text-gray-600 dark:text-neutral-300 hover:border-red-500/40 hover:text-red-500 dark:hover:text-red-200 transition-colors"
               >
                 {reference.id}
               </a>

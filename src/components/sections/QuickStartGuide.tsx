@@ -33,17 +33,17 @@ const steps = [
 
 export function QuickStartGuide() {
   return (
-    <section aria-labelledby="start-journey-heading" className="py-20 sm:py-28 bg-neutral-950 border-t border-white/5 relative overflow-hidden">
+    <section aria-labelledby="start-journey-heading" className="py-20 sm:py-28 bg-white dark:bg-neutral-950 border-t border-gray-200 dark:border-white/5 relative overflow-hidden">
       {/* Background Elements */}
-      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-neutral-900 via-neutral-950 to-neutral-950 opacity-50" />
+      <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-100 via-white to-gray-100 dark:from-neutral-900 dark:via-neutral-950 dark:to-neutral-950 opacity-80 dark:opacity-50" />
       
       <div className="container mx-auto px-6 relative z-10">
         <div className="flex flex-col items-center text-center mb-12 gap-3">
-          <Badge variant="outline" className="border-red-500/30 text-red-400 bg-red-900/10 backdrop-blur-sm px-4 py-1">
+          <Badge variant="outline" className="border-red-500/35 text-red-700 dark:text-red-400 bg-red-500/12 dark:bg-red-900/10 backdrop-blur-sm px-4 py-1">
             Get Online in Minutes
           </Badge>
-          <h2 id="start-journey-heading" className="text-3xl md:text-5xl font-heading font-bold text-white">Start Your <span className="text-red-500">Journey</span></h2>
-          <p className="text-neutral-400 text-lg max-w-2xl">
+          <h2 id="start-journey-heading" className="text-3xl md:text-5xl font-heading font-bold text-gray-900 dark:text-white">Start Your <span className="text-red-500">Journey</span></h2>
+          <p className="text-gray-600 dark:text-neutral-400 text-lg max-w-2xl">
             From fresh spawn to veteran survivor in three simple steps. No complex whitelist application required.
           </p>
         </div>
@@ -57,9 +57,9 @@ export function QuickStartGuide() {
               transition={{ delay: index * 0.2 }}
               viewport={{ once: true }}
             >
-              <Card className="p-8 h-full bg-neutral-900/40 border-neutral-800 hover:border-red-500/30 transition-all duration-300 relative group overflow-hidden">
+              <Card className="p-8 h-full bg-gray-50 dark:bg-neutral-900/40 border-gray-200 dark:border-neutral-800 hover:border-red-500/30 transition-all duration-300 relative group overflow-hidden">
                 <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                  <span className="text-8xl font-bold font-mono text-white tracking-tighter stroke-neutral-800">{item.step}</span>
+                  <span className="text-8xl font-bold font-mono text-gray-900 dark:text-white tracking-tighter stroke-neutral-800">{item.step}</span>
                 </div>
                 
                 <div className="relative z-10 flex flex-col h-full">
@@ -67,8 +67,8 @@ export function QuickStartGuide() {
                     <item.icon size={28} />
                   </div>
                   
-                  <h3 className="text-2xl font-bold text-white mb-3">{item.title}</h3>
-                  <p className="text-neutral-400 mb-8 leading-relaxed flex-grow">
+                  <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">{item.title}</h3>
+                  <p className="text-gray-600 dark:text-neutral-400 mb-8 leading-relaxed flex-grow">
                     {item.description}
                   </p>
                   
@@ -80,7 +80,7 @@ export function QuickStartGuide() {
                      </Button>
                   ) : (
                      <Button variant="outline" className="w-full justify-between group/btn" onClick={() => window.open(item.action.url, '_blank')}>
-                        {item.action.label} <ExternalLink size={16} className="text-neutral-500 group-hover/btn:text-white transition-colors" />
+                      {item.action.label} <ExternalLink size={16} className="text-gray-500 dark:text-neutral-500 group-hover/btn:text-red-600 dark:group-hover/btn:text-white transition-colors" />
                      </Button>
                   )}
                 </div>

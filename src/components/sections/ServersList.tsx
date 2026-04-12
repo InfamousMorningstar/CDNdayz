@@ -56,29 +56,29 @@ export function ServersList() {
   }, []);
 
   return (
-    <section aria-labelledby="deployment-zones-heading" className="py-20 sm:py-28 bg-neutral-900/50 backdrop-blur-sm relative z-10" id="servers">
+    <section aria-labelledby="deployment-zones-heading" className="py-20 sm:py-28 bg-gray-50 dark:bg-neutral-900/50 backdrop-blur-sm relative z-10" id="servers">
       <div className="container mx-auto px-4 sm:px-6">
         <div className="flex flex-col items-center text-center mb-10 sm:mb-12 gap-3">
-            <Badge variant="outline" className="border-red-500/30 text-red-400 bg-red-900/10 backdrop-blur-sm px-4 py-1">
+            <Badge variant="outline" className="border-red-500/35 text-red-700 dark:text-red-400 bg-red-500/12 dark:bg-red-900/10 backdrop-blur-sm px-4 py-1">
               Deployment Zones
             </Badge>
-            <h2 id="deployment-zones-heading" className="text-2xl sm:text-3xl md:text-5xl font-heading font-bold text-white leading-tight">Choose Your <span className="text-neutral-500">Battleground</span></h2>
-            <p className="text-neutral-400 text-base sm:text-lg max-w-2xl">
+            <h2 id="deployment-zones-heading" className="text-2xl sm:text-3xl md:text-5xl font-heading font-bold text-gray-900 dark:text-white leading-tight">Choose Your <span className="text-gray-700 dark:text-neutral-500">Battleground</span></h2>
+            <p className="text-gray-500 dark:text-neutral-400 text-base sm:text-lg max-w-2xl">
               Select from our network of high-performance servers. Each offers a unique gameplay experience tailored to different survival styles.
             </p>
             <div className="mt-2 flex flex-wrap items-center justify-center gap-2.5">
-              <Badge className="min-h-9 px-3 bg-emerald-500/15 border border-emerald-500/35 text-emerald-200 hover:bg-emerald-500/20">
+              <Badge className="min-h-9 px-3 bg-emerald-500/12 dark:bg-emerald-500/15 border border-emerald-500/35 text-emerald-700 dark:text-emerald-200 hover:bg-emerald-500/20">
                 {summary.onlineCount} Online
               </Badge>
-              <Badge className="min-h-9 px-3 bg-amber-500/15 border border-amber-500/35 text-amber-100 hover:bg-amber-500/20">
+              <Badge className="min-h-9 px-3 bg-amber-500/12 dark:bg-amber-500/15 border border-amber-500/35 text-amber-700 dark:text-amber-100 hover:bg-amber-500/20">
                 {summary.restartingCount} Restarting
               </Badge>
-              <Badge className="min-h-9 px-3 bg-sky-500/15 border border-sky-500/35 text-sky-100 hover:bg-sky-500/20">
+              <Badge className="min-h-9 px-3 bg-sky-500/12 dark:bg-sky-500/15 border border-sky-500/35 text-sky-700 dark:text-sky-100 hover:bg-sky-500/20">
                 {summary.totalPlayers} Players Live
               </Badge>
             </div>
             {lastUpdated && (
-              <p className="text-[11px] sm:text-xs font-mono uppercase tracking-[0.18em] text-neutral-500">
+              <p className="text-[11px] sm:text-xs font-mono uppercase tracking-[0.18em] text-gray-600 dark:text-neutral-500">
                 Last status sweep {lastUpdated}
               </p>
             )}
@@ -90,7 +90,7 @@ export function ServersList() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
            {loading ? (
              Array.from({ length: 4 }).map((_, i) => (
-                <div key={i} className="h-36 w-full bg-neutral-800/30 rounded-xl animate-pulse" />
+                <div key={i} className="h-36 w-full bg-gray-200/60 dark:bg-neutral-800/30 rounded-xl animate-pulse" />
              ))
            ) : (
              servers.map((server) => (

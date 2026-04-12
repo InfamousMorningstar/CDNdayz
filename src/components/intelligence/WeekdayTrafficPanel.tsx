@@ -19,8 +19,8 @@ export function WeekdayTrafficPanel({ analytics }: WeekdayTrafficPanelProps) {
     : 1;
 
   return (
-    <div className="rounded-xl border border-white/5 bg-neutral-900/40 backdrop-blur-sm p-4 flex flex-col gap-3">
-      <div className="flex items-center gap-2 text-neutral-200">
+    <div className="rounded-xl border border-gray-200 dark:border-white/5 bg-white/70 dark:bg-neutral-900/40 backdrop-blur-sm p-4 flex flex-col gap-3">
+      <div className="flex items-center gap-2 text-gray-700 dark:text-neutral-200">
         <CalendarDays className="w-4 h-4 text-indigo-300" />
         <p className="text-xs font-medium uppercase tracking-wide">Traffic by Day</p>
       </div>
@@ -37,7 +37,7 @@ export function WeekdayTrafficPanel({ analytics }: WeekdayTrafficPanelProps) {
       )}
 
       {!hasEnoughData ? (
-        <p className="text-sm text-neutral-500">More snapshots are needed before weekday traffic trends are reliable.</p>
+        <p className="text-sm text-gray-400 dark:text-neutral-500">More snapshots are needed before weekday traffic trends are reliable.</p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-7 gap-2">
           {weekdayTraffic.map((point) => {
@@ -56,11 +56,11 @@ export function WeekdayTrafficPanel({ analytics }: WeekdayTrafficPanelProps) {
                     ? 'border-emerald-500/35 bg-emerald-950/15'
                     : isQuietest
                     ? 'border-sky-500/35 bg-sky-950/15'
-                    : 'border-white/5 bg-black/20')
+                    : 'border-gray-200 dark:border-white/5 bg-gray-50 dark:bg-black/20')
                 }
                 title={DAY_NAMES[point.day]}
               >
-                <p className="text-[11px] text-neutral-500 uppercase tracking-wide">{short}</p>
+                <p className="text-[11px] text-gray-400 dark:text-neutral-500 uppercase tracking-wide">{short}</p>
                 <div className="h-16 w-full flex items-end justify-center">
                   <div
                     className={
@@ -75,10 +75,10 @@ export function WeekdayTrafficPanel({ analytics }: WeekdayTrafficPanelProps) {
                     aria-hidden
                   />
                 </div>
-                <p className="text-sm font-semibold text-white leading-none">
+                <p className="text-sm font-semibold text-gray-900 dark:text-white leading-none">
                   {point.avgPlayers === null ? '—' : point.avgPlayers}
                 </p>
-                <p className="text-[11px] text-neutral-500 leading-none">
+                <p className="text-[11px] text-gray-400 dark:text-neutral-500 leading-none">
                   {point.sampleCount} sample{point.sampleCount === 1 ? '' : 's'}
                 </p>
               </div>

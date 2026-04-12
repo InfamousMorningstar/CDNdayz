@@ -51,8 +51,8 @@ export function ActivityHeatmap({ heatmapData }: ActivityHeatmapProps) {
 
   if (!heatmapData.hasEnoughData) {
     return (
-      <div className="rounded-xl border border-white/5 bg-neutral-900/40 backdrop-blur-sm p-4 text-center">
-        <p className="text-sm text-neutral-500">
+      <div className="rounded-xl border border-gray-200 dark:border-white/5 bg-white/70 dark:bg-neutral-900/40 backdrop-blur-sm p-4 text-center">
+        <p className="text-sm text-gray-400 dark:text-neutral-500">
           More activity samples needed before heatmap patterns are reliable.
         </p>
       </div>
@@ -79,16 +79,16 @@ export function ActivityHeatmap({ heatmapData }: ActivityHeatmapProps) {
   };
 
   return (
-    <div className="rounded-xl border border-white/5 bg-neutral-900/40 backdrop-blur-sm p-4 flex flex-col gap-3">
+    <div className="rounded-xl border border-gray-200 dark:border-white/5 bg-white/70 dark:bg-neutral-900/40 backdrop-blur-sm p-4 flex flex-col gap-3">
       {/* Header */}
-      <div className="flex items-center gap-2 text-neutral-200">
+      <div className="flex items-center gap-2 text-gray-700 dark:text-neutral-200">
         <Calendar className="w-4 h-4 text-red-400" />
         <p className="text-xs font-medium uppercase tracking-wide">Activity Heatmap</p>
-        <span className="text-[10px] text-neutral-500 ml-auto">See when each server is actually alive</span>
+        <span className="text-[10px] text-gray-400 dark:text-neutral-500 ml-auto">See when each server is actually alive</span>
       </div>
 
       {/* Legend */}
-      <div className="flex flex-wrap items-center gap-2 text-xs text-neutral-400 px-2 py-1">
+      <div className="flex flex-wrap items-center gap-2 text-xs text-gray-500 dark:text-neutral-400 px-2 py-1">
         <span>Intensity:</span>
         <div className="flex items-center gap-1">
           <div className="w-2.5 h-2.5 bg-neutral-800/40 border border-neutral-700/40 rounded" />
@@ -131,7 +131,7 @@ export function ActivityHeatmap({ heatmapData }: ActivityHeatmapProps) {
           {Array.from({ length: 7 }, (_, day) => (
             <div key={`day-${day}`} className="flex gap-1 mb-1">
               {/* Day label */}
-              <div className="w-12 flex-shrink-0 text-right text-[10px] sm:text-xs text-neutral-400 font-medium py-0.5 leading-none">
+              <div className="w-12 flex-shrink-0 text-right text-[10px] sm:text-xs text-gray-500 dark:text-neutral-400 font-medium py-0.5 leading-none">
                 {DAY_NAMES[day].slice(0, 3)}
               </div>
 
@@ -177,38 +177,38 @@ export function ActivityHeatmap({ heatmapData }: ActivityHeatmapProps) {
       {/* Tooltip */}
       {tooltip && (
         <div
-          className="fixed z-50 bg-neutral-900 border border-red-500/40 rounded-lg p-2.5 shadow-2xl backdrop-blur-sm pointer-events-none text-xs"
+          className="fixed z-50 bg-white dark:bg-neutral-900 border border-red-500/40 rounded-lg p-2.5 shadow-2xl backdrop-blur-sm pointer-events-none text-xs"
           style={{
             left: `${tooltip.x}px`,
             top: `${tooltip.y - 90}px`,
             minWidth: '160px',
           }}
         >
-          <p className="font-semibold text-white mb-1 leading-none">
+          <p className="font-semibold text-gray-900 dark:text-white mb-1 leading-none">
             {DAY_NAMES[tooltip.cell.day]} @ {HOUR_LABELS[tooltip.cell.hour]}
           </p>
           {tooltip.cell.avgPlayers !== null ? (
             <>
-              <p className="text-neutral-300 mb-0.5">
+              <p className="text-gray-600 dark:text-neutral-300 mb-0.5">
                 <span className="text-amber-300">⚔ </span>
-                Avg: <span className="text-white font-medium">{tooltip.cell.avgPlayers} players</span>
+                Avg: <span className="text-gray-900 dark:text-white font-medium">{tooltip.cell.avgPlayers} players</span>
               </p>
-              <p className="text-neutral-300 mb-0.5">
+              <p className="text-gray-600 dark:text-neutral-300 mb-0.5">
                 <span className="text-red-400">◆ </span>
-                Occupancy: <span className="text-white font-medium">{tooltip.cell.avgOccupancyPercent}%</span>
+                Occupancy: <span className="text-gray-900 dark:text-white font-medium">{tooltip.cell.avgOccupancyPercent}%</span>
               </p>
-              <p className="text-neutral-400 text-[10px]">
+              <p className="text-gray-400 dark:text-neutral-400 text-[10px]">
                 {tooltip.cell.sampleCount} sample{tooltip.cell.sampleCount === 1 ? '' : 's'}
               </p>
             </>
           ) : (
-            <p className="text-neutral-400">Insufficient data</p>
+            <p className="text-gray-500 dark:text-neutral-400">Insufficient data</p>
           )}
         </div>
       )}
 
       {/* Responsive hint */}
-      <p className="text-[10px] text-neutral-600 text-center mt-2">
+      <p className="text-[10px] text-gray-400 dark:text-neutral-600 text-center mt-2">
         Hover over cells for details • Responsive grid automatically adjusts on mobile
       </p>
     </div>

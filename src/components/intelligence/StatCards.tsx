@@ -36,17 +36,17 @@ function StatCard({
 }) {
   return (
     <div className={cn(
-      "flex flex-col gap-2 rounded-xl p-3 sm:p-4 border bg-neutral-900/60 backdrop-blur-sm transition-colors",
+      "flex flex-col gap-2 rounded-xl p-3 sm:p-4 border bg-white/80 dark:bg-neutral-900/60 backdrop-blur-sm transition-colors",
       accent
-        ? "border-red-500/20 bg-red-950/10 hover:border-red-500/35"
-        : "border-white/5 hover:border-white/10",
+        ? "border-red-200 dark:border-red-500/20 bg-red-50 dark:bg-red-950/10 hover:border-red-400 dark:hover:border-red-500/35"
+        : "border-gray-200 dark:border-white/5 hover:border-gray-300 dark:hover:border-white/10",
     )}>
-      <div className="flex items-center gap-2 text-neutral-500">
+      <div className="flex items-center gap-2 text-gray-400 dark:text-neutral-500">
         {icon}
         <span className="text-xs uppercase tracking-wider font-medium">{label}</span>
       </div>
-      <p className="text-xl font-bold text-white leading-none">{value}</p>
-      {sub && <p className="text-xs text-neutral-500 leading-snug">{sub}</p>}
+      <p className="text-xl font-bold text-gray-900 dark:text-white leading-none">{value}</p>
+      {sub && <p className="text-xs text-gray-400 dark:text-neutral-500 leading-snug">{sub}</p>}
     </div>
   );
 }
@@ -157,8 +157,8 @@ export function TrendBadge({ analytics }: StatCardsProps) {
         : trendDirection === 'down'
         ? 'bg-rose-900/20 border-rose-500/25 text-rose-400'
         : trendDirection === 'insufficient'
-        ? 'bg-neutral-800/40 border-white/10 text-neutral-500'
-        : 'bg-neutral-800/50 border-white/10 text-neutral-400',
+        ? 'bg-gray-100 dark:bg-neutral-800/40 border-gray-200 dark:border-white/10 text-gray-500 dark:text-neutral-500'
+        : 'bg-gray-100 dark:bg-neutral-800/50 border-gray-200 dark:border-white/10 text-gray-500 dark:text-neutral-400',
     )}>
       <TrendIcon direction={trendDirection} />
       {trendDirection === 'insufficient'

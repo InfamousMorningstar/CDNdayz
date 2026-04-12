@@ -122,12 +122,12 @@ export function NewsTicker() {
         >
             <div className="px-2 sm:px-4 py-2 flex flex-col relative group gap-2 sm:gap-3">
                 {/* Pulse Indicator */}
-                <div className="rounded-full px-2.5 sm:px-3 py-1.5 border border-white/10 bg-black/25 backdrop-blur-sm flex items-center gap-2 shrink-0 self-start shadow-[0_8px_30px_rgba(0,0,0,0.25)]">
+                <div className="rounded-full px-2.5 sm:px-3 py-1.5 border border-white/20 dark:border-white/10 bg-white/60 dark:bg-black/25 backdrop-blur-sm flex items-center gap-2 shrink-0 self-start shadow-[0_8px_30px_rgba(0,0,0,0.12)] dark:shadow-[0_8px_30px_rgba(0,0,0,0.25)]">
                      <span className="relative flex h-2 w-2">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
                         <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
                     </span>
-                    <span className="text-[11px] sm:text-xs font-mono uppercase tracking-widest text-neutral-300">HQ Feed</span>
+                    <span className="text-[11px] sm:text-xs font-mono uppercase tracking-widest text-gray-700 dark:text-neutral-300">HQ Feed</span>
                 </div>
 
                 {/* Message Container */}
@@ -141,14 +141,14 @@ export function NewsTicker() {
                             transition={{ duration: 0.3, ease: "easeOut" }}
                             className="relative flex items-start gap-2 sm:gap-3"
                         >
-                            <div className="shrink-0 pt-1 text-white/80 drop-shadow-[0_2px_10px_rgba(0,0,0,0.45)]">{getIcon(currentItem.type)}</div>
+                            <div className="shrink-0 pt-1 text-gray-600 dark:text-white/80">{getIcon(currentItem.type)}</div>
                             <div className="flex flex-col items-start gap-1 sm:gap-1.5 min-w-0">
                                 {currentItemDate && (
-                                    <span className="text-[11px] sm:text-xs font-mono text-neutral-300 bg-black/25 px-2 py-0.5 rounded-full border border-white/10 backdrop-blur-sm shrink-0 whitespace-nowrap mt-0.5 shadow-[0_6px_18px_rgba(0,0,0,0.2)]">
+                                    <span className="text-[11px] sm:text-xs font-mono text-gray-600 dark:text-neutral-300 bg-white/70 dark:bg-black/25 px-2 py-0.5 rounded-full border border-gray-300/60 dark:border-white/10 backdrop-blur-sm shrink-0 whitespace-nowrap mt-0.5">
                                         {currentItemDate}
                                     </span>
                                 )}
-                                <span className="text-base sm:text-lg font-semibold text-neutral-50 leading-relaxed cursor-default select-none min-w-0 line-clamp-4 sm:line-clamp-3 break-words drop-shadow-[0_6px_24px_rgba(0,0,0,0.55)]">
+                                <span className="text-base sm:text-lg font-semibold text-gray-900 dark:text-neutral-50 leading-relaxed cursor-default select-none min-w-0 line-clamp-4 sm:line-clamp-3 break-words">
                                     {currentItem.message}
                                 </span>
                             </div>
@@ -162,7 +162,7 @@ export function NewsTicker() {
                         type="button"
                         onClick={goToPrevious}
                         aria-label="Show previous message"
-                        className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-white/20 bg-black/25 text-white/80 hover:text-white hover:bg-white/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/80"
+                        className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-gray-300/80 dark:border-white/20 bg-white/60 dark:bg-black/25 text-gray-600 dark:text-white/80 hover:text-gray-900 dark:hover:text-white hover:bg-white dark:hover:bg-white/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/80"
                     >
                         <ChevronLeft className="h-4 w-4" />
                     </button>
@@ -174,7 +174,7 @@ export function NewsTicker() {
                             key={idx}
                             onClick={() => navigateToIndex(idx)}
                             aria-label={`Show news item ${idx + 1}`}
-                            className={`w-2 h-2 sm:w-1.5 sm:h-1.5 rounded-full cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/80 ${idx === currentIndex ? 'bg-white' : 'bg-white/20 hover:bg-white/50'}`}
+                            className={`w-2 h-2 sm:w-1.5 sm:h-1.5 rounded-full cursor-pointer transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/80 ${idx === currentIndex ? 'bg-gray-800 dark:bg-white' : 'bg-gray-400/50 dark:bg-white/20 hover:bg-gray-500 dark:hover:bg-white/50'}`}
                         />
                     ))}
                     </div>
@@ -183,7 +183,7 @@ export function NewsTicker() {
                         type="button"
                         onClick={goToNext}
                         aria-label="Show next message"
-                        className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-white/20 bg-black/25 text-white/80 hover:text-white hover:bg-white/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/80"
+                        className="inline-flex h-7 w-7 items-center justify-center rounded-full border border-gray-300/80 dark:border-white/20 bg-white/60 dark:bg-black/25 text-gray-600 dark:text-white/80 hover:text-gray-900 dark:hover:text-white hover:bg-white dark:hover:bg-white/10 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/80"
                     >
                         <ChevronRight className="h-4 w-4" />
                     </button>

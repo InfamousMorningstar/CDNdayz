@@ -11,15 +11,15 @@ const cardVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-white/5 border border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.3)] hover:bg-white/10 hover:shadow-[0_8px_32px_rgba(220,38,38,0.1)]",
+          "bg-gray-100/80 dark:bg-white/5 border border-gray-200 dark:border-white/10 shadow-[0_4px_16px_rgba(0,0,0,0.06)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)] hover:bg-gray-50 dark:hover:bg-white/10 hover:shadow-[0_8px_24px_rgba(220,38,38,0.08)] dark:hover:shadow-[0_8px_32px_rgba(220,38,38,0.1)]",
         ghost:
-          "bg-transparent border-0 shadow-none hover:bg-white/5",
+          "bg-transparent border-0 shadow-none hover:bg-gray-100/60 dark:hover:bg-white/5",
         solid:
-          "bg-neutral-900 border border-neutral-800 rounded-2xl",
+          "bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800 rounded-2xl shadow-sm",
         outline:
-          "bg-transparent border border-white/10 hover:border-red-500/30 hover:bg-white/5",
+          "bg-transparent border border-gray-200 dark:border-white/10 hover:border-red-500/30 hover:bg-gray-50/80 dark:hover:bg-white/5",
         "glass-gradient":
-          "bg-gradient-to-br from-white/10 to-transparent border border-white/20 shadow-2xl backdrop-blur-2xl",
+          "bg-gradient-to-br from-gray-100/80 dark:from-white/10 to-transparent border border-gray-200 dark:border-white/20 shadow-2xl backdrop-blur-2xl",
       },
     },
     defaultVariants: {

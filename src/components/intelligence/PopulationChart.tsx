@@ -205,12 +205,12 @@ export function PopulationChart({ snapshots, timeRange, fallbackSummary }: Popul
 
   if (rows.length < MIN_VISUAL_POINTS || rows.every((r) => r.sampleCount === 0)) {
     return (
-      <div className="flex items-center justify-center h-40 rounded-xl bg-neutral-900/60 border border-white/5 px-6">
+      <div className="flex items-center justify-center h-40 rounded-xl bg-white/80 dark:bg-neutral-900/60 border border-gray-200 dark:border-white/5 px-6">
         <div className="text-center space-y-2 max-w-2xl">
-          <p className="text-sm text-neutral-300 leading-relaxed">
+          <p className="text-sm text-gray-600 dark:text-neutral-300 leading-relaxed">
             {fallbackSummary || 'Not enough data yet — keep checking back as more server activity is recorded.'}
           </p>
-          <p className="text-xs text-neutral-500">
+          <p className="text-xs text-gray-400 dark:text-neutral-500">
             {snapshots.length === 0
               ? 'No valid online snapshots recorded for this time window yet.'
               : `Only ${snapshots.length} valid snapshot${snapshots.length === 1 ? '' : 's'} recorded. Keep collecting data for clearer trends.`}
@@ -222,7 +222,7 @@ export function PopulationChart({ snapshots, timeRange, fallbackSummary }: Popul
 
   return (
     <div className="w-full">
-      <div className="mb-2 flex flex-wrap items-center gap-3 text-[11px] text-neutral-400">
+      <div className="mb-2 flex flex-wrap items-center gap-3 text-[11px] text-gray-400 dark:text-neutral-400">
         <span className="inline-flex items-center gap-1.5">
           <span className="h-2 w-2 rounded-full bg-red-500" />
           Observed players

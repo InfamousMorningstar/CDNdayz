@@ -41,7 +41,7 @@ type FetchState = 'idle' | 'loading' | 'success' | 'error';
 /** Skeleton placeholder shown while data is loading. */
 function Skeleton({ className }: { className?: string }) {
   return (
-    <div className={cn('animate-pulse rounded-xl bg-neutral-800/40', className)} />
+    <div className={cn('animate-pulse rounded-xl bg-gray-200 dark:bg-neutral-800/40', className)} />
   );
 }
 
@@ -73,15 +73,15 @@ function ServerSelector({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         className={cn(
-          'appearance-none cursor-pointer rounded-lg border border-white/10',
-          'bg-neutral-900/80 text-sm text-white px-4 py-2 pr-9',
+          'appearance-none cursor-pointer rounded-lg border border-gray-200 dark:border-white/10',
+          'bg-white dark:bg-neutral-900/80 text-sm text-gray-900 dark:text-white px-4 py-2 pr-9',
           'focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500/40',
-          'hover:border-white/20 transition-colors max-w-[280px] truncate',
+          'hover:border-gray-300 dark:hover:border-white/20 transition-colors max-w-[280px] truncate',
         )}
         aria-label="Select server"
       >
         {servers.map((s) => (
-          <option key={s.id} value={s.id} className="bg-neutral-900">
+          <option key={s.id} value={s.id} className="bg-white dark:bg-neutral-900">
             {s.name}
           </option>
         ))}
@@ -103,7 +103,7 @@ function TimeRangePicker({
   onChange: (r: TimeRange) => void;
 }) {
   return (
-    <div className="flex gap-1 p-1 rounded-lg bg-neutral-900/70 border border-white/5">
+    <div className="flex gap-1 p-1 rounded-lg bg-gray-100 dark:bg-neutral-900/70 border border-gray-200 dark:border-white/5">
       {TIME_RANGE_OPTIONS.map((opt) => (
         <button
           key={opt.value}
@@ -112,7 +112,7 @@ function TimeRangePicker({
             'px-3 py-1 rounded-md text-xs font-medium transition-all duration-150',
             value === opt.value
               ? 'bg-red-600 text-white shadow'
-              : 'text-neutral-400 hover:text-white hover:bg-white/5',
+              : 'text-gray-500 dark:text-neutral-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-200 dark:hover:bg-white/5',
           )}
           aria-pressed={value === opt.value}
         >
@@ -126,8 +126,8 @@ function TimeRangePicker({
 function TonightAtAGlance({ rows, loading }: { rows: CompareRow[]; loading: boolean }) {
   if (loading) {
     return (
-      <div className="rounded-xl border border-white/5 bg-neutral-900/40 backdrop-blur-sm p-4">
-        <p className="text-sm text-neutral-500">Preparing tonight recommendations...</p>
+      <div className="rounded-xl border border-gray-200 dark:border-white/5 bg-white/70 dark:bg-neutral-900/40 backdrop-blur-sm p-4">
+        <p className="text-sm text-gray-400 dark:text-neutral-500">Preparing tonight recommendations...</p>
       </div>
     );
   }
@@ -139,23 +139,23 @@ function TonightAtAGlance({ rows, loading }: { rows: CompareRow[]; loading: bool
   return (
     <div className="rounded-xl border border-cyan-500/20 bg-cyan-950/10 backdrop-blur-sm p-3 sm:p-4">
       <div className="flex items-center gap-2 mb-3">
-        <MoonStar className="w-4 h-4 text-cyan-300" />
-        <p className="text-xs sm:text-sm font-medium uppercase tracking-wide text-cyan-100">Tonight At A Glance</p>
+        <MoonStar className="w-4 h-4 text-cyan-700 dark:text-cyan-300" />
+        <p className="text-xs sm:text-sm font-medium uppercase tracking-wide text-cyan-700 dark:text-cyan-100">Tonight At A Glance</p>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
         {topThree.map((row, idx) => (
           <div
             key={row.serverId}
-            className="rounded-lg border border-white/10 bg-black/25 p-2.5 flex flex-col gap-1"
+            className="rounded-lg border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-black/25 p-2.5 flex flex-col gap-1"
           >
-            <p className="text-[11px] uppercase tracking-wider text-neutral-500">
+            <p className="text-[11px] uppercase tracking-wider text-gray-400 dark:text-neutral-500">
               #{idx + 1} recommendation
             </p>
-            <p className="text-sm font-semibold text-white truncate" title={row.serverName}>
+            <p className="text-sm font-semibold text-gray-900 dark:text-white truncate" title={row.serverName}>
               {row.serverName}
             </p>
-            <p className="text-xs text-neutral-400">Reliability {row.reliabilityScore}%~ · Avg {row.avgPlayers}</p>
-            <p className="text-xs text-cyan-200 inline-flex items-center gap-1">
+            <p className="text-xs text-gray-500 dark:text-neutral-400">Reliability {row.reliabilityScore}%~ · Avg {row.avgPlayers}</p>
+            <p className="text-xs text-cyan-700 dark:text-cyan-200 inline-flex items-center gap-1">
               <Sparkles className="w-3 h-3" />
               {row.verdict}
             </p>
@@ -177,23 +177,23 @@ function QuickInterpretation({ analytics }: { analytics: ServerAnalytics }) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3">
       <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/10 p-3">
-        <p className="text-[11px] uppercase tracking-widest text-emerald-200/80">Best Time To Play</p>
-        <p className="text-sm font-semibold text-white mt-1">{analytics.bestTimeToPlay ?? 'More samples needed'}</p>
+        <p className="text-[11px] uppercase tracking-widest text-emerald-700 dark:text-emerald-200/80">Best Time To Play</p>
+        <p className="text-sm font-semibold text-gray-900 dark:text-white mt-1">{analytics.bestTimeToPlay ?? 'More samples needed'}</p>
       </div>
       <div className="rounded-xl border border-red-500/20 bg-red-500/10 p-3">
-        <p className="text-[11px] uppercase tracking-widest text-red-200/80">Peak Hour</p>
-        <p className="text-base font-bold text-white mt-1">{busiestHourLabel}</p>
-        <p className="text-xs text-neutral-300">Most active day: {busiestDayLabel}</p>
+        <p className="text-[11px] uppercase tracking-widest text-red-700 dark:text-red-200/80">Peak Hour</p>
+        <p className="text-base font-bold text-gray-900 dark:text-white mt-1">{busiestHourLabel}</p>
+        <p className="text-xs text-gray-500 dark:text-neutral-300">Most active day: {busiestDayLabel}</p>
       </div>
       <div className="rounded-xl border border-cyan-500/20 bg-cyan-500/10 p-3">
-        <p className="text-[11px] uppercase tracking-widest text-cyan-100/80">Quiet Hour</p>
-        <p className="text-base font-bold text-white mt-1">{quietestHourLabel}</p>
-        <p className="text-xs text-neutral-300">Quietest day: {quietestDayLabel}</p>
+        <p className="text-[11px] uppercase tracking-widest text-cyan-700 dark:text-cyan-100/80">Quiet Hour</p>
+        <p className="text-base font-bold text-gray-900 dark:text-white mt-1">{quietestHourLabel}</p>
+        <p className="text-xs text-gray-500 dark:text-neutral-300">Quietest day: {quietestDayLabel}</p>
       </div>
-      <div className="rounded-xl border border-white/10 bg-black/25 p-3">
-        <p className="text-[11px] uppercase tracking-widest text-neutral-400">Reliability</p>
-        <p className="text-base font-bold text-white mt-1">{analytics.reliabilityScore}%~</p>
-        <p className="text-xs text-neutral-300">{analytics.nextBestWindow ?? 'Building next-window guidance'}</p>
+      <div className="rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-black/25 p-3">
+        <p className="text-[11px] uppercase tracking-widest text-gray-400 dark:text-neutral-400">Reliability</p>
+        <p className="text-base font-bold text-gray-900 dark:text-white mt-1">{analytics.reliabilityScore}%~</p>
+        <p className="text-xs text-gray-500 dark:text-neutral-300">{analytics.nextBestWindow ?? 'Building next-window guidance'}</p>
       </div>
     </div>
   );
@@ -265,7 +265,7 @@ export function ServerIntelligence() {
     <section
       id="server-intelligence"
       aria-labelledby="intelligence-heading"
-      className="py-8 sm:py-10 bg-neutral-950/50 backdrop-blur-sm rounded-2xl border border-white/5 relative z-10"
+      className="py-8 sm:py-10 bg-white/70 dark:bg-neutral-950/50 backdrop-blur-sm rounded-2xl border border-gray-200 dark:border-white/5 relative z-10"
     >
       <div className="w-full px-4 sm:px-6">
 
@@ -273,7 +273,7 @@ export function ServerIntelligence() {
         <div className="flex flex-col items-center text-center mb-6 gap-1.5">
           <Badge
             variant="outline"
-            className="border-sky-500/30 text-sky-400 bg-sky-900/10 backdrop-blur-sm px-4 py-1"
+            className="border-sky-500/35 text-sky-700 dark:text-sky-400 bg-sky-500/12 dark:bg-sky-900/10 backdrop-blur-sm px-4 py-1"
           >
             <BarChart2 className="w-3 h-3 mr-1.5 inline" />
             Population Intelligence
@@ -286,11 +286,11 @@ export function ServerIntelligence() {
             Population Intelligence
           </h2>
 
-          <p className="text-neutral-400 text-sm sm:text-base max-w-2xl">
+          <p className="text-gray-500 dark:text-neutral-400 text-sm sm:text-base max-w-2xl">
             Premium activity analytics to help you pick the right server, right map, and right time window.
           </p>
           {lastUpdatedAt && (
-            <p className="text-xs text-neutral-500">
+            <p className="text-xs text-gray-400 dark:text-neutral-500">
               Updated {Math.max(1, Math.floor((nowTick - lastUpdatedAt) / 1000))}s ago
             </p>
           )}
@@ -327,7 +327,7 @@ export function ServerIntelligence() {
               exit={{ opacity: 0 }}
               className="flex flex-col items-center justify-center gap-3 py-20 text-center"
             >
-              <p className="text-neutral-500 text-sm">{errorMsg}</p>
+              <p className="text-gray-400 dark:text-neutral-500 text-sm">{errorMsg}</p>
               <button
                 onClick={fetchHistory}
                 className="text-xs text-red-400 underline underline-offset-2 hover:text-red-300 transition-colors"
@@ -347,7 +347,7 @@ export function ServerIntelligence() {
               className="flex flex-col gap-4"
             >
               {/* Minimal view: Chart + Basic Stats */}
-              <div className="rounded-xl border border-white/5 bg-neutral-900/40 backdrop-blur-sm p-3 sm:p-4">
+              <div className="rounded-xl border border-gray-200 dark:border-white/5 bg-white/70 dark:bg-neutral-900/40 backdrop-blur-sm p-3 sm:p-4">
                 <PopulationChart
                   snapshots={analytics.snapshots}
                   timeRange={timeRange}
@@ -360,7 +360,7 @@ export function ServerIntelligence() {
               {/* Expandable detailed analytics */}
               <button
                 onClick={() => setExpandedDetails(!expandedDetails)}
-                className="flex items-center justify-center gap-2 py-2 text-xs font-medium uppercase tracking-wide text-neutral-400 hover:text-neutral-300 transition-colors"
+                className="flex items-center justify-center gap-2 py-2 text-xs font-medium uppercase tracking-wide text-gray-400 dark:text-neutral-400 hover:text-gray-700 dark:hover:text-neutral-300 transition-colors"
               >
                 {expandedDetails ? (
                   <>

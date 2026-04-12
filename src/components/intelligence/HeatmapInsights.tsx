@@ -164,14 +164,14 @@ export function HeatmapInsights({ analytics }: HeatmapInsightsProps) {
             <h3 className={`text-xs sm:text-sm font-semibold uppercase tracking-wide ${card.textColor}`}>
               {card.title}
             </h3>
-            <p className="text-[10px] sm:text-xs text-neutral-400 leading-tight">{card.subtitle}</p>
+            <p className="text-[10px] sm:text-xs text-gray-400 dark:text-neutral-400 leading-tight">{card.subtitle}</p>
           </div>
 
           {/* Value + Detail */}
           <div className="mt-1">
-            <p className="text-white font-bold text-sm sm:text-base leading-tight break-words">{card.value}</p>
+            <p className="text-gray-900 dark:text-white font-bold text-sm sm:text-base leading-tight break-words">{card.value}</p>
             {card.detail && (
-              <p className="text-[10px] sm:text-xs text-neutral-300 mt-1 leading-tight">{card.detail}</p>
+              <p className="text-[10px] sm:text-xs text-gray-600 dark:text-neutral-300 mt-1 leading-tight">{card.detail}</p>
             )}
           </div>
         </div>

@@ -68,16 +68,16 @@ export function DayzErrorCodesClient() {
 
   return (
     <div className="space-y-8 sm:space-y-10">
-      <Card className="rounded-2xl border border-red-500/20 bg-gradient-to-r from-red-900/25 via-black/40 to-black/40 p-5 sm:p-7">
+      <Card className="rounded-2xl border border-red-500/20 bg-red-50 dark:bg-gradient-to-r dark:from-red-900/25 dark:via-black/40 dark:to-black/40 p-5 sm:p-7">
         <div className="space-y-3">
           <div className="flex items-center gap-4">
             <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-2.5 text-red-300 shrink-0">
               <FileWarning size={18} />
             </div>
-            <h2 className="text-xl sm:text-2xl font-heading font-semibold text-white">Documentation Disclaimer</h2>
+            <h2 className="text-xl sm:text-2xl font-heading font-semibold text-gray-900 dark:text-white">Documentation Disclaimer</h2>
           </div>
           <div className="space-y-3">
-            <p className="text-sm sm:text-base text-neutral-300 leading-relaxed">
+            <p className="text-sm sm:text-base text-gray-600 dark:text-neutral-300 leading-relaxed">
               This is not a complete list of every DayZ warning/error code. Finding and validating all codes is difficult, so this hub currently includes the most reliable entries I could verify so far. Official documentation does not publish an exact root-cause tree for every code path, so this page combines official code naming with support guidance and reproducible community evidence and will be expanded as more codes are discovered and confirmed.
             </p>
             <div className="flex flex-wrap gap-2">
@@ -98,12 +98,12 @@ export function DayzErrorCodesClient() {
       />
 
       {groupedEntries.length === 0 ? (
-        <Card className="rounded-2xl border border-white/10 bg-black/35 p-8 text-center">
-          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 text-neutral-300">
+        <Card className="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-black/35 p-8 text-center">
+          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full border border-gray-200 dark:border-white/10 bg-gray-100 dark:bg-white/5 text-gray-500 dark:text-neutral-300">
             <SearchX size={20} />
           </div>
-          <h3 className="text-xl font-heading text-white">No matching error codes</h3>
-          <p className="mt-2 text-neutral-400 text-sm sm:text-base">
+          <h3 className="text-xl font-heading text-gray-900 dark:text-white">No matching error codes</h3>
+          <p className="mt-2 text-gray-500 dark:text-neutral-400 text-sm sm:text-base">
             Try a different code, title keyword, or reset your active category filter.
           </p>
         </Card>
@@ -111,9 +111,9 @@ export function DayzErrorCodesClient() {
         <div className="space-y-8">
           {groupedEntries.map(([category, entries]) => (
             <section key={category} className="space-y-4">
-              <div className="flex items-center justify-between gap-3 border-b border-white/10 pb-3">
-                <h2 className="text-xl sm:text-2xl font-heading font-semibold text-white">{category}</h2>
-                <span className="font-mono text-xs sm:text-sm uppercase tracking-[0.14em] text-neutral-500">
+              <div className="flex items-center justify-between gap-3 border-b border-gray-200 dark:border-white/10 pb-3">
+                <h2 className="text-xl sm:text-2xl font-heading font-semibold text-gray-900 dark:text-white">{category}</h2>
+                <span className="font-mono text-xs sm:text-sm uppercase tracking-[0.14em] text-gray-400 dark:text-neutral-500">
                   {entries.length} {entries.length === 1 ? 'entry' : 'entries'}
                 </span>
               </div>
@@ -134,10 +134,10 @@ export function DayzErrorCodesClient() {
         </div>
       )}
 
-      <Card className="rounded-2xl border border-white/10 bg-black/35 p-5 sm:p-7">
+      <Card className="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-black/35 p-5 sm:p-7">
         <div className="space-y-4">
-          <h2 className="text-xl sm:text-2xl font-heading font-semibold text-white">References</h2>
-          <p className="text-sm sm:text-base text-neutral-400 leading-relaxed">
+          <h2 className="text-xl sm:text-2xl font-heading font-semibold text-gray-900 dark:text-white">References</h2>
+          <p className="text-sm sm:text-base text-gray-500 dark:text-neutral-400 leading-relaxed">
             Source IDs shown in each code card map to the documents below.
           </p>
 
@@ -147,26 +147,26 @@ export function DayzErrorCodesClient() {
               if (!reference) return null;
 
               return (
-                <div key={reference.id} className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
+                <div key={reference.id} className="rounded-xl border border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/[0.02] p-4">
                   <div className="flex flex-wrap items-center gap-2 mb-2">
                     <span className="font-mono text-xs uppercase tracking-[0.16em] text-red-300">{reference.id}</span>
-                    <span className="text-[10px] sm:text-xs uppercase tracking-[0.16em] text-neutral-500">{reference.type.replace('_', ' ')}</span>
+                    <span className="text-[10px] sm:text-xs uppercase tracking-[0.16em] text-gray-400 dark:text-neutral-500">{reference.type.replace('_', ' ')}</span>
                   </div>
                   <a
                     href={reference.url}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-sm sm:text-base text-neutral-100 hover:text-red-200 transition-colors"
+                    className="text-sm sm:text-base text-gray-800 dark:text-neutral-100 hover:text-red-600 dark:hover:text-red-200 transition-colors"
                   >
                     {reference.title}
                   </a>
-                  <p className="mt-1 text-xs sm:text-sm text-neutral-400">{reference.note}</p>
+                  <p className="mt-1 text-xs sm:text-sm text-gray-500 dark:text-neutral-400">{reference.note}</p>
                   {reference.evidenceQuotes.length > 0 ? (
                     <div className="mt-3 space-y-2">
                       {reference.evidenceQuotes.map((quote) => (
                         <blockquote
                           key={quote}
-                          className="border-l-2 border-red-500/40 pl-3 text-xs sm:text-sm text-neutral-300/90 italic"
+                          className="border-l-2 border-red-500/40 pl-3 text-xs sm:text-sm text-gray-600 dark:text-neutral-300/90 italic"
                         >
                           {quote}
                         </blockquote>
@@ -180,14 +180,14 @@ export function DayzErrorCodesClient() {
         </div>
       </Card>
 
-      <Card className="rounded-2xl border border-white/10 bg-black/35 p-5 sm:p-7">
+      <Card className="rounded-2xl border border-gray-200 dark:border-white/10 bg-white dark:bg-black/35 p-5 sm:p-7">
         <div className="flex items-start gap-4">
           <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-2.5 text-amber-300">
             <AlertTriangle size={18} />
           </div>
           <div className="space-y-3">
-            <h2 className="text-xl sm:text-2xl font-heading font-semibold text-white">Unknown code?</h2>
-            <ul className="space-y-2 text-sm sm:text-base text-neutral-300 leading-relaxed">
+            <h2 className="text-xl sm:text-2xl font-heading font-semibold text-gray-900 dark:text-white">Unknown code?</h2>
+            <ul className="space-y-2 text-sm sm:text-base text-gray-600 dark:text-neutral-300 leading-relaxed">
               <li>Verify game files through Steam and restart your PC.</li>
               <li>Move DayZ to an SSD if possible and close heavy background apps.</li>
               <li>Try joining a different server to identify whether the issue is server-specific.</li>

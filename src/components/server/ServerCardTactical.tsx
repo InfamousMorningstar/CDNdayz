@@ -75,25 +75,25 @@ const ServerCardTactical: React.FC<ServerCardProps> = ({
         const isHardcore = lowerName.includes('hardcore');
 
         if (lowerMap.includes('namalsk') || lowerMap.includes('sakhal')) return { 
-            color: 'text-cyan-400', 
-            bg: 'bg-cyan-950', 
-            bar: 'bg-cyan-400',
+            color: 'text-cyan-700 dark:text-cyan-400', 
+            bg: 'bg-cyan-50 dark:bg-cyan-950/30', 
+            bar: 'bg-cyan-500',
             border: 'group-hover:border-cyan-500/50', 
             icon: Snowflake,
             label: isHardcore ? 'Hardcore Arctic' : 'Arctic Survival'
         };
         if (lowerMap.includes('livonia')) return { 
-            color: 'text-amber-400', 
-            bg: 'bg-amber-950', 
-            bar: 'bg-amber-400',
+            color: 'text-amber-700 dark:text-amber-400', 
+            bg: 'bg-amber-50 dark:bg-amber-950/30', 
+            bar: 'bg-amber-500',
             border: 'group-hover:border-amber-500/50', 
             icon: Trees,
             label: isHardcore ? 'Hardcore Woodland' : 'Woodland Combat'
         };
         if (lowerMap.includes('deer')) return { 
-            color: 'text-emerald-400', 
-            bg: 'bg-emerald-950', 
-            bar: 'bg-emerald-400',
+            color: 'text-emerald-700 dark:text-emerald-400', 
+            bg: 'bg-emerald-50 dark:bg-emerald-950/30', 
+            bar: 'bg-emerald-500',
             border: 'group-hover:border-emerald-500/50', 
             icon: Mountain,
             label: isHardcore ? 'Hardcore Island' : 'Island Operations'
@@ -102,8 +102,8 @@ const ServerCardTactical: React.FC<ServerCardProps> = ({
         // Default (Chernarus etc)
         // Check for specific keywords to customize the default theme
         if (lowerName.includes('deathmatch') || lowerName.includes('pvp')) return {
-             color: 'text-rose-500', 
-            bg: 'bg-rose-950', 
+             color: 'text-rose-700 dark:text-rose-500', 
+            bg: 'bg-rose-50 dark:bg-rose-950/30', 
             bar: 'bg-rose-500',
             border: 'group-hover:border-rose-500/50', 
             icon: Zap,
@@ -111,8 +111,8 @@ const ServerCardTactical: React.FC<ServerCardProps> = ({
         };
 
         return { 
-            color: 'text-red-500', 
-            bg: 'bg-red-950', 
+            color: 'text-red-600 dark:text-red-500', 
+            bg: 'bg-red-50 dark:bg-red-950/30', 
             bar: 'bg-red-500',
             border: 'group-hover:border-red-500/50', 
             icon:  MapIcon,
@@ -123,10 +123,10 @@ const ServerCardTactical: React.FC<ServerCardProps> = ({
     const ThemeIcon = theme.icon;
     const statusText = isOnline ? "Online" : isRestarting ? "Restarting" : "Offline";
     const statusClass = isOnline
-        ? "bg-green-500/20 text-green-300 hover:bg-green-500/30"
+        ? "bg-emerald-100 text-emerald-800 dark:bg-green-500/20 dark:text-green-300 hover:bg-emerald-200 dark:hover:bg-green-500/30"
         : isRestarting
-        ? "bg-amber-500/20 text-amber-300 hover:bg-amber-500/30"
-        : "bg-red-500/20 text-red-300 hover:bg-red-500/30";
+        ? "bg-amber-100 text-amber-800 dark:bg-amber-500/20 dark:text-amber-300 hover:bg-amber-200 dark:hover:bg-amber-500/30"
+        : "bg-red-100 text-red-800 dark:bg-red-500/20 dark:text-red-300 hover:bg-red-200 dark:hover:bg-red-500/30";
 
     // Grid Pattern SVG for background
     const GridPattern = () => (
@@ -141,15 +141,15 @@ const ServerCardTactical: React.FC<ServerCardProps> = ({
     );
 
     return (
-        <div className={`group relative h-full flex flex-col bg-neutral-900 border border-neutral-800 hover:bg-neutral-800/80 transition-all duration-300 ${theme.border}`}>
+        <div className={`group relative h-full flex flex-col bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-800 hover:bg-gray-50 dark:hover:bg-neutral-800/80 transition-all duration-300 ${theme.border}`}>
             {/* Tactical Corners */}
-            <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-white/20 group-hover:border-white/50 transition-colors" />
-            <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-white/20 group-hover:border-white/50 transition-colors" />
-            <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-white/20 group-hover:border-white/50 transition-colors" />
-            <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-white/20 group-hover:border-white/50 transition-colors" />
+            <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-gray-300 group-hover:border-gray-500 dark:border-white/20 dark:group-hover:border-white/50 transition-colors" />
+            <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-gray-300 group-hover:border-gray-500 dark:border-white/20 dark:group-hover:border-white/50 transition-colors" />
+            <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-gray-300 group-hover:border-gray-500 dark:border-white/20 dark:group-hover:border-white/50 transition-colors" />
+            <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-gray-300 group-hover:border-gray-500 dark:border-white/20 dark:group-hover:border-white/50 transition-colors" />
 
             {/* Header / Map Visual */}
-            <div className={`relative h-24 overflow-hidden border-b border-white/5 ${theme.bg} bg-opacity-20`}>
+            <div className={`relative h-24 overflow-hidden border-b border-gray-200 dark:border-white/5 ${theme.bg}`}>
                 <GridPattern />
                 
                 {/* Large Background Icon */}
@@ -159,7 +159,7 @@ const ServerCardTactical: React.FC<ServerCardProps> = ({
                     <button
                         type="button"
                         onClick={handleFavorite}
-                        className={`min-h-9 rounded-full border px-2.5 py-1 text-[10px] uppercase tracking-widest transition-colors ${isFavorite ? 'border-yellow-500/40 bg-yellow-500/15 text-yellow-300' : 'border-white/10 bg-black/30 text-neutral-400 hover:text-white'}`}
+                        className={`min-h-9 rounded-full border px-2.5 py-1 text-[10px] uppercase tracking-widest transition-colors ${isFavorite ? 'border-yellow-500/40 bg-yellow-500/15 text-yellow-600 dark:text-yellow-300' : 'border-gray-200 dark:border-white/10 bg-white/80 dark:bg-black/30 text-gray-500 dark:text-neutral-400 hover:text-gray-900 dark:hover:text-white'}`}
                         aria-label={`${isFavorite ? 'Remove from' : 'Add to'} favourite servers`}
                     >
                         <span className="inline-flex items-center gap-1">
@@ -168,7 +168,7 @@ const ServerCardTactical: React.FC<ServerCardProps> = ({
                         </span>
                     </button>
                      {isOnline && ping && (
-                        <Badge variant="outline" className="bg-black/40 backdrop-blur border-white/10 text-neutral-400 font-mono text-[10px]">
+                        <Badge variant="outline" className="bg-white/80 dark:bg-black/40 backdrop-blur border-gray-200 dark:border-white/10 text-gray-500 dark:text-neutral-400 font-mono text-[10px]">
                             {ping}ms
                         </Badge>
                     )}
@@ -181,8 +181,8 @@ const ServerCardTactical: React.FC<ServerCardProps> = ({
                     <div className={`text-xs font-mono uppercase tracking-widest opacity-60 mb-1 ${theme.color}`}>
                         {theme.label}
                     </div>
-                    <div className="flex items-center gap-2 text-white font-bold font-heading tracking-wide">
-                        <Globe className="w-4 h-4 text-neutral-500" />
+                    <div className="flex items-center gap-2 text-gray-900 dark:text-white font-bold font-heading tracking-wide">
+                        <Globe className="w-4 h-4 text-gray-500 dark:text-neutral-500" />
                         {map}
                     </div>
                 </div>
@@ -191,10 +191,10 @@ const ServerCardTactical: React.FC<ServerCardProps> = ({
             {/* Content Body */}
             <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between gap-4.5">
                 <div>
-                    <h3 className="text-sm sm:text-base md:text-lg font-heading text-white mb-1 group-hover:text-red-500 transition-colors leading-tight whitespace-normal break-words">
+                    <h3 className="text-sm sm:text-base md:text-lg font-heading text-gray-900 dark:text-white mb-1 group-hover:text-red-500 transition-colors leading-tight whitespace-normal break-words">
                         {name}
                     </h3>
-                    <p className="text-[11px] uppercase tracking-wider font-mono text-neutral-500 mb-2">
+                    <p className="text-[11px] uppercase tracking-wider font-mono text-gray-400 dark:text-neutral-500 mb-2">
                         {map} | {statusText}
                     </p>
                     <button
@@ -203,18 +203,18 @@ const ServerCardTactical: React.FC<ServerCardProps> = ({
                         className="group/copy flex items-center gap-2 cursor-pointer w-full sm:w-fit select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/80 rounded-lg px-1 py-1"
                         aria-label={`Copy server connect address for ${name}`}
                     >
-                         <p className={`text-[11px] sm:text-xs uppercase tracking-wider font-mono transition-colors duration-200 break-all text-left ${copied ? "text-green-400" : "text-neutral-500 group-hover:text-neutral-300"}`}>
+                         <p className={`text-[11px] sm:text-xs uppercase tracking-wider font-mono transition-colors duration-200 break-all text-left ${copied ? "text-green-500 dark:text-green-400" : "text-gray-400 dark:text-neutral-500 group-hover:text-gray-600 dark:group-hover:text-neutral-300"}`}>
                             {copied ? "IP COPIED" : connect}
                         </p>
                         <div className={`transition-all duration-300 ${copied ? "opacity-100 scale-100" : "opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0"}`}>
-                             {copied ? <Check className="w-3 h-3 text-green-400" /> : <Copy className="w-3 h-3 text-neutral-400 group-hover/copy:text-white" />}
+                             {copied ? <Check className="w-3 h-3 text-green-400" /> : <Copy className="w-3 h-3 text-gray-400 dark:text-neutral-400 group-hover/copy:text-gray-900 dark:group-hover/copy:text-white" />}
                         </div>
                     </button>
                 </div>
 
                 {/* Population Stats */}
                 <div className="space-y-2 mt-auto">
-                    <div className="flex justify-between text-xs font-mono text-neutral-400">
+                    <div className="flex justify-between text-xs font-mono text-gray-500 dark:text-neutral-400">
                         <span className="flex items-center gap-1.5">
                             <Users className="w-3 h-3" />
                             <span>SURVIVORS</span>
@@ -222,7 +222,7 @@ const ServerCardTactical: React.FC<ServerCardProps> = ({
                         <span>{players} / {maxPlayers}</span>
                     </div>
                     
-                    <div className="relative h-1.5 w-full bg-neutral-800 rounded-full overflow-hidden">
+                    <div className="relative h-1.5 w-full bg-gray-200 dark:bg-neutral-800 rounded-full overflow-hidden">
                         <div 
                             className={`absolute top-0 left-0 h-full transition-all duration-1000 ease-out rounded-full ${theme.bar}`}
                             style={{ width: `${percentage}%` }}
@@ -234,7 +234,7 @@ const ServerCardTactical: React.FC<ServerCardProps> = ({
                     <button
                         type="button"
                         onClick={handleJoin}
-                        className="min-h-9 rounded-full border border-red-500/35 bg-red-500/15 px-2.5 py-1.5 text-xs font-semibold uppercase tracking-widest text-red-200 hover:bg-red-500/25 transition-colors"
+                        className="min-h-9 rounded-full border border-red-500/35 bg-red-500/15 px-2.5 py-1.5 text-xs font-semibold uppercase tracking-widest text-red-700 dark:text-red-200 hover:bg-red-500/25 transition-colors"
                     >
                         <span className="inline-flex items-center gap-1">
                             <Plug className="w-3 h-3" />

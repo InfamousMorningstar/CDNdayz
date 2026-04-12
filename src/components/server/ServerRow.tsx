@@ -51,7 +51,7 @@ export function ServerRow({ name, map, players, maxPlayers, status, ping, connec
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       className={cn(
-        "group relative flex flex-col md:flex-row items-center gap-6 p-5 rounded-xl border border-white/5 bg-neutral-900/40 backdrop-blur-md transition-all duration-300 hover:bg-neutral-900/60",
+        "group relative flex flex-col md:flex-row items-center gap-6 p-5 rounded-xl border border-gray-200 dark:border-white/5 bg-white/70 dark:bg-neutral-900/40 backdrop-blur-md transition-all duration-300 hover:bg-gray-50 dark:hover:bg-neutral-900/60",
         glowBorder
       )}
     >
@@ -71,7 +71,7 @@ export function ServerRow({ name, map, players, maxPlayers, status, ping, connec
         <div className="flex-1 min-w-0 flex flex-col items-center md:items-start text-center md:text-left pl-3 space-y-2">
             <div className="flex items-center gap-3">
                 <div className={cn("w-2.5 h-2.5 rounded-full flex-shrink-0", statusColor, isOnline && "animate-pulse")} />
-                <h3 className="text-xl font-bold text-white tracking-tight group-hover:text-red-400 transition-colors">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white tracking-tight group-hover:text-red-400 transition-colors">
                     {name.replace('CDN ', '')}
                 </h3>
                 {isRestarting && (
@@ -81,19 +81,19 @@ export function ServerRow({ name, map, players, maxPlayers, status, ping, connec
                 )}
             </div>
             
-            <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 text-xs font-medium text-neutral-400 uppercase tracking-wider">
-                <div className="flex items-center gap-1.5 px-2 py-1 bg-white/5 rounded border border-white/5">
-                    <Map className="w-3 h-3 text-neutral-500" />
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 text-xs font-medium text-gray-500 dark:text-neutral-400 uppercase tracking-wider">
+                <div className="flex items-center gap-1.5 px-2 py-1 bg-gray-100 dark:bg-white/5 rounded border border-gray-200 dark:border-white/5">
+                    <Map className="w-3 h-3 text-gray-400 dark:text-neutral-500" />
                     <span>{map}</span>
                 </div>
                 {ping && (
-                   <div className="flex items-center gap-1.5 px-2 py-1 bg-white/5 rounded border border-white/5">
+                   <div className="flex items-center gap-1.5 px-2 py-1 bg-gray-100 dark:bg-white/5 rounded border border-gray-200 dark:border-white/5">
                        <Signal className={cn("w-3 h-3", ping < 60 ? "text-green-500" : ping < 150 ? "text-yellow-500" : "text-red-500")} />
                        <span>{ping}ms</span>
                    </div>
                 )}
-                <div className="hidden sm:flex items-center gap-1.5 px-2 py-1 bg-white/5 rounded border border-white/5">
-                    <Globe className="w-3 h-3 text-neutral-500" />
+                <div className="hidden sm:flex items-center gap-1.5 px-2 py-1 bg-gray-100 dark:bg-white/5 rounded border border-gray-200 dark:border-white/5">
+                    <Globe className="w-3 h-3 text-gray-400 dark:text-neutral-500" />
                     <span>PvE</span>
                 </div>
             </div>
@@ -102,20 +102,20 @@ export function ServerRow({ name, map, players, maxPlayers, status, ping, connec
         {/* Population Stats */}
         <div className="w-full md:w-64 flex flex-col gap-2">
             <div className="flex justify-between items-end px-1">
-                <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-widest flex items-center gap-1.5">
+                <span className="text-[10px] font-bold text-gray-400 dark:text-neutral-500 uppercase tracking-widest flex items-center gap-1.5">
                     <Users className="w-3 h-3" /> Survivors
                 </span>
-                <span className="font-mono text-sm text-white">
+                <span className="font-mono text-sm text-gray-900 dark:text-white">
                     <span className={cn(
                         "font-bold",
-                        percentage > 90 ? "text-red-500" : percentage > 50 ? "text-green-400" : "text-white"
+                        percentage > 90 ? "text-red-500" : percentage > 50 ? "text-green-500 dark:text-green-400" : "text-gray-900 dark:text-white"
                     )}>{players}</span>
-                    <span className="text-neutral-600 mx-1">/</span>
-                    <span className="text-neutral-500">{maxPlayers}</span>
+                    <span className="text-gray-400 dark:text-neutral-600 mx-1">/</span>
+                    <span className="text-gray-400 dark:text-neutral-500">{maxPlayers}</span>
                 </span>
             </div>
             
-            <div className="h-2 w-full bg-neutral-950 rounded-full overflow-hidden border border-white/5 shadow-inner">
+            <div className="h-2 w-full bg-gray-100 dark:bg-neutral-950 rounded-full overflow-hidden border border-gray-200 dark:border-white/5 shadow-inner">
                  <div
                     className={cn(
                         "h-full relative transition-all duration-1000 ease-out",
@@ -138,8 +138,8 @@ export function ServerRow({ name, map, players, maxPlayers, status, ping, connec
                 onClick={handleCopy}
                 disabled={!isOnline}
                 className={cn(
-                    "w-full sm:w-auto sm:min-w-[130px] h-10 border-white/10 hover:border-red-500/50 transition-all font-mono text-xs tracking-widest group/btn relative overflow-hidden",
-                    copied ? "bg-green-500/10 text-green-400 border-green-500/50" : "bg-transparent hover:bg-red-950/20 text-neutral-300 hover:text-white"
+                    "w-full sm:w-auto sm:min-w-[130px] h-10 border-gray-200 dark:border-white/10 hover:border-red-500/50 transition-all font-mono text-xs tracking-widest group/btn relative overflow-hidden",
+                    copied ? "bg-green-500/10 text-green-600 dark:text-green-400 border-green-500/50" : "bg-transparent hover:bg-red-50 dark:hover:bg-red-950/20 text-gray-600 dark:text-neutral-300 hover:text-gray-900 dark:hover:text-white"
                 )}
              >
                  <span className="relative z-10 flex items-center gap-2">
