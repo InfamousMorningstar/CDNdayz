@@ -321,8 +321,8 @@ export function Navbar() {
                       aria-current={isActive ? 'page' : undefined}
                       onClick={() => setIsOpen(false)}
                       className={cn(
-                        'block font-heading font-black uppercase leading-none tracking-tight touch-manipulation select-none transition-colors duration-100',
-                        'text-[min(8vw,2.8rem)]',
+                        'block font-heading font-black uppercase leading-none tracking-tight touch-manipulation select-none transition-colors duration-100 text-center',
+                        'text-[min(6.5vw,2.8rem)]',
                         isActive
                           ? 'text-gray-900 dark:text-white [text-shadow:none] dark:[text-shadow:0_0_40px_rgba(255,255,255,0.28),0_2px_0_rgba(0,0,0,0.8)]'
                           : 'text-gray-400 dark:text-neutral-500 hover:text-gray-900 dark:hover:text-white'
