@@ -1,6 +1,6 @@
 export const DISCORD_INVITE_URL =
 	process.env.NEXT_PUBLIC_DISCORD_INVITE_URL ||
-	'https://discord.gg/SBDHAJ9Bdg';
+	'https://discord.gg/X9ezaj8vEY';
 
 export const DISCORD_SUPPORT_CHANNEL_URL =
 	process.env.NEXT_PUBLIC_DISCORD_SUPPORT_CHANNEL_URL ||
