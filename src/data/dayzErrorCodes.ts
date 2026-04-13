@@ -204,6 +204,30 @@ export const dayzErrorCodes: DayzErrorCode[] = [
     sourceIds: ["R1", "R2", "R3", "R5", "R6", "R8", "R9", "R11"]
   },
   {
+    code: "0x00040093",
+    title: "VE_DATA",
+    category: "Mods / Verification",
+    description: "Client was kicked because a mod's local version is older than the version installed on the server. DayZ verifies PBO file versions on join and rejects clients whose mod files do not match the server's current build.",
+    commonCauses: [
+      "Steam Workshop failed to auto-update the mod before you launched (common with large mod packs or slow connections)",
+      "The server updated the mod (e.g. Dabs Framework) after you last launched the game without restarting Steam",
+      "Steam download cache is stale or corrupted, preventing the mod from updating",
+      "Multiple DayZ launchers (DayZ SA Launcher, DayZ Launcher, vanilla launcher) can each maintain their own mod state — one may have an outdated copy",
+      "The mod was updated by the author and the server admin applied it immediately, leaving a short window where clients are behind"
+    ],
+    recommendedFixes: [
+      "Fully close DayZ and Steam, then reopen Steam and wait for Workshop updates to complete before relaunching",
+      "In Steam, go to Library → DayZ → Workshop → find the outdated mod (e.g. Dabs Framework) and manually check for updates or click Subscribe again to force a re-download",
+      "Clear the Steam download cache: Steam menu → Settings → Downloads → Clear Download Cache, then relaunch Steam",
+      "Unsubscribe from the mod in the Steam Workshop page, let Steam fully remove it, then resubscribe and re-download a clean copy",
+      "Verify DayZ game file integrity via Steam (Library → DayZ → Properties → Installed Files → Verify integrity of game files) — this can also refresh Workshop mod metadata",
+      "Recommended quickest fix: open DayZ SA Launcher (DZSA), go to the Mods tab, and use Verify on all installed mods — DZSA will detect and re-download any outdated or mismatched files, after which the game will load correctly",
+      "If using DayZ SA Launcher or a third-party launcher, use its built-in 'Update Mods' or 'Check for Updates' function before joining the server"
+    ],
+    status: "documented",
+    sourceIds: ["R1", "R3", "USER_REPORT"]
+  },
+  {
     code: "0x00040074",
     title: "VE_EXTRA_MOD",
     category: "Mods / Verification",

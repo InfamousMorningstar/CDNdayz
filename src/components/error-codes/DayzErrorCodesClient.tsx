@@ -68,7 +68,7 @@ export function DayzErrorCodesClient() {
 
   return (
     <div className="space-y-8 sm:space-y-10">
-      <Card className="rounded-2xl border border-red-500/20 bg-red-50 dark:bg-gradient-to-r dark:from-red-900/25 dark:via-black/40 dark:to-black/40 p-5 sm:p-7">
+      <Card className="rounded-2xl border border-red-500/20 bg-red-50 dark:bg-red-950/75 backdrop-blur-none hover:bg-red-50 dark:hover:bg-red-950/75 hover:shadow-none dark:hover:shadow-none p-5 sm:p-7">
         <div className="space-y-3">
           <div className="flex items-center gap-4">
             <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-2.5 text-red-300 shrink-0">
