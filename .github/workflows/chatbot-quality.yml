@@ -31,7 +31,6 @@ jobs:
 
   e2e-eval:
     runs-on: ubuntu-latest
-    if: ${{ secrets.CHATBOT_EVAL_BASE_URL != '' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -46,6 +45,11 @@ jobs:
         run: npm ci
 
       - name: Run live chatbot e2e evaluation
-        run: npm run chatbot:eval:e2e
+        run: |
+          if [ -z "$CHATBOT_EVAL_BASE_URL" ]; then
+            echo "CHATBOT_EVAL_BASE_URL secret not set; skipping e2e eval."
+            exit 0
+          fi
+          npm run chatbot:eval:e2e
         env:
           CHATBOT_EVAL_BASE_URL: ${{ secrets.CHATBOT_EVAL_BASE_URL }}
