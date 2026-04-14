@@ -30,6 +30,12 @@
     "shouldFallback": false
   },
   {
+    "id": "rules-trader-distance",
+    "question": "Can I build a base 800m from the trader?",
+    "expectedPaths": ["/rules", "/rules/building"],
+    "shouldFallback": false
+  },
+  {
     "id": "offtopic-weather",
     "question": "What is the weather in Tokyo today?",
     "expectedPaths": [],

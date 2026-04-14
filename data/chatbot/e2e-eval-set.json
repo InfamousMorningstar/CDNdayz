@@ -54,6 +54,12 @@
     "expectedSourcePaths": ["/servers"]
   },
   {
+    "id": "e2e-trader-distance",
+    "question": "Can I build a base 800m from the trader?",
+    "shouldFallback": false,
+    "expectedSourcePaths": ["/rules", "/rules/building"]
+  },
+  {
     "id": "e2e-offtopic",
     "question": "Who won the 1986 World Cup?",
     "shouldFallback": true,
