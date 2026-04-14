@@ -72,6 +72,47 @@ function chunkText(input, maxChunkSize, overlap) {
   return chunks;
 }
 
+async function fetchWipeDatesSummary() {
+  const wipeApiUrl = `${baseUrl}/api/wipe-dates`;
+
+  try {
+    const response = await fetch(wipeApiUrl, {
+      headers: {
+        'User-Agent': 'CDN-Website-Indexer/1.0'
+      }
+    });
+
+    if (!response.ok) {
+      return null;
+    }
+
+    const payload = await response.json();
+    if (!payload || typeof payload !== 'object') {
+      return null;
+    }
+
+    const nextWipeWindow = typeof payload.nextWipeWindow === 'string' ? payload.nextWipeWindow : '';
+    const wipeCycleMonths = payload.wipeCycleMonths;
+    const estimatedDaysUntilWipe = payload.estimatedDaysUntilWipe;
+    const lastWipeDate = typeof payload.lastWipeDate === 'string' ? payload.lastWipeDate : '';
+    const notes = typeof payload.notes === 'string' ? payload.notes : '';
+
+    const lines = [
+      'Wipe data from website API:',
+      nextWipeWindow ? `Next projected wipe window: ${nextWipeWindow}.` : '',
+      typeof wipeCycleMonths === 'number' ? `Wipe cycle: every ${wipeCycleMonths} months.` : '',
+      typeof estimatedDaysUntilWipe === 'number' ? `Estimated days until wipe: ${estimatedDaysUntilWipe}.` : '',
+      lastWipeDate ? `Last wipe date: ${lastWipeDate}.` : '',
+      notes ? `Notes: ${notes}.` : ''
+    ].filter(Boolean);
+
+    const summary = normalizeWhitespace(lines.join(' '));
+    return summary.length > 0 ? summary : null;
+  } catch {
+    return null;
+  }
+}
+
 async function fetchPage(candidates) {
   for (const candidate of candidates) {
     const url = `${baseUrl}${candidate}`;
@@ -99,6 +140,7 @@ async function fetchPage(candidates) {
 
 async function main() {
   const collected = [];
+  const wipeDatesSummary = await fetchWipeDatesSummary();
 
   for (const target of pageTargets) {
     const result = await fetchPage(target.candidates);
@@ -112,7 +154,11 @@ async function main() {
     $('script, style, noscript').remove();
 
     const title = normalizeWhitespace($('title').first().text()) || target.label;
-    const mainText = normalizeWhitespace($('main').text()) || normalizeWhitespace($('body').text());
+    let mainText = normalizeWhitespace($('main').text()) || normalizeWhitespace($('body').text());
+
+    if (target.label === 'wipes' && wipeDatesSummary) {
+      mainText = normalizeWhitespace(`${mainText} ${wipeDatesSummary}`);
+    }
 
     if (!mainText || mainText.length < 120) {
       console.warn(`Skipping ${result.path}: content too short after parsing.`);
