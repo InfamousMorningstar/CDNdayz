@@ -32,14 +32,82 @@ type LiveServerStatus = {
   status: 'online' | 'offline' | 'restarting';
 };
 
-function isMostActiveServerQuestion(message: string): boolean {
-  const normalized = message.toLowerCase();
+type RealtimeIntent = 'top_server_population' | 'none';
 
-  return (
-    (normalized.includes('most') || normalized.includes('highest') || normalized.includes('top')) &&
-    (normalized.includes('active') || normalized.includes('population') || normalized.includes('players') || normalized.includes('people')) &&
-    normalized.includes('server')
-  );
+function isMostActiveServerQuestion(message: string): boolean {
+  const normalized = message.toLowerCase().replace(/[^a-z0-9\s]/g, ' ');
+  const hasRankingWord = /\b(most|highest|top|busiest)\b/.test(normalized);
+  const hasPopulationWord = /\b(active|population|populated|players|people|full|fullest)\b/.test(normalized);
+  const hasServerWord = /\b(server|servers)\b/.test(normalized);
+
+  return hasRankingWord && hasPopulationWord && hasServerWord;
+}
+
+function isPotentialTopPopulationQuestion(message: string): boolean {
+  const normalized = message.toLowerCase().replace(/[^a-z0-9\s]/g, ' ');
+  const hasRankingWord = /\b(most|highest|top|busiest|fullest|max)\b/.test(normalized);
+  const hasPopulationWord = /\b(active|activity|population|populated|players|people|online|full)\b/.test(normalized);
+  const hasServerContext = /\b(server|servers|which one|which|right now|currently|at the moment)\b/.test(normalized);
+
+  return (hasRankingWord && hasPopulationWord) || (hasPopulationWord && hasServerContext);
+}
+
+async function detectRealtimeIntent(message: string): Promise<RealtimeIntent> {
+  if (isMostActiveServerQuestion(message)) {
+    return 'top_server_population';
+  }
+
+  if (!isPotentialTopPopulationQuestion(message)) {
+    return 'none';
+  }
+
+  let client;
+  try {
+    client = getOpenAIClient();
+  } catch {
+    return 'none';
+  }
+
+  const modelCandidates = getChatModelCandidates();
+  const classifierSystemPrompt = [
+    'Classify whether the user is asking for the single CDN server with the highest live player activity right now.',
+    'Return exactly one token: TOP_SERVER_POPULATION or NONE.',
+    'Use TOP_SERVER_POPULATION for phrasings like most populated server, most active server, highest players, busiest server now, which one has most people online.',
+    'Return NONE for all other intents.'
+  ].join('\n');
+
+  for (const model of modelCandidates) {
+    try {
+      const completion = await client.chat.completions.create({
+        model,
+        temperature: 0,
+        max_tokens: 8,
+        messages: [
+          {
+            role: 'system',
+            content: classifierSystemPrompt
+          },
+          {
+            role: 'user',
+            content: message
+          }
+        ]
+      });
+
+      const label = completion.choices[0]?.message?.content?.trim().toUpperCase();
+      if (label === 'TOP_SERVER_POPULATION') {
+        return 'top_server_population';
+      }
+
+      if (label === 'NONE') {
+        return 'none';
+      }
+    } catch {
+      // Try next model candidate if classifier call fails.
+    }
+  }
+
+  return 'none';
 }
 
 async function resolveMostActiveServerAnswer(origin: string) {
@@ -150,7 +218,8 @@ export async function POST(request: NextRequest) {
   recordQuestion(message);
 
   try {
-    if (isMostActiveServerQuestion(message)) {
+    const realtimeIntent = await detectRealtimeIntent(message);
+    if (realtimeIntent === 'top_server_population') {
       const realtime = await resolveMostActiveServerAnswer(request.nextUrl.origin);
       return NextResponse.json({
         ...realtime,

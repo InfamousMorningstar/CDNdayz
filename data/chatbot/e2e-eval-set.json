@@ -36,6 +36,12 @@
     "expectedSourcePaths": ["/servers"]
   },
   {
+    "id": "e2e-most-populated-server",
+    "question": "Which server is most populated right now?",
+    "shouldFallback": false,
+    "expectedSourcePaths": ["/servers"]
+  },
+  {
     "id": "e2e-offtopic",
     "question": "Who won the 1986 World Cup?",
     "shouldFallback": true,
