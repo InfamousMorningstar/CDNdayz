@@ -42,6 +42,7 @@ type TrafficCompareRow = {
 };
 
 type RealtimeIntent = 'top_server_population' | 'top_server_traffic_over_time' | 'none';
+type RealtimeIntentClassification = RealtimeIntent | 'unknown';
 
 function isMostActiveServerQuestion(message: string): boolean {
   const normalized = message.toLowerCase().replace(/[^a-z0-9\s]/g, ' ');
@@ -72,6 +73,12 @@ function isTopTrafficOverTimeQuestion(message: string): boolean {
 }
 
 async function detectRealtimeIntent(message: string): Promise<RealtimeIntent> {
+  const modelIntent = await classifyRealtimeIntentWithModel(message);
+  if (modelIntent !== 'unknown') {
+    return modelIntent;
+  }
+
+  // If classification is unavailable, fall back to deterministic guards.
   if (isMostActiveServerQuestion(message)) {
     return 'top_server_population';
   }
@@ -80,15 +87,15 @@ async function detectRealtimeIntent(message: string): Promise<RealtimeIntent> {
     return 'top_server_traffic_over_time';
   }
 
-  if (!isPotentialTopPopulationQuestion(message)) {
-    return 'none';
-  }
+  return 'none';
+}
 
+async function classifyRealtimeIntentWithModel(message: string): Promise<RealtimeIntentClassification> {
   let client;
   try {
     client = getOpenAIClient();
   } catch {
-    return 'none';
+    return 'unknown';
   }
 
   const modelCandidates = getChatModelCandidates();
@@ -135,7 +142,11 @@ async function detectRealtimeIntent(message: string): Promise<RealtimeIntent> {
     }
   }
 
-  return 'none';
+  if (isPotentialTopPopulationQuestion(message)) {
+    return 'top_server_population';
+  }
+
+  return 'unknown';
 }
 
 async function resolveMostActiveServerAnswer(origin: string) {
