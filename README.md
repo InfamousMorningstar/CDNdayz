@@ -1,264 +1,358 @@
-# CDN DayZ Website
+<div align="center">
 
-Companion website for the CDN DayZ community, built with Next.js App Router and TypeScript.
+# 🌐 CDN DayZ — Community Website
 
-## Status
+**The official companion website for the CDN DayZ community.**  
+Built with Next.js · Powered by OpenAI · Deployed on Vercel
 
-Production.
+[![Status](https://img.shields.io/badge/Status-Production-22c55e?style=for-the-badge&logoColor=white)](https://cdndayz.com)
+[![Next.js](https://img.shields.io/badge/Next.js-15-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)](https://nextjs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
+[![Vercel](https://img.shields.io/badge/Deployed_on-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com)
+[![OpenAI](https://img.shields.io/badge/AI-GPT--5.4_mini-412991?style=for-the-badge&logo=openai&logoColor=white)](https://openai.com)
+[![Private](https://img.shields.io/badge/Access-Private_Community-DC143C?style=for-the-badge&logoColor=white)]()
 
-Live site: https://dayzcdn.com
+---
 
-## Changes Since Last README Update (April 2026)
+**🔗 Live Site: [cdndayz.com](https://cdndayz.com)**
 
-- Released DayZ Error Codes hub at `/dayz-error-codes` with:
-    - Search and category filtering.
-    - Per-code troubleshooting guidance.
-    - Source-linked references and inline evidence quotes.
-    - Coverage disclaimer for in-progress code discovery.
-- Added and refined admin/content workflows:
-    - Admin authentication and editor components for news/wipe management.
-    - Expanded API route coverage for admin/news/server/wipe flows.
-- Improved global design consistency and UX:
-    - Standardized page headers and badge patterns.
-    - Updated typography system and heading behavior.
-    - Refined navbar centering/alignment behavior.
-    - Polished card/button styling and section spacing rhythm.
-- Expanded legal/support surface:
-    - Added legal pages (privacy/terms) and supporting footer/nav updates.
-    - Continued rules/store/events/features content refinement.
-- Released Server Intelligence dashboard and data platform:
-    - Added server population intelligence UI on `/servers` with trend, volatility, peak/off-peak windows, and weekday traffic behavior.
-    - Added BI-style historical charting and "Tonight at a glance" summary blocks.
-    - Added cross-server comparison and reliability/anomaly indicators.
-    - Added forecast panel with confidence derived from available historical coverage.
-- Shipped data-quality hardening for intelligence metrics:
-    - Removed synthetic/guessed values from analytics and chart rendering.
-    - Enforced data sufficiency checks before producing trend/forecast signals.
-    - Preserved missing buckets as missing data (no zero-fill fabrication).
-- Added intelligence data retention and efficiency improvements:
-    - Implemented hybrid retention: raw snapshots for recent windows plus hourly aggregates for long-range history.
-    - Added single aggregated intelligence endpoint to reduce client fanout and free-tier load.
-    - Added response caching on intelligence API layer.
-- Store and support workflow overhaul:
-    - Removed public prices from catalog listings.
-    - Replaced category cards with tabbed catalog flow.
-    - Routed categories to channel-specific Discord support/store links.
-    - Added support CTA directly within rules experience.
-- Discord UX update (global):
-    - Added app-first Discord open behavior across major CTAs and support links.
-    - Uses Discord deep-link attempt first, then web fallback.
+</div>
 
-## Recent Updates (March 2026)
+---
 
-- Information architecture updates:
-    - Features page renamed to Features & Mods.
-    - Live server mods overview moved to Features & Mods.
-    - Rules navigation updated to Rules & FAQ.
-- Rules and FAQ expansion:
-    - Added dedicated Hardcore rules callout (HC exceptions).
-    - Added categorized, collapsible FAQ (Gameplay, Rules, Technical).
-    - Copy updates to use Donation Items/Gear terminology.
-- Server and home UX updates:
-    - Added HC warning context under the Servers heading.
-    - Improved mobile behavior for home news ticker.
-    - Refined homepage section order for clearer progression.
-- Accessibility and semantics:
-    - Added skip-to-content link.
-    - Improved focus-visible styling and keyboard interactions.
-    - Added section labeling and active navigation semantics.
-    - Standardized external links with rel="noopener noreferrer".
-- Platform and reliability:
-    - Added canonical Discord link constant used across pages.
-    - Added live launcher-verified mod endpoint at /api/server-mods.
-    - Tuned cinematic background behavior for reduced-motion and lower-capability contexts.
+## 🗺️ Overview
 
-## Core Capabilities
+CDN DayZ is a **private, production-grade community website** — not a public template. It provides members with real-time server intelligence, AI-assisted support, store access, rules, wipe information, and more. It is deployed exclusively for the **CDN DayZ** community at [cdndayz.com](https://cdndayz.com).
 
-- Live server status via GameDig-backed API route.
-- Server Intelligence system with historical snapshots, analytics, forecasts, anomalies, and compare views.
-- Live per-server mod inventory via DayZSA query proxy route.
-- Official DayZ news and ticker integration.
-- Rules hub with hardcore policy visibility and FAQ support.
-- Store, join guide, wipe information, and legal pages.
+> [!IMPORTANT]
+> This is a **private community website**. It is not designed to run on personal machines or be self-hosted by others.
 
-## Server Intelligence System
+---
 
-### What it Provides
+## ✨ Feature Highlights
 
-- Near-real-time server population telemetry and history exploration.
-- Actionable analytics for admins and players:
-    - Current trend and momentum context.
-    - Peak/off-peak hour windows.
-    - Volatility and reliability markers.
-    - Day-of-week traffic profiles.
-    - Cross-server comparison snapshots.
+<table>
+<tr>
+<td width="50%">
+
+### 🤖 CDN AI Concierge
+AI-powered support chatbot using a full RAG pipeline — answers questions about servers, wipes, rules, store, mods, and error codes directly from indexed site content.
+
+</td>
+<td width="50%">
+
+### 📊 Server Intelligence
+Live population tracking with trend analysis, peak windows, weekday traffic profiles, cross-server comparison, and forecast panels.
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+### 🔴 Live Server Status
+Real-time server population, map info, and online/offline state powered by GameDig queries.
+
+</td>
+<td width="50%">
+
+### 🗓️ Wipe Information
+Next wipe dates, schedules, and history — surfaced in the chat and on the wipe info page.
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+### 🛠️ Error Codes Hub
+Full searchable DayZ error code database with troubleshooting guidance, source references, and category filtering.
+
+</td>
+<td width="50%">
+
+### 📰 News & Ticker
+Official DayZ news feed integration with a live scrolling news ticker on the homepage.
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+### 📋 Rules & FAQ
+Community rules hub with hardcore policy callouts, collapsible FAQ (Gameplay, Rules, Technical), and support CTA.
+
+</td>
+<td width="50%">
+
+### 🛒 Store & Support
+Tabbed store catalog routed to channel-specific Discord links, with direct support CTAs throughout.
+
+</td>
+</tr>
+</table>
+
+---
+
+## 🤖 CDN AI Concierge
+
+[![Chatbot](https://img.shields.io/badge/Model-GPT--5.4_mini-412991?style=flat-square&logo=openai&logoColor=white)]()
+[![Retrieval](https://img.shields.io/badge/Retrieval-Hybrid_RAG-22c55e?style=flat-square)]()
+[![Grounding](https://img.shields.io/badge/Grounding-Validated-3178C6?style=flat-square)]()
+[![Intent](https://img.shields.io/badge/Intent_Routing-ChatGPT--First-f59e0b?style=flat-square)]()
+
+The CDN AI Concierge is a **production-grade RAG chatbot** embedded site-wide. It understands natural language questions about the community and answers using only content indexed from the actual website — no hallucination, no guessing.
+
+### How It Works
+
+```
+User Message
+     │
+     ▼
+┌─────────────────────────────────┐
+│   ChatGPT Intent Classifier     │  ← Understands natural phrasing
+│  TOP_SERVER_POPULATION          │
+│  TOP_SERVER_TRAFFIC_OVER_TIME   │
+│  NONE → RAG path                │
+└────────────┬────────────────────┘
+             │
+    ┌─────────┴──────────┐
+    │                    │
+    ▼                    ▼
+Live API Fast-Path    RAG Pipeline
+/api/servers         Query Rewriting
+/api/population      Hybrid Retrieval
+ /intelligence       Grounding Check
+                     GPT Completion
+```
+
+### Intelligence Architecture
+
+| Layer | Technology | Purpose |
+|---|---|---|
+| **Intent Router** | GPT-5.4 mini (classifier) | Semantic intent detection before retrieval |
+| **Query Rewriting** | `lib/chatbot/query.ts` | Synonym expansion + intent-aware enrichment |
+| **Retrieval** | BM25-style lexical + cosine embedding | Hybrid scoring with route-priority and rerank |
+| **Grounding** | `lib/chatbot/grounding.ts` | Rejects answers with < 45% sentence coverage |
+| **Completion** | GPT-5.4 mini | Strict, grounded website Q&A responses |
+| **Fallback** | Deterministic heuristics | Covers edge cases when model classifier returns `NONE` |
+
+> [!NOTE]
+> If information is not found in the indexed site content, the chatbot responds with exactly: **"I couldn't find that on the website."** — never a guess.
+
+### Retrieval Scoring Formula
+
+```
+score = (embedding × 0.45) + (lexical × 0.35) + (title × 0.12) + (density × 0.08) + routeBoost
+```
+
+### Quality & CI
+
+[![CI](https://img.shields.io/badge/CI-GitHub_Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white)]()
+[![Eval](https://img.shields.io/badge/Retrieval_Eval-6%2F6_Passing-22c55e?style=flat-square)]()
+
+- **Offline retrieval eval** — `npm run chatbot:eval` against `data/chatbot/eval-set.json`
+- **Live E2E eval** — `npm run chatbot:eval:e2e` against the deployed site endpoint
+- **GitHub Actions workflow** — `.github/workflows/chatbot-quality.yml` runs on schedule (every 12h) and manual trigger
+
+### Security
+
+- `OPENAI_API_KEY` is server-only. Never exposed to the client.
+- No secrets hardcoded in source. `.env.local` is gitignored.
+- Analytics endpoint protected by `CHATBOT_ANALYTICS_TOKEN` bearer auth.
+- Rate limiting is applied per runtime instance.
+
+---
+
+## 📊 Server Intelligence System
+
+[![KV](https://img.shields.io/badge/Storage-Vercel_KV_(Redis)-DC382D?style=flat-square&logo=redis&logoColor=white)]()
+[![Scheduler](https://img.shields.io/badge/Scheduler-GitHub_Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white)]()
+[![Data Policy](https://img.shields.io/badge/Data_Policy-No_Fabrication-f59e0b?style=flat-square)]()
 
 ### Data Pipeline
 
-- Snapshot collection runs on a schedule (GitHub Actions every 5 minutes).
-- Scheduler triggers protected snapshot API route with secret authentication.
-- API queries active server populations and persists normalized records.
+```
+GitHub Actions (every 5 min)
+         │
+         ▼ POST /api/population/snapshot  (auth required)
+         │
+         ▼ GameDig query → normalize
+         │
+         ▼ Vercel KV write
+              ├── Raw snapshots   (short/mid-range, high fidelity)
+              └── Hourly buckets  (long-range, up to 1 year)
+```
 
-### Storage and Retention
+### Analytics Surface (Servers Page)
 
-- Backed by Redis/KV (`@vercel/kv`).
-- Hybrid model:
-    - Raw snapshots retained for short-to-mid windows (high fidelity recent analysis).
-    - Hourly aggregate buckets retained for long windows (up to 1 year).
-- Read path merges raw + hourly sources to keep charts accurate while controlling storage/compute costs.
+| Panel | Description |
+|---|---|
+| **Population Chart** | BI-style historical population with time-range selector |
+| **Stat Cards** | Current trend, momentum, volatility, reliability |
+| **Tonight at a Glance** | Peak/off-peak hour windows and current session context |
+| **Weekday Traffic** | Day-of-week traffic profiles and best-time-to-play signals |
+| **Forecast Panel** | Forward-looking estimate with confidence based on sample depth |
+| **Server Compare** | Side-by-side cross-server snapshot comparison |
 
-### Analytics Rules
+> [!WARNING]
+> **No synthetic data.** Missing historical buckets are represented as missing — never filled with zeros or estimated values. Forecasts are only generated when historical coverage is sufficient.
 
-- Data-first policy: no synthetic trend or forecast generation when data coverage is insufficient.
-- Forecast confidence is based on historical sample depth and consistency.
-- Missing historical intervals are represented as missing, not converted into fake zero values.
+---
 
-### UI Surface
+## 🌐 Pages
 
-- Lives in the Servers page intelligence section.
-- Includes:
-    - BI-style charting for historical population behavior.
-    - Stat cards and insight summaries.
-    - Forecast panel and weekday traffic panel.
-    - Server comparison panel.
+| Route | Description |
+|---|---|
+| `/` | Homepage with news ticker, server list, quick start, and CTAs |
+| `/servers` | Live server status + full intelligence dashboard |
+| `/wipe-info` | Next wipe dates, schedules, and history |
+| `/features` | Features & Mods overview with live mod inventory |
+| `/rules` | Community rules, hardcore policy, and collapsible FAQ |
+| `/new-player` | New player onboarding guide |
+| `/join` | How to join guide and launcher instructions |
+| `/store` | Tabbed store catalog with Discord-routed support links |
+| `/events` | Community events |
+| `/dayz-error-codes` | Searchable error codes hub with troubleshooting guidance |
+| `/legal/privacy` | Privacy policy |
+| `/legal/terms` | Terms of service |
 
-### Operational Notes
+---
 
-- Snapshot scheduling is performed outside platform cron constraints using GitHub Actions.
-- Intelligence API is aggregated and cached to reduce client request fanout and free-tier pressure.
-- Storage path includes diagnostics/fail-fast handling to prevent silent persistence failures.
+## 🔌 API Reference
 
-## API Endpoints
+<details>
+<summary><strong>Server & Mods</strong></summary>
 
-- GET /api/servers
-    - Returns server status, population, and map data.
-- GET /api/server-mods
-    - Returns launcher-verified mod details per server.
-- GET /api/news
-    - Returns official DayZ news feed data.
-- GET /api/news-ticker
-    - Returns condensed ticker content for hero/news bar.
-- POST /api/population/snapshot
-    - Protected endpoint used by scheduler to capture population snapshots.
-- GET /api/population/history/[serverId]
-    - Returns historical population points for the selected server and time window.
-- GET /api/population/intelligence
-    - Returns aggregated intelligence payload used by the Servers intelligence UI.
-- POST /api/chatbot
-     - Website-only support assistant using retrieval + OpenAI. Answers only from indexed website content.
-- GET /api/chatbot/analytics
-     - Returns top chatbot questions (requires `Authorization: Bearer <CHATBOT_ANALYTICS_TOKEN>`).
+| Endpoint | Method | Description |
+|---|---|---|
+| `/api/servers` | `GET` | Live server status, population, and map data |
+| `/api/server-mods` | `GET` | Launcher-verified mod details per server |
 
-## Website Chatbot (RAG)
+</details>
 
-This project includes a production-ready website support chatbot:
+<details>
+<summary><strong>News</strong></summary>
 
-- UI widget: fixed chat launcher and panel on all pages.
-- Secure API: server-only OpenAI usage (`/api/chatbot`).
-- Model: ChatGPT-5.4 mini for concise website Q&A responses.
-- RAG retrieval: local vector index stored at `data/chatbot/site-index.json` (gitignored).
-- Hybrid retrieval + rerank: combines lexical, title, route-priority, and optional embedding scores.
-- Query rewriting: expands user phrasing into retrieval-friendly terms before search.
-- Grounding validation: weakly supported generated answers are rejected and replaced with fallback.
-- Strict behavior: if content is not found in indexed pages, response is exactly:
-  - `I couldn't find that on the website.`
+| Endpoint | Method | Description |
+|---|---|---|
+| `/api/news` | `GET` | Official DayZ news feed |
+| `/api/news-ticker` | `GET` | Condensed ticker content for homepage bar |
 
-### Security Model
+</details>
 
-- `OPENAI_API_KEY` is used only on the server.
-- No secrets are hardcoded in source.
-- `.env.local` stays uncommitted.
-- `.env.example` contains placeholders only.
+<details>
+<summary><strong>Population Intelligence</strong></summary>
 
-### Setup
+| Endpoint | Method | Description |
+|---|---|---|
+| `/api/population/snapshot` | `POST` | 🔒 Protected — scheduler captures population snapshots |
+| `/api/population/history/[serverId]` | `GET` | Historical population points for time-window selection |
+| `/api/population/intelligence` | `GET` | Aggregated intelligence payload (cached) |
 
-1. Install dependencies:
-    - `npm install`
-2. Copy env template and set values:
-    - `cp .env.example .env.local` (PowerShell: `Copy-Item .env.example .env.local`)
-3. Set at minimum:
-    - `OPENAI_API_KEY`
-    - `WEBSITE_BASE_URL` (your canonical site URL)
-4. Build the retrieval index:
-    - `npm run chatbot:index`
-5. Run app:
-    - `npm run dev`
+</details>
 
-Production note:
+<details>
+<summary><strong>Wipe Dates</strong></summary>
 
-- `npm run build` now runs `npm run chatbot:index` automatically before `next build`.
-- Ensure `WEBSITE_BASE_URL` is available in the build environment (for example in Vercel Environment Variables).
-- `OPENAI_API_KEY` is still required at runtime for response generation.
+| Endpoint | Method | Description |
+|---|---|---|
+| `/api/wipe-dates` | `GET` | Next and recent wipe dates for all servers |
 
-### Refreshing Website Knowledge
+</details>
 
-Whenever website content changes, rebuild the index:
+<details>
+<summary><strong>AI Concierge</strong></summary>
 
-- `npm run chatbot:index`
-- Then run retrieval quality checks:
-    - `npm run chatbot:eval`
+| Endpoint | Method | Description |
+|---|---|---|
+| `/api/chatbot` | `POST` | Website support assistant — RAG + OpenAI |
+| `/api/chatbot/analytics` | `GET` | 🔒 Top questions (requires `Authorization: Bearer <token>`) |
 
-This re-crawls configured website pages, re-chunks content, and overwrites the local index file.
+</details>
 
-### Evaluation Harness
+<details>
+<summary><strong>Admin</strong></summary>
 
-- Eval dataset: `data/chatbot/eval-set.json`
-- Eval script: `scripts/eval-chatbot-retrieval.mjs`
-- Goal: maintain/improve pass rate before deploying chatbot changes.
+| Endpoint | Method | Description |
+|---|---|---|
+| `/api/admin/auth` | `POST` | Admin authentication |
+| `/api/news` | `POST/PUT/DELETE` | 🔒 News content management |
+| `/api/wipe-dates` | `POST/PUT/DELETE` | 🔒 Wipe date management |
 
-### Live E2E Chatbot Evaluation
+</details>
 
-- E2E dataset: `data/chatbot/e2e-eval-set.json`
-- E2E script: `scripts/eval-chatbot-e2e.mjs`
-- Run locally against a deployed site:
-    - `CHATBOT_EVAL_BASE_URL=https://cdndayz.com npm run chatbot:eval:e2e`
+---
 
-GitHub Actions workflow:
+## 🛠️ Tech Stack
 
-- File: `.github/workflows/chatbot-quality.yml`
-- Runs retrieval eval + live e2e eval (when secret is configured).
-- Required repository secret:
-    - `CHATBOT_EVAL_BASE_URL` (your deployed site URL, e.g. `https://cdndayz.com`)
+<div align="center">
 
-### Routed Intent Priority
+[![Next.js](https://img.shields.io/badge/Next.js_15-App_Router-000000?style=for-the-badge&logo=nextdotjs)](https://nextjs.org)
+[![React](https://img.shields.io/badge/React-Latest-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://typescriptlang.org)
+[![Tailwind](https://img.shields.io/badge/Tailwind_CSS-3-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
 
-Before vector retrieval, the chatbot applies lightweight keyword routing:
+[![Framer Motion](https://img.shields.io/badge/Framer_Motion-Animation-FF0055?style=for-the-badge&logo=framer&logoColor=white)](https://www.framer.com/motion/)
+[![Recharts](https://img.shields.io/badge/Recharts-Charts-22c55e?style=for-the-badge)](https://recharts.org)
+[![Lucide](https://img.shields.io/badge/Lucide_React-Icons-f59e0b?style=for-the-badge)](https://lucide.dev)
 
-- Status questions prioritize `/status` (fallback `/servers`)
-- Wipe questions prioritize `/wipes` (fallback `/wipe-info`)
-- Error questions prioritize `/dayz-error-codes`
-- Join/mods questions prioritize `/join`
+[![OpenAI](https://img.shields.io/badge/OpenAI_SDK-4-412991?style=for-the-badge&logo=openai&logoColor=white)](https://platform.openai.com)
+[![GameDig](https://img.shields.io/badge/GameDig-Server_Query-DC2626?style=for-the-badge)](https://github.com/gamedig/node-gamedig)
+[![Vercel KV](https://img.shields.io/badge/Vercel_KV-Redis%2FKV-000000?style=for-the-badge&logo=vercel)](https://vercel.com/storage/kv)
+[![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-CI%2FCD-2088FF?style=for-the-badge&logo=githubactions&logoColor=white)](https://github.com/features/actions)
 
-### Deployment Notes
+</div>
 
-- Set environment variables in your hosting provider (for example Vercel project settings).
-- Run `npm run chatbot:index` as part of a deployment pipeline step, or run it on a trusted server and deploy the generated index artifact outside git.
-- The analytics endpoint is protected by `CHATBOT_ANALYTICS_TOKEN`.
-- Rate limiting is in-memory per runtime instance; for globally shared limits in multi-instance environments, swap to Redis/KV-based counters.
+---
 
-## Tech Stack
+## 🔄 Changelog
 
-- Next.js 15 (App Router)
-- React + TypeScript
-- Tailwind CSS
-- Framer Motion
-- Lucide React
-- GameDig
-- Recharts
-- @vercel/kv (Redis/KV)
-- GitHub Actions (snapshot scheduler)
+<details>
+<summary><strong>April 2026 — AI Concierge & Error Codes</strong></summary>
 
-## Notes
+- Shipped **CDN AI Concierge** chatbot with full RAG pipeline:
+  - Hybrid lexical + embedding retrieval with BM25-style scoring and rerank
+  - ChatGPT-first semantic intent routing (`classifyRealtimeIntentWithModel`)
+  - Query rewriting, grounding validation, model fallback chain
+  - Live API fast-paths for real-time server population questions
+  - Offline + live E2E evaluation harness with GitHub Actions CI
+- Released **DayZ Error Codes** hub at `/dayz-error-codes`:
+  - Search and category filtering
+  - Per-code troubleshooting guidance with source-linked references
+- Admin content workflows: news/wipe editor components, expanded API coverage
+- Global design system polish: standardized headers, badge patterns, typography, card/button spacing
 
-- Some server/UI data is intentionally cached in API routes to reduce upstream load.
-- If upstream launcher data is unavailable, mod records are returned with per-server error details instead of failing the entire request.
-- Server Intelligence uses strict data-coverage checks and intentionally avoids guessed analytics output.
-- Discord support/store/invite links are centralized and support app-first open behavior with web fallback.
+</details>
 
-## Usage Notice
+<details>
+<summary><strong>March–April 2026 — Server Intelligence & Store Overhaul</strong></summary>
 
-This website is built specifically for the CDN DayZ community and is not maintained as a public template product.
+- Released **Server Intelligence** dashboard on `/servers`:
+  - Population telemetry, BI-style charting, trend/volatility/reliability indicators
+  - Weekday traffic profiles, forecast panel, cross-server comparison
+  - Hybrid KV retention (raw snapshots + hourly aggregates, up to 1 year)
+  - Data-first policy: no synthetic analytics, no zero-fill fabrication
+- **Store overhaul**: removed public prices, tabbed catalog flow, channel-specific Discord routing
+- **Discord UX**: app-first deep-link behavior across all CTAs with web fallback
+- Expanded legal surface: privacy policy, terms of service, footer/nav integration
 
-If you want a custom website for your own community, reach out to discuss a dedicated build.
+</details>
 
-Built for the CDN DayZ community.
+<details>
+<summary><strong>February–March 2026 — Rules, Accessibility & Platform</strong></summary>
+
+- **Features & Mods** page with live mod inventory via DayZSA query proxy
+- **Rules & FAQ** expansion: hardcore callout, categorized collapsible FAQ, donation terminology
+- Accessibility: skip-to-content, focus-visible styling, keyboard interactions, section labeling
+- Platform: canonical Discord link constants, reduced-motion cinematic background, `rel="noopener noreferrer"` standardization
+
+</details>
+
+---
+
+<div align="center">
+
+**Built exclusively for the CDN DayZ community · [cdndayz.com](https://cdndayz.com)**
+
+</div>
+
