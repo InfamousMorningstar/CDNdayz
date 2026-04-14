@@ -26,19 +26,18 @@ const routeAliasTargets = [
   { label: 'faq', candidates: ['/faq', '/rules'] }
 ];
 
+const excludedRoutePaths = new Set(['/admin']);
+
 const componentFolderRouteMap = {
-  admin: '/admin',
   'error-codes': '/dayz-error-codes',
   events: '/events',
   features: '/features',
   intelligence: '/servers',
-  layout: '/',
   news: '/',
   rules: '/rules',
   sections: '/',
   server: '/servers',
-  store: '/store',
-  ui: '/'
+  store: '/store'
 };
 
 const dataFileRouteMap = {
@@ -138,10 +137,12 @@ async function discoverRouteTargets(dirPath = appDir, routeSegments = []) {
   const hasPage = entries.some((entry) => entry.isFile() && entry.name === 'page.tsx');
   if (hasPage) {
     const routePath = toRoutePath(routeSegments);
-    targets.push({
-      label: formatRouteLabel(routePath),
-      candidates: [routePath]
-    });
+    if (!excludedRoutePaths.has(routePath)) {
+      targets.push({
+        label: formatRouteLabel(routePath),
+        candidates: [routePath]
+      });
+    }
   }
 
   for (const entry of entries) {
@@ -322,12 +323,14 @@ function inferRoutePathFromSourceFile(filePath) {
     const parts = relativeAppPath.split(path.sep);
     const pageIndex = parts.findIndex((part) => part === 'page.tsx');
     if (pageIndex >= 0) {
-      return toRoutePath(parts.slice(0, pageIndex));
+      const routePath = toRoutePath(parts.slice(0, pageIndex));
+      return excludedRoutePaths.has(routePath) ? null : routePath;
     }
 
     const filtered = parts.filter((part) => !part.endsWith('.tsx') && !part.endsWith('.ts'));
     if (filtered.length > 0 && filtered[0] !== 'api') {
-      return toRoutePath(filtered);
+      const routePath = toRoutePath(filtered);
+      return excludedRoutePaths.has(routePath) ? null : routePath;
     }
 
     return '/';
@@ -336,15 +339,15 @@ function inferRoutePathFromSourceFile(filePath) {
   const relativeComponentPath = path.relative(componentsDir, filePath);
   if (!relativeComponentPath.startsWith('..')) {
     const [folderName] = relativeComponentPath.split(path.sep);
-    return componentFolderRouteMap[folderName] || '/';
+    return componentFolderRouteMap[folderName] || null;
   }
 
   const relativeDataPath = path.relative(dataDir, filePath);
   if (!relativeDataPath.startsWith('..')) {
-    return dataFileRouteMap[path.basename(filePath)] || '/';
+    return dataFileRouteMap[path.basename(filePath)] || null;
   }
 
-  return '/';
+  return null;
 }
 
 async function buildSourceSupplementEntries() {
@@ -369,6 +372,10 @@ async function buildSourceSupplementEntries() {
     }
 
     const routePath = inferRoutePathFromSourceFile(filePath);
+    if (!routePath || excludedRoutePaths.has(routePath)) {
+      continue;
+    }
+
     const relativePath = path.relative(process.cwd(), filePath).replace(/\\/g, '/');
     const current = groupedByRoute.get(routePath) || [];
     current.push(`Source file: ${relativePath}`);

@@ -3,31 +3,50 @@
     "id": "e2e-wipe-next-window",
     "question": "When is the next server wipe?",
     "shouldFallback": false,
-    "expectedSourcePaths": ["/wipes", "/wipe-info"]
+    "expectedSourcePaths": ["/wipes", "/wipe-info"],
+    "answerMustIncludeAny": ["wipe", "window", "days"]
   },
   {
     "id": "e2e-wipe-last-date",
     "question": "What was the last wipe date?",
     "shouldFallback": false,
-    "expectedSourcePaths": ["/wipes", "/wipe-info"]
+    "expectedSourcePaths": ["/wipes", "/wipe-info"],
+    "answerMustIncludeAny": ["last wipe", "occurred", "date"]
   },
   {
     "id": "e2e-error-code",
     "question": "What does error 0x00040093 mean?",
     "shouldFallback": false,
-    "expectedSourcePaths": ["/dayz-error-codes"]
+    "expectedSourcePaths": ["/dayz-error-codes"],
+    "answerMustIncludeAny": ["mod", "verification", "older", "server"]
   },
   {
     "id": "e2e-join-mods",
     "question": "How do I join and install mods?",
     "shouldFallback": false,
-    "expectedSourcePaths": ["/join"]
+    "expectedSourcePaths": ["/join"],
+    "answerMustIncludeAny": ["launcher", "mods", "join"]
+  },
+  {
+    "id": "e2e-join-mods-alt",
+    "question": "What's the proper way to get the CDN mods installed?",
+    "shouldFallback": false,
+    "expectedSourcePaths": ["/join"],
+    "answerMustIncludeAny": ["launcher", "mods", "dayz"]
   },
   {
     "id": "e2e-status",
     "question": "Where do I check server status?",
     "shouldFallback": false,
-    "expectedSourcePaths": ["/status", "/servers"]
+    "expectedSourcePaths": ["/status", "/servers"],
+    "answerMustIncludeAny": ["status", "servers", "player count", "online"]
+  },
+  {
+    "id": "e2e-status-alt",
+    "question": "Where do I look to see if CDN servers are online?",
+    "shouldFallback": false,
+    "expectedSourcePaths": ["/status", "/servers"],
+    "answerMustIncludeAny": ["status", "online", "servers"]
   },
   {
     "id": "e2e-most-active-server",
@@ -57,11 +76,99 @@
     "id": "e2e-trader-distance",
     "question": "Can I build a base 800m from the trader?",
     "shouldFallback": false,
-    "expectedSourcePaths": ["/rules", "/rules/building"]
+    "expectedSourcePaths": ["/rules", "/rules/building"],
+    "answerMustIncludeAll": ["1000"],
+    "answerMustIncludeAny": ["no", "not allowed", "cannot"]
+  },
+  {
+    "id": "e2e-trader-distance-make-base",
+    "question": "Can I make my base 800m away from trader?",
+    "shouldFallback": false,
+    "expectedSourcePaths": ["/rules", "/rules/building"],
+    "answerMustIncludeAll": ["1000"],
+    "answerMustIncludeAny": ["no", "not allowed", "cannot"]
+  },
+  {
+    "id": "e2e-trader-distance-allowed",
+    "question": "Is 800 meters from trader allowed for a base?",
+    "shouldFallback": false,
+    "expectedSourcePaths": ["/rules", "/rules/building"],
+    "answerMustIncludeAll": ["1000"],
+    "answerMustIncludeAny": ["no", "not allowed", "cannot"]
+  },
+  {
+    "id": "e2e-ai-mission-distance",
+    "question": "Can I build near AI missions?",
+    "shouldFallback": false,
+    "expectedSourcePaths": ["/rules", "/rules/building"],
+    "answerMustIncludeAll": ["500"],
+    "answerMustIncludeAny": ["no", "not allowed", "cannot"]
+  },
+  {
+    "id": "e2e-pvp-allowed",
+    "question": "Is PvP allowed on CDN?",
+    "shouldFallback": false,
+    "expectedSourcePaths": ["/rules", "/faq"],
+    "answerMustIncludeAny": ["no", "not allowed", "pve"]
+  },
+  {
+    "id": "e2e-report-broken",
+    "question": "Where do I report something broken?",
+    "shouldFallback": false,
+    "expectedSourcePaths": ["/rules", "/faq"],
+    "answerMustIncludeAny": ["discord", "ticket"]
+  },
+  {
+    "id": "e2e-dm-admins",
+    "question": "Can I DM admins if my heli vanished?",
+    "shouldFallback": false,
+    "expectedSourcePaths": ["/rules", "/faq"],
+    "answerMustIncludeAny": ["no", "ticket", "do not dm"]
+  },
+  {
+    "id": "e2e-pbo-errors",
+    "question": "Why am I getting a more recent version or PBO error?",
+    "shouldFallback": false,
+    "expectedSourcePaths": ["/rules", "/dayz-error-codes"],
+    "answerMustIncludeAny": ["mod", "launcher", "outdated", "verification"]
+  },
+  {
+    "id": "e2e-ve-data-title",
+    "question": "What does VE_DATA mean?",
+    "shouldFallback": false,
+    "expectedSourcePaths": ["/dayz-error-codes"],
+    "answerMustIncludeAny": ["mod", "verification", "server", "older"]
+  },
+  {
+    "id": "e2e-launcher-recommendation",
+    "question": "Do I need DZSA or will the normal launcher work?",
+    "shouldFallback": false,
+    "expectedSourcePaths": ["/join", "/rules", "/faq"],
+    "answerMustIncludeAny": ["recommend", "launcher", "dayz"],
+    "answerMustExclude": ["you need the dzsa launcher"]
+  },
+  {
+    "id": "e2e-ticket-contact",
+    "question": "Who do I contact if something breaks?",
+    "shouldFallback": false,
+    "expectedSourcePaths": ["/rules", "/faq"],
+    "answerMustIncludeAny": ["discord", "ticket"]
   },
   {
     "id": "e2e-offtopic",
     "question": "Who won the 1986 World Cup?",
+    "shouldFallback": true,
+    "expectedSourcePaths": []
+  },
+  {
+    "id": "e2e-offtopic-weapon-meta",
+    "question": "What is the best gun in DayZ right now?",
+    "shouldFallback": true,
+    "expectedSourcePaths": []
+  },
+  {
+    "id": "e2e-offtopic-poem",
+    "question": "Write me a poem about space.",
     "shouldFallback": true,
     "expectedSourcePaths": []
   }

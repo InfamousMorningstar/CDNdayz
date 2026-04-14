@@ -148,11 +148,23 @@ score = (embedding × 0.45) + (lexical × 0.35) + (title × 0.12) + (density × 
 ### Quality & CI
 
 [![CI](https://img.shields.io/badge/CI-GitHub_Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white)]()
-[![Eval](https://img.shields.io/badge/Retrieval_Eval-6%2F6_Passing-22c55e?style=flat-square)]()
+[![Retrieval Eval](https://img.shields.io/badge/Retrieval_Eval-17%2F17_Passing-22c55e?style=flat-square)]()
+[![E2E Eval](https://img.shields.io/badge/Local_E2E-25%2F25_Passing-16a34a?style=flat-square)]()
 
 - **Offline retrieval eval** — `npm run chatbot:eval` against `data/chatbot/eval-set.json`
 - **Live E2E eval** — `npm run chatbot:eval:e2e` against the deployed site endpoint
 - **GitHub Actions workflow** — `.github/workflows/chatbot-quality.yml` runs on schedule (every 12h) and manual trigger
+
+### Hardening Highlights (Latest)
+
+- **Intent split for rules**: building-rule intents are separated from general/support rules intents to avoid cross-contamination.
+- **Corpus cleanup**: admin/internal source noise is excluded from chatbot indexing.
+- **Paraphrase resilience**: expanded query rewriting for trader-distance, ticket/support, and VE_DATA/PBO phrasing.
+- **Answer discipline**: improved yes/no handling and recommendation-vs-requirement phrasing safeguards.
+- **Evaluator upgrades**:
+  - Retrieval evaluator aligned closer to runtime fallback logic.
+  - E2E evaluator now supports semantic answer assertions (`must include` / `must exclude`).
+  - E2E evaluator rotates request IP headers to avoid local rate-limit false failures.
 
 ### Security
 
@@ -321,6 +333,13 @@ GitHub Actions (every 5 min)
   - Per-code troubleshooting guidance with source-linked references
 - Admin content workflows: news/wipe editor components, expanded API coverage
 - Global design system polish: standardized headers, badge patterns, typography, card/button spacing
+- Post-launch **chatbot hardening pass**:
+  - Split rules routing into `rules_building` and `rules_general` intent families.
+  - Expanded rules/support/error intent coverage (`ticket`, `DM admins`, `VE_DATA`, `PBO`, `more recent version`).
+  - Strengthened prompt guardrails for binary questions and recommendation phrasing.
+  - Removed admin/index noise from chatbot corpus generation.
+  - Expanded evaluation datasets with broad paraphrases and adversarial prompts.
+  - Latest local validation: **17/17 retrieval** and **25/25 E2E** passing.
 
 </details>
 

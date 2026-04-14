@@ -24,8 +24,20 @@
     "shouldFallback": false
   },
   {
+    "id": "join-mods-alt",
+    "question": "What's the proper way to get the CDN mods installed?",
+    "expectedPaths": ["/join"],
+    "shouldFallback": false
+  },
+  {
     "id": "status-check",
     "question": "Where can I check server status?",
+    "expectedPaths": ["/status", "/servers"],
+    "shouldFallback": false
+  },
+  {
+    "id": "status-check-alt",
+    "question": "Where do I look to see if CDN servers are online?",
     "expectedPaths": ["/status", "/servers"],
     "shouldFallback": false
   },
@@ -33,6 +45,54 @@
     "id": "rules-trader-distance",
     "question": "Can I build a base 800m from the trader?",
     "expectedPaths": ["/rules", "/rules/building"],
+    "shouldFallback": false
+  },
+  {
+    "id": "rules-trader-distance-make-base",
+    "question": "Can I make my base 800m away from trader?",
+    "expectedPaths": ["/rules", "/rules/building"],
+    "shouldFallback": false
+  },
+  {
+    "id": "rules-trader-distance-allowed",
+    "question": "Is 800 meters from trader allowed for a base?",
+    "expectedPaths": ["/rules", "/rules/building"],
+    "shouldFallback": false
+  },
+  {
+    "id": "rules-ai-mission-distance",
+    "question": "Can I build near AI missions?",
+    "expectedPaths": ["/rules", "/rules/building"],
+    "shouldFallback": false
+  },
+  {
+    "id": "rules-pvp",
+    "question": "Is PvP allowed on CDN?",
+    "expectedPaths": ["/rules", "/faq"],
+    "shouldFallback": false
+  },
+  {
+    "id": "rules-report-broken",
+    "question": "Where do I report something broken?",
+    "expectedPaths": ["/rules", "/faq"],
+    "shouldFallback": false
+  },
+  {
+    "id": "rules-dm-admins",
+    "question": "Can I DM admins if my heli vanished?",
+    "expectedPaths": ["/rules", "/faq"],
+    "shouldFallback": false
+  },
+  {
+    "id": "rules-pbo-errors",
+    "question": "Why am I getting a more recent version or PBO error?",
+    "expectedPaths": ["/rules", "/dayz-error-codes"],
+    "shouldFallback": false
+  },
+  {
+    "id": "error-ve-data-title",
+    "question": "What does VE_DATA mean?",
+    "expectedPaths": ["/dayz-error-codes"],
     "shouldFallback": false
   },
   {

@@ -8,6 +8,10 @@ function normalizeBaseUrl(input) {
   return input.trim().replace(/\/$/, '');
 }
 
+function normalizeAnswer(input) {
+  return typeof input === 'string' ? input.toLowerCase().replace(/\s+/g, ' ').trim() : '';
+}
+
 function hasExpectedSource(sources, expectedPaths) {
   if (!Array.isArray(expectedPaths) || expectedPaths.length === 0) {
     return true;
@@ -19,12 +23,37 @@ function hasExpectedSource(sources, expectedPaths) {
   });
 }
 
-async function askChatbot(baseUrl, question) {
+function includesAny(answer, expected) {
+  if (!Array.isArray(expected) || expected.length === 0) {
+    return true;
+  }
+
+  return expected.some((item) => answer.includes(String(item).toLowerCase()));
+}
+
+function includesAll(answer, expected) {
+  if (!Array.isArray(expected) || expected.length === 0) {
+    return true;
+  }
+
+  return expected.every((item) => answer.includes(String(item).toLowerCase()));
+}
+
+function excludesAll(answer, rejected) {
+  if (!Array.isArray(rejected) || rejected.length === 0) {
+    return true;
+  }
+
+  return rejected.every((item) => !answer.includes(String(item).toLowerCase()));
+}
+
+async function askChatbot(baseUrl, question, requestId) {
   const start = Date.now();
   const response = await fetch(`${baseUrl}/api/chatbot`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'X-Forwarded-For': `198.51.100.${(requestId % 200) + 1}`
     },
     body: JSON.stringify({ message: question })
   });
@@ -48,11 +77,13 @@ async function main() {
   let fails = 0;
   let totalLatency = 0;
 
-  for (const testCase of evalSet) {
-    const { response, payload, latencyMs } = await askChatbot(baseUrl, testCase.question);
+  for (let index = 0; index < evalSet.length; index += 1) {
+    const testCase = evalSet[index];
+    const { response, payload, latencyMs } = await askChatbot(baseUrl, testCase.question, index + 1);
     totalLatency += latencyMs;
 
     const answer = typeof payload.answer === 'string' ? payload.answer.trim() : '';
+    const normalizedAnswer = normalizeAnswer(answer);
     const sources = Array.isArray(payload.sources) ? payload.sources : [];
 
     let passed = true;
@@ -84,6 +115,18 @@ async function main() {
       if (!hasExpectedSource(sources, testCase.expectedSourcePaths)) {
         passed = false;
         reasons.push(`missing_expected_source:${(testCase.expectedSourcePaths || []).join('|')}`);
+      }
+      if (!includesAny(normalizedAnswer, testCase.answerMustIncludeAny)) {
+        passed = false;
+        reasons.push(`missing_answer_any:${(testCase.answerMustIncludeAny || []).join('|')}`);
+      }
+      if (!includesAll(normalizedAnswer, testCase.answerMustIncludeAll)) {
+        passed = false;
+        reasons.push(`missing_answer_all:${(testCase.answerMustIncludeAll || []).join('|')}`);
+      }
+      if (!excludesAll(normalizedAnswer, testCase.answerMustExclude)) {
+        passed = false;
+        reasons.push(`contains_rejected_answer_text:${(testCase.answerMustExclude || []).join('|')}`);
       }
     }
 

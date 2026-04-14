@@ -27,4 +27,6 @@ export type RouteIntent =
   | 'wipes'
   | 'errors'
   | 'join'
+  | 'rules_building'
+  | 'rules_general'
   | 'general';
