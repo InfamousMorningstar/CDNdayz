@@ -1,0 +1,38 @@
+[
+  {
+    "id": "e2e-wipe-next-window",
+    "question": "When is the next server wipe?",
+    "shouldFallback": false,
+    "expectedSourcePaths": ["/wipes", "/wipe-info"]
+  },
+  {
+    "id": "e2e-wipe-last-date",
+    "question": "What was the last wipe date?",
+    "shouldFallback": false,
+    "expectedSourcePaths": ["/wipes", "/wipe-info"]
+  },
+  {
+    "id": "e2e-error-code",
+    "question": "What does error 0x00040093 mean?",
+    "shouldFallback": false,
+    "expectedSourcePaths": ["/dayz-error-codes"]
+  },
+  {
+    "id": "e2e-join-mods",
+    "question": "How do I join and install mods?",
+    "shouldFallback": false,
+    "expectedSourcePaths": ["/join"]
+  },
+  {
+    "id": "e2e-status",
+    "question": "Where do I check server status?",
+    "shouldFallback": false,
+    "expectedSourcePaths": ["/status", "/servers"]
+  },
+  {
+    "id": "e2e-offtopic",
+    "question": "Who won the 1986 World Cup?",
+    "shouldFallback": true,
+    "expectedSourcePaths": []
+  }
+]

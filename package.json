@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "chatbot:index": "node scripts/build-site-index.mjs",
-    "chatbot:eval": "node scripts/eval-chatbot-retrieval.mjs"
+    "chatbot:eval": "node scripts/eval-chatbot-retrieval.mjs",
+    "chatbot:eval:e2e": "node scripts/eval-chatbot-e2e.mjs"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.4",

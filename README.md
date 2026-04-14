@@ -206,6 +206,20 @@ This re-crawls configured website pages, re-chunks content, and overwrites the l
 - Eval script: `scripts/eval-chatbot-retrieval.mjs`
 - Goal: maintain/improve pass rate before deploying chatbot changes.
 
+### Live E2E Chatbot Evaluation
+
+- E2E dataset: `data/chatbot/e2e-eval-set.json`
+- E2E script: `scripts/eval-chatbot-e2e.mjs`
+- Run locally against a deployed site:
+    - `CHATBOT_EVAL_BASE_URL=https://cdndayz.com npm run chatbot:eval:e2e`
+
+GitHub Actions workflow:
+
+- File: `.github/workflows/chatbot-quality.yml`
+- Runs retrieval eval + live e2e eval (when secret is configured).
+- Required repository secret:
+    - `CHATBOT_EVAL_BASE_URL` (your deployed site URL, e.g. `https://cdndayz.com`)
+
 ### Routed Intent Priority
 
 Before vector retrieval, the chatbot applies lightweight keyword routing:
