@@ -1,9 +1,10 @@
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
-import { loadEnvConfig } from '@next/env';
+import nextEnv from '@next/env';
 import OpenAI from 'openai';
 import { load } from 'cheerio';
 
+const { loadEnvConfig } = nextEnv;
 loadEnvConfig(process.cwd());
 
 const baseUrl = (process.env.WEBSITE_BASE_URL || '').trim().replace(/\/$/, '');
