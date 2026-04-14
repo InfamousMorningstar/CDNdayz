@@ -22,12 +22,24 @@ jobs:
         run: npm ci
 
       - name: Build retrieval index
-        run: npm run chatbot:index
+        run: |
+          if [ -z "$CHATBOT_EVAL_BASE_URL" ]; then
+            echo "CHATBOT_EVAL_BASE_URL secret not set; skipping retrieval index build."
+            exit 0
+          fi
+          WEBSITE_BASE_URL="$CHATBOT_EVAL_BASE_URL" npm run chatbot:index
         env:
-          WEBSITE_BASE_URL: ${{ secrets.CHATBOT_EVAL_BASE_URL }}
+          CHATBOT_EVAL_BASE_URL: ${{ secrets.CHATBOT_EVAL_BASE_URL }}
 
       - name: Run retrieval evaluation
-        run: npm run chatbot:eval
+        run: |
+          if [ -z "$CHATBOT_EVAL_BASE_URL" ]; then
+            echo "CHATBOT_EVAL_BASE_URL secret not set; skipping retrieval eval."
+            exit 0
+          fi
+          npm run chatbot:eval
+        env:
+          CHATBOT_EVAL_BASE_URL: ${{ secrets.CHATBOT_EVAL_BASE_URL }}
 
   e2e-eval:
     runs-on: ubuntu-latest
