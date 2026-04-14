@@ -32,7 +32,16 @@ type LiveServerStatus = {
   status: 'online' | 'offline' | 'restarting';
 };
 
-type RealtimeIntent = 'top_server_population' | 'none';
+type TrafficCompareRow = {
+  serverId: string;
+  serverName: string;
+  avgPlayers: number;
+  peakPlayers: number;
+  reliabilityScore: number;
+  trendDirection: 'up' | 'down' | 'stable' | 'insufficient';
+};
+
+type RealtimeIntent = 'top_server_population' | 'top_server_traffic_over_time' | 'none';
 
 function isMostActiveServerQuestion(message: string): boolean {
   const normalized = message.toLowerCase().replace(/[^a-z0-9\s]/g, ' ');
@@ -46,15 +55,29 @@ function isMostActiveServerQuestion(message: string): boolean {
 function isPotentialTopPopulationQuestion(message: string): boolean {
   const normalized = message.toLowerCase().replace(/[^a-z0-9\s]/g, ' ');
   const hasRankingWord = /\b(most|highest|top|busiest|fullest|max)\b/.test(normalized);
-  const hasPopulationWord = /\b(active|activity|population|populated|players|people|online|full)\b/.test(normalized);
+  const hasPopulationWord =
+    /\b(active|activity|population|populated|players|people|online|full|popular|traffic)\b/.test(normalized);
   const hasServerContext = /\b(server|servers|which one|which|right now|currently|at the moment)\b/.test(normalized);
 
   return (hasRankingWord && hasPopulationWord) || (hasPopulationWord && hasServerContext);
 }
 
+function isTopTrafficOverTimeQuestion(message: string): boolean {
+  const normalized = message.toLowerCase().replace(/[^a-z0-9\s]/g, ' ');
+  const hasRankingWord = /\b(most|highest|top|best|busiest)\b/.test(normalized);
+  const hasTrafficWord = /\b(popular|traffic|overall|throughout|over\s+time|trend|historical)\b/.test(normalized);
+  const hasServerWord = /\b(server|servers)\b/.test(normalized);
+
+  return hasRankingWord && hasTrafficWord && hasServerWord;
+}
+
 async function detectRealtimeIntent(message: string): Promise<RealtimeIntent> {
   if (isMostActiveServerQuestion(message)) {
     return 'top_server_population';
+  }
+
+  if (isTopTrafficOverTimeQuestion(message)) {
+    return 'top_server_traffic_over_time';
   }
 
   if (!isPotentialTopPopulationQuestion(message)) {
@@ -70,9 +93,10 @@ async function detectRealtimeIntent(message: string): Promise<RealtimeIntent> {
 
   const modelCandidates = getChatModelCandidates();
   const classifierSystemPrompt = [
-    'Classify whether the user is asking for the single CDN server with the highest live player activity right now.',
-    'Return exactly one token: TOP_SERVER_POPULATION or NONE.',
+    'Classify the user request into one label for CDN server activity questions.',
+    'Return exactly one token: TOP_SERVER_POPULATION, TOP_SERVER_TRAFFIC_OVER_TIME, or NONE.',
     'Use TOP_SERVER_POPULATION for phrasings like most populated server, most active server, highest players, busiest server now, which one has most people online.',
+    'Use TOP_SERVER_TRAFFIC_OVER_TIME for phrasings like most popular server, highest traffic, best traffic throughout, most active over time, busiest overall.',
     'Return NONE for all other intents.'
   ].join('\n');
 
@@ -97,6 +121,10 @@ async function detectRealtimeIntent(message: string): Promise<RealtimeIntent> {
       const label = completion.choices[0]?.message?.content?.trim().toUpperCase();
       if (label === 'TOP_SERVER_POPULATION') {
         return 'top_server_population';
+      }
+
+      if (label === 'TOP_SERVER_TRAFFIC_OVER_TIME') {
+        return 'top_server_traffic_over_time';
       }
 
       if (label === 'NONE') {
@@ -171,6 +199,69 @@ async function resolveMostActiveServerAnswer(origin: string) {
   };
 }
 
+async function resolveTopTrafficServerAnswer(origin: string) {
+  const response = await fetch(`${origin}/api/population/intelligence?range=7d`, {
+    headers: {
+      'User-Agent': 'CDN-AI-Concierge/1.0'
+    },
+    cache: 'no-store'
+  });
+
+  if (!response.ok) {
+    throw new Error(`Population intelligence lookup failed with ${response.status}`);
+  }
+
+  const payload = (await response.json()) as {
+    compareRows?: TrafficCompareRow[];
+    generatedAt?: number;
+  };
+
+  const rows = Array.isArray(payload.compareRows) ? payload.compareRows : [];
+  if (rows.length === 0) {
+    return {
+      answer: FALLBACK_NOT_FOUND_MESSAGE,
+      sources: [],
+      confidence: 0
+    };
+  }
+
+  const ranked = [...rows].sort((a, b) => {
+    if (b.avgPlayers !== a.avgPlayers) return b.avgPlayers - a.avgPlayers;
+    if (b.peakPlayers !== a.peakPlayers) return b.peakPlayers - a.peakPlayers;
+    if (b.reliabilityScore !== a.reliabilityScore) return b.reliabilityScore - a.reliabilityScore;
+    return a.serverName.localeCompare(b.serverName);
+  });
+
+  const top = ranked[0];
+  if (!top) {
+    return {
+      answer: FALLBACK_NOT_FOUND_MESSAGE,
+      sources: [],
+      confidence: 0
+    };
+  }
+
+  const generatedAtText = payload.generatedAt
+    ? new Date(payload.generatedAt).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
+    : null;
+
+  const answer = generatedAtText
+    ? `${top.serverName} has the highest overall traffic across the last 7 days with an average of ${top.avgPlayers} players (peak ${top.peakPlayers}, snapshot ${generatedAtText}).`
+    : `${top.serverName} has the highest overall traffic across the last 7 days with an average of ${top.avgPlayers} players (peak ${top.peakPlayers}).`;
+
+  return {
+    answer,
+    sources: [
+      {
+        title: 'Servers & Analytics',
+        url: `${origin}/servers`,
+        path: '/servers'
+      }
+    ],
+    confidence: 0.96
+  };
+}
+
 function normalizeUserMessage(raw: unknown): string {
   if (typeof raw !== 'string') {
     return '';
@@ -223,6 +314,14 @@ export async function POST(request: NextRequest) {
       const realtime = await resolveMostActiveServerAnswer(request.nextUrl.origin);
       return NextResponse.json({
         ...realtime,
+        routeIntent: 'status'
+      });
+    }
+
+    if (realtimeIntent === 'top_server_traffic_over_time') {
+      const traffic = await resolveTopTrafficServerAnswer(request.nextUrl.origin);
+      return NextResponse.json({
+        ...traffic,
         routeIntent: 'status'
       });
     }
