@@ -24,6 +24,85 @@ type ChatRequestBody = {
   message?: unknown;
 };
 
+type LiveServerStatus = {
+  id: string;
+  name: string;
+  players: number;
+  maxPlayers: number;
+  status: 'online' | 'offline' | 'restarting';
+};
+
+function isMostActiveServerQuestion(message: string): boolean {
+  const normalized = message.toLowerCase();
+
+  return (
+    (normalized.includes('most') || normalized.includes('highest') || normalized.includes('top')) &&
+    (normalized.includes('active') || normalized.includes('population') || normalized.includes('players') || normalized.includes('people')) &&
+    normalized.includes('server')
+  );
+}
+
+async function resolveMostActiveServerAnswer(origin: string) {
+  const response = await fetch(`${origin}/api/servers`, {
+    headers: {
+      'User-Agent': 'CDN-AI-Concierge/1.0'
+    },
+    cache: 'no-store'
+  });
+
+  if (!response.ok) {
+    throw new Error(`Server status lookup failed with ${response.status}`);
+  }
+
+  const payload = (await response.json()) as LiveServerStatus[];
+  if (!Array.isArray(payload) || payload.length === 0) {
+    return {
+      answer: FALLBACK_NOT_FOUND_MESSAGE,
+      sources: [],
+      confidence: 0
+    };
+  }
+
+  const online = payload.filter((server) => server.status === 'online');
+  const candidates = online.length > 0 ? online : payload;
+
+  const ranked = [...candidates].sort((a, b) => {
+    if (b.players !== a.players) return b.players - a.players;
+    if (b.maxPlayers !== a.maxPlayers) return b.maxPlayers - a.maxPlayers;
+    return a.name.localeCompare(b.name);
+  });
+
+  const top = ranked[0];
+  if (!top) {
+    return {
+      answer: FALLBACK_NOT_FOUND_MESSAGE,
+      sources: [],
+      confidence: 0
+    };
+  }
+
+  const fetchedAtHeader = response.headers.get('x-server-fetched-at');
+  const fetchedAtText = fetchedAtHeader
+    ? new Date(Number(fetchedAtHeader)).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
+    : null;
+
+  const answer = fetchedAtText
+    ? `${top.name} currently has the most active players right now at ${top.players}/${top.maxPlayers} (snapshot ${fetchedAtText}).`
+    : `${top.name} currently has the most active players right now at ${top.players}/${top.maxPlayers}.`;
+
+  return {
+    answer,
+    sources: [
+      {
+        title: 'Servers & Analytics',
+        url: `${origin}/servers`,
+        path: '/servers'
+      }
+    ],
+    confidence: 0.99
+  };
+}
+
 function normalizeUserMessage(raw: unknown): string {
   if (typeof raw !== 'string') {
     return '';
@@ -71,6 +150,14 @@ export async function POST(request: NextRequest) {
   recordQuestion(message);
 
   try {
+    if (isMostActiveServerQuestion(message)) {
+      const realtime = await resolveMostActiveServerAnswer(request.nextUrl.origin);
+      return NextResponse.json({
+        ...realtime,
+        routeIntent: 'status'
+      });
+    }
+
     const index = await loadWebsiteIndex();
     const client = getOpenAIClient();
     const rewrittenQuery = rewriteQueryForRetrieval(message);
