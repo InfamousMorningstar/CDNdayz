@@ -1,25 +1,18 @@
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import nextEnv from '@next/env';
-import OpenAI from 'openai';
 import { load } from 'cheerio';
 
 const { loadEnvConfig } = nextEnv;
 loadEnvConfig(process.cwd());
 
 const baseUrl = (process.env.WEBSITE_BASE_URL || '').trim().replace(/\/$/, '');
-const apiKey = process.env.OPENAI_API_KEY;
-const embeddingModel = process.env.OPENAI_EMBEDDING_MODEL || 'text-embedding-3-small';
 const outputPath = path.join(process.cwd(), 'data/chatbot/site-index.json');
 const chunkSize = 1200;
 const overlapSize = 220;
 
 if (!baseUrl) {
   throw new Error('WEBSITE_BASE_URL is required. Example: https://dayzcdn.com');
-}
-
-if (!apiKey) {
-  throw new Error('OPENAI_API_KEY is required to build embeddings.');
 }
 
 const pageTargets = [
@@ -105,7 +98,6 @@ async function fetchPage(candidates) {
 }
 
 async function main() {
-  const client = new OpenAI({ apiKey });
   const collected = [];
 
   for (const target of pageTargets) {
@@ -146,46 +138,20 @@ async function main() {
     throw new Error('No website content was indexed. Check WEBSITE_BASE_URL and page availability.');
   }
 
-  const batchSize = 50;
-  const embeddedChunks = [];
-
-  for (let index = 0; index < collected.length; index += batchSize) {
-    const batch = collected.slice(index, index + batchSize);
-
-    const response = await client.embeddings.create({
-      model: embeddingModel,
-      input: batch.map((chunk) => chunk.content)
-    });
-
-    batch.forEach((chunk, localIndex) => {
-      const embedding = response.data[localIndex]?.embedding;
-      if (!embedding) {
-        throw new Error(`Missing embedding for chunk ${chunk.id}`);
-      }
-
-      embeddedChunks.push({
-        ...chunk,
-        embedding
-      });
-    });
-
-    console.info(`Embedded ${Math.min(index + batchSize, collected.length)}/${collected.length} chunks`);
-  }
-
   const output = {
     version: 1,
     builtAt: new Date().toISOString(),
     baseUrl,
-    embeddingModel,
+    embeddingModel: null,
     chunkSize,
     overlapSize,
-    chunks: embeddedChunks
+    chunks: collected
   };
 
   await fs.mkdir(path.dirname(outputPath), { recursive: true });
   await fs.writeFile(outputPath, JSON.stringify(output, null, 2), 'utf8');
 
-  console.info(`Done. Wrote ${embeddedChunks.length} chunks to ${outputPath}`);
+  console.info(`Done. Wrote ${collected.length} chunks to ${outputPath}`);
 }
 
 main().catch((error) => {

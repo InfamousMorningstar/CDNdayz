@@ -14,6 +14,31 @@ import { RetrievedChunk, RouteIntent, WebsiteIndex } from '@/lib/chatbot/types';
 let cachedIndex: WebsiteIndex | null = null;
 let cachedIndexPath = '';
 
+function tokenize(input: string): string[] {
+  return input
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .split(/\s+/)
+    .filter((token) => token.length >= 3);
+}
+
+function lexicalScore(query: string, content: string): number {
+  const queryTokens = new Set(tokenize(query));
+  if (queryTokens.size === 0) {
+    return 0;
+  }
+
+  const contentTokens = new Set(tokenize(content));
+  let overlap = 0;
+  queryTokens.forEach((token) => {
+    if (contentTokens.has(token)) {
+      overlap += 1;
+    }
+  });
+
+  return overlap / queryTokens.size;
+}
+
 function cosineSimilarity(a: number[], b: number[]): number {
   if (a.length !== b.length || a.length === 0) {
     return 0;
@@ -74,7 +99,7 @@ export async function loadWebsiteIndex(): Promise<WebsiteIndex> {
 
 export function retrieveRelevantChunks(params: {
   query: string;
-  queryEmbedding: number[];
+  queryEmbedding?: number[];
   index: WebsiteIndex;
   topK?: number;
 }): {
@@ -89,7 +114,10 @@ export function retrieveRelevantChunks(params: {
   const topK = params.topK ?? RETRIEVAL_TOP_K;
   const scored = params.index.chunks
     .map<RetrievedChunk>((chunk) => {
-      const similarity = cosineSimilarity(params.queryEmbedding, chunk.embedding);
+      const similarity =
+        params.queryEmbedding && chunk.embedding
+          ? cosineSimilarity(params.queryEmbedding, chunk.embedding)
+          : lexicalScore(params.query, `${chunk.title}\n${chunk.content}`);
       const routeBoost = scoreRouteBoost(chunk.path, routeIntent);
       return {
         ...chunk,

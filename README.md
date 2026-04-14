@@ -184,7 +184,8 @@ This project includes a production-ready website support chatbot:
 Production note:
 
 - `npm run build` now runs `npm run chatbot:index` automatically before `next build`.
-- Ensure `OPENAI_API_KEY`, `OPENAI_EMBEDDING_MODEL`, and `WEBSITE_BASE_URL` are available in the build environment (for example in Vercel Environment Variables).
+- Ensure `WEBSITE_BASE_URL` is available in the build environment (for example in Vercel Environment Variables).
+- `OPENAI_API_KEY` is still required at runtime for response generation.
 
 ### Refreshing Website Knowledge
 

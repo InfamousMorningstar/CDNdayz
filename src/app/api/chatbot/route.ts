@@ -70,15 +70,16 @@ export async function POST(request: NextRequest) {
   try {
     const index = await loadWebsiteIndex();
     const client = getOpenAIClient();
+    let queryEmbedding: number[] | undefined;
 
-    const embeddingResponse = await client.embeddings.create({
-      model: getEmbeddingModel(),
-      input: message
-    });
-
-    const queryEmbedding = embeddingResponse.data[0]?.embedding;
-    if (!queryEmbedding) {
-      throw new Error('Missing embedding result from OpenAI.');
+    try {
+      const embeddingResponse = await client.embeddings.create({
+        model: getEmbeddingModel(),
+        input: message
+      });
+      queryEmbedding = embeddingResponse.data[0]?.embedding;
+    } catch (embeddingError) {
+      console.warn('[chatbot.retrieval] embedding fallback to lexical', embeddingError);
     }
 
     const retrieval = retrieveRelevantChunks({
@@ -177,9 +178,14 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('[chatbot.api] failed', error);
 
+    const errorCode = (error as { code?: string } | null)?.code;
+    const isQuotaError = errorCode === 'insufficient_quota';
+
     return NextResponse.json(
       {
-        error: 'Chatbot is temporarily unavailable.',
+        error: isQuotaError
+          ? 'Chatbot is temporarily unavailable because the AI API quota is exhausted.'
+          : 'Chatbot is temporarily unavailable.',
         answer: FALLBACK_NOT_FOUND_MESSAGE,
         sources: []
       },

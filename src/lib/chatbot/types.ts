@@ -4,7 +4,7 @@ export type IndexedChunk = {
   url: string;
   path: string;
   content: string;
-  embedding: number[];
+  embedding?: number[];
 };
 
 export type WebsiteIndex = {
