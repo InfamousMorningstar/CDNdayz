@@ -6,7 +6,7 @@ import {
   buildSnippetContext,
   buildStrictSystemPrompt,
   checkRateLimit,
-  getChatModel,
+  getChatModelCandidates,
   getClientIp,
   getEmbeddingModel,
   getOpenAIClient,
@@ -105,21 +105,42 @@ export async function POST(request: NextRequest) {
 
     const context = buildSnippetContext(retrieval.chunks);
 
-    const completion = await client.chat.completions.create({
-      model: getChatModel(),
-      temperature: 0,
-      max_tokens: 320,
-      messages: [
-        {
-          role: 'system',
-          content: buildStrictSystemPrompt()
-        },
-        {
-          role: 'user',
-          content: `QUESTION:\n${message}\n\nWEBSITE_SNIPPETS:\n${context}`
+    let completion: Awaited<ReturnType<typeof client.chat.completions.create>> | null = null;
+    let completionError: unknown = null;
+
+    const modelCandidates = getChatModelCandidates();
+    const requestedModel = modelCandidates[0];
+
+    for (const model of modelCandidates) {
+      try {
+        completion = await client.chat.completions.create({
+          model,
+          temperature: 0,
+          max_tokens: 320,
+          messages: [
+            {
+              role: 'system',
+              content: buildStrictSystemPrompt()
+            },
+            {
+              role: 'user',
+              content: `QUESTION:\n${message}\n\nWEBSITE_SNIPPETS:\n${context}`
+            }
+          ]
+        });
+
+        if (model !== requestedModel) {
+          console.warn('[chatbot.api] fallback model used', { requested: requestedModel, selected: model });
         }
-      ]
-    });
+        break;
+      } catch (error) {
+        completionError = error;
+      }
+    }
+
+    if (!completion) {
+      throw completionError instanceof Error ? completionError : new Error('Failed to generate chat completion.');
+    }
 
     const answer = completion.choices[0]?.message?.content?.trim() || FALLBACK_NOT_FOUND_MESSAGE;
     const safeAnswer = answer.length > 1200 ? `${answer.slice(0, 1200)}...` : answer;

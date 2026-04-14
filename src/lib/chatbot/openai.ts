@@ -23,6 +23,13 @@ export function getChatModel(): string {
   return process.env.OPENAI_CHAT_MODEL || DEFAULT_CHAT_MODEL;
 }
 
+export function getChatModelCandidates(): string[] {
+  const requested = getChatModel();
+  const fallbacks = ['gpt-5-mini', 'gpt-4o-mini'];
+
+  return Array.from(new Set([requested, ...fallbacks]));
+}
+
 export function getEmbeddingModel(): string {
   return process.env.OPENAI_EMBEDDING_MODEL || DEFAULT_EMBEDDING_MODEL;
 }
