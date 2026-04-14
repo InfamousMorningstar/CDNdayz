@@ -187,7 +187,7 @@ export default function WipeInfoPage() {
                         Our staff will verify your donation date and restore your purchased perks on the fresh server.
                     </p>
                     <p className="italic text-gray-400 dark:text-neutral-500">
-                        Note: This applies to "permanent" store items like Custom Bases and Priority Queue. 
+                        Note: This applies to "permanent" store items like Clothing and Vehicles. 
                         Consumables that were already used may not be eligible.
                     </p>
                 </div>
