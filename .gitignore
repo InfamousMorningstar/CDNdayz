@@ -25,6 +25,9 @@ yarn-error.log*
 # local env files
 .env*.local
 
+# generated chatbot retrieval index
+/data/chatbot/site-index.json
+
 # vercel
 .vercel
 

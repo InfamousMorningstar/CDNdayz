@@ -144,6 +144,66 @@ Live site: https://dayzcdn.com
     - Returns historical population points for the selected server and time window.
 - GET /api/population/intelligence
     - Returns aggregated intelligence payload used by the Servers intelligence UI.
+- POST /api/chatbot
+     - Website-only support assistant using retrieval + OpenAI. Answers only from indexed website content.
+- GET /api/chatbot/analytics
+     - Returns top chatbot questions (requires `Authorization: Bearer <CHATBOT_ANALYTICS_TOKEN>`).
+
+## Website Chatbot (RAG)
+
+This project includes a production-ready website support chatbot:
+
+- UI widget: fixed chat launcher and panel on all pages.
+- Secure API: server-only OpenAI usage (`/api/chatbot`).
+- Model: ChatGPT-5.4 mini for concise website Q&A responses.
+- RAG retrieval: local vector index stored at `data/chatbot/site-index.json` (gitignored).
+- Strict behavior: if content is not found in indexed pages, response is exactly:
+  - `I couldn't find that on the website.`
+
+### Security Model
+
+- `OPENAI_API_KEY` is used only on the server.
+- No secrets are hardcoded in source.
+- `.env.local` stays uncommitted.
+- `.env.example` contains placeholders only.
+
+### Setup
+
+1. Install dependencies:
+    - `npm install`
+2. Copy env template and set values:
+    - `cp .env.example .env.local` (PowerShell: `Copy-Item .env.example .env.local`)
+3. Set at minimum:
+    - `OPENAI_API_KEY`
+    - `WEBSITE_BASE_URL` (your canonical site URL)
+4. Build the retrieval index:
+    - `npm run chatbot:index`
+5. Run app:
+    - `npm run dev`
+
+### Refreshing Website Knowledge
+
+Whenever website content changes, rebuild the index:
+
+- `npm run chatbot:index`
+
+This re-crawls the configured website pages, re-chunks content, regenerates embeddings, and overwrites the local index file.
+
+### Routed Intent Priority
+
+Before vector retrieval, the chatbot applies lightweight keyword routing:
+
+- Status questions prioritize `/status` (fallback `/servers`)
+- Wipe questions prioritize `/wipes` (fallback `/wipe-info`)
+- Error questions prioritize `/dayz-error-codes`
+- Join/mods questions prioritize `/join`
+
+### Deployment Notes
+
+- Set environment variables in your hosting provider (for example Vercel project settings).
+- Run `npm run chatbot:index` as part of a deployment pipeline step, or run it on a trusted server and deploy the generated index artifact outside git.
+- The analytics endpoint is protected by `CHATBOT_ANALYTICS_TOKEN`.
+- Rate limiting is in-memory per runtime instance; for globally shared limits in multi-instance environments, swap to Redis/KV-based counters.
 
 ## Tech Stack
 

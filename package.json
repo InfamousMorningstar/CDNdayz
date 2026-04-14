@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "chatbot:index": "node scripts/build-site-index.mjs"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.4",
@@ -20,6 +21,7 @@
     "iconv-lite": "^0.7.2",
     "lucide-react": "latest",
     "next": "latest",
+    "openai": "^4.104.0",
     "react": "latest",
     "react-dom": "latest",
     "recharts": "^3.8.1",

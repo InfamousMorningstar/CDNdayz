@@ -1,0 +1,193 @@
+import { promises as fs } from 'node:fs';
+import path from 'node:path';
+import { loadEnvConfig } from '@next/env';
+import OpenAI from 'openai';
+import { load } from 'cheerio';
+
+loadEnvConfig(process.cwd());
+
+const baseUrl = (process.env.WEBSITE_BASE_URL || '').trim().replace(/\/$/, '');
+const apiKey = process.env.OPENAI_API_KEY;
+const embeddingModel = process.env.OPENAI_EMBEDDING_MODEL || 'text-embedding-3-small';
+const outputPath = path.join(process.cwd(), 'data/chatbot/site-index.json');
+const chunkSize = 1200;
+const overlapSize = 220;
+
+if (!baseUrl) {
+  throw new Error('WEBSITE_BASE_URL is required. Example: https://dayzcdn.com');
+}
+
+if (!apiKey) {
+  throw new Error('OPENAI_API_KEY is required to build embeddings.');
+}
+
+const pageTargets = [
+  { label: 'homepage', candidates: ['/'] },
+  { label: 'status', candidates: ['/status', '/servers'] },
+  { label: 'wipes', candidates: ['/wipes', '/wipe-info'] },
+  { label: 'dayz error codes', candidates: ['/dayz-error-codes'] },
+  { label: 'join', candidates: ['/join'] },
+  { label: 'rules', candidates: ['/rules'] },
+  { label: 'faq', candidates: ['/faq', '/rules'] }
+];
+
+function normalizeWhitespace(value) {
+  return value.replace(/\s+/g, ' ').trim();
+}
+
+function chunkText(input, maxChunkSize, overlap) {
+  const paragraphs = input
+    .split(/\n{2,}/)
+    .map((part) => normalizeWhitespace(part))
+    .filter((part) => part.length > 40);
+
+  const chunks = [];
+  let current = '';
+
+  for (const paragraph of paragraphs) {
+    const candidate = current ? `${current}\n\n${paragraph}` : paragraph;
+
+    if (candidate.length <= maxChunkSize) {
+      current = candidate;
+      continue;
+    }
+
+    if (current) {
+      chunks.push(current);
+    }
+
+    if (paragraph.length <= maxChunkSize) {
+      current = paragraph;
+      continue;
+    }
+
+    let start = 0;
+    while (start < paragraph.length) {
+      const end = Math.min(start + maxChunkSize, paragraph.length);
+      chunks.push(paragraph.slice(start, end));
+      start += maxChunkSize - overlap;
+    }
+
+    current = '';
+  }
+
+  if (current) {
+    chunks.push(current);
+  }
+
+  return chunks;
+}
+
+async function fetchPage(candidates) {
+  for (const candidate of candidates) {
+    const url = `${baseUrl}${candidate}`;
+
+    try {
+      const response = await fetch(url, {
+        headers: {
+          'User-Agent': 'CDN-Website-Indexer/1.0'
+        }
+      });
+
+      if (!response.ok) {
+        continue;
+      }
+
+      const html = await response.text();
+      return { html, url, path: candidate };
+    } catch {
+      // Skip candidate and try next one.
+    }
+  }
+
+  return null;
+}
+
+async function main() {
+  const client = new OpenAI({ apiKey });
+  const collected = [];
+
+  for (const target of pageTargets) {
+    const result = await fetchPage(target.candidates);
+
+    if (!result) {
+      console.warn(`Skipping ${target.label}: no reachable path in ${target.candidates.join(', ')}`);
+      continue;
+    }
+
+    const $ = load(result.html);
+    $('script, style, noscript').remove();
+
+    const title = normalizeWhitespace($('title').first().text()) || target.label;
+    const mainText = normalizeWhitespace($('main').text()) || normalizeWhitespace($('body').text());
+
+    if (!mainText || mainText.length < 120) {
+      console.warn(`Skipping ${result.path}: content too short after parsing.`);
+      continue;
+    }
+
+    const chunks = chunkText(mainText, chunkSize, overlapSize);
+
+    chunks.forEach((content, index) => {
+      collected.push({
+        id: `${result.path === '/' ? 'home' : result.path.replace(/^\//, '').replace(/\//g, '-')}-${index + 1}`,
+        title,
+        url: result.url,
+        path: result.path,
+        content
+      });
+    });
+
+    console.info(`Indexed ${result.path} -> ${chunks.length} chunks`);
+  }
+
+  if (collected.length === 0) {
+    throw new Error('No website content was indexed. Check WEBSITE_BASE_URL and page availability.');
+  }
+
+  const batchSize = 50;
+  const embeddedChunks = [];
+
+  for (let index = 0; index < collected.length; index += batchSize) {
+    const batch = collected.slice(index, index + batchSize);
+
+    const response = await client.embeddings.create({
+      model: embeddingModel,
+      input: batch.map((chunk) => chunk.content)
+    });
+
+    batch.forEach((chunk, localIndex) => {
+      const embedding = response.data[localIndex]?.embedding;
+      if (!embedding) {
+        throw new Error(`Missing embedding for chunk ${chunk.id}`);
+      }
+
+      embeddedChunks.push({
+        ...chunk,
+        embedding
+      });
+    });
+
+    console.info(`Embedded ${Math.min(index + batchSize, collected.length)}/${collected.length} chunks`);
+  }
+
+  const output = {
+    version: 1,
+    builtAt: new Date().toISOString(),
+    baseUrl,
+    embeddingModel,
+    chunkSize,
+    overlapSize,
+    chunks: embeddedChunks
+  };
+
+  await fs.mkdir(path.dirname(outputPath), { recursive: true });
+  await fs.writeFile(outputPath, JSON.stringify(output, null, 2), 'utf8');
+
+  console.info(`Done. Wrote ${embeddedChunks.length} chunks to ${outputPath}`);
+}
+
+main().catch((error) => {
+  console.error(error);
+  process.exitCode = 1;
+});
