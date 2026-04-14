@@ -6,7 +6,13 @@ type QuestionStat = {
   lastSeenAt: string;
 };
 
+type RetrievalStats = {
+  hits: number;
+  misses: number;
+};
+
 const questionCounts = new Map<string, QuestionStat>();
+const retrievalByIntent = new Map<string, RetrievalStats>();
 let totalQuestions = 0;
 
 function normalizeQuestion(input: string): string {
@@ -50,10 +56,27 @@ export function getTopQuestions(limit = 20): QuestionStat[] {
     .slice(0, limit);
 }
 
+export function recordRetrievalOutcome(intent: string, hit: boolean): void {
+  const key = intent || 'general';
+  const existing = retrievalByIntent.get(key) || { hits: 0, misses: 0 };
+
+  if (hit) {
+    existing.hits += 1;
+  } else {
+    existing.misses += 1;
+  }
+
+  retrievalByIntent.set(key, existing);
+}
+
 export function getAnalyticsSummary() {
   return {
     totalQuestions,
     uniqueQuestions: questionCounts.size,
-    topQuestions: getTopQuestions(10)
+    topQuestions: getTopQuestions(10),
+    retrievalByIntent: Array.from(retrievalByIntent.entries()).map(([intent, stats]) => ({
+      intent,
+      ...stats
+    }))
   };
 }

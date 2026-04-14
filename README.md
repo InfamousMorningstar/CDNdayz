@@ -157,6 +157,9 @@ This project includes a production-ready website support chatbot:
 - Secure API: server-only OpenAI usage (`/api/chatbot`).
 - Model: ChatGPT-5.4 mini for concise website Q&A responses.
 - RAG retrieval: local vector index stored at `data/chatbot/site-index.json` (gitignored).
+- Hybrid retrieval + rerank: combines lexical, title, route-priority, and optional embedding scores.
+- Query rewriting: expands user phrasing into retrieval-friendly terms before search.
+- Grounding validation: weakly supported generated answers are rejected and replaced with fallback.
 - Strict behavior: if content is not found in indexed pages, response is exactly:
   - `I couldn't find that on the website.`
 
@@ -192,8 +195,16 @@ Production note:
 Whenever website content changes, rebuild the index:
 
 - `npm run chatbot:index`
+- Then run retrieval quality checks:
+    - `npm run chatbot:eval`
 
-This re-crawls the configured website pages, re-chunks content, regenerates embeddings, and overwrites the local index file.
+This re-crawls configured website pages, re-chunks content, and overwrites the local index file.
+
+### Evaluation Harness
+
+- Eval dataset: `data/chatbot/eval-set.json`
+- Eval script: `scripts/eval-chatbot-retrieval.mjs`
+- Goal: maintain/improve pass rate before deploying chatbot changes.
 
 ### Routed Intent Priority
 

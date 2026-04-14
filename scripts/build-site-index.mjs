@@ -113,6 +113,43 @@ async function fetchWipeDatesSummary() {
   }
 }
 
+async function fetchServerStatusSummary() {
+  const statusApiUrl = `${baseUrl}/api/servers`;
+
+  try {
+    const response = await fetch(statusApiUrl, {
+      headers: {
+        'User-Agent': 'CDN-Website-Indexer/1.0'
+      }
+    });
+
+    if (!response.ok) {
+      return null;
+    }
+
+    const payload = await response.json();
+    if (!Array.isArray(payload) || payload.length === 0) {
+      return null;
+    }
+
+    const serverLines = payload.slice(0, 8).map((server) => {
+      const name = typeof server.name === 'string' ? server.name : 'Server';
+      const status = server.online ? 'online' : 'offline';
+      const players = typeof server.players === 'number' ? server.players : 0;
+      const maxPlayers = typeof server.maxPlayers === 'number' ? server.maxPlayers : 0;
+      return `${name} is ${status} with ${players}/${maxPlayers} players.`;
+    });
+
+    const summary = normalizeWhitespace(
+      ['Live server status snapshot from website API:', ...serverLines].join(' ')
+    );
+
+    return summary.length > 0 ? summary : null;
+  } catch {
+    return null;
+  }
+}
+
 async function fetchPage(candidates) {
   for (const candidate of candidates) {
     const url = `${baseUrl}${candidate}`;
@@ -141,6 +178,7 @@ async function fetchPage(candidates) {
 async function main() {
   const collected = [];
   const wipeDatesSummary = await fetchWipeDatesSummary();
+  const serverStatusSummary = await fetchServerStatusSummary();
 
   for (const target of pageTargets) {
     const result = await fetchPage(target.candidates);
@@ -158,6 +196,10 @@ async function main() {
 
     if (target.label === 'wipes' && wipeDatesSummary) {
       mainText = normalizeWhitespace(`${mainText} ${wipeDatesSummary}`);
+    }
+
+    if (target.label === 'status' && serverStatusSummary) {
+      mainText = normalizeWhitespace(`${mainText} ${serverStatusSummary}`);
     }
 
     if (!mainText || mainText.length < 120) {

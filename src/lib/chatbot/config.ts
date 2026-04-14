@@ -11,6 +11,8 @@ export const RATE_LIMIT_MAX_REQUESTS = 12;
 export const RETRIEVAL_MIN_SCORE = 0.32;
 export const RETRIEVAL_MIN_STRONG_MATCHES = 1;
 export const RETRIEVAL_TOP_K = 6;
+export const RETRIEVAL_CANDIDATE_POOL = 24;
+export const GROUNDING_MIN_COVERAGE = 0.45;
 
 export const DEFAULT_CHAT_MODEL = 'gpt-5.4-mini';
 export const DEFAULT_EMBEDDING_MODEL = 'text-embedding-3-small';
@@ -24,10 +26,10 @@ export const ROUTE_PRIORITY: Record<RouteIntent, string[]> = {
 };
 
 const routeKeywords: Record<RouteIntent, string[]> = {
-  status: ['status', 'online', 'offline', 'server up', 'server down', 'player count', 'ping'],
-  wipes: ['wipe', 'wipes', 'reset', 'fresh wipe', 'wipe schedule'],
-  errors: ['error', 'code', '0x', 'kick', 'battleye', 'battlEye', 'verification'],
-  join: ['join', 'mods', 'launcher', 'install', 'connect', 'how to join', 'discord join'],
+  status: ['status', 'online', 'offline', 'server up', 'server down', 'player count', 'ping', 'population'],
+  wipes: ['wipe', 'wipes', 'reset', 'fresh wipe', 'wipe schedule', 'next wipe', 'wipe date'],
+  errors: ['error', 'code', '0x', 'kick', 'battleye', 'battlEye', 'verification', 'data verification'],
+  join: ['join', 'mods', 'launcher', 'install', 'connect', 'how to join', 'discord join', 'dzsa'],
   general: []
 };
 

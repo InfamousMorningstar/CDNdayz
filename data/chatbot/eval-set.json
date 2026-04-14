@@ -1,0 +1,38 @@
+[
+  {
+    "id": "wipe-next-window",
+    "question": "When is the next server wipe?",
+    "expectedPaths": ["/wipes", "/wipe-info"],
+    "shouldFallback": false
+  },
+  {
+    "id": "wipe-last-date",
+    "question": "What was the last wipe date?",
+    "expectedPaths": ["/wipes", "/wipe-info"],
+    "shouldFallback": false
+  },
+  {
+    "id": "error-ve-data",
+    "question": "What does 0x00040093 mean?",
+    "expectedPaths": ["/dayz-error-codes"],
+    "shouldFallback": false
+  },
+  {
+    "id": "join-mods",
+    "question": "How do I join and install mods?",
+    "expectedPaths": ["/join"],
+    "shouldFallback": false
+  },
+  {
+    "id": "status-check",
+    "question": "Where can I check server status?",
+    "expectedPaths": ["/status", "/servers"],
+    "shouldFallback": false
+  },
+  {
+    "id": "offtopic-weather",
+    "question": "What is the weather in Tokyo today?",
+    "expectedPaths": [],
+    "shouldFallback": true
+  }
+]

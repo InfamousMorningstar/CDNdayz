@@ -12,8 +12,11 @@ import {
   getOpenAIClient,
   loadWebsiteIndex,
   recordQuestion,
+  recordRetrievalOutcome,
+  rewriteQueryForRetrieval,
   retrieveRelevantChunks
 } from '@/lib/chatbot';
+import { validateGroundedAnswer } from '@/lib/chatbot';
 
 export const runtime = 'nodejs';
 
@@ -70,12 +73,13 @@ export async function POST(request: NextRequest) {
   try {
     const index = await loadWebsiteIndex();
     const client = getOpenAIClient();
+    const rewrittenQuery = rewriteQueryForRetrieval(message);
     let queryEmbedding: number[] | undefined;
 
     try {
       const embeddingResponse = await client.embeddings.create({
         model: getEmbeddingModel(),
-        input: message
+        input: rewrittenQuery
       });
       queryEmbedding = embeddingResponse.data[0]?.embedding;
     } catch (embeddingError) {
@@ -84,13 +88,16 @@ export async function POST(request: NextRequest) {
 
     const retrieval = retrieveRelevantChunks({
       query: message,
+      rewrittenQuery,
       queryEmbedding,
       index
     });
 
     if (retrieval.shouldFallback) {
+      recordRetrievalOutcome(retrieval.routeIntent, false);
       console.info('[chatbot.retrieval] miss', {
         query: message,
+        rewrittenQuery,
         routeIntent: retrieval.routeIntent,
         topScore: retrieval.topScore,
         strongMatchCount: retrieval.strongMatchCount
@@ -145,6 +152,7 @@ export async function POST(request: NextRequest) {
 
     const answer = completion.choices[0]?.message?.content?.trim() || FALLBACK_NOT_FOUND_MESSAGE;
     const safeAnswer = answer.length > 1200 ? `${answer.slice(0, 1200)}...` : answer;
+    const grounding = validateGroundedAnswer(safeAnswer, retrieval.chunks);
 
     const sources = Array.from(
       new Map(
@@ -154,11 +162,30 @@ export async function POST(request: NextRequest) {
 
     console.info('[chatbot.retrieval] hit', {
       query: message,
+      rewrittenQuery,
       routeIntent: retrieval.routeIntent,
       topScore: retrieval.topScore,
       sourceCount: sources.length,
       sources: sources.map((source) => source.path)
     });
+
+    if (!grounding.accepted) {
+      recordRetrievalOutcome(retrieval.routeIntent, false);
+      console.info('[chatbot.grounding] rejected', {
+        query: message,
+        minCoverage: grounding.minCoverage,
+        weakSentenceCount: grounding.weakSentences.length
+      });
+
+      return NextResponse.json({
+        answer: FALLBACK_NOT_FOUND_MESSAGE,
+        sources: [],
+        routeIntent: retrieval.routeIntent,
+        confidence: retrieval.topScore
+      });
+    }
+
+    recordRetrievalOutcome(retrieval.routeIntent, true);
 
     if (safeAnswer === FALLBACK_NOT_FOUND_MESSAGE) {
       return NextResponse.json({
