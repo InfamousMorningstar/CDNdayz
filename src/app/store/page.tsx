@@ -78,7 +78,7 @@ export default function StorePage() {
                 <span className="text-gray-700 dark:text-neutral-300">
                   Open a ticket in{' '}
                   <DiscordLink href={DISCORD_STORE_CHANNEL_URL} className="text-amber-500 hover:underline">
-                    your store channel
+                    Support
                   </DiscordLink>
                 </span>
               </li>
