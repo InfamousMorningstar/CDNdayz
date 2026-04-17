@@ -35,7 +35,7 @@ const faqData = {
         `Of course. Build your empire. Just don't expect it to survive bad decisions.`,
     },
     {
-      question: 'How do I dismantle / fold a BLR house kit?',
+      question: 'how do I takedown BLR house?',
       answer:
         `Claim your house, make sure it's completely empty, and equip a hammer.
 Stand outside facing the door, look at it, and you'll get the "Fold" option.
