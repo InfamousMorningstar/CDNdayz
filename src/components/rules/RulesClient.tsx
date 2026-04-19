@@ -457,11 +457,11 @@ export function RulesClient() {
                   <div className="space-y-4">
                     <div>
                       <Badge variant="outline" className="mb-2 text-red-400 border-red-500/30">Expansion Building</Badge>
-                      <p className="text-xs text-neutral-500">DeerIsle, Bitterroot, Sakhal, Hardcore Hashima, Chernarus (Noob Friendly)</p>
+                      <p className="text-xs text-neutral-500">DeerIsle, Bitterroot, Sakhal, Chernarus (Noob Friendly)</p>
                     </div>
                     <div>
                       <Badge variant="outline" className="mb-2 text-amber-400 border-amber-500/30">Base Building Plus</Badge>
-                      <p className="text-xs text-neutral-500">Hardcore Livonia</p>
+                      <p className="text-xs text-neutral-500">Hardcore Livonia, Hardcore Hashima, Hardcore Chernarus</p>
                     </div>
                     <div>
                       <Badge variant="outline" className="mb-2 text-emerald-400 border-emerald-500/30">No Mod</Badge>
