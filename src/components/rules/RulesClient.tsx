@@ -653,6 +653,14 @@ export function RulesClient() {
                       <span className="text-gray-500 dark:text-neutral-500 text-xs">Rainbow Bear kill</span>
                       <span className="font-mono font-bold text-amber-400 text-xs">+100 rep</span>
                     </li>
+                    <li className="flex items-center justify-between">
+                      <span className="text-gray-500 dark:text-neutral-500 text-xs">AI Mercenaries kill</span>
+                      <span className="font-mono font-bold text-amber-400 text-xs">+100 rep</span>
+                    </li>
+                    <li className="flex items-center justify-between">
+                      <span className="text-gray-500 dark:text-neutral-500 text-xs">Fleshpound kill</span>
+                      <span className="font-mono font-bold text-rose-400 text-xs">+500 rep</span>
+                    </li>
                   </ul>
                 </Card>
               </div>
