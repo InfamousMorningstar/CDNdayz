@@ -79,7 +79,7 @@ Official DayZ news feed integration with a live scrolling news ticker on the hom
 <td width="50%">
 
 ### 📋 Rules & FAQ
-Community rules hub with hardcore policy callouts, collapsible FAQ (Gameplay, Rules, Technical), and support CTA.
+Community rules hub with hardcore policy callouts, collapsible FAQ (Gameplay, Rules, Technical), and support CTA. Includes a dedicated **Sci-fi Server** tab covering Yrtsk weapon tiers, rep progression, dungeon rules, and unique server mechanics.
 
 </td>
 <td width="50%">

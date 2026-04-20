@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Shield, Hammer, MessageSquare, AlertTriangle, BookOpen, Terminal, Construction, Users, Home, ExternalLink } from 'lucide-react';
+import { Shield, Hammer, MessageSquare, AlertTriangle, BookOpen, Terminal, Construction, Users, Home, ExternalLink, Cpu } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
@@ -10,7 +10,7 @@ import { DiscordLink } from '@/components/ui/DiscordLink';
 import { cn } from '@/lib/utils';
 import { DISCORD_SUPPORT_CHANNEL_URL } from '@/lib/links';
 
-type Tab = 'general' | 'building';
+type Tab = 'general' | 'building' | 'scifi';
 
 const faqData = {
   gameplay: [
@@ -165,6 +165,18 @@ export function RulesClient() {
         >
           <Hammer className="w-5 h-5" />
           Base Building
+        </button>
+        <button
+          onClick={() => setActiveTab('scifi')}
+          className={cn(
+            "w-full sm:w-auto justify-center flex items-center gap-2 px-4 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-bold transition-all duration-300 border",
+            activeTab === 'scifi'
+              ? "bg-violet-600 border-violet-500 text-white shadow-[0_0_20px_rgba(139,92,246,0.4)]"
+              : "bg-white dark:bg-neutral-900/50 border-gray-200 dark:border-neutral-800 text-gray-500 dark:text-neutral-400 hover:border-violet-500/50 hover:text-gray-900 dark:hover:text-white"
+          )}
+        >
+          <Cpu className="w-5 h-5" />
+          Sci-fi Server
         </button>
       </div>
 
@@ -393,7 +405,7 @@ export function RulesClient() {
                 </Card>
               </div>
             </motion.div>
-          ) : (
+          ) : activeTab === 'building' ? (
             <motion.div
               key="building"
               initial={{ opacity: 0, y: 20 }}
@@ -582,6 +594,195 @@ export function RulesClient() {
                   </div>
                 </Card>
               </div>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="scifi"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+              className="space-y-5"
+            >
+              {/* Banner + Rep side by side */}
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+                <Card className="p-5 bg-violet-950/25 border-violet-500/40 shadow-[0_0_25px_rgba(139,92,246,0.12)] lg:col-span-2">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Cpu className="text-violet-400 w-5 h-5 shrink-0" />
+                    <h2 className="text-xl font-heading font-bold text-gray-900 dark:text-white">Sci-fi Banov</h2>
+                    <Badge variant="outline" className="ml-auto border-violet-500/40 text-violet-400 bg-violet-500/10 text-xs">Banov Map</Badge>
+                  </div>
+                  <p className="text-sm text-gray-600 dark:text-neutral-400 leading-relaxed">
+                    Uses custom <strong className="text-gray-900 dark:text-white">Yrtsk</strong> weapons split across 5 tiers.
+                    {' '}<span className="text-emerald-400 font-semibold">Tiers 1–3</span> at the Trader,
+                    {' '}<span className="text-violet-400 font-semibold">Tiers 4–5</span> Blackmarket only.
+                    {' '}Tier 1 is the weakest — Tier <span className="text-amber-400 font-semibold">5</span> is the strongest.
+                  </p>
+                  <div className="flex flex-wrap gap-2 mt-3">
+                    <span className="text-xs px-2 py-0.5 rounded-full bg-black/20 border border-violet-500/20 text-violet-300">Permadeath Dungeon</span>
+                    <span className="text-xs px-2 py-0.5 rounded-full bg-black/20 border border-emerald-500/20 text-emerald-300">Rep Progression</span>
+                    <span className="text-xs px-2 py-0.5 rounded-full bg-black/20 border border-amber-500/20 text-amber-300">Parkour Blackmarket</span>
+                    <span className="text-xs px-2 py-0.5 rounded-full bg-black/20 border border-rose-500/20 text-rose-300">Hidden Special Trader</span>
+                  </div>
+                </Card>
+
+                <Card className="p-5 bg-white/80 dark:bg-neutral-900/60 border-gray-200 dark:border-violet-500/20">
+                  <p className="text-xs text-gray-500 dark:text-neutral-500 uppercase tracking-widest font-mono mb-3">Rep Required to Unlock</p>
+                  <ul className="space-y-2 text-sm">
+                    <li className="flex items-center justify-between">
+                      <span className="text-gray-700 dark:text-neutral-300">Vehicle Trader</span>
+                      <span className="font-mono font-bold text-emerald-400">10,000</span>
+                    </li>
+                    <li className="flex items-center justify-between">
+                      <span className="text-gray-700 dark:text-neutral-300">Aircraft Trader</span>
+                      <span className="font-mono font-bold text-blue-400">20,000</span>
+                    </li>
+                    <li className="flex items-center justify-between">
+                      <span className="text-gray-700 dark:text-neutral-300">Special Trader</span>
+                      <span className="font-mono font-bold text-amber-400">25,500</span>
+                    </li>
+                    <li className="flex items-center justify-between border-t border-gray-200 dark:border-white/5 pt-2">
+                      <span className="text-gray-700 dark:text-neutral-300">Black Market</span>
+                      <span className="font-mono font-bold text-violet-400">50,000</span>
+                    </li>
+                    <li className="flex items-center justify-between border-t border-gray-200 dark:border-white/5 pt-2">
+                      <span className="text-gray-500 dark:text-neutral-500 text-xs">Zombie kill</span>
+                      <span className="font-mono font-bold text-emerald-400 text-xs">+10 rep</span>
+                    </li>
+                    <li className="flex items-center justify-between">
+                      <span className="text-gray-500 dark:text-neutral-500 text-xs">Rainbow Bear kill</span>
+                      <span className="font-mono font-bold text-amber-400 text-xs">+100 rep</span>
+                    </li>
+                  </ul>
+                </Card>
+              </div>
+
+              {/* All Weapon Tiers — compact pill layout */}
+              <Card className="p-5 bg-white/80 dark:bg-neutral-900/60 border-gray-200 dark:border-neutral-800">
+                <div className="flex items-center gap-3 mb-4">
+                  <p className="text-xs text-gray-500 dark:text-neutral-500 uppercase tracking-widest font-mono">Yrtsk Weapons by Tier</p>
+                  <div className="flex gap-2 ml-auto">
+                    <Badge variant="outline" className="border-emerald-500/40 text-emerald-400 bg-emerald-500/10 text-xs">Trader T1–3</Badge>
+                    <Badge variant="outline" className="border-violet-500/40 text-violet-400 bg-violet-500/10 text-xs">Blackmarket T4–5</Badge>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3">
+                  {/* Tier 1 */}
+                  <div>
+                    <div className="flex items-center gap-1.5 mb-2">
+                      <span className="w-5 h-5 rounded bg-neutral-100 dark:bg-neutral-800 border border-neutral-300 dark:border-neutral-600 flex items-center justify-center text-[10px] font-bold text-neutral-500">1</span>
+                      <span className="text-xs font-bold text-gray-500 dark:text-neutral-400">Tier 1</span>
+                    </div>
+                    <div className="flex flex-wrap gap-1">
+                      {['Armadilo','Boar','Claw','Grizzly','Hedgehog','Puma','Wolverine'].map(w => (
+                        <span key={w} className="text-[11px] px-1.5 py-0.5 rounded bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 border border-neutral-200 dark:border-neutral-700">{w}</span>
+                      ))}
+                    </div>
+                  </div>
+                  {/* Tier 2 */}
+                  <div>
+                    <div className="flex items-center gap-1.5 mb-2">
+                      <span className="w-5 h-5 rounded bg-emerald-100 dark:bg-emerald-900/20 border border-emerald-300 dark:border-emerald-500/40 flex items-center justify-center text-[10px] font-bold text-emerald-600 dark:text-emerald-400">2</span>
+                      <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400">Tier 2</span>
+                    </div>
+                    <div className="flex flex-wrap gap-1">
+                      {['Lizard','Panther','Red Fox','Rhino','Shark','Sparrow'].map(w => (
+                        <span key={w} className="text-[11px] px-1.5 py-0.5 rounded bg-emerald-50 dark:bg-emerald-900/10 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-500/20">{w}</span>
+                      ))}
+                    </div>
+                  </div>
+                  {/* Tier 3 */}
+                  <div>
+                    <div className="flex items-center gap-1.5 mb-2">
+                      <span className="w-5 h-5 rounded bg-blue-100 dark:bg-blue-900/20 border border-blue-300 dark:border-blue-500/40 flex items-center justify-center text-[10px] font-bold text-blue-600 dark:text-blue-400">3</span>
+                      <span className="text-xs font-bold text-blue-600 dark:text-blue-400">Tier 3</span>
+                    </div>
+                    <div className="flex flex-wrap gap-1">
+                      {['Bee','Bull','Crocodile','Grey Wolf','Porcupine','Tiger'].map(w => (
+                        <span key={w} className="text-[11px] px-1.5 py-0.5 rounded bg-blue-50 dark:bg-blue-900/10 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-500/20">{w}</span>
+                      ))}
+                    </div>
+                  </div>
+                  {/* Tier 4 */}
+                  <div>
+                    <div className="flex items-center gap-1.5 mb-2">
+                      <span className="w-5 h-5 rounded bg-violet-100 dark:bg-violet-900/20 border border-violet-300 dark:border-violet-500/40 flex items-center justify-center text-[10px] font-bold text-violet-600 dark:text-violet-400">4</span>
+                      <span className="text-xs font-bold text-violet-600 dark:text-violet-400">Tier 4</span>
+                    </div>
+                    <div className="flex flex-wrap gap-1">
+                      {['A White Whisper','All of Existence','Bars','Corw','Eagle','Fang','Glimpses','Glossy Chip','Ignorance','Sin','Slasher','Sunrise'].map(w => (
+                        <span key={w} className="text-[11px] px-1.5 py-0.5 rounded bg-violet-50 dark:bg-violet-900/10 text-violet-700 dark:text-violet-300 border border-violet-200 dark:border-violet-500/20">{w}</span>
+                      ))}
+                    </div>
+                  </div>
+                  {/* Tier 5 */}
+                  <div>
+                    <div className="flex items-center gap-1.5 mb-2">
+                      <span className="w-5 h-5 rounded bg-amber-100 dark:bg-amber-900/20 border border-amber-300 dark:border-amber-500/40 flex items-center justify-center text-[10px] font-bold text-amber-600 dark:text-amber-400">5</span>
+                      <span className="text-xs font-bold text-amber-600 dark:text-amber-400">Tier 5</span>
+                    </div>
+                    <div className="flex flex-wrap gap-1">
+                      {['Ant','Bulldog','Hawkmoon','Piranha','Snake','The Sign','Thousand Burning Suns'].map(w => (
+                        <span key={w} className="text-[11px] px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-900/10 text-amber-700 dark:text-amber-300 border border-amber-200 dark:border-amber-500/20">{w}</span>
+                      ))}
+                    </div>
+                  </div>
+                  {/* Other */}
+                  <div>
+                    <div className="flex items-center gap-1.5 mb-2">
+                      <span className="w-5 h-5 rounded bg-rose-100 dark:bg-rose-900/20 border border-rose-300 dark:border-rose-500/40 flex items-center justify-center text-[10px] font-bold text-rose-500 dark:text-rose-400">~</span>
+                      <span className="text-xs font-bold text-rose-500 dark:text-rose-400">Other</span>
+                    </div>
+                    <div className="flex flex-wrap gap-1">
+                      {['Etude','Reaper ScarH','RSASS Hogasswhoop','Sci-fi Glock','Sonata','Suite'].map(w => (
+                        <span key={w} className="text-[11px] px-1.5 py-0.5 rounded bg-rose-50 dark:bg-rose-900/10 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-500/20">{w}</span>
+                      ))}
+                    </div>
+                    <p className="text-[10px] text-neutral-500 mt-2">Tier 4/5 range</p>
+                  </div>
+                </div>
+              </Card>
+
+              {/* Dungeon + Blackmarket + Special Trader */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <Card className="p-5 bg-red-950/20 border-red-500/30 md:col-span-2">
+                  <div className="flex items-center gap-2 mb-4 pb-3 border-b border-red-500/20">
+                    <AlertTriangle className="text-red-400 w-4 h-4 shrink-0" />
+                    <h3 className="font-heading font-bold text-gray-900 dark:text-white">Dungeon Rules</h3>
+                    <span className="ml-auto text-[10px] text-red-400 border border-red-500/30 rounded-full px-2 py-0.5 font-mono uppercase tracking-wider">Permadeath</span>
+                  </div>
+                  <ul className="space-y-2.5 text-sm text-gray-600 dark:text-neutral-300">
+                    <li className="flex gap-2"><span className="text-red-500 shrink-0">›</span><span>Die inside = permanent death. No respawns, no revives. Mates may loot your gear.</span></li>
+                    <li className="flex gap-2"><span className="text-red-500 shrink-0">›</span><span><strong className="text-gray-900 dark:text-white">Admin Teleport Both Ways</strong> — players cannot enter or exit on their own. An admin must teleport you <em>in</em> and <em>out</em>.</span></li>
+                    <li className="flex gap-2"><span className="text-red-500 shrink-0">›</span><span>Entering without an admin = <strong className="text-red-400">permanent ban</strong>.</span></li>
+                    <li className="flex gap-2"><span className="text-amber-400 shrink-0">›</span><span><strong className="text-gray-900 dark:text-white">Start:</strong> Announce <span className="font-mono text-xs bg-black/20 px-1 py-0.5 rounded">Starting dungeon run</span> in chat before entering.</span></li>
+                    <li className="flex gap-2"><span className="text-amber-400 shrink-0">›</span><span><strong className="text-gray-900 dark:text-white">Finish:</strong> Announce <span className="font-mono text-xs bg-black/20 px-1 py-0.5 rounded">Dungeon completed [name]</span> in chat on completion.</span></li>
+                  </ul>
+                </Card>
+
+                <div className="flex flex-col gap-5">
+                  <Card className="p-4 bg-white/80 dark:bg-neutral-900/60 border-gray-200 dark:border-violet-500/20 flex-1">
+                    <div className="flex items-center gap-2 mb-2 pb-2 border-b border-gray-200 dark:border-white/5">
+                      <Shield className="text-violet-400 w-3.5 h-3.5" />
+                      <h3 className="font-heading font-bold text-gray-900 dark:text-white text-sm">Hidden Blackmarket</h3>
+                    </div>
+                    <p className="text-xs text-gray-600 dark:text-neutral-400 leading-relaxed">
+                      Survive the deadly <strong className="text-gray-900 dark:text-white">PARKOUR</strong> gauntlet to access illicit weapons and rare armor. The backdoor is deadlier than the front.
+                    </p>
+                  </Card>
+
+                  <Card className="p-4 bg-white/80 dark:bg-neutral-900/60 border-gray-200 dark:border-amber-500/20 flex-1">
+                    <div className="flex items-center gap-2 mb-2 pb-2 border-b border-gray-200 dark:border-white/5">
+                      <Shield className="text-amber-400 w-3.5 h-3.5" />
+                      <h3 className="font-heading font-bold text-gray-900 dark:text-white text-sm">Special Trader</h3>
+                    </div>
+                    <p className="text-xs text-gray-600 dark:text-neutral-400 leading-relaxed">
+                      Elusive merchant with exclusive items. Find him in the wilds. Hint: <em className="text-gray-900 dark:text-white">&quot;It&apos;s not hard to find.&quot;</em>
+                    </p>
+                  </Card>
+                </div>
+              </div>
+
             </motion.div>
           )}
         </AnimatePresence>
