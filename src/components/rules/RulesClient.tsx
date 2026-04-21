@@ -17,7 +17,7 @@ const faqData = {
     {
       question: 'What type of server is this?',
       answer:
-        `This is a PvE-focused server. That means survival, exploration, and cooperation come first. If you're here to ruin someone's day for fun... you're on the wrong server, mate.`,
+        `CDN is a PvE-focused network. Survival, exploration, and cooperation come first across all servers.\n\nThe one exception is CDN Melkart — a Shoot to Kill PvP server where both AI and other players are a threat. If you're here to ruin someone's day for fun... Melkart is the place. Everywhere else, that's not welcome.`,
     },
     {
       question: 'How do I join the server?',
@@ -56,7 +56,7 @@ Note: If it's not working, something's off - either it's not claimed, not empty,
   rules: [
     {
       question: 'Is PvP allowed at all?',
-      answer: `Nope.`,
+      answer: `Almost everywhere — no. CDN is a PvE-focused network.\n\nThe one exception is CDN Melkart, which is a Shoot to Kill PvP server. On Melkart, expect to encounter AI enemies and other players — everyone is a threat. If you're not looking for that, stick to the other servers.`,
     },
     {
       question: 'What happens if I break the rules?',
@@ -469,7 +469,7 @@ export function RulesClient() {
                   <div className="space-y-4">
                     <div>
                       <Badge variant="outline" className="mb-2 text-red-400 border-red-500/30">Expansion Building</Badge>
-                      <p className="text-xs text-neutral-500">DeerIsle, Bitterroot, Sakhal, Chernarus (Noob Friendly)</p>
+                      <p className="text-xs text-neutral-500">DeerIsle, Bitterroot, Sakhal, Chernarus (Noob Friendly), Melkart (PvP)</p>
                     </div>
                     <div>
                       <Badge variant="outline" className="mb-2 text-amber-400 border-amber-500/30">Base Building Plus</Badge>
