@@ -751,6 +751,20 @@ export function RulesClient() {
                 </div>
               </Card>
 
+              {/* Black Market Spoiler Policy */}
+              <Card className="p-5 bg-violet-950/20 border-violet-500/30">
+                <div className="flex items-center gap-2 mb-3 pb-3 border-b border-violet-500/20">
+                  <Shield className="text-violet-400 w-4 h-4 shrink-0" />
+                  <h3 className="font-heading font-bold text-gray-900 dark:text-white">Black Market — Discovery Policy</h3>
+                  <span className="ml-auto text-[10px] text-violet-300 border border-violet-500/30 rounded-full px-2 py-0.5 font-mono uppercase tracking-wider">Sci-Fi Banov Only</span>
+                </div>
+                <ul className="space-y-2.5 text-sm text-gray-600 dark:text-neutral-300">
+                  <li className="flex gap-2"><span className="text-red-500 shrink-0">›</span><span><strong className="text-gray-900 dark:text-white">Do not spoil the location.</strong> Posting or broadcasting the Black Market's whereabouts in chat is not allowed — half the fun is finding it yourself. Any Discord messages revealing the location will be <strong className="text-red-400">deleted</strong>.</span></li>
+                  <li className="flex gap-2"><span className="text-amber-400 shrink-0">›</span><span><strong className="text-gray-900 dark:text-white">Hints are fine, coords are not.</strong> Vague clues in chat are acceptable; dropping a pin or naming the exact spot is not.</span></li>
+                  <li className="flex gap-2"><span className="text-emerald-400 shrink-0">›</span><span><strong className="text-gray-900 dark:text-white">Bringing friends is fair game.</strong> If you team up with players who haven't found it yet and you all just <em>happen</em> to be heading that way together… that's just good teamwork. 😉</span></li>
+                </ul>
+              </Card>
+
               {/* Dungeon + Blackmarket + Special Trader */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                 <Card className="p-5 bg-red-950/20 border-red-500/30 md:col-span-2">
