@@ -56,7 +56,6 @@ export function Footer() {
               <h3 className="font-semibold text-gray-900 dark:text-white tracking-wide text-sm uppercase">Support</h3>
               <div className="flex flex-col gap-2">
                 <FooterLink href="/rules">Rules & FAQ</FooterLink>
-                <FooterLink href="/join">Join Guide</FooterLink>
               </div>
             </div>
 

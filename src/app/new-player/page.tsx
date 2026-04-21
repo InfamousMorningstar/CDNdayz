@@ -73,8 +73,8 @@ export default function NewPlayerPage() {
         </div>
 
         <div className="mt-20 flex justify-center">
-            <Link href="/join" className="text-red-500 hover:text-red-400 border-b border-red-500/30 hover:border-red-500 pb-1 transition-all">
-                &larr; Back to Join Guide
+            <Link href="/" className="text-red-500 hover:text-red-400 border-b border-red-500/30 hover:border-red-500 pb-1 transition-all">
+                &larr; Back to Home
             </Link>
         </div>
       </div>

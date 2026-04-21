@@ -30,7 +30,7 @@ export function JoinCTA() {
             Join Discord Community
           </Button>
           <Button size="lg" variant="outline" className="h-14 px-8 text-lg border-gray-300 dark:border-neutral-700 hover:bg-gray-100 dark:hover:bg-neutral-800" asChild>
-            <Link href="/join">Read Join Guide</Link>
+            <Link href="/new-player">New Player Guide</Link>
           </Button>
         </div>
       </div>

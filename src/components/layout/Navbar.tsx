@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { Menu, X, Globe, Shield, BookOpen, Calendar, HelpCircle, Hammer, ShoppingBag, AlertTriangle, Sun, Moon } from 'lucide-react';
+import { Menu, X, Globe, Shield, BookOpen, Calendar, Hammer, ShoppingBag, AlertTriangle, Sun, Moon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { ScrambleLink } from '@/components/ui/ScrambleLink';
 import Image from 'next/image';
@@ -16,7 +16,6 @@ const navItems = [
   { name: 'Mods', href: '/features', icon: Hammer },
   { name: 'Wipe Info', href: '/wipe-info', icon: Calendar },
   { name: 'Rules & FAQ', href: '/rules', icon: BookOpen },
-  { name: 'Join Guide', href: '/join', icon: HelpCircle },
   { name: 'Error Help', href: '/dayz-error-codes', icon: AlertTriangle },
   { name: 'Events', href: '/events', icon: Calendar },
   { name: 'Store', href: '/store', icon: ShoppingBag },

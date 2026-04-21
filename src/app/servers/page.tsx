@@ -31,10 +31,10 @@ export default function ServersPage() {
           </div>
           <div className="mt-4 flex flex-wrap items-center justify-center gap-3 text-sm">
             <Link
-              href="/join"
+              href="/new-player"
               className="px-4 py-2 rounded-full border border-gray-200 dark:border-white/10 bg-white/80 dark:bg-black/30 text-gray-700 dark:text-neutral-200 hover:text-gray-900 dark:hover:text-white hover:border-red-500/40 transition-colors"
             >
-              New here? Open Join Guide
+              New here? New Player Guide
             </Link>
             <Link
               href="/store"
