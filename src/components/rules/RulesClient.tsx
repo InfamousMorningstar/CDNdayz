@@ -35,7 +35,7 @@ const faqData = {
         `Of course. Build your empire. Just don't expect it to survive bad decisions.`,
     },
     {
-      question: 'how do I takedown BLR house?',
+      question: 'How do I takedown BLR deployable house?',
       answer:
         `Claim your house, make sure it's completely empty, and equip a hammer.
 Stand outside facing the door, look at it, and you'll get the "Fold" option.
@@ -425,33 +425,33 @@ export function RulesClient() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="bg-red-950/10 border border-red-500/20 p-4 rounded">
                         <h3 className="font-bold text-red-400 mb-2">Military Areas</h3>
-                        <ul className="text-sm text-neutral-300 space-y-2">
-                          <li><strong className="text-white">1000m</strong> - Large Areas (2+ buildings/tents)</li>
-                          <li><strong className="text-white">500m</strong> - Smaller Areas (2 or fewer tents)</li>
+                        <ul className="text-sm text-gray-600 dark:text-neutral-300 space-y-2">
+                          <li><strong className="text-gray-900 dark:text-white">1000m</strong> - Large Areas (2+ buildings/tents)</li>
+                          <li><strong className="text-gray-900 dark:text-white">500m</strong> - Smaller Areas (2 or fewer tents)</li>
                         </ul>
                       </div>
                       <div className="bg-amber-950/10 border border-amber-500/20 p-4 rounded">
                         <h3 className="font-bold text-amber-400 mb-2">Traders & Missions</h3>
-                        <ul className="text-sm text-neutral-300 space-y-2">
-                          <li><strong className="text-white">1000m</strong> - All Traders (General)</li>
-                          <li><strong className="text-white">500m</strong> - Namalsk Traders Only</li>
+                        <ul className="text-sm text-gray-600 dark:text-neutral-300 space-y-2">
+                          <li><strong className="text-gray-900 dark:text-white">1000m</strong> - All Traders (General)</li>
+                          <li><strong className="text-gray-900 dark:text-white">500m</strong> - Namalsk Traders Only</li>
                           <li>
-                            <strong className="text-white">500m</strong> - AI Missions
-                            <span className="block text-[10px] text-neutral-500 font-normal mt-0.5 leading-tight">
+                            <strong className="text-gray-900 dark:text-white">500m</strong> - AI Missions
+                            <span className="block text-[10px] text-gray-500 dark:text-neutral-500 font-normal mt-0.5 leading-tight">
                               (Strictly enforced to prevent mission blocking)
                             </span>
                           </li>
                         </ul>
                       </div>
                     </div>
-                    <div className="bg-neutral-800/30 p-4 rounded border-l-2 border-red-500 space-y-2">
-                      <p className="text-sm text-neutral-400 dark:text-neutral-400">
+                    <div className="bg-gray-100 dark:bg-neutral-800/30 p-4 rounded border-l-2 border-red-500 space-y-2">
+                      <p className="text-sm text-gray-600 dark:text-neutral-400">
                         <strong className="text-gray-900 dark:text-white">Note:</strong> Some maps can make this difficult, so if your territory is within 25-30 metres of the 1,000-metre boundary, you should be good. Do your best to stick to the 1000-metre radius, though.
                       </p>
-                      <p className="text-sm text-neutral-400 dark:text-neutral-400">
+                      <p className="text-sm text-gray-600 dark:text-neutral-400">
                         <strong className="text-gray-900 dark:text-white">Grace Period:</strong> Those who do not adhere to these rules may find their base deleted.
                         <br/>
-                        <span className="text-neutral-500 text-xs mt-1 block">
+                        <span className="text-gray-500 dark:text-neutral-500 text-xs mt-1 block">
                           – If you are online: Admins will try to talk to you in person first.
                           <br/>
                           – If you are offline: An admin will place a sign by your base. Please follow instructions on the sign.
@@ -469,15 +469,15 @@ export function RulesClient() {
                   <div className="space-y-4">
                     <div>
                       <Badge variant="outline" className="mb-2 text-red-400 border-red-500/30">Expansion Building</Badge>
-                      <p className="text-xs text-neutral-500">DeerIsle, Bitterroot, Sakhal, Chernarus (Noob Friendly), Melkart (PvP)</p>
+                      <p className="text-xs text-gray-500 dark:text-neutral-500">DeerIsle, Bitterroot, Sakhal, Chernarus (Noob Friendly), Melkart (PvP)</p>
                     </div>
                     <div>
                       <Badge variant="outline" className="mb-2 text-amber-400 border-amber-500/30">Base Building Plus</Badge>
-                      <p className="text-xs text-neutral-500">Hardcore Livonia, Hardcore Hashima, Hardcore Chernarus</p>
+                      <p className="text-xs text-gray-500 dark:text-neutral-500">Hardcore Livonia, Hardcore Hashima, Hardcore Chernarus</p>
                     </div>
                     <div>
                       <Badge variant="outline" className="mb-2 text-emerald-400 border-emerald-500/30">No Mod</Badge>
-                      <p className="text-xs text-neutral-500">Reg Livonia, Reg Chernarus, Banov, Scifi Banov, Namalsk</p>
+                      <p className="text-xs text-gray-500 dark:text-neutral-500">Reg Livonia, Reg Chernarus, Banov, Scifi Banov, Namalsk</p>
                     </div>
                     <div className="pt-2">
                          <a href="/features" className="text-xs text-red-500 hover:text-red-400 underline decoration-red-500/30 underline-offset-4">
@@ -493,10 +493,10 @@ export function RulesClient() {
                   <BookOpen className="text-blue-400 w-6 h-6" />
                   <h2 className="text-2xl font-heading font-bold text-gray-900 dark:text-white">Territory Setup</h2>
                 </div>
-                <div className="rounded border border-blue-500/20 bg-blue-500/10 p-4 text-sm text-blue-100/90 flex gap-3">
-                  <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5 text-blue-300" />
+                <div className="rounded border border-blue-500/20 bg-blue-500/10 p-4 text-sm text-blue-900 dark:text-blue-100/90 flex gap-3">
+                  <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5 text-blue-500 dark:text-blue-300" />
                   <p>
-                    To create a territory, place a <strong className="text-white">Flag Kit</strong>. On some maps it is sold at the Trader, and on others you can craft one with <strong className="text-white">3 short sticks and rope</strong>. If you place your territory and want to move it, press <strong className="text-white">B</strong>, open <strong className="text-white">Manage Territory</strong>, and delete it. You will get the Flag Kit back so you can place it somewhere else. The <strong className="text-white">B</strong> menu also has other usefull in-game info and tips.
+                    To create a territory, place a <strong className="text-blue-950 dark:text-white">Flag Kit</strong>. On some maps it is sold at the Trader, and on others you can craft one with <strong className="text-blue-950 dark:text-white">3 short sticks and rope</strong>. If you place your territory and want to move it, press <strong className="text-blue-950 dark:text-white">B</strong>, open <strong className="text-blue-950 dark:text-white">Manage Territory</strong>, and delete it. You will get the Flag Kit back so you can place it somewhere else. The <strong className="text-blue-950 dark:text-white">B</strong> menu also has other usefull in-game info and tips.
                   </p>
                 </div>
               </Card>
@@ -522,7 +522,7 @@ export function RulesClient() {
                     <div>
                       <h3 className="text-lg font-bold mb-2 text-red-400">Type 2: Crafted</h3>
                       <div className="text-sm text-gray-500 dark:text-neutral-400 mb-2">
-                        <strong className="text-white block mb-1">Equipment Needed:</strong>
+                        <strong className="text-gray-900 dark:text-white block mb-1">Equipment Needed:</strong>
                         <ul className="grid grid-cols-2 gap-x-2 gap-y-1 text-xs">
                            <li>• Bunker Shovel (Trader)</li>
                            <li>• Pickaxe (Digging)</li>
@@ -564,9 +564,9 @@ export function RulesClient() {
                       <p className="text-sm text-gray-600 dark:text-neutral-300 mb-2">
                          9 options purchasable at Build Trader (Shacks to Mansions). Each includes a working fireplace/stove.
                       </p>
-                      <ol className="list-decimal list-inside text-sm text-neutral-300 space-y-1 ml-2">
+                      <ol className="list-decimal list-inside text-sm text-gray-600 dark:text-neutral-300 space-y-1 ml-2">
                         <li>Buy & Place in a valid location.</li>
-                        <li>Look at door & select <strong className="text-white">"Claim House"</strong> from scroll options.</li>
+                        <li>Look at door & select <strong className="text-gray-900 dark:text-white">"Claim House"</strong> from scroll options.</li>
                         <li>Use "Invite Members" from scroll options to give access.</li>
                       </ol>
                     </div>
