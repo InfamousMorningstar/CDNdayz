@@ -774,7 +774,7 @@ export function RulesClient() {
                     <span className="ml-auto text-[10px] text-red-400 border border-red-500/30 rounded-full px-2 py-0.5 font-mono uppercase tracking-wider">Permadeath</span>
                   </div>
                   <ul className="space-y-2.5 text-sm text-gray-600 dark:text-neutral-300">
-                    <li className="flex gap-2"><span className="text-red-500 shrink-0">›</span><span>Die inside = permanent death. No respawns, no revives. Mates may loot your gear.</span></li>
+                    <li className="flex gap-2"><span className="text-red-500 shrink-0">›</span><span>If you die inside, you cannot get your gear back. No TP back and no admin assistance. That loadout is gone; you start fresh. Friends may loot your body and carry out whatever they can.</span></li>
                     <li className="flex gap-2"><span className="text-red-500 shrink-0">›</span><span><strong className="text-gray-900 dark:text-white">Admin Teleport Both Ways</strong> — players cannot enter or exit on their own. An admin must teleport you <em>in</em> and <em>out</em>.</span></li>
                     <li className="flex gap-2"><span className="text-red-500 shrink-0">›</span><span>Entering without an admin = <strong className="text-red-400">permanent ban</strong>.</span></li>
                     <li className="flex gap-2"><span className="text-amber-400 shrink-0">›</span><span><strong className="text-gray-900 dark:text-white">Start:</strong> Announce <span className="font-mono text-xs bg-black/20 px-1 py-0.5 rounded">Starting dungeon run</span> in chat before entering.</span></li>
