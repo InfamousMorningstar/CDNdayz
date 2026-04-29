@@ -37,7 +37,7 @@ const faqData = {
     {
       question: 'How do I takedown BLR deployable house?',
       answer:
-        `Claim your house, make sure it's completely empty, and equip a hammer.
+        `Claim your house, make sure it's completely empty, and equip a hammer or pliers.
 Stand outside facing the door, look at it, and you'll get the "Fold" option.
 
 Note: If it's not working, something's off - either it's not claimed, not empty, or you're not at the door.`,
