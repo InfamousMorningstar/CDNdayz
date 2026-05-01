@@ -63,6 +63,7 @@ export interface Event {
   id: string;
   title: string;
   date: string;
+  duration?: string;
   description: string;
   status: 'upcoming' | 'active' | 'completed';
   rewards?: string;
@@ -70,6 +71,16 @@ export interface Event {
 }
 
 export const events: Event[] = [
+  {
+    id: 'noob-chernarus-rify-search-seizure',
+    title: 'Search and Seizure',
+    date: '02 MAY 26 // 20:00 UTC',
+    duration: '3 hours',
+    description: 'Noob Chernarus. Sweep, seize, extract with high-value loot.',
+    status: 'upcoming',
+    rewards: 'Rare loot, including but not limited to Ant Miner and one-time loot-saving armbands. High-risk toxic zone operation.',
+    type: 'PvE',
+  },
   {
     id: 'supply-drop-alpha',
     title: 'Operation Supply Drop',
