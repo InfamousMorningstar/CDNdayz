@@ -100,7 +100,7 @@ export default function EventsPage() {
                            <Gem className="w-4 h-4" /> Safehouse Keycards (10 Uses)
                          </span>
                          <span className="inline-flex items-center gap-2 rounded-full border border-rose-700/50 bg-rose-900/30 px-3 py-1.5 text-xs sm:text-sm text-rose-200">
-                           <Gem className="w-4 h-4" /> OP Suits
+                           <Gem className="w-4 h-4" /> Donation Gear/Items
                          </span>
                          <span className="inline-flex items-center gap-2 rounded-full border border-amber-700/50 bg-amber-900/30 px-3 py-1.5 text-xs sm:text-sm text-amber-200">
                            <Gem className="w-4 h-4" /> And Much More
@@ -120,8 +120,8 @@ export default function EventsPage() {
                  </div>
 
                  <div className="p-6 sm:p-8 lg:p-10 bg-black/35">
-                   <div className="mb-4 inline-flex items-center rounded border border-amber-700/50 bg-amber-950/35 px-3 py-1.5 text-[11px] font-mono uppercase tracking-[0.24em] text-amber-300 animate-flicker-2">
-                     <TriangleAlert className="w-3.5 h-3.5 mr-2" /> Extreme Risk Window
+                   <div className="mb-4 inline-flex items-center rounded border border-amber-700/50 bg-amber-950/35 px-4 py-2.5 text-sm sm:text-base font-mono uppercase tracking-[0.24em] text-amber-300 animate-flicker-2">
+                     <TriangleAlert className="w-4 h-4 sm:w-5 sm:h-5 mr-3" /> Extreme Risk Operation
                    </div>
 
                    <div className="space-y-3 mb-6">

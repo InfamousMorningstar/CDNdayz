@@ -80,7 +80,7 @@ export const events: Event[] = [
     duration: '3 hours',
     description: 'Noob Chernarus. Sweep, seize, extract with high-value loot.',
     status: 'upcoming',
-    rewards: 'Rare loot, including Ant Miner, 5-time loot-saving armbands, safehouse keycards (10 uses), OP suits, and much more. High-risk toxic zone operation.',
+    rewards: 'Rare loot, including Ant Miner, 5-time loot-saving armbands, safehouse keycards (10 uses), Donation Gear/Items, and much more. High-risk toxic zone operation.',
     type: 'PvE',
   },
   {

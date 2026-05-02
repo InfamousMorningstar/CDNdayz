@@ -101,6 +101,9 @@ export function TimedAdvisoryBadge({ startsAtUtc, fallbackStatus }: TimedAdvisor
         <p className="text-[11px] font-mono uppercase tracking-[0.24em] text-lime-300 flex items-center gap-2">
           <Biohazard className="w-4 h-4" /> Contaminated Zone Advisory
         </p>
+        <p className="text-[10px] font-mono uppercase tracking-[0.18em] text-lime-200/80 mt-2">
+          Not your average zombies here
+        </p>
       </div>
     );
   }
