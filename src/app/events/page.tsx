@@ -1,6 +1,6 @@
 import { Card } from '@/components/ui/Card';
 import { Metadata } from 'next';
-import { CalendarDays, Radio, ArrowRight, Radar, MapPin, Gem, Biohazard, ShieldAlert, TriangleAlert } from 'lucide-react';
+import { CalendarDays, Radio, ArrowRight, Radar, Gem, ShieldAlert, TriangleAlert } from 'lucide-react';
 import { CinematicBackground } from '@/components/features/CinematicBackground';
 import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
@@ -8,6 +8,7 @@ import { DISCORD_INVITE_URL } from '@/lib/links';
 import { Badge } from '@/components/ui/Badge';
 import { events } from '@/data/mock';
 import { DiscordLink } from '@/components/ui/DiscordLink';
+import { TargetZoneStatus, TimedAdvisoryBadge } from '@/components/events/TargetZoneStatus';
 
 export const metadata: Metadata = {
   title: 'Events Schedule | CDN',
@@ -71,7 +72,11 @@ export default function EventsPage() {
                          </div>
                          <div className="rounded-xl border border-orange-700/45 bg-orange-900/25 p-4">
                            <p className="text-[11px] font-mono uppercase tracking-[0.22em] text-orange-300 mb-1">Target Zone</p>
-                           <p className="font-semibold text-stone-100 flex items-center gap-2"><MapPin className="w-4 h-4 text-orange-400" /> Rify</p>
+                          <TargetZoneStatus
+                            targetZone="Rify"
+                            startsAtUtc={rifyEvent?.startsAtUtc}
+                            fallbackStatus={rifyEvent?.status ?? 'upcoming'}
+                          />
                          </div>
                          <div className="rounded-xl border border-red-700/50 bg-red-950/35 p-4">
                            <p className="text-[11px] font-mono uppercase tracking-[0.22em] text-red-300 mb-1">Mode</p>
@@ -79,18 +84,26 @@ export default function EventsPage() {
                          </div>
                        </div>
 
-                       <div className="mb-5 rounded-xl border border-lime-700/50 bg-lime-950/25 p-4">
-                         <p className="text-[11px] font-mono uppercase tracking-[0.24em] text-lime-300 flex items-center gap-2">
-                           <Biohazard className="w-4 h-4" /> Contaminated Zone Advisory
-                         </p>
-                       </div>
+                       <TimedAdvisoryBadge
+                         startsAtUtc={rifyEvent?.startsAtUtc}
+                         fallbackStatus={rifyEvent?.status ?? 'upcoming'}
+                       />
 
                        <div className="flex flex-wrap gap-2">
                          <span className="inline-flex items-center gap-2 rounded-full border border-emerald-700/50 bg-emerald-900/30 px-3 py-1.5 text-xs sm:text-sm text-emerald-200">
                            <Gem className="w-4 h-4" /> Ant Miner
                          </span>
                          <span className="inline-flex items-center gap-2 rounded-full border border-violet-700/50 bg-violet-900/30 px-3 py-1.5 text-xs sm:text-sm text-violet-200">
-                           <Gem className="w-4 h-4" /> One-time Loot-saving Armbands
+                           <Gem className="w-4 h-4" /> 5-time Loot-saving Armbands
+                         </span>
+                         <span className="inline-flex items-center gap-2 rounded-full border border-cyan-700/50 bg-cyan-900/30 px-3 py-1.5 text-xs sm:text-sm text-cyan-200">
+                           <Gem className="w-4 h-4" /> Safehouse Keycards (10 Uses)
+                         </span>
+                         <span className="inline-flex items-center gap-2 rounded-full border border-rose-700/50 bg-rose-900/30 px-3 py-1.5 text-xs sm:text-sm text-rose-200">
+                           <Gem className="w-4 h-4" /> OP Suits
+                         </span>
+                         <span className="inline-flex items-center gap-2 rounded-full border border-amber-700/50 bg-amber-900/30 px-3 py-1.5 text-xs sm:text-sm text-amber-200">
+                           <Gem className="w-4 h-4" /> And Much More
                          </span>
                        </div>
                      </>
