@@ -552,6 +552,24 @@ export function RulesClient() {
                     <h2 className="text-2xl font-heading font-bold text-gray-900 dark:text-white">Housing</h2>
                   </div>
                   <div className="space-y-6">
+                    <div className="rounded-xl border border-amber-300/70 dark:border-amber-500/30 bg-amber-50 dark:bg-amber-900/15 p-4 sm:p-5">
+                      <div className="flex items-start gap-3">
+                        <AlertTriangle className="w-5 h-5 text-amber-500 mt-0.5 shrink-0" />
+                        <div>
+                          <h3 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white">BLR Housing Vehicle Placement Notice</h3>
+                          <p className="text-sm text-gray-700 dark:text-neutral-300 mt-2 leading-relaxed">
+                            Some BLR houses have a known garage issue. If a vehicle is parked too close to the house, driveway, or porch,
+                            the virtual garage may fail to bring it out and return an object-blocking error.
+                          </p>
+                          <p className="text-sm text-gray-700 dark:text-neutral-300 mt-2 leading-relaxed">
+                            Please do not land or park directly in these tight areas. Leave clear space between your house and vehicle so it can be spawned from the virtual garage correctly.
+                          </p>
+                          <p className="text-sm text-gray-700 dark:text-neutral-300 mt-2 leading-relaxed">
+                            When you are ready to store a vehicle in the virtual garage, make sure there is clear space between the vehicle and the house so no blockage occurs when trying to respawn it.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
                     <div>
                       <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Rag Cabins</h3>
                       <p className="text-sm text-gray-500 dark:text-neutral-400 mb-2">Available ONLY on <span className="text-gray-900 dark:text-white">Noob Chernarus</span>.</p>
