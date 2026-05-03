@@ -198,6 +198,12 @@ export function OperationsCard({ activeEvent }: OperationsCardProps) {
                   ))}
                 </div>
 
+                <div className="mb-5 rounded-sm border border-amber-700/40 bg-amber-950/20 px-4 py-3">
+                  <p className="text-[11px] sm:text-xs font-mono uppercase tracking-[0.16em] text-amber-300">
+                    TARGET ZONE REVEALS HERE AT ZERO // NO DISCORD LOCATION CALL
+                  </p>
+                </div>
+
                 {/* Classified asset chips */}
                 <div>
                   <p className="text-[11px] font-mono uppercase tracking-[0.2em] text-zinc-600 mb-2.5">
@@ -206,7 +212,7 @@ export function OperationsCard({ activeEvent }: OperationsCardProps) {
                   <div className="flex flex-wrap gap-1.5">
                     {([
                       ['ASSET_01', 'ANT_MINER'],
-                      ['ASSET_02', 'LOOT-SAVE_TOKEN ×5'],
+                      ['ASSET_02', 'LOOT-SAVE_ARMBAND (5 USES)'],
                       ['ASSET_03', 'SAFEHOUSE_KEYCARD'],
                       ['ASSET_04', 'DONATION_PACKAGE'],
                       ['ASSET_05', '[REDACTED]'],
