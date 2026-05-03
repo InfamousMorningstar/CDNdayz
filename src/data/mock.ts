@@ -73,13 +73,23 @@ export interface Event {
 
 export const events: Event[] = [
   {
+    id: 'deer-isle-search-seizure',
+    title: 'Search and Seizure',
+    date: 'TBA',
+    duration: 'TBA',
+    description: 'Deer Isle. Sweep, seize, extract with high-value loot.',
+    status: 'upcoming',
+    rewards: 'Rare loot, including Ant Miner, 5-time loot-saving armbands, safehouse keycards (10 uses), Donation Gear/Items, and much more. High-risk toxic zone operation.',
+    type: 'PvE',
+  },
+  {
     id: 'noob-chernarus-rify-search-seizure',
     title: 'Search and Seizure',
     date: '02 MAY 26 // 20:00 UTC',
     startsAtUtc: '2026-05-02T20:00:00Z',
     duration: '3 hours',
     description: 'Noob Chernarus. Sweep, seize, extract with high-value loot.',
-    status: 'upcoming',
+    status: 'completed',
     rewards: 'Rare loot, including Ant Miner, 5-time loot-saving armbands, safehouse keycards (10 uses), Donation Gear/Items, and much more. High-risk toxic zone operation.',
     type: 'PvE',
   },
