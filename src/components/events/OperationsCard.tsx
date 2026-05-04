@@ -55,6 +55,16 @@ export function OperationsCard({ activeEvent }: OperationsCardProps) {
   const targetDate = activeEvent?.startsAtUtc ? new Date(activeEvent.startsAtUtc) : null;
   const countdown = useCountdown(targetDate);
   const isPending = !targetDate || (activeEvent?.date === 'TBA');
+  const [isLive, setIsLive] = useState(targetDate ? Date.now() >= targetDate.getTime() : false);
+
+  useEffect(() => {
+    if (!targetDate) return;
+    if (Date.now() >= targetDate.getTime()) { setIsLive(true); return; }
+    const id = setInterval(() => {
+      if (Date.now() >= targetDate.getTime()) { setIsLive(true); clearInterval(id); }
+    }, 1000);
+    return () => clearInterval(id);
+  }, [targetDate]);
 
   return (
     <Card className="max-w-5xl w-full p-0 overflow-hidden text-left border-zinc-700/60 bg-[#060809]/97 shadow-[0_24px_80px_rgba(0,0,0,0.72),0_0_0_1px_rgba(255,255,255,0.03)]">
@@ -150,8 +160,8 @@ export function OperationsCard({ activeEvent }: OperationsCardProps) {
                     ['UPLINK', 'SECURE'],
                     ['FEED', 'ACTIVE'],
                   ].map(([k, v]) => (
-                    <span key={k} className="text-[11px] font-mono text-zinc-600 uppercase tracking-widest">
-                      <span className="text-zinc-500">{k}:</span> {v}
+                    <span key={k} className="text-xs font-mono text-zinc-500 uppercase tracking-widest">
+                      <span className="text-zinc-400">{k}:</span> {v}
                     </span>
                   ))}
                 </div>
@@ -175,7 +185,7 @@ export function OperationsCard({ activeEvent }: OperationsCardProps) {
 
                 {/* Operation codename box */}
                 <div className="mb-5 rounded-sm border border-zinc-700/80 bg-zinc-950/80 p-5 sm:p-6">
-                  <p className="text-[11px] font-mono uppercase tracking-[0.22em] text-zinc-500 mb-3 break-all">
+                  <p className="text-xs font-mono uppercase tracking-[0.22em] text-zinc-400 mb-3 break-all">
                     C:\CDN\OPS{'>'}&nbsp;OPERATION_CODENAME
                   </p>
                   <p className="text-3xl sm:text-4xl lg:text-5xl font-black font-mono uppercase tracking-[0.06em] text-zinc-100 mb-3 leading-tight">
@@ -188,25 +198,27 @@ export function OperationsCard({ activeEvent }: OperationsCardProps) {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-5">
                   {([
                     ['MAP:', <span key="map" className="flex items-center gap-1.5"><Radar className="w-3.5 h-3.5 text-red-400" />Deer Isle</span>],
-                    ['TARGET_ZONE:', <span key="tz" className="flex items-center gap-1.5 text-zinc-400"><Lock className="w-3 h-3" />COMMAND_SEALED</span>],
+                    ['TARGET_ZONE:', isLive
+                      ? <span key="tz" className="flex items-center gap-1.5 text-red-300"><Lock className="w-3 h-3" />CRATER <span className="text-zinc-400 text-xs ml-1">// GRID 7200:5100</span></span>
+                      : <span key="tz" className="flex items-center gap-1.5 text-zinc-500"><Lock className="w-3 h-3" />COMMAND_SEALED</span>],
                     ['MODE:', 'Search and Seizure'],
                   ] as [string, React.ReactNode][]).map(([label, value]) => (
                     <div key={label} className="rounded-sm border border-zinc-800/90 bg-zinc-900/60 p-4">
-                      <p className="text-[11px] font-mono uppercase tracking-[0.16em] text-zinc-500 mb-1.5">{label}</p>
+                      <p className="text-xs font-mono uppercase tracking-[0.16em] text-zinc-400 mb-1.5">{label}</p>
                       <p className="font-semibold text-zinc-100 text-sm font-mono">{value}</p>
                     </div>
                   ))}
                 </div>
 
                 <div className="mb-5 rounded-sm border border-amber-700/40 bg-amber-950/20 px-4 py-3">
-                  <p className="text-[11px] sm:text-xs font-mono uppercase tracking-[0.16em] text-amber-300">
+                  <p className="text-xs sm:text-sm font-mono uppercase tracking-[0.16em] text-amber-300">
                     TARGET ZONE REVEALS HERE AT ZERO // NO DISCORD LOCATION CALL
                   </p>
                 </div>
 
                 {/* Classified asset chips */}
                 <div>
-                  <p className="text-[11px] font-mono uppercase tracking-[0.2em] text-zinc-600 mb-2.5">
+                  <p className="text-xs font-mono uppercase tracking-[0.2em] text-zinc-400 mb-2.5">
                     RECOVERED_ASSETS:&nbsp;CLASSIFIED_INVENTORY
                   </p>
                   <div className="flex flex-wrap gap-1.5">
@@ -219,7 +231,7 @@ export function OperationsCard({ activeEvent }: OperationsCardProps) {
                     ] as [string, string][]).map(([id, label]) => (
                       <span
                         key={id}
-                        className="inline-flex items-center gap-1.5 rounded-sm border border-red-900/50 bg-zinc-950/80 px-3 py-2 text-xs font-mono text-zinc-300"
+                        className="inline-flex items-center gap-1.5 rounded-sm border border-red-900/50 bg-zinc-950/80 px-3 py-2 text-sm font-mono text-zinc-200"
                       >
                         <span className="text-red-500/80">◈</span>
                         <span className="text-zinc-500">{id}:</span>
@@ -227,6 +239,31 @@ export function OperationsCard({ activeEvent }: OperationsCardProps) {
                       </span>
                     ))}
                   </div>
+                </div>
+
+                {/* Survivor field briefing */}
+                <div className="mt-5 rounded-sm border border-zinc-700/50 bg-zinc-900/40 p-4 space-y-2">
+                  <p className="text-xs font-mono uppercase tracking-[0.22em] text-zinc-400 mb-3">
+                    C:\CDN\OPS{'>'}&nbsp;FIELD_BRIEFING
+                  </p>
+                  <p className="text-sm font-mono text-zinc-300 leading-relaxed">
+                    ALL UNITS — prepare to the best of your abilities before insertion. Intel on the target zone remains classified until zero-hour. Environmental conditions are <span className="text-amber-400 font-bold">UNKNOWN</span>. Operators should be equipped for all contingencies.
+                  </p>
+                  <div className="pt-2 grid grid-cols-2 gap-1.5 text-xs font-mono text-zinc-400 uppercase tracking-[0.1em]">
+                    {[
+                      '❄ FROZEN TERRAIN',
+                      '🌲 DEEP WILDERNESS',
+                      '☢ GAS_CONTAMINATION',
+                      '⬛ UNDERGROUND_BUNKER',
+                    ].map((hint) => (
+                      <span key={hint} className="flex items-center gap-1.5 border border-zinc-800/80 bg-zinc-950/50 px-2 py-1.5 rounded-sm">
+                        {hint}
+                      </span>
+                    ))}
+                  </div>
+                  <p className="text-xs font-mono text-zinc-500 pt-1">
+                    // PACK ACCORDINGLY. NO RESUPPLY. NO EXTRACTION GUARANTEE.
+                  </p>
                 </div>
               </>
             ) : (
@@ -269,14 +306,15 @@ export function OperationsCard({ activeEvent }: OperationsCardProps) {
               </div>
               <div className="space-y-2">
                 {([
-                  ['THREAT_LEVEL', 'UNKNOWN', 'text-zinc-300'],
-                  ['NBC_CONTAMINATION', 'UNKNOWN', 'text-zinc-300'],
-                  ['HOSTILE_ACTIVITY', 'UNKNOWN', 'text-zinc-300'],
-                  ['RECOVERY_WINDOW', 'UNKNOWN', 'text-zinc-300'],
+                  ['THREAT_LEVEL', 'DIABOLICAL', 'text-red-400'],
+                  ['NBC_CONTAMINATION', 'ACTIVE', 'text-orange-400'],
+                  ['HOSTILE_ACTIVITY', 'CRITICAL', 'text-red-500'],
                 ] as [string, string, string][]).map(([k, v, color]) => (
                   <div key={k} className="flex items-center justify-between">
-                    <span className="text-xs font-mono text-zinc-500 uppercase tracking-[0.12em]">{k}:</span>
-                    <span className={`text-sm font-mono font-bold uppercase tracking-[0.1em] ${color}`}>{v}</span>
+                    <span className="text-xs font-mono text-zinc-400 uppercase tracking-[0.12em]">{k}:</span>
+                    <span className={`text-sm font-mono font-bold uppercase tracking-[0.1em] ${isLive ? color : 'text-zinc-600'}`}>
+                      {isLive ? v : '[REDACTED]'}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -284,50 +322,75 @@ export function OperationsCard({ activeEvent }: OperationsCardProps) {
 
             {/* Countdown / Deployment window */}
             <div className="rounded-sm border border-zinc-800/90 bg-zinc-900/60 p-5">
-              <p className="text-xs font-mono uppercase tracking-[0.2em] text-zinc-500 mb-3 flex items-center gap-1.5">
+              <p className="text-xs font-mono uppercase tracking-[0.2em] text-zinc-500 mb-4 flex items-center gap-1.5">
                 <Activity className="w-4 h-4" />
-                COMMAND_RELEASE_IN:
+                INSERTION_T-MINUS:
               </p>
               {isPending ? (
-                <div className="space-y-1.5">
-                  <p className="text-zinc-400 font-mono text-sm font-bold tracking-widest">
-                    --D : --H : --M : --S
-                  </p>
-                  <p className="text-xs font-mono text-zinc-600 uppercase tracking-widest">
-                    DEPLOYMENT_WINDOW_PENDING
-                  </p>
-                </div>
+                <p className="text-zinc-600 font-mono text-xs tracking-[0.2em] uppercase">
+                  DEPLOYMENT_WINDOW_PENDING
+                </p>
+              ) : isLive ? (
+                <motion.p
+                  className="text-red-400 font-black font-mono text-sm tracking-[0.2em] uppercase"
+                  animate={{ opacity: [1, 0.4, 1] }}
+                  transition={{ duration: 0.8, repeat: Infinity }}
+                >
+                  ◉ OPERATION_ACTIVE — UNITS_INSERTED
+                </motion.p>
               ) : (
-                <div className="grid grid-cols-4 gap-1 text-center">
-                  {([
-                    [countdown.days, 'D'],
-                    [countdown.hours, 'H'],
-                    [countdown.mins, 'M'],
-                    [countdown.secs, 'S'],
-                  ] as [string, string][]).map(([val, unit], i) => (
-                    <div key={i} className="flex flex-col items-center">
-                      <span className="text-xl font-black font-mono text-zinc-100 tabular-nums leading-none">
-                        {val}
+                <div className="space-y-2">
+                  <div className="flex items-baseline gap-0 font-mono tabular-nums">
+                    {([
+                      [countdown.days, 'D'],
+                      [countdown.hours, 'H'],
+                      [countdown.mins, 'M'],
+                      [countdown.secs, 'S'],
+                    ] as [string, string][]).map(([val, unit], i) => (
+                      <span key={i} className="flex items-baseline">
+                        <span className="text-2xl font-black text-zinc-100 leading-none">{val}</span>
+                        <span className="text-[10px] font-bold text-red-500/80 uppercase mr-2.5">{unit}</span>
                       </span>
-                      <span className="text-[8px] font-mono text-zinc-600 uppercase mt-0.5">{unit}</span>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
+                  <div className="w-full h-1.5 bg-zinc-800 rounded-full relative overflow-hidden">
+                    <motion.div
+                      className="absolute top-0 bottom-0 left-0 bg-gradient-to-r from-transparent via-red-500 to-transparent rounded-full"
+                      animate={{ x: ['-100%', '200%'] }}
+                      transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+                      style={{ width: '40%' }}
+                    />
+                  </div>
+                  <p className="text-xs font-mono text-zinc-500 uppercase tracking-[0.18em]">
+                    // STANDBY — AWAIT_COMMAND_SIGNAL
+                  </p>
                 </div>
               )}
             </div>
 
             {/* Schedule */}
             <div className="rounded-sm border border-zinc-800/90 bg-zinc-900/60 p-5">
-              <p className="text-xs font-mono uppercase tracking-[0.18em] text-zinc-500 mb-2 flex items-center gap-1.5">
+              <p className="text-xs font-mono uppercase tracking-[0.18em] text-zinc-500 mb-3 flex items-center gap-1.5">
                 <CalendarDays className="w-4 h-4" />
                 SCHEDULE:
               </p>
-              <p className="text-zinc-100 font-bold font-mono text-sm mb-1">
-                {activeEvent?.date && activeEvent.date !== 'TBA' ? activeEvent.date : 'TIME_PENDING...'}
+              <p className="text-zinc-100 font-black font-mono text-base mb-3">
+                09 MAY 2026
               </p>
-              <p className="text-xs font-mono text-zinc-600 uppercase tracking-wide">
-                AWAITING_COMMAND_BRIEFING
-              </p>
+              <div className="space-y-1.5">
+                {([
+                  ['PDT', 'UTC−7', '18:00'],
+                  ['MDT', 'UTC−6', '19:00'],
+                  ['CDT', 'UTC−5', '20:00'],
+                  ['EDT', 'UTC−4', '21:00'],
+                  ['UTC', 'UTC+0', '01:00 (+1D)'],
+                ] as [string, string, string][]).map(([zone, offset, time]) => (
+                  <div key={zone} className="flex items-center justify-between">
+                    <span className="text-xs font-mono text-zinc-400 uppercase tracking-[0.12em]">{zone} <span className="text-zinc-500">{offset}</span></span>
+                    <span className="text-sm font-mono font-bold text-zinc-200">{time}</span>
+                  </div>
+                ))}
+              </div>
             </div>
 
             {/* Mission length */}

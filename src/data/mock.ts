@@ -75,8 +75,9 @@ export const events: Event[] = [
   {
     id: 'deer-isle-search-seizure',
     title: 'Search and Seizure',
-    date: 'TBA',
-    duration: 'TBA',
+    date: '09 MAY 26 // 0100 UTC',
+    startsAtUtc: '2026-05-09T19:00:00-06:00',
+    duration: '3 hours',
     description: 'Deer Isle. Sweep, seize, extract with high-value loot.',
     status: 'upcoming',
     rewards: 'Rare loot, including Ant Miner, 5-time loot-saving armbands, safehouse keycards (10 uses), Donation Gear/Items, and much more. High-risk toxic zone operation.',
