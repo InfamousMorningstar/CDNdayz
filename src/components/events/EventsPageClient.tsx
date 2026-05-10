@@ -5,6 +5,7 @@ import { Radio } from 'lucide-react';
 import { CinematicBackground } from '@/components/features/CinematicBackground';
 import { Badge } from '@/components/ui/Badge';
 import { OperationsCard } from '@/components/events/OperationsCard';
+import { Card } from '@/components/ui/Card';
 import type { Event } from '@/data/mock';
 import { getComputedEventStatus } from '@/lib/event-status';
 
@@ -64,7 +65,26 @@ export function EventsPageClient({ events }: EventsPageClientProps) {
 
         {/* Main operations card */}
         <div className="flex justify-center mb-12 sm:mb-16">
-          <OperationsCard activeEvent={activeEvent} />
+          {activeEvent ? (
+            <OperationsCard activeEvent={activeEvent} />
+          ) : (
+            <Card className="max-w-5xl w-full border-zinc-700/60 bg-[#060809]/97 p-8 sm:p-10 text-left shadow-[0_24px_80px_rgba(0,0,0,0.72),0_0_0_1px_rgba(255,255,255,0.03)]">
+              <div className="flex flex-col gap-4">
+                <span className="inline-flex w-fit items-center rounded border border-zinc-700/90 bg-zinc-900/65 px-3 py-1.5 text-xs uppercase tracking-[0.14em] text-zinc-400 font-mono">
+                  C:\CDN\OPS{'>'} STANDBY_BOARD
+                </span>
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black font-mono uppercase tracking-[0.1em] text-zinc-100">
+                  NEXT EVENT CURRENTLY BEING PLANNED
+                </h2>
+                <p className="text-sm sm:text-base text-zinc-400 leading-relaxed max-w-3xl">
+                  Command is assembling the next operation package. Mission brief, target zone, and deployment window will be posted once planning is complete.
+                </p>
+                <p className="text-xs font-mono uppercase tracking-[0.18em] text-zinc-500">
+                  // CHECK BACK SOON FOR NEW ORDERS
+                </p>
+              </div>
+            </Card>
+          )}
         </div>
 
         {/* Past Operations — Event History */}
