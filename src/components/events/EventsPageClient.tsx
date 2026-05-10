@@ -113,7 +113,9 @@ export function EventsPageClient({ events }: EventsPageClientProps) {
                   </div>
                   <div className="shrink-0 text-right">
                     <p className="text-[11px] font-mono text-zinc-500">{ev.date}</p>
-                    <p className="text-[10px] font-mono text-zinc-600 mt-0.5">MAP: NOOB_CHERNARUS</p>
+                    <p className="text-[10px] font-mono text-zinc-600 mt-0.5">
+                      MAP: {(ev.map ?? 'UNKNOWN').toUpperCase().replace(/\s+/g, '_')}
+                    </p>
                   </div>
                 </div>
               ))}

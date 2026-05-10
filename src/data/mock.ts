@@ -62,6 +62,7 @@ export const servers: Server[] = [
 export interface Event {
   id: string;
   title: string;
+  map?: string;
   date: string;
   startsAtUtc?: string;
   duration?: string;
@@ -75,6 +76,7 @@ export const events: Event[] = [
   {
     id: 'deer-isle-search-seizure',
     title: 'Search and Seizure',
+    map: 'Deer Isle',
     date: '09 MAY 26 // 0100 UTC',
     startsAtUtc: '2026-05-09T19:00:00-06:00',
     duration: '3 hours',
@@ -86,30 +88,13 @@ export const events: Event[] = [
   {
     id: 'noob-chernarus-rify-search-seizure',
     title: 'Search and Seizure',
+    map: 'Noob Chernarus',
     date: '02 MAY 26 // 20:00 UTC',
     startsAtUtc: '2026-05-02T20:00:00Z',
     duration: '3 hours',
     description: 'Noob Chernarus. Sweep, seize, extract with high-value loot.',
     status: 'completed',
     rewards: 'Rare loot, including Ant Miner, 5-time loot-saving armbands, safehouse keycards (10 uses), Donation Gear/Items, and much more. High-risk toxic zone operation.',
-    type: 'PvE',
-  },
-  {
-    id: 'supply-drop-alpha',
-    title: 'Operation Supply Drop',
-    date: 'March 25, 2026 - 18:00 EST',
-    description: 'A massive supply drop is inbound at NWAF. Secure the area from AI guards and claim high-tier loot.',
-    status: 'upcoming',
-    rewards: 'Class 4 Armor, Custom Vehicles',
-    type: 'PvE',
-  },
-  {
-    id: 'bounty-hunt',
-    title: 'The Bear Hunt',
-    date: 'March 22, 2026 - 20:00 EST',
-    description: 'Increased bear spawns in the south. Collect pelts for double trader value.',
-    status: 'active',
-    rewards: 'Double Rubles',
     type: 'PvE',
   },
 ];
