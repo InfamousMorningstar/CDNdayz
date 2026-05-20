@@ -556,14 +556,16 @@ export function RulesClient() {
                       <div className="flex items-start gap-3">
                         <AlertTriangle className="w-5 h-5 text-amber-500 mt-0.5 shrink-0" />
                         <div>
-                          <h3 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white">BLR Housing — Garage Heads Up</h3>
+                          <h3 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white">BLR Housing Vehicle Placement Notice</h3>
                           <p className="text-sm text-gray-700 dark:text-neutral-300 mt-2 leading-relaxed">
-                            Some BLR models have a quirky garage issue. Park your vehicle too close to the house, driveway, or porch and the virtual garage
-                            might just <span className="text-gray-900 dark:text-white font-semibold">eat your vehicle and refuse to give it back</span>. Yep, gone. Poof.
+                            Some BLR houses have a known garage issue. If a vehicle is parked too close to the house, driveway, or porch,
+                            the virtual garage may fail to bring it out and return an object-blocking error.
                           </p>
                           <p className="text-sm text-gray-700 dark:text-neutral-300 mt-2 leading-relaxed">
-                            Before you tuck your ride into the virtual garage, leave plenty of breathing room between it and the house.
-                            That one simple step keeps things purring like a kitten, smooth as butter — you get our drift.
+                            Please do not land or park directly in these tight areas. Leave clear space between your house and vehicle so it can be spawned from the virtual garage correctly.
+                          </p>
+                          <p className="text-sm text-gray-700 dark:text-neutral-300 mt-2 leading-relaxed">
+                            When you are ready to store a vehicle in the virtual garage, make sure there is clear space between the vehicle and the house so no blockage occurs when trying to respawn it.
                           </p>
                         </div>
                       </div>
