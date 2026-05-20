@@ -229,19 +229,15 @@ export function Hero() {
             <span className="text-xs font-mono text-green-700 dark:text-green-400 tracking-widest uppercase">CDN NETWORK ONLINE</span>
           </div>
           
-          <h1 className={`text-[2.15rem] sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight sm:tracking-tighter ${isLight ? 'text-gray-900' : 'text-white'} max-w-5xl relative z-20 leading-[1.03] sm:leading-tight`}>
-            <span className={`inline-block ${isLight ? '' : 'drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]'}`}>
-              <span className="inline-block">S</span>
-              <span className="inline-block animate-flicker-3 opacity-90">U</span>
-              <span className={`inline-block opacity-100 ${isLight ? '' : 'shadow-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]'}`}>R</span>
-              <span className={`inline-block animate-flicker-1 ${isLight ? 'text-gray-700' : 'text-white/80'}`}>V</span>
-              <span className={`inline-block opacity-50 ${isLight ? 'text-gray-500' : 'text-neutral-500'}`}>I</span>
-              <span className="inline-block animate-flicker-2">V</span>
-              <span className="inline-block opacity-90">E</span>
+          <h1 className="font-charlie-surf text-[2.15rem] sm:text-5xl md:text-7xl lg:text-8xl tracking-tight sm:tracking-tighter max-w-5xl relative z-20 leading-[1.03] sm:leading-tight">
+            <span className={`${isLight ? 'text-gray-900' : 'text-white'} whitespace-nowrap`}>
+              S<span className="led-broken-letter animate-[led-broken_2.4s_steps(1,end)_infinite]">U</span>RVI<span className="led-broken-letter animate-flicker-3">V</span>E
             </span>{' '}
-            <span className="text-red-600 drop-shadow-[0_0_20px_rgba(220,38,38,0.45)]">TOGETHER</span>
+            <span className="text-red-600 drop-shadow-[0_0_20px_rgba(220,38,38,0.45)] whitespace-nowrap">
+              TOG<span className="led-broken-letter animate-[led-broken_2.9s_steps(1,end)_infinite]">E</span>THER
+            </span>
             <br />
-            <span className={`text-[1.35rem] sm:text-3xl md:text-5xl lg:text-6xl font-heading text-transparent bg-clip-text tracking-[0.03em] sm:tracking-wide opacity-90 ${isLight ? 'bg-gradient-to-b from-gray-800 to-gray-500' : 'bg-gradient-to-b from-neutral-200 to-neutral-600'}`}>
+            <span className={`text-[1.35rem] sm:text-3xl md:text-5xl lg:text-6xl tracking-[0.03em] sm:tracking-wide opacity-90 ${isLight ? 'text-gray-700' : 'text-neutral-300'}`}>
               THRIVE FOREVER
             </span>
           </h1>

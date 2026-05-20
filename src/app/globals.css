@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'CharlieDontSurf';
+  src: url("/The-Boy-Series-charlie_don_t_surf/Charlie%20don%27t%20surf.ttf") format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   /* ── Light mode (default) ── */
   --background: #f5f3ee;
@@ -280,6 +288,134 @@ html.theme-switching body::after {
   .text-balance {
     text-wrap: balance;
   }
+
+  .ink-worn-text {
+    position: relative;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: #f5f5f5;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.22), 0 3px 16px rgba(0, 0, 0, 0.45);
+  }
+
+  .font-charlie-surf {
+    font-family: 'CharlieDontSurf', var(--font-inter), sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.03em;
+  }
+
+  .led-broken-letter {
+    display: inline-block;
+    transform: translateZ(0);
+    will-change: opacity, filter;
+  }
+
+  .ink-worn-text::before {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    color: rgba(8, 8, 8, 0.92);
+    opacity: 0.42;
+    -webkit-mask-image:
+      radial-gradient(circle at 7% 22%, #000 0 4px, transparent 6px),
+      radial-gradient(circle at 17% 68%, #000 0 5px, transparent 7px),
+      radial-gradient(circle at 31% 30%, #000 0 4px, transparent 6px),
+      radial-gradient(circle at 42% 74%, #000 0 5px, transparent 8px),
+      radial-gradient(circle at 55% 18%, #000 0 6px, transparent 8px),
+      radial-gradient(circle at 66% 56%, #000 0 4px, transparent 6px),
+      radial-gradient(circle at 74% 30%, #000 0 5px, transparent 7px),
+      radial-gradient(circle at 86% 66%, #000 0 6px, transparent 8px),
+      radial-gradient(circle at 94% 22%, #000 0 4px, transparent 6px);
+    mask-image:
+      radial-gradient(circle at 7% 22%, #000 0 4px, transparent 6px),
+      radial-gradient(circle at 17% 68%, #000 0 5px, transparent 7px),
+      radial-gradient(circle at 31% 30%, #000 0 4px, transparent 6px),
+      radial-gradient(circle at 42% 74%, #000 0 5px, transparent 8px),
+      radial-gradient(circle at 55% 18%, #000 0 6px, transparent 8px),
+      radial-gradient(circle at 66% 56%, #000 0 4px, transparent 6px),
+      radial-gradient(circle at 74% 30%, #000 0 5px, transparent 7px),
+      radial-gradient(circle at 86% 66%, #000 0 6px, transparent 8px),
+      radial-gradient(circle at 94% 22%, #000 0 4px, transparent 6px);
+  }
+
+  .dark .ink-worn-text {
+    color: #f4f4f4;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.2), 0 4px 18px rgba(0, 0, 0, 0.78);
+  }
+
+  .dark .ink-worn-text::before {
+    color: rgba(12, 12, 12, 0.96);
+    opacity: 0.5;
+  }
+
+  .ink-worn-text-red {
+    position: relative;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: #dc2626;
+    text-shadow: 0 1px 0 rgba(255, 180, 180, 0.2), 0 0 18px rgba(220, 38, 38, 0.38);
+  }
+
+  .ink-worn-text-red::before {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    color: rgba(50, 10, 10, 0.95);
+    opacity: 0.36;
+    -webkit-mask-image:
+      radial-gradient(circle at 8% 26%, #000 0 4px, transparent 6px),
+      radial-gradient(circle at 24% 66%, #000 0 5px, transparent 7px),
+      radial-gradient(circle at 37% 28%, #000 0 4px, transparent 6px),
+      radial-gradient(circle at 49% 71%, #000 0 5px, transparent 8px),
+      radial-gradient(circle at 63% 20%, #000 0 6px, transparent 8px),
+      radial-gradient(circle at 76% 58%, #000 0 4px, transparent 6px),
+      radial-gradient(circle at 89% 34%, #000 0 5px, transparent 7px);
+    mask-image:
+      radial-gradient(circle at 8% 26%, #000 0 4px, transparent 6px),
+      radial-gradient(circle at 24% 66%, #000 0 5px, transparent 7px),
+      radial-gradient(circle at 37% 28%, #000 0 4px, transparent 6px),
+      radial-gradient(circle at 49% 71%, #000 0 5px, transparent 8px),
+      radial-gradient(circle at 63% 20%, #000 0 6px, transparent 8px),
+      radial-gradient(circle at 76% 58%, #000 0 4px, transparent 6px),
+      radial-gradient(circle at 89% 34%, #000 0 5px, transparent 7px);
+  }
+
+  .ink-worn-text-muted {
+    position: relative;
+    display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #a3a3a3;
+    text-shadow: 0 1px 0 rgba(230, 230, 230, 0.16), 0 2px 14px rgba(0, 0, 0, 0.45);
+  }
+
+  .ink-worn-text-muted::before {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    color: rgba(22, 22, 22, 0.88);
+    opacity: 0.38;
+    -webkit-mask-image:
+      radial-gradient(circle at 12% 24%, #000 0 3px, transparent 5px),
+      radial-gradient(circle at 28% 62%, #000 0 4px, transparent 6px),
+      radial-gradient(circle at 47% 28%, #000 0 3px, transparent 5px),
+      radial-gradient(circle at 62% 68%, #000 0 4px, transparent 6px),
+      radial-gradient(circle at 82% 32%, #000 0 4px, transparent 6px);
+    mask-image:
+      radial-gradient(circle at 12% 24%, #000 0 3px, transparent 5px),
+      radial-gradient(circle at 28% 62%, #000 0 4px, transparent 6px),
+      radial-gradient(circle at 47% 28%, #000 0 3px, transparent 5px),
+      radial-gradient(circle at 62% 68%, #000 0 4px, transparent 6px),
+      radial-gradient(circle at 82% 32%, #000 0 4px, transparent 6px);
+  }
+
+  .dark .ink-worn-text-muted {
+    color: #b8b8b8;
+  }
   
   .animate-flicker-1 {
     animation: flicker-1 4s infinite step-end;
@@ -366,6 +502,21 @@ html.theme-switching body::after {
 @keyframes flicker-3 {
   0%, 5%, 10%, 80%, 85%, 90%, 100% { opacity: 1; }
   6%, 9%, 81%, 84%, 89% { opacity: 0.1; }
+}
+
+@keyframes led-broken {
+  0%, 8%, 11%, 19%, 23%, 52%, 56%, 74%, 79%, 100% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+  9%, 10%, 20%, 53%, 75% {
+    opacity: 0.2;
+    filter: brightness(0.4);
+  }
+  21%, 54%, 76% {
+    opacity: 0.65;
+    filter: brightness(1.35);
+  }
 }
 
 @keyframes glitch {
