@@ -6,9 +6,18 @@ import { useTheme } from '@/components/layout/ThemeProvider';
 interface CinematicBackgroundProps {
   children: React.ReactNode;
   backgroundImageSrc?: string;
+  backgroundFit?: 'cover' | 'contain';
+  backgroundPosition?: string;
+  backgroundParallax?: boolean;
 }
 
-export function CinematicBackground({ children, backgroundImageSrc = "/Images/S3F8X.jpg" }: CinematicBackgroundProps) {
+export function CinematicBackground({
+  children,
+  backgroundImageSrc = "/Images/S3F8X.jpg",
+  backgroundFit = 'cover',
+  backgroundPosition = 'center',
+  backgroundParallax = true,
+}: CinematicBackgroundProps) {
   const { theme } = useTheme();
   const isLight = theme === 'light';
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -314,15 +323,26 @@ export function CinematicBackground({ children, backgroundImageSrc = "/Images/S3
         <>
           {/* 1. Background Image with Parallax (dark mode only) */}
           <div
-            className="absolute inset-[-20px] bg-cover bg-center bg-no-repeat transition-transform duration-100 ease-out z-0"
+            className={`absolute ${backgroundFit === 'contain' ? 'inset-0' : 'inset-[-20px]'} bg-no-repeat transition-transform duration-100 ease-out z-0`}
             style={{
               backgroundImage: `url("${backgroundImageSrc}")`,
-              transform: shouldAnimate
-                ? `translate(${mousePosition.x * -6}px, ${mousePosition.y * -6}px) scale(1.04)`
-                : 'scale(1.02)',
+              backgroundSize: backgroundFit,
+              backgroundPosition,
+              transform: backgroundParallax
+                ? shouldAnimate
+                  ? backgroundFit === 'contain'
+                    ? `translate(${mousePosition.x * -4}px, ${mousePosition.y * -4}px)`
+                    : `translate(${mousePosition.x * -6}px, ${mousePosition.y * -6}px) scale(1.04)`
+                  : backgroundFit === 'contain'
+                    ? 'none'
+                    : 'scale(1.02)'
+                : 'none',
             }}
           >
-            <div className="absolute inset-0 bg-black/70 z-10" />
+            <div
+              className="absolute inset-0 z-10"
+              style={{ backgroundColor: backgroundFit === 'contain' ? 'rgba(0, 0, 0, 0.46)' : 'rgba(0, 0, 0, 0.70)' }}
+            />
           </div>
 
           {/* 2. Embers */}

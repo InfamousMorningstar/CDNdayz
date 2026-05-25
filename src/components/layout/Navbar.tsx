@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { Menu, X, Globe, Shield, BookOpen, Calendar, Hammer, ShoppingBag, AlertTriangle, Sun, Moon } from 'lucide-react';
+import { Menu, X, Globe, Shield, BookOpen, Calendar, Hammer, ShoppingBag, AlertTriangle, Sun, Moon, HeartPulse } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { ScrambleLink } from '@/components/ui/ScrambleLink';
 import Image from 'next/image';
@@ -13,6 +13,7 @@ import { useTheme } from '@/components/layout/ThemeProvider';
 const navItems = [
   { name: 'Home', href: '/', icon: Globe },
   { name: 'Servers & Analytics', href: '/servers', icon: Shield },
+  { name: 'Terje Wiki', href: '/hardcore', icon: HeartPulse },
   { name: 'Mods', href: '/features', icon: Hammer },
   { name: 'Wipe Info', href: '/wipe-info', icon: Calendar },
   { name: 'Rules & FAQ', href: '/rules', icon: BookOpen },
