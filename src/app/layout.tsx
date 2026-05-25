@@ -6,6 +6,7 @@ import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { EasterEggs } from '@/components/layout/EasterEggs'
 import { ThemeProvider } from '@/components/layout/ThemeProvider'
+import { PageTransition } from '@/components/layout/PageTransition'
 import { WebsiteSupportChat } from '@/components/chat/WebsiteSupportChat'
 import { Analytics } from "@vercel/analytics/react"
 
@@ -46,7 +47,9 @@ export default function RootLayout({
           </a>
           <div className="relative flex min-h-screen flex-col">
             <Navbar />
-            <main id="main-content" className="flex-1 relative z-10">{children}</main>
+            <main id="main-content" className="flex-1 relative z-10">
+              <PageTransition>{children}</PageTransition>
+            </main>
             <Footer />
             <EasterEggs />
             <WebsiteSupportChat />
