@@ -20,6 +20,37 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'CDN - Premium DayZ PvE Network',
   description: 'Join the ultimate PvE survival experience. Custom events, thriving community, and zero toxic behavior.',
+  metadataBase: new URL('https://cdndayz.com'),
+  alternates: {
+    canonical: '/',
+  },
+  icons: {
+    icon: '/Logo/Logo.png',
+    shortcut: '/Logo/Logo.png',
+    apple: '/Logo/Logo.png',
+  },
+  openGraph: {
+    title: 'CDN - Premium DayZ PvE Network',
+    description: 'Track every CDN server, required mods, wipe schedules, and live population intelligence from one place.',
+    url: 'https://cdndayz.com',
+    siteName: 'CDN',
+    images: [
+      {
+        url: '/Logo/Logo.png',
+        width: 512,
+        height: 512,
+        alt: 'CDN DayZ Network logo',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'CDN - Premium DayZ PvE Network',
+    description: 'Track every CDN server, required mods, wipe schedules, and live population intelligence from one place.',
+    images: ['/Logo/Logo.png'],
+  },
 }
 
 export default function RootLayout({
