@@ -12,7 +12,7 @@ export function QuickInfo() {
     {
       title: "Server Rules",
       icon: <Shield className="w-8 h-8 text-red-500" />,
-            description: "We enforce strict PvE rules as the network default. No raiding on standard PvE servers. Hardcore servers have clearly labeled exceptions.",
+            description: "We enforce strict PvE rules across the network by default. Takistan is our dedicated PvP server, while standard PvE servers remain no-raiding. Hardcore servers have clearly labeled exceptions.",
       link: "/rules",
       cta: "Full Ruleset"
     },

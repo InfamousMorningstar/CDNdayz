@@ -23,6 +23,7 @@ const mapAliases: Record<string, string> = {
   namalsk: 'Namalsk',
   bitterroot: 'Bitterroot',
   banov: 'Banov',
+  takistanplus: 'Takistan',
 };
 
 export function normalizeMapName(mapValue: string): string {

@@ -111,6 +111,20 @@ function getTheme(name: string, map: string): Theme {
     };
   }
 
+  // Takistan — hot desert PvP
+  if (m.includes('takistan')) {
+    return {
+      bg: 'bg-amber-50/90 dark:bg-amber-950/70',
+      border: 'border-amber-300/50 dark:border-amber-500/25',
+      hoverShadow: 'hover:shadow-amber-400/15 dark:hover:shadow-amber-500/15 hover:border-amber-400/60 dark:hover:border-amber-400/50',
+      topGlow: 'from-orange-500/10',
+      badge: 'bg-amber-100 dark:bg-amber-500/10 border-amber-300/50 dark:border-amber-400/25 text-amber-700 dark:text-amber-300',
+      accent: 'text-amber-600 dark:text-amber-300',
+      copyHover: 'hover:bg-amber-100 dark:hover:bg-amber-500/15 hover:border-amber-400/40 hover:text-amber-700 dark:hover:text-amber-300',
+      focusRing: 'focus-visible:ring-amber-400/60',
+    };
+  }
+
   // Noob Friendly — welcoming emerald
   if (n.includes('noob')) {
     return {
@@ -157,6 +171,7 @@ export function ServerMiniCard({ name, map, players, maxPlayers, status, ping, c
   const isOnline = status === 'online';
   const statusText = status === 'restarting' ? 'Restarting' : isOnline ? 'Online' : 'Offline';
   const theme = getTheme(name, map);
+  const displayMap = map.toLowerCase() === 'takistan' ? 'Takistan' : map;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(connect);
@@ -188,7 +203,7 @@ export function ServerMiniCard({ name, map, players, maxPlayers, status, ping, c
           </span>
         </div>
         <span className={cn("self-start text-[10px] font-mono px-2 py-0.5 rounded border uppercase tracking-widest", theme.badge)}>
-          {map}
+          {displayMap}
         </span>
         <span className={cn(
           "self-start text-[10px] font-mono px-2 py-0.5 rounded border uppercase tracking-widest",

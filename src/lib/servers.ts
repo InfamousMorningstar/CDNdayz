@@ -131,6 +131,15 @@ export const servers: ServerConfig[] = [
     type: "dayz"
   },
   {
+    id: "takistan-pvp",
+    name: "CDN Takistan PvP",
+    map: "Takistan",
+    host: "65.7.2.44",
+    port: 2523,
+    gamePort: 2522,
+    type: "dayz"
+  },
+  {
     id: "walking-dead",
     name: "CDN Walking Dead Hardcore",
     map: "Hashima",

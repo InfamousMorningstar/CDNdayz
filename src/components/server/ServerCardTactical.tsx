@@ -9,7 +9,7 @@ import {
     Snowflake, 
     Trees, 
     Mountain,
-    Radio,
+    Sun,
     Copy,
     Check,
     Star,
@@ -66,6 +66,8 @@ const ServerCardTactical: React.FC<ServerCardProps> = ({
         onToggleFavorite?.(serverId);
     };
 
+    const displayMap = map.toLowerCase() === 'takistan' ? 'Takistan' : map;
+
     // Determine Theme based on Map
 
     // Determine Theme based on Map
@@ -81,6 +83,14 @@ const ServerCardTactical: React.FC<ServerCardProps> = ({
             border: 'group-hover:border-cyan-500/50', 
             icon: Snowflake,
             label: isHardcore ? 'Hardcore Arctic' : 'Arctic Survival'
+        };
+        if (lowerMap.includes('takistan')) return {
+            color: 'text-amber-700 dark:text-amber-400',
+            bg: 'bg-amber-50 dark:bg-amber-950/30',
+            bar: 'bg-amber-500',
+            border: 'group-hover:border-amber-500/50',
+            icon: Sun,
+            label: 'Desert PvP'
         };
         if (lowerMap.includes('livonia')) return { 
             color: 'text-amber-700 dark:text-amber-400', 
@@ -183,7 +193,7 @@ const ServerCardTactical: React.FC<ServerCardProps> = ({
                     </div>
                     <div className="flex items-center gap-2 text-gray-900 dark:text-white font-bold font-heading tracking-wide">
                         <Globe className="w-4 h-4 text-gray-500 dark:text-neutral-500" />
-                        {map}
+                        {displayMap}
                     </div>
                 </div>
             </div>
