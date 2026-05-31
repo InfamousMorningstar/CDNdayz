@@ -23,7 +23,7 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["var(--font-inter)", "-apple-system", "BlinkMacSystemFont", "Helvetica Neue", "sans-serif"],
-        mono: ["JetBrains Mono", "monospace"],
+        mono: ["var(--font-ibm-plex-mono)", "var(--font-jetbrains-mono)", "monospace"],
         heading: ["var(--font-inter)", "-apple-system", "BlinkMacSystemFont", "Helvetica Neue", "sans-serif"],
       },
       animation: {

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { IBM_Plex_Mono, Inter, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import { cn } from '@/lib/utils'
 import { Navbar } from '@/components/layout/Navbar'
@@ -14,6 +14,20 @@ const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
   weight: ['300', '400', '500', '600', '700', '800', '900'],
+  display: 'swap',
+})
+
+const ibmPlexMono = IBM_Plex_Mono({
+  subsets: ['latin'],
+  variable: '--font-ibm-plex-mono',
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+})
+
+const jetBrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-jetbrains-mono',
+  weight: ['400', '500', '600', '700'],
   display: 'swap',
 })
 
@@ -63,7 +77,9 @@ export default function RootLayout({
       <body 
         className={cn(
           "min-h-screen bg-background font-sans antialiased text-foreground selection:bg-red-500/20",
-          inter.variable
+          inter.variable,
+          ibmPlexMono.variable,
+          jetBrainsMono.variable
         )}
         suppressHydrationWarning
       >

@@ -74,6 +74,17 @@ export interface Event {
 
 export const events: Event[] = [
   {
+    id: 'takistan-desert-crown',
+    title: 'Operation: Desert Crown',
+    map: 'Takistan',
+    date: 'TBD',
+    duration: 'TBA',
+    description: 'High Command has gone rogue in Takistan. Hunt and eliminate the admin target(s) before they escape the AO.',
+    status: 'upcoming',
+    rewards: 'Event rewards and permanent bragging rights for successful hunters.',
+    type: 'PvP Zone',
+  },
+  {
     id: 'deer-isle-search-seizure',
     title: 'Search and Seizure',
     map: 'Deer Isle',
