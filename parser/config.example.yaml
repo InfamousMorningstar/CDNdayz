@@ -1,0 +1,39 @@
+# CDN DayZ PvP parser — example configuration.
+#
+# Copy this file to `config.yaml` (in the same folder as the .exe) and edit.
+# `config.yaml` is gitignored — it holds your ingest key.
+
+website:
+  # Where to POST events. Production: https://cdndayz.com/api/pvp/ingest
+  ingest_url: "https://cdndayz.com/api/pvp/ingest"
+  # Must match PVP_INGEST_KEY on the website (Vercel env var).
+  # Treat this like a password. Anyone with it can submit events.
+  ingest_key: "REPLACE_ME_WITH_SHARED_SECRET"
+
+# One entry per DayZ server whose logs live on this machine.
+# `id` MUST match an id in src/lib/servers.ts on the website,
+# otherwise the website will reject the batch with HTTP 400.
+servers:
+  - id: chernarus-hardcore
+    name: "CDN Chernarus Hardcore"
+    # Folder containing the *.ADM files. Usually the server's `profiles`
+    # directory. The parser auto-discovers all .ADM files in here.
+    log_dir: 'C:\DayZServers\Chernarus\profiles'
+
+  - id: livonia-snow
+    name: "CDN Livonia Snow Hardcore"
+    log_dir: 'C:\DayZServers\Livonia\profiles'
+
+agent:
+  # Seconds between log-scan passes. 5 is a good default.
+  poll_interval_sec: 5
+  # Max events per HTTP POST. Server caps at 1000.
+  batch_size: 200
+  # State file — remembers byte offsets per .ADM so we don't re-ship
+  # everything on restart. Default folder is fine for most installs.
+  state_file: 'C:\ProgramData\CDN-PvP-Parser\state.json'
+  # Disk-backed retry queue. Used when the website is unreachable.
+  queue_file: 'C:\ProgramData\CDN-PvP-Parser\queue.jsonl'
+  # Rotating log file (5 MB × 5 generations).
+  log_file: 'C:\ProgramData\CDN-PvP-Parser\agent.log'
+  request_timeout_sec: 15

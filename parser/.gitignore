@@ -1,0 +1,14 @@
+# Built executable + admin secrets
+dist/
+build/
+*.spec
+__pycache__/
+*.pyc
+.venv/
+venv/
+config.yaml
+state.json
+queue.jsonl
+queue.jsonl.tmp
+agent.log
+agent.log.*

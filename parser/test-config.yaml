@@ -1,0 +1,13 @@
+website:
+  ingest_url: "http://localhost:3000/api/pvp/ingest"
+  ingest_key: "test-key"
+servers:
+  - id: chernarus-hardcore
+    name: "CDN Chernarus Hardcore"
+    log_dir: "./test-logs"
+agent:
+  poll_interval_sec: 2
+  batch_size: 200
+  state_file: "./test-state/state.json"
+  queue_file: "./test-state/queue.jsonl"
+  log_file: "./test-state/agent.log"
