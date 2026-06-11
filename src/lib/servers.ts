@@ -50,15 +50,6 @@ export const servers: ServerConfig[] = [
     type: "dayz"
   },
   {
-    id: "chernarus-noob-65",
-    name: "CDN Melkart PVP",
-    map: "Chernarus",
-    host: "65.7.2.44",
-    port: 2493,
-    gamePort: 2492,
-    type: "dayz"
-  },
-  {
     id: "banov-modded",
     name: "CDN Banov Modded",
     map: "Banov",

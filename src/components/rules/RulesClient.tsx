@@ -17,7 +17,7 @@ const faqData = {
     {
       question: 'What type of server is this?',
       answer:
-        `CDN is a PvE-focused network. Survival, exploration, and cooperation come first across all servers.\n\nThe one exception is CDN Melkart — a Shoot to Kill PvP server where both AI and other players are a threat. If you're here to ruin someone's day for fun... Melkart is the place. Everywhere else, that's not welcome.`,
+        `CDN is a PvE-focused network. Survival, exploration, and cooperation come first across all servers.\n\nThe one exception is CDN Takistan — a Shoot to Kill PvP server where both AI and other players are a threat. If you're here to ruin someone's day for fun... Takistan is the place. Everywhere else, that's not welcome.`,
     },
     {
       question: 'How do I join the server?',
@@ -56,7 +56,7 @@ Note: If it's not working, something's off - either it's not claimed, not empty,
   rules: [
     {
       question: 'Is PvP allowed at all?',
-      answer: `Almost everywhere — no. CDN is a PvE-focused network.\n\nThe one exception is CDN Melkart, which is a Shoot to Kill PvP server. On Melkart, expect to encounter AI enemies and other players — everyone is a threat. If you're not looking for that, stick to the other servers.`,
+      answer: `Almost everywhere — no. CDN is a PvE-focused network.\n\nThe one exception is CDN Takistan, which is a Shoot to Kill PvP server. On Takistan, expect to encounter AI enemies and other players — everyone is a threat. If you're not looking for that, stick to the other servers.`,
     },
     {
       question: 'What happens if I break the rules?',
@@ -469,11 +469,11 @@ export function RulesClient() {
                   <div className="space-y-4">
                     <div>
                       <Badge variant="outline" className="mb-2 text-red-400 border-red-500/30">Expansion Building</Badge>
-                      <p className="text-xs text-gray-500 dark:text-neutral-500">DeerIsle, Bitterroot, Sakhal, Chernarus (Noob Friendly), Melkart (PvP)</p>
+                      <p className="text-xs text-gray-500 dark:text-neutral-500">DeerIsle, Bitterroot, Sakhal, Chernarus (Noob Friendly)</p>
                     </div>
                     <div>
                       <Badge variant="outline" className="mb-2 text-amber-400 border-amber-500/30">Base Building Plus</Badge>
-                      <p className="text-xs text-gray-500 dark:text-neutral-500">Hardcore Livonia, Hardcore Hashima, Hardcore Chernarus</p>
+                      <p className="text-xs text-gray-500 dark:text-neutral-500">Hardcore Livonia, Hardcore Hashima, Hardcore Chernarus, Takistan (PvP)</p>
                     </div>
                     <div>
                       <Badge variant="outline" className="mb-2 text-emerald-400 border-emerald-500/30">No Mod</Badge>

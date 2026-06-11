@@ -54,8 +54,7 @@ export default function FeaturesPage() {
                   'Deer Isle',
                   'Bitterroot',
                   'Sakhal',
-                  'Noob Chernarus',
-                  'Melkart (PvP)'
+                  'Noob Chernarus'
                 ].map((server) => (
                   <li key={server} className="flex items-center gap-2 text-gray-600 dark:text-neutral-300 text-sm font-sans">
                     <span className="w-1.5 h-1.5 rounded-full bg-red-500 shadow-[0_0_8px_rgba(220,38,38,0.5)]"></span>
@@ -91,7 +90,8 @@ export default function FeaturesPage() {
                 {[
                   'Hardcore Livonia',
                   'Hardcore Hashima',
-                  'Hardcore Chernarus'
+                  'Hardcore Chernarus',
+                  'Takistan (PvP)'
                 ].map((server) => (
                   <li key={server} className="flex items-center gap-2 text-gray-600 dark:text-neutral-300 text-sm font-sans">
                     <span className="w-1.5 h-1.5 rounded-full bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.5)]"></span>
