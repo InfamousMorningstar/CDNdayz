@@ -65,6 +65,40 @@ RE_HIT = re.compile(
     r' into (?P<zone>\S+)'
 )
 
+# Player killed by AI — counts as a player death, attributed to an AI faction.
+# AI individual names are intentionally NOT shipped downstream; only faction.
+RE_KILL_PLAYER_BY_AI = re.compile(
+    r'^(?P<h>\d{2}):(?P<mi>\d{2}):(?P<s>\d{2}) \| '
+    r'Player "(?P<victim>[^"]+)"(?:\s+\(DEAD\))? \(id=(?P<vid>\S+) pos=<[^>]*>\)'
+    r'(?:\s*\[HP: 0(?:\.\d+)?\])?'
+    r' killed by AI "(?P<ainame>[^"]+)" \(group=(?P<group>\d+) faction="(?P<faction>[^"]+)" pos=<[^>]*>\)'
+    r' with (?P<weapon>.+?)(?: from (?P<dist>[\d.]+) meters)?\s*$'
+)
+
+# AI killed by Player — counts as a player kill, victim shown as AI faction only.
+RE_KILL_AI_BY_PLAYER = re.compile(
+    r'^(?P<h>\d{2}):(?P<mi>\d{2}):(?P<s>\d{2}) \| '
+    r'AI "(?P<ainame>[^"]+)"(?:\s+\(DEAD\))? \(group=(?P<group>\d+) faction="(?P<faction>[^"]+)" pos=<[^>]*>\)'
+    r' killed by Player "(?P<killer>[^"]+)"(?:\s+\(DEAD\))? \(id=(?P<kid>\S+) pos=<[^>]*>\)'
+    r' with (?P<weapon>.+?)(?: from (?P<dist>[\d.]+) meters)?\s*$'
+)
+
+# Player hit by AI — used for headshot attribution on subsequent Player kill by AI.
+RE_HIT_PLAYER_BY_AI = re.compile(
+    r'^(?P<h>\d{2}):(?P<mi>\d{2}):(?P<s>\d{2}) \| '
+    r'Player "(?P<victim>[^"]+)"(?:\s+\(DEAD\))? \(id=(?P<vid>\S+) pos=<[^>]*>\)'
+    r'\s*\[HP: (?P<hp>[\d.]+)\] hit by AI "(?P<ainame>[^"]+)" \(group=(?P<group>\d+) faction="(?P<faction>[^"]+)" pos=<[^>]*>\)'
+    r' into (?P<zone>\S+)'
+)
+
+# AI hit by Player — used for headshot attribution on subsequent AI kill by Player.
+RE_HIT_AI_BY_PLAYER = re.compile(
+    r'^(?P<h>\d{2}):(?P<mi>\d{2}):(?P<s>\d{2}) \| '
+    r'AI "(?P<ainame>[^"]+)"(?:\s+\(DEAD\))? \(group=(?P<group>\d+) faction="(?P<faction>[^"]+)" pos=<[^>]*>\)'
+    r'(?:\s*\[HP: (?P<hp>[\d.]+)\])? hit by Player "(?P<killer>[^"]+)"(?:\s+\(DEAD\))? \(id=(?P<kid>\S+) pos=<[^>]*>\)'
+    r' into (?P<zone>\S+)'
+)
+
 # Connect: only "is connected" (post-handshake), not "is connecting".
 # pos=<...> appears once the player has finished spawning in.
 RE_CONNECT = re.compile(
@@ -234,6 +268,19 @@ class AdmParser:
                 return zone.startswith("Head")
         return False
 
+    @staticmethod
+    def _ai_id(faction: str) -> str:
+        # Public-facing synthetic id for an AI side — by faction only.
+        # AI individual names are intentionally not exposed.
+        return f"ai:{faction}"
+
+    @staticmethod
+    def _ai_hit_key(faction: str, group: str, ainame: str) -> str:
+        # Parser-internal key for headshot attribution; never shipped.
+        # More specific than the public id so headshot attribution stays
+        # per-AI rather than blurring across a whole faction.
+        return f"ai:{faction}:{group}:{ainame}"
+
     def parse_line(self, line: str) -> Optional[dict]:
         line = line.rstrip("\r\n")
         if not line:
@@ -252,6 +299,24 @@ class AdmParser:
                 return None
             self._recent_hits.append((ts, m["kid"], m["vid"], m["zone"]))
             return None  # hits are not shipped
+
+        m = RE_HIT_PLAYER_BY_AI.match(line)
+        if m:
+            ts = self._parse_time(m["h"], m["mi"], m["s"])
+            if ts is None:
+                return None
+            ai_key = self._ai_hit_key(m["faction"], m["group"], m["ainame"])
+            self._recent_hits.append((ts, ai_key, m["vid"], m["zone"]))
+            return None
+
+        m = RE_HIT_AI_BY_PLAYER.match(line)
+        if m:
+            ts = self._parse_time(m["h"], m["mi"], m["s"])
+            if ts is None:
+                return None
+            ai_key = self._ai_hit_key(m["faction"], m["group"], m["ainame"])
+            self._recent_hits.append((ts, m["kid"], ai_key, m["zone"]))
+            return None
 
         m = RE_KILL.match(line)
         if m:
@@ -274,6 +339,71 @@ class AdmParser:
                 "killerName": m["killer"],
                 "victimId": m["vid"],
                 "victimName": m["victim"],
+                "weapon": m["weapon"].strip(),
+                "distance": distance,
+                "headshot": headshot,
+            }
+
+        m = RE_KILL_PLAYER_BY_AI.match(line)
+        if m:
+            ts = self._parse_time(m["h"], m["mi"], m["s"])
+            if ts is None:
+                return None
+            distance = None
+            if m["dist"]:
+                try:
+                    distance = float(m["dist"])
+                except ValueError:
+                    pass
+            ai_hit_key = self._ai_hit_key(m["faction"], m["group"], m["ainame"])
+            ai_public_id = self._ai_id(m["faction"])
+            headshot = self._check_headshot(ai_hit_key, m["vid"], ts)
+            # Include a private marker in the event id hash so two same-second
+            # AI kills from the same faction stay unique without leaking the
+            # AI name into the public event payload.
+            return {
+                "id": event_id(self.server.id, ts, "kill",
+                               ai_hit_key, m["vid"], m["weapon"]),
+                "serverId": self.server.id,
+                "ts": ts,
+                "kind": "kill",
+                "killerId": ai_public_id,
+                "killerName": "AI",
+                "killerIsAI": True,
+                "killerFaction": m["faction"],
+                "victimId": m["vid"],
+                "victimName": m["victim"],
+                "weapon": m["weapon"].strip(),
+                "distance": distance,
+                "headshot": headshot,
+            }
+
+        m = RE_KILL_AI_BY_PLAYER.match(line)
+        if m:
+            ts = self._parse_time(m["h"], m["mi"], m["s"])
+            if ts is None:
+                return None
+            distance = None
+            if m["dist"]:
+                try:
+                    distance = float(m["dist"])
+                except ValueError:
+                    pass
+            ai_hit_key = self._ai_hit_key(m["faction"], m["group"], m["ainame"])
+            ai_public_id = self._ai_id(m["faction"])
+            headshot = self._check_headshot(m["kid"], ai_hit_key, ts)
+            return {
+                "id": event_id(self.server.id, ts, "kill",
+                               m["kid"], ai_hit_key, m["weapon"]),
+                "serverId": self.server.id,
+                "ts": ts,
+                "kind": "kill",
+                "killerId": m["kid"],
+                "killerName": m["killer"],
+                "victimId": ai_public_id,
+                "victimName": "AI",
+                "victimIsAI": True,
+                "victimFaction": m["faction"],
                 "weapon": m["weapon"].strip(),
                 "distance": distance,
                 "headshot": headshot,

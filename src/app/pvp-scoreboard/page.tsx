@@ -23,13 +23,17 @@ interface MarksmanRow {
   ts: number;
 }
 
+type RosterMode = 'all' | 'pvp-only';
+
 interface StatsResponse {
   period: LeaderboardPeriod;
   generatedAt: number;
   eventCount: number;
   players: Array<PlayerAggregate & { rank: number }>;
+  playersPvPOnly: Array<PlayerAggregate & { rank: number }>;
   overall: {
     totalKills: number;
+    totalKillsPvPOnly: number;
     playersOnline: number;
     longestShot: LongestShotRecord | null;
   };
@@ -69,16 +73,22 @@ function splitZulu(ts: number): { date: string; hh: string; mm: string; ss: stri
 
 export default function PvPScoreboardPage() {
   const [period, setPeriod] = useState<LeaderboardPeriod>('weekly');
-  const [players, setPlayers] = useState<PlayerStat[]>([]);
+  const [rosterMode, setRosterMode] = useState<RosterMode>('all');
+  const [playersAll, setPlayersAll] = useState<PlayerStat[]>([]);
+  const [playersPvPOnly, setPlayersPvPOnly] = useState<PlayerStat[]>([]);
   const [marksmen, setMarksmen] = useState<MarksmanRow[]>([]);
   const [record, setRecord] = useState<LongestShotInfo | null>(null);
   const [recentKills, setRecentKills] = useState<KillFeedEntry[]>([]);
   const [eventCount, setEventCount] = useState(0);
-  const [totalKills, setTotalKills] = useState(0);
+  const [totalKillsAll, setTotalKillsAll] = useState(0);
+  const [totalKillsPvPOnly, setTotalKillsPvPOnly] = useState(0);
   const [playersOnline, setPlayersOnline] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [hasLiveData, setHasLiveData] = useState(false);
   const [generatedAt, setGeneratedAt] = useState<number | null>(null);
+
+  const players = rosterMode === 'all' ? playersAll : playersPvPOnly;
+  const totalKills = rosterMode === 'all' ? totalKillsAll : totalKillsPvPOnly;
 
   const loadStats = useCallback(async (p: LeaderboardPeriod) => {
     setIsLoading(true);
@@ -87,22 +97,26 @@ export default function PvPScoreboardPage() {
       if (!res.ok) throw new Error(`status ${res.status}`);
       const data: StatsResponse = await res.json();
       setEventCount(data.eventCount);
-      setTotalKills(data.overall.totalKills);
+      setTotalKillsAll(data.overall.totalKills);
+      setTotalKillsPvPOnly(data.overall.totalKillsPvPOnly);
       setPlayersOnline(data.overall.playersOnline);
       setRecord(data.overall.longestShot);
       setMarksmen(data.topMarksmen);
       setRecentKills(data.recentKills ?? []);
-      setPlayers(data.players.map(aggregateToStat));
+      setPlayersAll(data.players.map(aggregateToStat));
+      setPlayersPvPOnly((data.playersPvPOnly ?? []).map(aggregateToStat));
       setHasLiveData(data.players.length > 0);
       setGeneratedAt(data.generatedAt);
     } catch (err) {
       console.error('[pvp-scoreboard] stats fetch failed:', err);
-      setPlayers([]);
+      setPlayersAll([]);
+      setPlayersPvPOnly([]);
       setMarksmen([]);
       setRecord(null);
       setRecentKills([]);
       setEventCount(0);
-      setTotalKills(0);
+      setTotalKillsAll(0);
+      setTotalKillsPvPOnly(0);
       setPlayersOnline(0);
       setHasLiveData(false);
     } finally {
@@ -220,6 +234,8 @@ export default function PvPScoreboardPage() {
               players={players}
               period={period}
               onPeriodChange={setPeriod}
+              rosterMode={rosterMode}
+              onRosterModeChange={setRosterMode}
             />
           </div>
 

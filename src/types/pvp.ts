@@ -24,6 +24,14 @@ export interface PvPEvent {
   /** meters */
   distance?: number;
   headshot?: boolean;
+  /** True when the killer is an AI bot rather than a player. */
+  killerIsAI?: boolean;
+  /** True when the victim is an AI bot rather than a player. */
+  victimIsAI?: boolean;
+  /** Faction name for the AI killer (e.g. "Mercenaries"). Absent for humans. */
+  killerFaction?: string;
+  /** Faction name for the AI victim. Absent for humans. */
+  victimFaction?: string;
 
   // ── connect / disconnect ────────────────────────────
   playerId?: string;

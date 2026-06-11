@@ -2,8 +2,8 @@ website:
   ingest_url: "http://localhost:3000/api/pvp/ingest"
   ingest_key: "test-key"
 servers:
-  - id: chernarus-hardcore
-    name: "CDN Chernarus Hardcore"
+  - id: takistan-pvp
+    name: "Takistan PvP"
     log_dir: "./test-logs"
 agent:
   poll_interval_sec: 2

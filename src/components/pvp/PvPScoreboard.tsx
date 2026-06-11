@@ -30,11 +30,14 @@ export interface PlayerStat {
 }
 
 export type Period = 'daily' | 'weekly' | 'monthly' | 'alltime';
+export type RosterMode = 'all' | 'pvp-only';
 
 interface PvPScoreboardProps {
   players: PlayerStat[];
   period: Period;
   onPeriodChange: (period: Period) => void;
+  rosterMode?: RosterMode;
+  onRosterModeChange?: (mode: RosterMode) => void;
 }
 
 type SortColumn = 'rank' | 'kills' | 'kd' | 'headshots' | 'longestShot' | 'playtime';
@@ -64,7 +67,7 @@ function SortArrow({ active, direction }: { active: boolean; direction: SortDire
     : <ChevronUp   className="ml-1 inline h-3 w-3" />;
 }
 
-export function PvPScoreboard({ players, period, onPeriodChange }: PvPScoreboardProps) {
+export function PvPScoreboard({ players, period, onPeriodChange, rosterMode, onRosterModeChange }: PvPScoreboardProps) {
   const [sortColumn, setSortColumn] = useState<SortColumn>('kills');
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
 
@@ -137,14 +140,41 @@ export function PvPScoreboard({ players, period, onPeriodChange }: PvPScoreboard
 
       {/* Roster table */}
       <div className="overflow-hidden rounded-[18px] border border-white/10 bg-[#11161E]/85 backdrop-blur-sm">
-        <div className="flex items-center justify-between border-b border-white/10 px-5 py-3">
+        <div className="flex flex-col gap-3 border-b border-white/10 px-5 py-3 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-3">
             <Activity className="h-3.5 w-3.5 text-[#C29B40]" />
             <span className="font-mono text-[11px] uppercase tracking-[0.28em] text-[#C29B40]">Operator Roster</span>
           </div>
-          <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#6F7784]">
-            {sortedPlayers.length.toString().padStart(3, '0')} Subjects on File
-          </span>
+
+          <div className="flex flex-wrap items-center gap-3">
+            {rosterMode && onRosterModeChange && (
+              <div className="inline-flex items-center gap-1 rounded-sm border border-white/10 bg-white/[0.02] p-0.5">
+                {(
+                  [
+                    ['all', 'AI + PVP'],
+                    ['pvp-only', 'PVP Only'],
+                  ] as Array<[RosterMode, string]>
+                ).map(([key, label]) => (
+                  <button
+                    key={key}
+                    type="button"
+                    onClick={() => onRosterModeChange(key)}
+                    className={cn(
+                      "rounded-sm px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.22em] transition-all",
+                      rosterMode === key
+                        ? "bg-[#C29B40]/15 text-[#C29B40] shadow-[inset_0_0_0_1px_rgba(194,155,64,0.35)]"
+                        : "text-[#9CA3AF] hover:text-[#E6E6E6]"
+                    )}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            )}
+            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[#6F7784]">
+              {sortedPlayers.length.toString().padStart(3, '0')} Subjects on File
+            </span>
+          </div>
         </div>
 
         <div className="overflow-x-auto">

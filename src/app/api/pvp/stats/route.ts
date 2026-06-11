@@ -2,11 +2,15 @@
  * GET /api/pvp/stats?period=daily|weekly|monthly|alltime&limit=20
  *
  * Returns the ranked PvP leaderboard, aggregated on demand from raw events.
+ *
+ * The roster is computed twice — `players` includes kills/deaths against AI,
+ * `playersPvPOnly` counts only Player↔Player engagements. The client picks
+ * which to render via a roster toggle.
  */
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getEvents } from '@/lib/pvp-store';
-import { aggregate, periodCutoff } from '@/lib/pvp-aggregate';
+import { aggregate, periodCutoff, formatAIDisplayName } from '@/lib/pvp-aggregate';
 import { LeaderboardPeriod, PvPEvent } from '@/types/pvp';
 import { servers } from '@/lib/servers';
 
@@ -30,8 +34,19 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   );
   const allEvents: PvPEvent[] = perServer.flat();
 
+  // Roster A: all kills (Player↔Player and Player↔AI).
   const agg = aggregate(allEvents, period, now);
   const ranked = agg.players.slice(0, limit).map((p, idx) => ({ ...p, rank: idx + 1 }));
+
+  // Roster B: Player↔Player only. Strip AI-involved kills, keep
+  // connect/disconnect events so playtime stays accurate.
+  const pvpOnlyEvents = allEvents.filter(
+    (e) => e.kind !== 'kill' || (!e.killerIsAI && !e.victimIsAI),
+  );
+  const aggPvPOnly = aggregate(pvpOnlyEvents, period, now);
+  const rankedPvPOnly = aggPvPOnly.players
+    .slice(0, limit)
+    .map((p, idx) => ({ ...p, rank: idx + 1 }));
 
   // Top marksmen by longestShot (separate ranking from kill leaderboard).
   const topMarksmen = [...agg.players]
@@ -49,8 +64,9 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     }));
 
   // Most recent kills (newest first) — drives the live kill-feed panel.
+  // Includes Player↔AI engagements (AI-vs-AI is filtered upstream by the parser).
   const recentKills = allEvents
-    .filter((e) => e.kind === 'kill' && e.killerName && e.victimName)
+    .filter((e) => e.kind === 'kill' && (e.killerName || e.killerIsAI) && (e.victimName || e.victimIsAI))
     .sort((a, b) => b.ts - a.ts)
     .slice(0, 25)
     .map((e) => ({
@@ -58,9 +74,9 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
       ts: e.ts,
       serverId: e.serverId,
       killerId: e.killerId ?? '',
-      killerName: e.killerName ?? 'Unknown',
+      killerName: e.killerIsAI ? formatAIDisplayName(e.killerFaction) : (e.killerName ?? 'Unknown'),
       victimId: e.victimId ?? '',
-      victimName: e.victimName ?? 'Unknown',
+      victimName: e.victimIsAI ? formatAIDisplayName(e.victimFaction) : (e.victimName ?? 'Unknown'),
       weapon: e.weapon ?? 'Unknown',
       distance: typeof e.distance === 'number' ? e.distance : null,
       headshot: e.headshot === true,
@@ -71,8 +87,10 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     generatedAt: now,
     eventCount: allEvents.length,
     players: ranked,
+    playersPvPOnly: rankedPvPOnly,
     overall: {
       totalKills: agg.totalKills,
+      totalKillsPvPOnly: aggPvPOnly.totalKills,
       playersOnline: agg.playersOnline,
       longestShot: agg.longestShot,
     },

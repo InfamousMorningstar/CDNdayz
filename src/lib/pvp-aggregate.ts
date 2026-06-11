@@ -14,6 +14,36 @@ export function periodCutoff(period: LeaderboardPeriod, now = Date.now()): numbe
   }
 }
 
+/**
+ * Render the display name used for an AI side in kill feeds and marksmanship
+ * records. AI individual names are never shown — only the faction (if known).
+ */
+export function formatAIDisplayName(faction?: string): string {
+  return faction ? `AI (${faction})` : 'AI';
+}
+
+/** Render either the player's real name or an AI faction label. */
+function killerDisplay(ev: PvPEvent): string {
+  if (ev.killerIsAI) return formatAIDisplayName(ev.killerFaction);
+  return ev.killerName ?? 'Unknown';
+}
+
+function victimDisplay(ev: PvPEvent): string {
+  if (ev.victimIsAI) return formatAIDisplayName(ev.victimFaction);
+  return ev.victimName ?? 'Unknown';
+}
+
+// If a player has had no events for this long while *other* activity has
+// been logged on the server, their disconnect line was likely missed
+// (crash, server restart, log rotation, parser gap) and they are no longer
+// actually online. Used to clear ghost "Active" rows.
+const STALE_ONLINE_MS = 30 * 60 * 1000;
+
+// Hard cap: any session open longer than this is treated as a missed
+// disconnect regardless of recent activity, since real DayZ play sessions
+// don't span half a day without at least one log line.
+const MAX_SESSION_MS = 12 * 60 * 60 * 1000;
+
 interface MutablePlayer {
   playerId: string;
   playerName: string;
@@ -79,7 +109,10 @@ export function aggregate(
 
   for (const ev of sorted) {
     if (ev.kind === 'kill') {
-      if (ev.killerId && ev.killerName) {
+      // Skip AI-vs-AI entirely (UI scope is player engagements only).
+      if (ev.killerIsAI && ev.victimIsAI) continue;
+
+      if (!ev.killerIsAI && ev.killerId && ev.killerName) {
         const killer = ensure(players, ev.killerId, ev.killerName, ev.ts);
         killer.kills += 1;
         if (ev.headshot) killer.headshots += 1;
@@ -87,7 +120,7 @@ export function aggregate(
         if (dist > killer.longestShot) {
           killer.longestShot = dist;
           killer.longestShotWeapon = ev.weapon;
-          killer.longestShotVictim = ev.victimName;
+          killer.longestShotVictim = victimDisplay(ev);
           killer.longestShotTs = ev.ts;
         }
         if (dist > 0 && (overallLongest === null || dist > overallLongest.distance)) {
@@ -95,14 +128,14 @@ export function aggregate(
             distance: dist,
             killerId: ev.killerId,
             killerName: ev.killerName,
-            victimName: ev.victimName ?? 'Unknown',
+            victimName: victimDisplay(ev),
             weapon: ev.weapon ?? 'Unknown',
             ts: ev.ts,
             serverId: ev.serverId,
           };
         }
       }
-      if (ev.victimId && ev.victimName) {
+      if (!ev.victimIsAI && ev.victimId && ev.victimName) {
         const victim = ensure(players, ev.victimId, ev.victimName, ev.ts);
         victim.deaths += 1;
       }
@@ -132,6 +165,11 @@ export function aggregate(
     }
   }
 
+  // Most recent event timestamp across all processed events. Used as the
+  // "wall clock" for staleness so the leaderboard stays accurate even when
+  // querying historical periods where `Date.now()` is far ahead of the data.
+  const latestGlobalTs = sorted.length > 0 ? sorted[sorted.length - 1].ts : now;
+
   const result: PlayerAggregate[] = [];
   let totalKills = 0;
   let playersOnline = 0;
@@ -139,7 +177,18 @@ export function aggregate(
     // Skip ghost players with no meaningful activity.
     if (p.kills === 0 && p.deaths === 0 && p.playtimeMs === 0) continue;
     totalKills += p.kills;
-    if (p.openSessionStart !== null) playersOnline += 1;
+
+    // A session is "live" only if it is open AND the player has been seen
+    // recently relative to other server activity AND has not exceeded the
+    // absolute max-session cap. Anything else is a missed disconnect.
+    let isLive = false;
+    if (p.openSessionStart !== null) {
+      const sessionAge = latestGlobalTs - p.openSessionStart;
+      const idleFor = latestGlobalTs - p.lastSeenTs;
+      isLive = sessionAge < MAX_SESSION_MS && idleFor < STALE_ONLINE_MS;
+    }
+    if (isLive) playersOnline += 1;
+
     result.push({
       playerId: p.playerId,
       playerName: p.playerName,
@@ -148,7 +197,7 @@ export function aggregate(
       headshots: p.headshots,
       playtime: Math.round(p.playtimeMs / 60_000),
       lastSeenTs: p.lastSeenTs,
-      isOnline: p.openSessionStart !== null,
+      isOnline: isLive,
       longestShot: Math.round(p.longestShot * 10) / 10,
       longestShotWeapon: p.longestShotWeapon,
       longestShotVictim: p.longestShotVictim,
