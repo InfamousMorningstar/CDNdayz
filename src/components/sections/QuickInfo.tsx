@@ -6,6 +6,9 @@ import { Badge } from '@/components/ui/Badge';
 import { Shield, Calendar, Store, ArrowRight, Rss } from 'lucide-react';
 import Link from 'next/link';
 import { OfficialDayZNewsClient } from '@/components/news/OfficialDayZNewsClient';
+import { Reveal3D } from '@/components/motion/Reveal3D';
+import { TiltCard } from '@/components/motion/TiltCard';
+import { TextReveal } from '@/components/motion/TextReveal';
 
 export function QuickInfo() {
   const infoCards = [
@@ -33,49 +36,65 @@ export function QuickInfo() {
   ];
 
   return (
-    <section aria-labelledby="essential-intel-heading" className="py-20 sm:py-28 bg-gray-50 dark:bg-neutral-900/50 border-t border-gray-200/80 dark:border-white/5 relative">
+    <section aria-labelledby="essential-intel-heading" className="py-12 sm:py-16 bg-gray-50 dark:bg-neutral-900/50 border-t border-gray-200/80 dark:border-white/5 relative">
             <div className="container mx-auto px-4 sm:px-6">
-        
+
         {/* Section Header */}
-        <div className="flex flex-col items-center text-center mb-8 sm:mb-12 gap-3">
-            <Badge variant="outline" className="border-red-500/35 text-red-700 dark:text-red-400 bg-red-500/12 dark:bg-red-900/10 backdrop-blur-sm px-4 py-1">
-              Essential Intel
-            </Badge>
-            <h2 id="essential-intel-heading" className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-gray-900 dark:text-white">Key Information for <span className="text-red-500">Survivors</span></h2>
-            <p className="text-gray-600 dark:text-neutral-400 max-w-xl">Everything you need to know before you spawn.</p>
+        <div className="flex flex-col items-center text-center mb-8 gap-3">
+            <Reveal3D from="up" tilt={10} duration={0.6}>
+              <div className="flex flex-col items-center gap-2">
+                <span className="font-mono text-[11px] tracking-[0.3em] uppercase text-red-500/80">01 // Intel</span>
+                <Badge variant="outline" className="border-red-500/35 text-red-700 dark:text-red-400 bg-red-500/12 dark:bg-red-900/10 backdrop-blur-sm px-4 py-1">
+                  Essential Intel
+                </Badge>
+              </div>
+            </Reveal3D>
+            <h2 id="essential-intel-heading" className="text-2xl sm:text-3xl md:text-4xl font-heading font-bold text-gray-900 dark:text-white">
+              <TextReveal>
+                Key Information for <span className="text-red-500">Survivors</span>
+              </TextReveal>
+            </h2>
+            <Reveal3D from="up" delay={0.2} duration={0.6}>
+              <p className="text-gray-600 dark:text-neutral-400 max-w-xl">Everything you need to know before you spawn.</p>
+            </Reveal3D>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-5 sm:gap-8">
             {/* Quick Links Column (Span 3 on large screens) */}
             <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8 h-full">
                 {infoCards.map((card, index) => (
-                    <Card key={index} className="p-5 sm:p-8 bg-white dark:bg-neutral-950/50 border-gray-200 dark:border-neutral-800 hover:border-red-500/30 transition-all group relative overflow-hidden flex flex-col h-full">
-                        <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                        
-                        <div className="relative z-10 flex-1">
-                            <div className="bg-gray-100 dark:bg-neutral-900/50 w-16 h-16 rounded-lg flex items-center justify-center mb-6 border border-gray-200 dark:border-white/5 group-hover:scale-110 transition-transform duration-300">
-                                {card.icon}
-                            </div>
-                            
-                            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-red-500 dark:group-hover:text-red-400 transition-colors">{card.title}</h3>
-                            <p className="text-gray-600 dark:text-neutral-400 text-sm leading-relaxed mb-6">
-                                {card.description}
-                            </p>
-                        </div>
+                    <Reveal3D key={index} from="up" delay={index * 0.12} className="h-full">
+                      <TiltCard>
+                        <Card className="p-5 sm:p-8 bg-white dark:bg-neutral-950/50 border-gray-200 dark:border-neutral-800 hover:border-red-500/30 transition-all group relative overflow-hidden flex flex-col h-full hud-corners">
+                          <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
-                         <div className="relative z-10 mt-auto pt-6 border-t border-gray-100 dark:border-white/5">
-                            <Link href={card.link} className="flex items-center text-sm font-bold text-gray-900 dark:text-white hover:text-red-500 transition-colors gap-2 group/link rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/80">
-                                {card.cta}
-                                <ArrowRight size={16} className="transform group-hover/link:translate-x-1 transition-transform" />
-                            </Link>
-                        </div>
-                    </Card>
+                          <div className="relative z-10 flex-1" style={{ transform: 'translateZ(24px)' }}>
+                              <div className="bg-gray-100 dark:bg-neutral-900/50 w-16 h-16 rounded-lg flex items-center justify-center mb-6 border border-gray-200 dark:border-white/5 group-hover:scale-110 transition-transform duration-300">
+                                  {card.icon}
+                              </div>
+
+                              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-red-500 dark:group-hover:text-red-400 transition-colors">{card.title}</h3>
+                              <p className="text-gray-600 dark:text-neutral-400 text-sm leading-relaxed mb-6">
+                                  {card.description}
+                              </p>
+                          </div>
+
+                           <div className="relative z-10 mt-auto pt-6 border-t border-gray-100 dark:border-white/5">
+                              <Link href={card.link} className="flex items-center text-sm font-bold text-gray-900 dark:text-white hover:text-red-500 transition-colors gap-2 group/link rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/80">
+                                  {card.cta}
+                                  <ArrowRight size={16} className="transform group-hover/link:translate-x-1 transition-transform" />
+                              </Link>
+                          </div>
+                        </Card>
+                      </TiltCard>
+                    </Reveal3D>
                 ))}
             </div>
 
             {/* Official News Feed Column (Span 1) */}
             <div className="lg:col-span-1 h-full">
-                <Card className="h-full bg-white dark:bg-neutral-950/80 border-gray-200 dark:border-neutral-800 p-4 sm:p-6 relative overflow-hidden flex flex-col">
+                <Reveal3D from="right" delay={0.25} className="h-full">
+                  <Card className="h-full bg-white dark:bg-neutral-950/80 border-gray-200 dark:border-neutral-800 p-4 sm:p-6 relative overflow-hidden flex flex-col">
                     <div className="relative z-10 h-full flex flex-col">
                         <div className="mb-4 pb-4 border-b border-gray-100 dark:border-white/5 flex items-center gap-2">
                              <Rss className="w-4 h-4 text-red-500 animate-pulse" />
@@ -88,10 +107,11 @@ export function QuickInfo() {
                            <OfficialDayZNewsClient />
                         </div>
                     </div>
-                </Card>
+                  </Card>
+                </Reveal3D>
             </div>
         </div>
-        
+
         <div className="mt-10 md:hidden">
             <Button variant="outline" className="w-full justify-center gap-2" asChild>
                 <Link href="/servers">

@@ -7,6 +7,8 @@ import { ServerStatus } from '@/lib/servers';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import Link from 'next/link';
+import { Reveal3D } from '@/components/motion/Reveal3D';
+import { TextReveal } from '@/components/motion/TextReveal';
 
 export function ServersList() {
   const [servers, setServers] = useState<ServerStatus[]>([]);
@@ -56,16 +58,27 @@ export function ServersList() {
   }, []);
 
   return (
-    <section aria-labelledby="deployment-zones-heading" className="py-20 sm:py-28 bg-gray-50 dark:bg-neutral-900/50 backdrop-blur-sm relative z-10" id="servers">
+    <section aria-labelledby="deployment-zones-heading" className="py-12 sm:py-16 bg-gray-50 dark:bg-neutral-900/50 backdrop-blur-sm relative z-10" id="servers">
       <div className="container mx-auto px-4 sm:px-6">
-        <div className="flex flex-col items-center text-center mb-10 sm:mb-12 gap-3">
-            <Badge variant="outline" className="border-red-500/35 text-red-700 dark:text-red-400 bg-red-500/12 dark:bg-red-900/10 backdrop-blur-sm px-4 py-1">
-              Deployment Zones
-            </Badge>
-            <h2 id="deployment-zones-heading" className="text-2xl sm:text-3xl md:text-5xl font-heading font-bold text-gray-900 dark:text-white leading-tight">Choose Your <span className="text-gray-700 dark:text-neutral-500">Battleground</span></h2>
-            <p className="text-gray-500 dark:text-neutral-400 text-base sm:text-lg max-w-2xl">
-              Select from our network of high-performance servers. Each offers a unique gameplay experience tailored to different survival styles.
-            </p>
+        <div className="flex flex-col items-center text-center mb-8 gap-3">
+            <Reveal3D from="up" tilt={10} duration={0.6}>
+              <div className="flex flex-col items-center gap-2">
+                <span className="font-mono text-[11px] tracking-[0.3em] uppercase text-red-500/80">04 // Zones</span>
+                <Badge variant="outline" className="border-red-500/35 text-red-700 dark:text-red-400 bg-red-500/12 dark:bg-red-900/10 backdrop-blur-sm px-4 py-1">
+                  Deployment Zones
+                </Badge>
+              </div>
+            </Reveal3D>
+            <h2 id="deployment-zones-heading" className="text-2xl sm:text-3xl md:text-5xl font-heading font-bold text-gray-900 dark:text-white leading-tight">
+              <TextReveal>
+                Choose Your <span className="text-gray-700 dark:text-neutral-500">Battleground</span>
+              </TextReveal>
+            </h2>
+            <Reveal3D from="up" delay={0.2} duration={0.6}>
+              <p className="text-gray-500 dark:text-neutral-400 text-base sm:text-lg max-w-2xl">
+                Select from our network of high-performance servers. Each offers a unique gameplay experience tailored to different survival styles.
+              </p>
+            </Reveal3D>
             <div className="mt-2 flex flex-wrap items-center justify-center gap-2.5">
               <Badge className="min-h-9 px-3 bg-emerald-500/12 dark:bg-emerald-500/15 border border-emerald-500/35 text-emerald-700 dark:text-emerald-200 hover:bg-emerald-500/20">
                 {summary.onlineCount} Online
@@ -93,11 +106,19 @@ export function ServersList() {
                 <div key={i} className="h-36 w-full bg-gray-200/60 dark:bg-neutral-800/30 rounded-xl animate-pulse" />
              ))
            ) : (
-             servers.map((server) => (
-               <ServerMiniCard 
+             servers.map((server, index) => (
+               <Reveal3D
                  key={server.id}
-                 {...server}
-               />
+                 from="up"
+                 delay={(index % 4) * 0.08}
+                 tilt={18}
+                 amount={0.15}
+                 className="h-full"
+               >
+                 <ServerMiniCard
+                   {...server}
+                 />
+               </Reveal3D>
              ))
            )}
         </div>

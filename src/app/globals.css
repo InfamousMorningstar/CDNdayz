@@ -541,6 +541,200 @@ html.theme-switching body::after {
   }
 }
 
+/* ── Tactical UI kit ── */
+
+/* Giant outlined display text used by marquees and watermarks */
+.marquee-outline-text {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(120, 120, 120, 0.55);
+}
+.dark .marquee-outline-text {
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.28);
+}
+
+/* Chromatic aberration: RGB-split ghosts that twitch like bad signal */
+.chromatic-text {
+  position: relative;
+}
+.chromatic-text::before,
+.chromatic-text::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+.chromatic-text::before {
+  color: rgba(255, 0, 64, 0.55);
+  animation: chromatic-shift-r 5s steps(1, end) infinite;
+}
+.chromatic-text::after {
+  color: rgba(0, 200, 255, 0.45);
+  animation: chromatic-shift-b 5s steps(1, end) infinite;
+}
+
+@keyframes chromatic-shift-r {
+  0%, 88%, 100% { transform: translate(0, 0); opacity: 0; }
+  89%, 91% { transform: translate(3px, -1px); opacity: 1; }
+  92%, 94% { transform: translate(-2px, 1px); opacity: 0.8; }
+  95% { transform: translate(1px, 0); opacity: 0.4; }
+}
+
+@keyframes chromatic-shift-b {
+  0%, 88%, 100% { transform: translate(0, 0); opacity: 0; }
+  89%, 91% { transform: translate(-3px, 1px); opacity: 1; }
+  92%, 94% { transform: translate(2px, -1px); opacity: 0.8; }
+  95% { transform: translate(-1px, 0); opacity: 0.4; }
+}
+
+/* HUD corner brackets for tactical card framing */
+.hud-corners {
+  position: relative;
+}
+.hud-corners::before,
+.hud-corners::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+  z-index: 15;
+  transition: border-color 0.3s ease;
+}
+.hud-corners::before {
+  top: 8px;
+  left: 8px;
+  border-top: 1px solid rgba(220, 38, 38, 0.45);
+  border-left: 1px solid rgba(220, 38, 38, 0.45);
+}
+.hud-corners::after {
+  bottom: 8px;
+  right: 8px;
+  border-bottom: 1px solid rgba(220, 38, 38, 0.45);
+  border-right: 1px solid rgba(220, 38, 38, 0.45);
+}
+.hud-corners:hover::before,
+.hud-corners:hover::after {
+  border-color: rgba(239, 68, 68, 0.9);
+}
+
+/* Hide native cursor while the tactical crosshair is active (desktop only) */
+@media (pointer: fine) {
+  html.tactical-cursor-active body,
+  html.tactical-cursor-active a,
+  html.tactical-cursor-active button,
+  html.tactical-cursor-active [role="button"],
+  html.tactical-cursor-active summary,
+  html.tactical-cursor-active label {
+    cursor: none !important;
+  }
+}
+
+/* Site-wide tactical scrollbar */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(220, 38, 38, 0.55) rgba(28, 28, 28, 0.9);
+}
+body::-webkit-scrollbar {
+  width: 10px;
+}
+body::-webkit-scrollbar-track {
+  background: rgba(20, 20, 20, 0.95);
+}
+body::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, rgba(220, 38, 38, 0.7), rgba(146, 24, 24, 0.85));
+  border-radius: 9999px;
+  border: 2px solid rgba(20, 20, 20, 0.95);
+}
+body::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, rgba(239, 68, 68, 0.9), rgba(185, 28, 28, 0.95));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chromatic-text::before,
+  .chromatic-text::after {
+    animation: none !important;
+    opacity: 0 !important;
+  }
+}
+
+/* ── Hero atmosphere: rising embers + drifting fog ── */
+.hero-ember {
+  position: absolute;
+  bottom: -2%;
+  border-radius: 9999px;
+  opacity: 0;
+  animation-name: ember-rise;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform, opacity;
+}
+
+@keyframes ember-rise {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.9;
+  }
+  60% {
+    opacity: 0.55;
+  }
+  100% {
+    transform: translate3d(var(--ember-drift, 0px), -105vh, 0) scale(0.4);
+    opacity: 0;
+  }
+}
+
+.hero-fog {
+  position: absolute;
+  inset: -20% -30%;
+  pointer-events: none;
+  opacity: 0.5;
+  background:
+    radial-gradient(40% 30% at 25% 70%, rgba(120, 120, 130, 0.12), transparent 70%),
+    radial-gradient(35% 28% at 70% 60%, rgba(100, 100, 110, 0.1), transparent 70%);
+  filter: blur(2px);
+  will-change: transform;
+}
+
+.hero-fog-a {
+  animation: fog-drift-a 38s ease-in-out infinite alternate;
+}
+
+.hero-fog-b {
+  animation: fog-drift-b 52s ease-in-out infinite alternate;
+  opacity: 0.35;
+}
+
+@keyframes fog-drift-a {
+  from {
+    transform: translate3d(-4%, 1%, 0) scale(1);
+  }
+  to {
+    transform: translate3d(5%, -2%, 0) scale(1.08);
+  }
+}
+
+@keyframes fog-drift-b {
+  from {
+    transform: translate3d(4%, -1%, 0) scale(1.05);
+  }
+  to {
+    transform: translate3d(-5%, 2%, 0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-ember,
+  .hero-fog-a,
+  .hero-fog-b {
+    animation: none !important;
+    opacity: 0 !important;
+  }
+}
+
 /* Custom premium styling */
 .glass-panel {
   @apply bg-black/40 backdrop-blur-md border border-white/5 shadow-xl;
