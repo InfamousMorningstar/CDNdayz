@@ -44,7 +44,7 @@ export function OfficialDayZNewsClient() {
     return (
       <div className="space-y-4 animate-pulse">
         {[1,2,3].map(i => (
-            <div key={i} className="h-24 bg-gray-200/60 dark:bg-neutral-900/40 rounded-lg border border-gray-200 dark:border-neutral-800" />
+            <div key={i} className="h-24 bg-gray-200/60 dark:bg-neutral-900/40 rounded-2xl border border-gray-200 dark:border-neutral-800" />
         ))}
       </div>
     );
@@ -52,7 +52,7 @@ export function OfficialDayZNewsClient() {
 
   if (error || news.length === 0) {
     return (
-        <div className="p-4 bg-gray-100 dark:bg-neutral-900/30 border border-gray-200 dark:border-neutral-800 rounded-lg text-center">
+        <div className="p-4 bg-gray-100 dark:bg-neutral-900/30 border border-gray-200 dark:border-neutral-800 rounded-2xl text-center">
             <p className="text-gray-600 dark:text-neutral-500 text-sm">Unable to load official news feed.</p>
         </div>
     );
@@ -72,7 +72,7 @@ export function OfficialDayZNewsClient() {
                     <div className="flex justify-between items-start gap-3">
                         <div className="flex-1 min-w-0">
                             <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-                                <span className={`px-1.5 py-0.5 rounded text-[10px] uppercase tracking-wider font-bold border ${
+                                <span className={`px-1.5 py-0.5 rounded-full text-[10px] uppercase tracking-wider font-bold border ${
                                     item.category === 'update' ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-600 dark:text-emerald-400' :
                                     item.category === 'announcement' ? 'bg-amber-500/10 border-amber-500/20 text-amber-600 dark:text-amber-400' :
                                     item.category === 'event' ? 'bg-blue-500/10 border-blue-500/20 text-blue-600 dark:text-blue-400' :

@@ -10,7 +10,7 @@ import { PageTransition } from '@/components/layout/PageTransition'
 import { SmoothScroll } from '@/components/motion/SmoothScroll'
 import { ScrollProgressHUD } from '@/components/motion/ScrollProgressHUD'
 import { TacticalCursor } from '@/components/motion/TacticalCursor'
-import { WebsiteSupportChat } from '@/components/chat/WebsiteSupportChat'
+import { LiquidGlass } from '@/components/motion/LiquidGlass'
 import { Analytics } from "@vercel/analytics/react"
 
 const inter = Inter({
@@ -92,6 +92,7 @@ export default function RootLayout({
           <SmoothScroll>
           <ScrollProgressHUD />
           <TacticalCursor />
+          <LiquidGlass />
           <a
             href="#main-content"
             className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-black focus:text-white focus:px-4 focus:py-2 focus:rounded focus:ring-2 focus:ring-red-500"
@@ -105,7 +106,6 @@ export default function RootLayout({
             </main>
             <Footer />
             <EasterEggs />
-            <WebsiteSupportChat />
             <div className="fixed inset-0 -z-10 h-full w-full bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none dark:opacity-100 opacity-30"></div>
           </div>
           </SmoothScroll>

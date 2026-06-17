@@ -13,7 +13,7 @@ import { useTheme } from '@/components/layout/ThemeProvider';
 const navItems = [
   { name: 'Home', href: '/', icon: Globe },
   { name: 'Servers & Analytics', href: '/servers', icon: Shield },
-  { name: 'Terje Wiki', href: '/terje-wiki', icon: HeartPulse },
+  { name: 'Wiki', href: '/terje-wiki', icon: HeartPulse },
   { name: 'Mods', href: '/features', icon: Hammer },
   { name: 'Wipe Info', href: '/wipe-info', icon: Calendar },
   { name: 'Rules & FAQ', href: '/rules', icon: BookOpen },

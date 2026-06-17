@@ -4,12 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npm run chatbot:index && next build",
+    "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "chatbot:index": "node scripts/build-site-index.mjs",
-    "chatbot:eval": "node scripts/eval-chatbot-retrieval.mjs",
-    "chatbot:eval:e2e": "node scripts/eval-chatbot-e2e.mjs"
+    "lint": "next lint"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.4",
@@ -24,7 +21,6 @@
     "lenis": "^1.3.23",
     "lucide-react": "latest",
     "next": "latest",
-    "openai": "^4.104.0",
     "react": "latest",
     "react-dom": "latest",
     "recharts": "^3.8.1",

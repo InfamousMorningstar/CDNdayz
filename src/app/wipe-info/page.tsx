@@ -102,7 +102,7 @@ export default function WipeInfoPage() {
                     or major DayZ patches can sometimes trigger an early or delayed wipe for specific maps.
                 </p>
 
-                <div className="bg-gray-50 dark:bg-neutral-950/50 p-6 rounded-xl border border-gray-200 dark:border-white/5 flex flex-col items-center text-center">
+                <div className="bg-white/60 dark:bg-white/[0.03] p-6 rounded-3xl border border-gray-200/70 dark:border-white/[0.07] backdrop-blur-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.5),0_8px_24px_-14px_rgba(0,0,0,0.2)] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_8px_30px_-14px_rgba(0,0,0,0.5)] flex flex-col items-center text-center">
                     <span className="text-gray-400 dark:text-neutral-500 text-sm mb-2">Next Projected Wipe Window</span>
                     <span className="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white tracking-tight mb-2">
                         {wipeDisplay} <span className="text-gray-400 dark:text-neutral-600">{wipeYear}</span>
@@ -117,7 +117,7 @@ export default function WipeInfoPage() {
                 </div>
 
                 <div className="mt-4 flex justify-center">
-                    <div className="bg-gray-50 dark:bg-neutral-950/50 px-6 py-3 rounded-xl border border-gray-200 dark:border-white/5 flex items-center gap-3">
+                    <div className="bg-white/60 dark:bg-white/[0.03] px-6 py-3 rounded-full border border-gray-200/70 dark:border-white/[0.07] backdrop-blur-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.5)] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] flex items-center gap-3">
                         <span className="text-xs font-mono text-gray-400 dark:text-neutral-500 uppercase tracking-widest">Last Wipe</span>
                         <span className="text-sm font-bold text-gray-700 dark:text-neutral-300">{formattedLastWipe}</span>
                     </div>
@@ -148,11 +148,11 @@ export default function WipeInfoPage() {
                     </div>
 
                     <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="bg-gray-50 dark:bg-neutral-950/50 p-4 rounded border border-gray-200 dark:border-white/5">
+                        <div className="bg-white/60 dark:bg-white/[0.03] p-4 rounded-2xl border border-gray-200/70 dark:border-white/[0.07] backdrop-blur-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.5)] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
                             <span className="text-xs font-mono text-gray-400 dark:text-neutral-500 uppercase tracking-widest block mb-1">Current Frequency</span>
                             <span className="text-xl font-bold text-gray-900 dark:text-white">~{wipeDates.estimatedDaysUntilWipe} Days</span>
                         </div>
-                        <div className="bg-gray-50 dark:bg-neutral-950/50 p-4 rounded border border-gray-200 dark:border-white/5">
+                        <div className="bg-white/60 dark:bg-white/[0.03] p-4 rounded-2xl border border-gray-200/70 dark:border-white/[0.07] backdrop-blur-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.5)] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
                             <span className="text-xs font-mono text-gray-400 dark:text-neutral-500 uppercase tracking-widest block mb-1">Impact</span>
                             <span className="text-xl font-bold text-red-400">Total Map Reset</span>
                         </div>
@@ -169,7 +169,7 @@ export default function WipeInfoPage() {
                     Donation Protection
                 </h2>
 
-                <div className="bg-emerald-50 dark:bg-emerald-900/10 border border-emerald-200 dark:border-emerald-500/20 p-6 rounded-xl mb-6">
+                <div className="bg-emerald-50 dark:bg-emerald-900/10 border border-emerald-200 dark:border-emerald-500/20 p-6 rounded-3xl mb-6">
                     <h3 className="text-xl font-bold text-emerald-600 dark:text-emerald-400 mb-2">The 30-Day Safe Zone</h3>
                     <p className="text-gray-600 dark:text-neutral-300">
                         We value your support. If you donate for gear, bases, or vehicles within the 

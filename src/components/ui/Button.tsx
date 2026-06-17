@@ -9,10 +9,10 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-red-700 text-white hover:bg-red-600 shadow-[0_0_15px_rgba(220,38,38,0.2)] hover:shadow-[0_0_25px_rgba(220,38,38,0.4)] border border-red-500/20 active:scale-[0.98]",
+          "bg-red-700 text-white hover:bg-red-600 shadow-[inset_0_1px_0_rgba(255,255,255,0.25),0_0_15px_rgba(220,38,38,0.2)] hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.3),0_0_25px_rgba(220,38,38,0.4)] border border-red-500/20 active:scale-[0.97] active:translate-y-px",
         outline:
-          "border border-gray-300 dark:border-white/10 bg-white/80 dark:bg-black/40 hover:bg-gray-50 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-white hover:border-red-500/40 dark:hover:border-red-500/30 text-gray-700 dark:text-neutral-300 backdrop-blur-sm active:scale-[0.98]",
-        ghost: "hover:bg-gray-100 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-white text-gray-500 dark:text-neutral-400 active:scale-[0.98]",
+          "border border-gray-300 dark:border-white/10 bg-white/80 dark:bg-black/40 hover:bg-gray-50 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-white hover:border-red-500/40 dark:hover:border-red-500/30 text-gray-700 dark:text-neutral-300 backdrop-blur-sm backdrop-saturate-150 shadow-[inset_0_1px_0_rgba(255,255,255,0.5)] dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] active:scale-[0.97] active:translate-y-px",
+        ghost: "hover:bg-gray-100 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-white text-gray-500 dark:text-neutral-400 active:scale-[0.97]",
         destructive:
           "bg-rose-900/80 text-white hover:bg-rose-800 border border-rose-500/20 shadow-sm",
         link: "text-red-500 underline-offset-4 hover:underline normal-case tracking-normal font-sans",

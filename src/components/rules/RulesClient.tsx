@@ -198,7 +198,7 @@ export function RulesClient() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="rounded-lg border border-red-500/25 bg-gray-50 dark:bg-black/30 p-4">
+                  <div className="rounded-2xl border border-red-500/25 bg-gray-50 dark:bg-black/30 p-4">
                     <p className="text-sm text-gray-900 dark:text-white font-semibold mb-2">Donation Items/Gear Policy</p>
                     <p className="text-sm text-gray-600 dark:text-neutral-300">HC servers DO NOT allow Donation Items/Gear.</p>
                     <p className="text-xs text-gray-400 dark:text-neutral-500 mt-2">
@@ -206,13 +206,13 @@ export function RulesClient() {
                     </p>
                   </div>
 
-                  <div className="rounded-lg border border-red-500/25 bg-gray-50 dark:bg-black/30 p-4">
+                  <div className="rounded-2xl border border-red-500/25 bg-gray-50 dark:bg-black/30 p-4">
                     <p className="text-sm text-gray-900 dark:text-white font-semibold mb-2">Raiding Policy</p>
                     <p className="text-sm text-gray-600 dark:text-neutral-300">HC servers ALLOW raiding.</p>
                     <p className="text-xs text-gray-400 dark:text-neutral-500 mt-2">Players must record raids as proof.</p>
                   </div>
 
-                  <div className="rounded-lg border border-red-500/25 bg-gray-50 dark:bg-black/30 p-4 md:col-span-2">
+                  <div className="rounded-2xl border border-red-500/25 bg-gray-50 dark:bg-black/30 p-4 md:col-span-2">
                     <p className="text-sm text-gray-900 dark:text-white font-semibold mb-2">Territories</p>
                     <p className="text-sm text-gray-600 dark:text-neutral-300">Territories are PvP zones.</p>
                     <p className="text-xs text-gray-400 dark:text-neutral-500 mt-2">No PvE protection in these areas.</p>

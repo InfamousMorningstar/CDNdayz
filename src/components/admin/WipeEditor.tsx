@@ -107,44 +107,44 @@ export default function WipeEditor({ token }: WipeEditorProps) {
     return (
         <div className="space-y-8">
             {/* Info Section */}
-            <div className="bg-neutral-900 border border-neutral-700 rounded-lg p-6">
+            <div className="bg-white/70 dark:bg-neutral-900/50 border border-gray-200/60 dark:border-white/[0.07] rounded-3xl backdrop-blur-2xl shadow-[0_1px_2px_rgba(0,0,0,0.04),0_12px_34px_-14px_rgba(0,0,0,0.24)] dark:shadow-[0_8px_30px_-12px_rgba(0,0,0,0.5)] p-6">
                 <div className="flex items-center gap-2 mb-4">
                     <Calendar className="w-5 h-5 text-amber-400" />
                     <h3 className="text-lg font-semibold">Current Wipe Information</h3>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="bg-neutral-800/50 p-4 rounded border border-neutral-700">
+                    <div className="bg-gray-50 dark:bg-neutral-800/40 p-4 rounded-2xl border border-gray-200 dark:border-white/[0.05]">
                         <p className="text-xs text-neutral-500 uppercase tracking-widest mb-1">Next Wipe Window</p>
-                        <p className="text-sm font-semibold text-white">{nextWipeWindow}</p>
+                        <p className="text-sm font-semibold text-neutral-900 dark:text-white">{nextWipeWindow}</p>
                     </div>
-                    <div className="bg-neutral-800/50 p-4 rounded border border-neutral-700">
+                    <div className="bg-gray-50 dark:bg-neutral-800/40 p-4 rounded-2xl border border-gray-200 dark:border-white/[0.05]">
                         <p className="text-xs text-neutral-500 uppercase tracking-widest mb-1">Estimated Days</p>
-                        <p className="text-sm font-semibold text-white">{estimatedDaysUntilWipe} days</p>
+                        <p className="text-sm font-semibold text-neutral-900 dark:text-white">{estimatedDaysUntilWipe} days</p>
                     </div>
-                    <div className="bg-neutral-800/50 p-4 rounded border border-neutral-700">
+                    <div className="bg-gray-50 dark:bg-neutral-800/40 p-4 rounded-2xl border border-gray-200 dark:border-white/[0.05]">
                         <p className="text-xs text-neutral-500 uppercase tracking-widest mb-1">Cycle Duration</p>
-                        <p className="text-sm font-semibold text-white">{wipeCycleMonths} months</p>
+                        <p className="text-sm font-semibold text-neutral-900 dark:text-white">{wipeCycleMonths} months</p>
                     </div>
-                    <div className="bg-neutral-800/50 p-4 rounded border border-neutral-700">
+                    <div className="bg-gray-50 dark:bg-neutral-800/40 p-4 rounded-2xl border border-gray-200 dark:border-white/[0.05]">
                         <p className="text-xs text-neutral-500 uppercase tracking-widest mb-1">Last Wipe</p>
-                        <p className="text-sm font-semibold text-white">{lastWipeDate}</p>
+                        <p className="text-sm font-semibold text-neutral-900 dark:text-white">{lastWipeDate}</p>
                     </div>
                 </div>
             </div>
 
             {/* Editor Form */}
-            <div className="bg-neutral-900 border border-neutral-700 rounded-lg p-6">
+            <div className="bg-white/70 dark:bg-neutral-900/50 border border-gray-200/60 dark:border-white/[0.07] rounded-3xl backdrop-blur-2xl shadow-[0_1px_2px_rgba(0,0,0,0.04),0_12px_34px_-14px_rgba(0,0,0,0.24)] dark:shadow-[0_8px_30px_-12px_rgba(0,0,0,0.5)] p-6">
                 <h3 className="text-lg font-semibold mb-6">Update Wipe Dates</h3>
 
                 {successMsg && (
-                    <div className="mb-6 p-4 bg-green-500/10 border border-green-500/20 rounded-lg flex items-center gap-3 text-green-600">
+                    <div className="mb-6 p-4 bg-green-500/10 border border-green-500/20 rounded-2xl flex items-center gap-3 text-green-600">
                         <CheckCircle className="w-5 h-5 flex-shrink-0" />
                         <span>{successMsg}</span>
                     </div>
                 )}
 
                 {errorMsg && (
-                    <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg flex items-center gap-3 text-red-600">
+                    <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-2xl flex items-center gap-3 text-red-600">
                         <AlertCircle className="w-5 h-5 flex-shrink-0" />
                         <span>{errorMsg}</span>
                     </div>
@@ -152,7 +152,7 @@ export default function WipeEditor({ token }: WipeEditorProps) {
 
                 <form onSubmit={handleSaveWipeDates} className="space-y-4">
                     <div>
-                        <label className="block text-sm font-medium text-neutral-300 mb-2">
+                        <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
                             Next Wipe Window<span className="text-red-500">*</span>
                         </label>
                         <input
@@ -160,12 +160,12 @@ export default function WipeEditor({ token }: WipeEditorProps) {
                             placeholder="e.g., First Week of April 2026"
                             value={nextWipeWindow}
                             onChange={(e) => setNextWipeWindow(e.target.value)}
-                            className="w-full px-4 py-2 bg-neutral-800 border border-neutral-700 rounded-lg text-white placeholder-neutral-500 focus:outline-none focus:border-neutral-500"
+                            className="w-full px-4 py-2.5 bg-gray-50 dark:bg-neutral-800/60 border border-gray-200 dark:border-white/10 rounded-2xl text-neutral-900 dark:text-white placeholder-neutral-500 backdrop-blur-sm transition-all focus:outline-none focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20"
                         />
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-neutral-300 mb-2">
+                        <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
                             Wipe Cycle (months)
                         </label>
                         <input
@@ -173,12 +173,12 @@ export default function WipeEditor({ token }: WipeEditorProps) {
                             min="1"
                             value={wipeCycleMonths}
                             onChange={(e) => setWipeCycleMonths(e.target.value)}
-                            className="w-full px-4 py-2 bg-neutral-800 border border-neutral-700 rounded-lg text-white placeholder-neutral-500 focus:outline-none focus:border-neutral-500"
+                            className="w-full px-4 py-2.5 bg-gray-50 dark:bg-neutral-800/60 border border-gray-200 dark:border-white/10 rounded-2xl text-neutral-900 dark:text-white placeholder-neutral-500 backdrop-blur-sm transition-all focus:outline-none focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20"
                         />
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-neutral-300 mb-2">
+                        <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
                             Estimated Days Until Wipe
                         </label>
                         <input
@@ -186,24 +186,24 @@ export default function WipeEditor({ token }: WipeEditorProps) {
                             min="0"
                             value={estimatedDaysUntilWipe}
                             onChange={(e) => setEstimatedDaysUntilWipe(e.target.value)}
-                            className="w-full px-4 py-2 bg-neutral-800 border border-neutral-700 rounded-lg text-white placeholder-neutral-500 focus:outline-none focus:border-neutral-500"
+                            className="w-full px-4 py-2.5 bg-gray-50 dark:bg-neutral-800/60 border border-gray-200 dark:border-white/10 rounded-2xl text-neutral-900 dark:text-white placeholder-neutral-500 backdrop-blur-sm transition-all focus:outline-none focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20"
                         />
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-neutral-300 mb-2">
+                        <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
                             Last Wipe Date
                         </label>
                         <input
                             type="date"
                             value={lastWipeDate}
                             onChange={(e) => setLastWipeDate(e.target.value)}
-                            className="w-full px-4 py-2 bg-neutral-800 border border-neutral-700 rounded-lg text-white placeholder-neutral-500 focus:outline-none focus:border-neutral-500"
+                            className="w-full px-4 py-2.5 bg-gray-50 dark:bg-neutral-800/60 border border-gray-200 dark:border-white/10 rounded-2xl text-neutral-900 dark:text-white placeholder-neutral-500 backdrop-blur-sm transition-all focus:outline-none focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20"
                         />
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-neutral-300 mb-2">
+                        <label className="block text-sm font-medium text-neutral-700 dark:text-neutral-300 mb-2">
                             Notes
                         </label>
                         <input
@@ -211,14 +211,14 @@ export default function WipeEditor({ token }: WipeEditorProps) {
                             placeholder="e.g., Subject to Change"
                             value={notes}
                             onChange={(e) => setNotes(e.target.value)}
-                            className="w-full px-4 py-2 bg-neutral-800 border border-neutral-700 rounded-lg text-white placeholder-neutral-500 focus:outline-none focus:border-neutral-500"
+                            className="w-full px-4 py-2.5 bg-gray-50 dark:bg-neutral-800/60 border border-gray-200 dark:border-white/10 rounded-2xl text-neutral-900 dark:text-white placeholder-neutral-500 backdrop-blur-sm transition-all focus:outline-none focus:border-red-500/50 focus:ring-2 focus:ring-red-500/20"
                         />
                     </div>
 
                     <Button
                         type="submit"
                         disabled={isSaving}
-                        className="w-full px-6 py-2 bg-amber-600 hover:bg-amber-700 disabled:opacity-50"
+                        className="w-full"
                     >
                         {isSaving ? 'Saving...' : 'Save Wipe Dates'}
                     </Button>

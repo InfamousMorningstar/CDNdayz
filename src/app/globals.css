@@ -766,3 +766,165 @@ body::-webkit-scrollbar-thumb:hover {
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(to bottom, rgba(239, 68, 68, 0.85), rgba(220, 38, 38, 0.95));
 }
+
+/* ════════════════════════════════════════════════════════════════
+   LIQUID GLASS — Apple iOS-26 style material
+   How Apple does it: a translucent layer that (1) blurs + over-
+   saturates the backdrop, (2) refracts/lenses the content behind it
+   at the edges (via an SVG displacement map), (3) carries a bright
+   specular bevel on its top/left rim where light catches the glass,
+   and (4) shows a soft moving highlight that tracks the light source
+   (here: the pointer). Everything degrades gracefully.
+   ════════════════════════════════════════════════════════════════ */
+
+:root {
+  --lg-tint: 255, 255, 255;
+  --lg-surface: rgba(255, 255, 255, 0.55);
+  --lg-surface-strong: rgba(255, 255, 255, 0.72);
+  --lg-rim: rgba(255, 255, 255, 0.65);
+  --lg-rim-soft: rgba(255, 255, 255, 0.14);
+  --lg-shade: rgba(15, 23, 42, 0.18);
+  --lg-sheen: rgba(255, 255, 255, 0.9);
+  --lg-shadow: 0 1px 1px rgba(0, 0, 0, 0.04), 0 12px 34px -14px rgba(0, 0, 0, 0.24);
+  --lg-blur: 18px;
+  --lg-x: 50%;
+  --lg-y: 0%;
+}
+
+.dark {
+  --lg-tint: 255, 255, 255;
+  --lg-surface: rgba(255, 255, 255, 0.06);
+  --lg-surface-strong: rgba(255, 255, 255, 0.10);
+  --lg-rim: rgba(255, 255, 255, 0.22);
+  --lg-rim-soft: rgba(255, 255, 255, 0.06);
+  --lg-shade: rgba(0, 0, 0, 0.55);
+  --lg-sheen: rgba(255, 255, 255, 0.5);
+  --lg-shadow: 0 1px 1px rgba(0, 0, 0, 0.3), 0 16px 40px -16px rgba(0, 0, 0, 0.6);
+}
+
+/* Base material — the specular bevel + depth that reads as glass */
+.liquid-glass {
+  position: relative;
+  isolation: isolate;
+  background-color: var(--lg-surface);
+  background-image: linear-gradient(
+    180deg,
+    rgba(var(--lg-tint), 0.10) 0%,
+    rgba(var(--lg-tint), 0) 42%,
+    rgba(0, 0, 0, 0.03) 100%
+  );
+  -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(180%) brightness(1.04);
+  backdrop-filter: blur(var(--lg-blur)) saturate(180%) brightness(1.04);
+  box-shadow:
+    inset 0 1px 0.5px var(--lg-rim),
+    inset 0 0 0 1px var(--lg-rim-soft),
+    inset 0 -10px 26px -18px var(--lg-shade),
+    var(--lg-shadow);
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Edge refraction band — bright lensing along the top-left rim */
+.liquid-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  pointer-events: none;
+  z-index: 1;
+  background: linear-gradient(
+    135deg,
+    var(--lg-sheen) 0%,
+    rgba(var(--lg-tint), 0) 38%,
+    rgba(var(--lg-tint), 0) 64%,
+    rgba(var(--lg-tint), 0.35) 100%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0.7;
+}
+
+/* Moving specular highlight — follows the pointer like a light source */
+.liquid-glass::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  background: radial-gradient(
+    160px circle at var(--lg-x) var(--lg-y),
+    rgba(var(--lg-tint), 0.55),
+    rgba(var(--lg-tint), 0.12) 30%,
+    transparent 60%
+  );
+  mix-blend-mode: soft-light;
+  transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.dark .liquid-glass::after {
+  mix-blend-mode: screen;
+}
+
+/* Pointer-tracked sheen reveals on hover */
+.liquid-glass[data-liquid]:hover::after,
+.liquid-glass[data-liquid].is-lit::after {
+  opacity: 1;
+}
+
+/* True backdrop refraction — only where the browser honours url() in
+   backdrop-filter (Chromium). Toggled on by the controller. */
+html.lg-refract-ok .liquid-glass--refract {
+  -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(180%) brightness(1.04) url(#liquid-glass-filter);
+  backdrop-filter: blur(var(--lg-blur)) saturate(180%) brightness(1.04) url(#liquid-glass-filter);
+}
+
+/* Strength + interaction modifiers */
+.liquid-glass--strong {
+  background-color: var(--lg-surface-strong);
+  --lg-blur: 26px;
+}
+
+.liquid-glass--interactive {
+  cursor: pointer;
+}
+.liquid-glass--interactive:hover {
+  box-shadow:
+    inset 0 1px 0.5px var(--lg-rim),
+    inset 0 0 0 1px var(--lg-rim-soft),
+    inset 0 -10px 26px -18px var(--lg-shade),
+    0 6px 14px -6px rgba(0, 0, 0, 0.12),
+    0 22px 50px -18px rgba(0, 0, 0, 0.3);
+}
+
+/* Subtle living shimmer for hero glass */
+@keyframes lg-breathe {
+  0%, 100% { filter: saturate(1) brightness(1); }
+  50% { filter: saturate(1.06) brightness(1.03); }
+}
+.liquid-glass--alive {
+  animation: lg-breathe 7s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .liquid-glass,
+  .liquid-glass::after,
+  .liquid-glass--interactive {
+    transition: none !important;
+  }
+  .liquid-glass--alive {
+    animation: none !important;
+  }
+  .liquid-glass--interactive:hover {
+    transform: none;
+  }
+}
