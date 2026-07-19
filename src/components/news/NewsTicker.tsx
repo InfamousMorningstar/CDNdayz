@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AlertTriangle, Info, Calendar, Megaphone, ChevronLeft, ChevronRight } from 'lucide-react';
+import { usePolling } from '@/hooks/usePolling';
 
 export type NewsItem = {
     id: string | number;
@@ -64,28 +65,22 @@ export function NewsTicker() {
         setCurrentIndex((prev) => (prev + 1) % news.length);
     };
 
-    // Fetch news from internal API to avoid exposing Gist URL and handle caching
-    useEffect(() => {
-        const fetchNews = async () => {
-            try {
-                const response = await fetch('/api/news-ticker');
-                if (response.ok) {
-                    const data = await response.json();
-                    if (Array.isArray(data) && data.length > 0) {
-                        setNews(data);
-                    }
+    const fetchNews = async () => {
+        try {
+            const response = await fetch('/api/news-ticker');
+            if (response.ok) {
+                const data = await response.json();
+                if (Array.isArray(data) && data.length > 0) {
+                    setNews(data);
                 }
-            } catch (error) {
-                console.error("Failed to fetch news ticker:", error);
             }
-        };
+        } catch (error) {
+            console.error("Failed to fetch news ticker:", error);
+        }
+    };
 
-        fetchNews();
-        
-        // Refresh every 60 seconds
-        const refreshInterval = setInterval(fetchNews, 60 * 1000); 
-        return () => clearInterval(refreshInterval);
-    }, []);
+    // Fetch news from internal API to avoid exposing Gist URL and handle caching
+    usePolling(fetchNews, 60_000);
 
     // Auto-cycle through messages
     useEffect(() => {

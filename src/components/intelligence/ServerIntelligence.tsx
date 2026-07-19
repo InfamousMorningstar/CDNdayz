@@ -11,11 +11,11 @@
  * loading and error states so it degrades gracefully when no data exists.
  */
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
+import dynamic from 'next/dynamic';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BarChart2, ChevronDown, MoonStar, Sparkles, ChevronUp } from 'lucide-react';
 import { Badge } from '@/components/ui/Badge';
-import { PopulationChart } from './PopulationChart';
 import { StatCards, TrendBadge } from './StatCards';
 import { InsightSummary } from './InsightSummary';
 import { ForecastPanel } from './ForecastPanel';
@@ -31,6 +31,17 @@ import {
 import { servers } from '@/lib/servers';
 import { cn } from '@/lib/utils';
 import { DAY_NAMES, HOUR_LABELS } from '@/lib/population-analytics';
+import { usePolling } from '@/hooks/usePolling';
+
+const PopulationChart = dynamic(
+  () => import('./PopulationChart').then((module) => module.PopulationChart),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="h-[260px] w-full animate-pulse rounded-lg bg-gray-200 dark:bg-neutral-800/40" />
+    ),
+  },
+);
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -211,6 +222,7 @@ export function ServerIntelligence() {
   const [nowTick, setNowTick]               = useState<number>(Date.now());
   const [compareRows, setCompareRows]       = useState<CompareRow[]>([]);
   const [expandedDetails, setExpandedDetails] = useState<boolean>(false);
+  const hasStartedPolling = useRef(false);
 
   const fetchHistory = useCallback(async () => {
     if (!selectedServer) return;
@@ -242,18 +254,16 @@ export function ServerIntelligence() {
     }
   }, [selectedServer, timeRange]);
 
-  // Fetch on mount and whenever the selection changes
-  useEffect(() => {
-    fetchHistory();
-    setExpandedDetails(false);
-  }, [fetchHistory]);
+  usePolling(fetchHistory, 60_000);
 
-  // Auto-refresh every 60 seconds to pick up new snapshots (aligns with API cache TTL)
+  // Fetch whenever the selection changes after the initial polling call.
   useEffect(() => {
-    const interval = setInterval(() => {
+    if (hasStartedPolling.current) {
       fetchHistory();
-    }, 60_000);
-    return () => clearInterval(interval);
+    } else {
+      hasStartedPolling.current = true;
+    }
+    setExpandedDetails(false);
   }, [fetchHistory]);
 
   useEffect(() => {

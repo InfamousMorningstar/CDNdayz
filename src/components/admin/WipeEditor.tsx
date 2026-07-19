@@ -36,7 +36,10 @@ export default function WipeEditor({ token }: WipeEditorProps) {
 
     const fetchWipeDates = async () => {
         try {
-            const response = await fetch('/api/wipe-dates');
+            // Bypass the CDN cache: the public GET is cached for 5 minutes,
+            // but an admin must always see live values — especially straight
+            // after saving. Admin traffic is negligible, so this costs nothing.
+            const response = await fetch('/api/wipe-dates', { cache: 'no-store' });
             const data = await response.json();
             setWipeDates(data);
             setNextWipeWindow(data.nextWipeWindow);

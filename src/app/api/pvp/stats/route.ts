@@ -1,31 +1,70 @@
 /**
  * GET /api/pvp/stats?period=daily|weekly|monthly|alltime&limit=20
  *
- * Returns the ranked PvP leaderboard, aggregated on demand from raw events.
+ * Returns the ranked PvP leaderboard.
  *
  * The roster is computed twice — `players` includes kills/deaths against AI,
  * `playersPvPOnly` counts only Player↔Player engagements. The client picks
  * which to render via a roster toggle.
+ *
+ * ── COST ──────────────────────────────────────────────────────────────────
+ * Aggregating means loading and parsing every stored event across all
+ * servers, which is pure active CPU and far too expensive to repeat per
+ * request. Two caches sit in front of it:
+ *
+ *   1. Cache-Control / s-maxage — the CDN serves most reads with no function
+ *      invocation at all.
+ *   2. getCachedLeaderboard — a KV-backed read-through cache shared by every
+ *      Fluid instance, so a miss recomputes at most once per TTL globally.
+ *
+ * The aggregation itself runs only on a miss in both.
+ * ─────────────────────────────────────────────────────────────────────────
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { getEvents } from '@/lib/pvp-store';
+import {
+  getEvents,
+  getCachedLeaderboard,
+  setCachedLeaderboard,
+} from '@/lib/pvp-store';
 import { aggregate, periodCutoff, formatAIDisplayName } from '@/lib/pvp-aggregate';
 import { LeaderboardPeriod, PvPEvent } from '@/types/pvp';
 import { servers } from '@/lib/servers';
 
 const VALID_PERIODS: LeaderboardPeriod[] = ['daily', 'weekly', 'monthly', 'alltime'];
 
-export async function GET(req: NextRequest): Promise<NextResponse> {
-  const periodParam = req.nextUrl.searchParams.get('period') ?? 'weekly';
-  const period: LeaderboardPeriod = VALID_PERIODS.includes(periodParam as LeaderboardPeriod)
-    ? (periodParam as LeaderboardPeriod)
-    : 'weekly';
+// Rosters are cached at the maximum requestable size and sliced down per
+// request, so every `limit` shares one cache entry.
+const MAX_LIMIT = 200;
 
-  const limitParam = Number(req.nextUrl.searchParams.get('limit') ?? 50);
-  const limit = Number.isFinite(limitParam) ? Math.min(Math.max(limitParam, 1), 200) : 50;
+/** Shape stored in the leaderboard cache — the full response minus slicing. */
+interface LeaderboardPayload {
+  generatedAt: number;
+  eventCount: number;
+  players: ReturnType<typeof buildRoster>;
+  playersPvPOnly: ReturnType<typeof buildRoster>;
+  overall: {
+    totalKills: number;
+    totalKillsPvPOnly: number;
+    playersOnline: number;
+    longestShot: ReturnType<typeof aggregate>['longestShot'];
+  };
+  topMarksmen: unknown[];
+  recentKills: unknown[];
+}
 
-  const now = Date.now();
+function buildRoster(agg: ReturnType<typeof aggregate>) {
+  return agg.players.slice(0, MAX_LIMIT).map((p, idx) => ({ ...p, rank: idx + 1 }));
+}
+
+/**
+ * The expensive path: load every event, aggregate, and assemble the payload.
+ * Only called on a cache miss.
+ */
+async function computeLeaderboard(
+  period: LeaderboardPeriod,
+  now: number,
+): Promise<LeaderboardPayload> {
   const cutoff = periodCutoff(period, now);
 
   // Pull events for every known server in parallel.
@@ -36,7 +75,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 
   // Roster A: all kills (Player↔Player and Player↔AI).
   const agg = aggregate(allEvents, period, now);
-  const ranked = agg.players.slice(0, limit).map((p, idx) => ({ ...p, rank: idx + 1 }));
+  const ranked = buildRoster(agg);
 
   // Roster B: Player↔Player only. Strip AI-involved kills, keep
   // connect/disconnect events so playtime stays accurate.
@@ -44,9 +83,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     (e) => e.kind !== 'kill' || (!e.killerIsAI && !e.victimIsAI),
   );
   const aggPvPOnly = aggregate(pvpOnlyEvents, period, now);
-  const rankedPvPOnly = aggPvPOnly.players
-    .slice(0, limit)
-    .map((p, idx) => ({ ...p, rank: idx + 1 }));
+  const rankedPvPOnly = buildRoster(aggPvPOnly);
 
   // Top marksmen by longestShot (separate ranking from kill leaderboard).
   const topMarksmen = [...agg.players]
@@ -82,8 +119,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
       headshot: e.headshot === true,
     }));
 
-  return NextResponse.json({
-    period,
+  return {
     generatedAt: now,
     eventCount: allEvents.length,
     players: ranked,
@@ -96,5 +132,44 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     },
     topMarksmen,
     recentKills,
+  };
+}
+
+export async function GET(req: NextRequest): Promise<NextResponse> {
+  const periodParam = req.nextUrl.searchParams.get('period') ?? 'weekly';
+  const period: LeaderboardPeriod = VALID_PERIODS.includes(periodParam as LeaderboardPeriod)
+    ? (periodParam as LeaderboardPeriod)
+    : 'weekly';
+
+  const limitParam = Number(req.nextUrl.searchParams.get('limit') ?? 50);
+  const limit = Number.isFinite(limitParam)
+    ? Math.min(Math.max(limitParam, 1), MAX_LIMIT)
+    : 50;
+
+  let payload = await getCachedLeaderboard<LeaderboardPayload>(period);
+  let cacheHit = true;
+
+  if (!payload) {
+    cacheHit = false;
+    payload = await computeLeaderboard(period, Date.now());
+    await setCachedLeaderboard(period, payload);
+  }
+
+  // Rosters are cached at MAX_LIMIT; narrow to what this request asked for.
+  const body = {
+    period,
+    ...payload,
+    players: payload.players.slice(0, limit),
+    playersPvPOnly: payload.playersPvPOnly.slice(0, limit),
+  };
+
+  return NextResponse.json(body, {
+    headers: {
+      // Most reads should be served by the CDN without invoking a function.
+      // stale-while-revalidate keeps the page instant while a refresh runs.
+      'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
+      'x-leaderboard-cache': cacheHit ? 'hit' : 'miss',
+      'x-leaderboard-age': String(Math.max(0, Date.now() - payload.generatedAt)),
+    },
   });
 }

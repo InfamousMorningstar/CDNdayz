@@ -39,7 +39,7 @@ let cache:
     }>
   | null = null;
 let lastFetch = 0;
-const CACHE_MS = 60 * 1000;
+const CACHE_MS = 300 * 1000;
 
 function normalizeMapName(mapValue: string): string {
   const normalized = mapValue.trim().toLowerCase();
@@ -84,7 +84,9 @@ export async function GET() {
   const now = Date.now();
 
   if (cache && now - lastFetch < CACHE_MS) {
-    return NextResponse.json(cache);
+    return NextResponse.json(cache, {
+      headers: { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600' },
+    });
   }
 
   const records = await Promise.all(
@@ -144,5 +146,7 @@ export async function GET() {
   cache = records;
   lastFetch = now;
 
-  return NextResponse.json(records);
+  return NextResponse.json(records, {
+    headers: { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600' },
+  });
 }

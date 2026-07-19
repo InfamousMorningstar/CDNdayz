@@ -80,7 +80,12 @@ function getDefaultWipeDates(): WipeDates {
 export async function GET() {
     try {
         const wipeDates = await readWipeDates();
-        return NextResponse.json(wipeDates);
+        // Wipe dates change a few times a year, so let the CDN serve this and
+        // skip the function invocation on every /wipe-info visit. Admin edits
+        // via PUT take up to the s-maxage window to appear publicly.
+        return NextResponse.json(wipeDates, {
+            headers: { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=3600' },
+        });
     } catch (error) {
         console.error('Error fetching wipe dates:', error);
         return NextResponse.json(

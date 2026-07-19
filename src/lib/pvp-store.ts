@@ -133,3 +133,76 @@ export async function getStoreInfo(): Promise<{ backend: 'kv' | 'memory' }> {
   const kv = await getKV();
   return { backend: kv ? 'kv' : 'memory' };
 }
+
+// ── Computed leaderboard cache ─────────────────────────────────────────────
+//
+// Aggregating the leaderboard means parsing every stored event for all
+// servers — hundreds of thousands of objects, all of it active CPU. That is
+// far too expensive to do per request, so the *computed* payload is cached
+// here instead.
+//
+// This lives in KV rather than a module-level `let` because Fluid Compute
+// runs many instances across regions: an in-process cache would be cold for
+// most requests and give each instance its own copy. KV is shared, so a
+// recompute by any instance serves all of them.
+
+const LEADERBOARD_KEY_PREFIX = 'cdn:pvp:leaderboard:';
+
+/** How long a computed leaderboard stays servable before a recompute. */
+export const LEADERBOARD_TTL_MS = 60 * 1000;
+
+interface CachedLeaderboard<T> {
+  computedAt: number;
+  payload: T;
+}
+
+const leaderboardMemoryCache = new Map<string, CachedLeaderboard<unknown>>();
+
+function leaderboardKey(period: string): string {
+  return `${LEADERBOARD_KEY_PREFIX}${period}`;
+}
+
+/**
+ * Read a previously computed leaderboard. Returns null when absent or older
+ * than `ttlMs`, signalling the caller to recompute.
+ */
+export async function getCachedLeaderboard<T>(
+  period: string,
+  ttlMs: number = LEADERBOARD_TTL_MS,
+): Promise<T | null> {
+  const key = leaderboardKey(period);
+  const kv = await getKV();
+
+  let entry: CachedLeaderboard<T> | null | undefined;
+  if (kv) {
+    entry = await kv.get<CachedLeaderboard<T>>(key);
+  } else {
+    entry = leaderboardMemoryCache.get(key) as CachedLeaderboard<T> | undefined;
+  }
+
+  if (!entry || typeof entry.computedAt !== 'number') return null;
+  if (Date.now() - entry.computedAt > ttlMs) return null;
+  return entry.payload;
+}
+
+/** Store a freshly computed leaderboard for subsequent reads. */
+export async function setCachedLeaderboard<T>(
+  period: string,
+  payload: T,
+): Promise<void> {
+  const key = leaderboardKey(period);
+  const entry: CachedLeaderboard<T> = { computedAt: Date.now(), payload };
+
+  const kv = await getKV();
+  if (kv) {
+    // A failed cache write must not fail the request — worst case is that
+    // the next reader recomputes.
+    try {
+      await kv.set(key, entry);
+    } catch (err) {
+      console.error(`[pvp-store] Failed to cache leaderboard "${period}":`, err);
+    }
+    return;
+  }
+  leaderboardMemoryCache.set(key, entry);
+}

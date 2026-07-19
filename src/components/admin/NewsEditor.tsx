@@ -59,7 +59,9 @@ export default function NewsEditor({ token }: NewsEditorProps) {
 
     const fetchNews = async () => {
         try {
-            const response = await fetch('/api/news-ticker');
+            // Bypass the CDN cache — see WipeEditor: admins must always read
+            // live data, not the 60s public cache.
+            const response = await fetch('/api/news-ticker', { cache: 'no-store' });
             const data = await response.json();
             setNews(Array.isArray(data) ? data : []);
         } catch (err) {

@@ -93,7 +93,10 @@ export default function PvPScoreboardPage() {
   const loadStats = useCallback(async (p: LeaderboardPeriod) => {
     setIsLoading(true);
     try {
-      const res = await fetch(`/api/pvp/stats?period=${p}&limit=50`, { cache: 'no-store' });
+      // No `cache: 'no-store'` — the endpoint is CDN-cached with a 60s
+      // s-maxage, so letting the cache serve this avoids a function
+      // invocation on every poll. Freshness is bounded by that TTL.
+      const res = await fetch(`/api/pvp/stats?period=${p}&limit=50`);
       if (!res.ok) throw new Error(`status ${res.status}`);
       const data: StatsResponse = await res.json();
       setEventCount(data.eventCount);

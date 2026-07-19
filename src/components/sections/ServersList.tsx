@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useMemo } from 'react';
 import { ServerMiniCard } from '@/components/server/ServerMiniCard';
 import { ServerStatus } from '@/lib/servers';
@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/Badge';
 import Link from 'next/link';
 import { Reveal3D } from '@/components/motion/Reveal3D';
 import { TextReveal } from '@/components/motion/TextReveal';
+import { usePolling } from '@/hooks/usePolling';
 
 export function ServersList() {
   const [servers, setServers] = useState<ServerStatus[]>([]);
@@ -27,35 +28,31 @@ export function ServersList() {
     };
   }, [servers]);
 
-  useEffect(() => {
-    const fetchServers = async () => {
-      try {
-        const response = await fetch('/api/servers');
-        if (!response.ok) return;
-        const data = await response.json();
-        const fetchedAt = response.headers.get('x-server-fetched-at');
-        setServers(data);
-        if (fetchedAt) {
-          setLastUpdated(
-            new Intl.DateTimeFormat(undefined, {
-              hour: 'numeric',
-              minute: '2-digit',
-              second: '2-digit',
-              hour12: false,
-            }).format(new Date(Number(fetchedAt)))
-          );
-        }
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
+  const fetchServers = async () => {
+    try {
+      const response = await fetch('/api/servers');
+      if (!response.ok) return;
+      const data = await response.json();
+      const fetchedAt = response.headers.get('x-server-fetched-at');
+      setServers(data);
+      if (fetchedAt) {
+        setLastUpdated(
+          new Intl.DateTimeFormat(undefined, {
+            hour: 'numeric',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false,
+          }).format(new Date(Number(fetchedAt)))
+        );
       }
-    };
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    fetchServers();
-    const interval = setInterval(fetchServers, 30000);
-    return () => clearInterval(interval);
-  }, []);
+  usePolling(fetchServers, 30000);
 
   return (
     <section aria-labelledby="deployment-zones-heading" className="py-12 sm:py-16 bg-gray-50 dark:bg-neutral-900/50 backdrop-blur-sm relative z-10" id="servers">
