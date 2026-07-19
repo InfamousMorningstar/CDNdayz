@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Badge } from '@/components/ui/Badge';
 import { Card } from '@/components/ui/Card';
 import { Layers, ListChecks, Search, ShieldCheck } from 'lucide-react';
+import { usePolling } from '@/hooks/usePolling';
 
 interface ServerModRecord {
   id: string;
@@ -28,28 +29,24 @@ export function ServerModsOverview() {
   const [searchTerm, setSearchTerm] = useState('');
   const [serverFilter, setServerFilter] = useState<string>('all');
 
-  useEffect(() => {
-    const fetchMods = async () => {
-      try {
-        const response = await fetch('/api/server-mods');
-        if (!response.ok) {
-          throw new Error(`Failed to load server mods (${response.status})`);
-        }
-
-        const data = (await response.json()) as ServerModRecord[];
-        setRecords(data);
-        setError(null);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to load server mods');
-      } finally {
-        setLoading(false);
+  const fetchMods = async () => {
+    try {
+      const response = await fetch('/api/server-mods');
+      if (!response.ok) {
+        throw new Error(`Failed to load server mods (${response.status})`);
       }
-    };
 
-    fetchMods();
-    const interval = setInterval(fetchMods, 60 * 1000);
-    return () => clearInterval(interval);
-  }, []);
+      const data = (await response.json()) as ServerModRecord[];
+      setRecords(data);
+      setError(null);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to load server mods');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  usePolling(fetchMods, 300_000);
 
   const verifiedCount = useMemo(
     () => records.filter((record) => record.modCount !== null).length,

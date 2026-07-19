@@ -14,7 +14,10 @@ export async function GET() {
   // Return cached data if valid
   if (cache && now - lastFetchTime < CACHE_DURATION) {
     return NextResponse.json(cache, {
-      headers: { 'x-server-fetched-at': String(lastFetchTime) },
+      headers: {
+        'Cache-Control': 'public, s-maxage=30, stale-while-revalidate=60',
+        'x-server-fetched-at': String(lastFetchTime),
+      },
     });
   }
 
@@ -24,7 +27,10 @@ export async function GET() {
     lastFetchTime = now;
 
     return NextResponse.json(results, {
-      headers: { 'x-server-fetched-at': String(lastFetchTime) },
+      headers: {
+        'Cache-Control': 'public, s-maxage=30, stale-while-revalidate=60',
+        'x-server-fetched-at': String(lastFetchTime),
+      },
     });
   } catch (error) {
     console.error('API Error:', error);

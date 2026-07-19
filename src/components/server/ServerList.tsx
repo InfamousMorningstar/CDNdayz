@@ -7,6 +7,7 @@ import { ServerStatus } from '@/lib/servers'; // Importing shared type
 import { DISCORD_INVITE_URL } from '@/lib/links';
 import { DiscordLink } from '@/components/ui/DiscordLink';
 import { Badge } from '@/components/ui/Badge';
+import { usePolling } from '@/hooks/usePolling';
 
 export function ServerList() {
   const [servers, setServers] = useState<ServerStatus[]>([]);
@@ -107,11 +108,7 @@ export function ServerList() {
     }
   };
 
-  useEffect(() => {
-    fetchServers();
-    const interval = setInterval(fetchServers, 30000);
-    return () => clearInterval(interval);
-  }, []);
+  usePolling(fetchServers, 30000);
 
   if (loading && servers.length === 0) {
     return (
