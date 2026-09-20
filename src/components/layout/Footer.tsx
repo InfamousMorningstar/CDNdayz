@@ -107,7 +107,7 @@ export function Footer() {
                  
                  <div className="flex flex-col justify-center">
                     <span className="text-[10px] uppercase tracking-wider text-neutral-500 font-medium leading-none mb-1">Designed & Built by</span>
-                    <span className="text-sm font-mono font-semibold text-red-400/90 group-hover:text-red-300 transition-colors tracking-wide">AHMXD Technologies</span>
+                    <span className="text-sm font-mono font-semibold text-red-400/90 group-hover:text-red-300 transition-colors tracking-wide whitespace-nowrap">AHMXD Technologies</span>
                  </div>
               </div>
             </Spotlight>
