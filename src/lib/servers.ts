@@ -26,9 +26,9 @@ export const servers: ServerConfig[] = [
     id: "banov-scifi",
     name: "CDN Banov SciFi",
     map: "Banov",
-    host: "65.7.2.44",
-    port: 2534,
-    gamePort: 2533,
+    host: "99.199.82.20",
+    port: 2412,
+    gamePort: 2411,
     type: "dayz"
   },
   {
@@ -36,8 +36,8 @@ export const servers: ServerConfig[] = [
     name: "CDN Chernarus Hardcore",
     map: "Chernarus",
     host: "65.7.2.44",
-    port: 2433,
-    gamePort: 2432,
+    port: 2411,
+    gamePort: 2410,
     type: "dayz"
   },
   {
@@ -45,8 +45,8 @@ export const servers: ServerConfig[] = [
     name: "CDN Livonia Snow Hardcore",
     map: "Livonia",
     host: "65.7.2.44",
-    port: 2423,
-    gamePort: 2422,
+    port: 2407,
+    gamePort: 2406,
     type: "dayz"
   },
   {
