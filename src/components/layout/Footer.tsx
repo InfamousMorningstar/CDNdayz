@@ -89,22 +89,25 @@ export function Footer() {
             </div>
           </div>
 
-          <a href="https://portfolio.ahmxd.net" target="_blank" rel="noopener noreferrer" className="block w-full md:w-auto group">
+          <a href="https://ahmxdtechnologies.ca" target="_blank" rel="noopener noreferrer" className="block w-full md:w-auto group">
             <Spotlight className="rounded-full border border-gray-200 dark:border-white/5 bg-gray-50 dark:bg-white/5 hover:bg-gray-100 dark:hover:bg-black/50 transition-all duration-300">
               <div className="flex items-center gap-4 py-2 pl-2 pr-6 relative z-10">
                  <div className="relative w-10 h-10 rounded-full bg-white dark:bg-black flex items-center justify-center border border-gray-200 dark:border-white/10 shadow-inner overflow-hidden group-hover:border-red-500/30 transition-colors">
-                    <Image 
-                      src="https://portfolio.ahmxd.net/assets/logo.svg" 
-                      alt="Logo" 
-                      width={20} 
-                      height={20}
-                      className="w-5 h-5 dark:invert opacity-70 group-hover:opacity-100 transition-opacity" 
-                    />
+                    {/* AHMXD mark, inline so the footer does not depend on another site staying up. */}
+                    <svg
+                      viewBox="0 0 100 100"
+                      aria-hidden
+                      className="w-5 h-5 text-neutral-900 dark:text-white opacity-70 group-hover:opacity-100 transition-opacity"
+                    >
+                      <path d="M50 5 L54 20 L52 85 L50 95 L48 85 L46 20 Z" fill="#8B5CF6" />
+                      <path d="M42 30 L12 85 L38 75 L42 60 Z" fill="currentColor" fillOpacity={0.9} />
+                      <path d="M58 30 L88 85 L62 75 L58 60 Z" fill="currentColor" fillOpacity={0.9} />
+                    </svg>
                  </div>
                  
                  <div className="flex flex-col justify-center">
                     <span className="text-[10px] uppercase tracking-wider text-neutral-500 font-medium leading-none mb-1">Designed & Built by</span>
-                    <span className="text-sm font-mono font-semibold text-red-400/90 group-hover:text-red-300 transition-colors tracking-wide">Morningstar.0</span>
+                    <span className="text-sm font-mono font-semibold text-red-400/90 group-hover:text-red-300 transition-colors tracking-wide">AHMXD Technologies</span>
                  </div>
               </div>
             </Spotlight>
